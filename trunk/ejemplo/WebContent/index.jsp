@@ -2,7 +2,7 @@
   
 <html>  
 <body>  
-<s:form action="Ejemplo">  
+<s:form action="Principal">  
 <s:textfield name="Username" label="Username:"/>
 <s:textfield name="Password" label="Contraseña:"/>  
 <s:submit/>  
