@@ -26,7 +26,7 @@
 		<ul class="sub">
 			<li><a href="#">Tipos de Propiedades</a></li>
 			<li><a href="#">Propiedades</a></li>
-            <li><a href="#">Edificios</a></li>
+            <li><a href="edificio.jsp">Edificios</a></li>
 			<li><a href="#">Propietarios</a></li>
 			<li><a href="#">Inquilinos</a></li>
 			<li><a href="#">Apoderados</a></li>
