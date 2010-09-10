@@ -11,12 +11,14 @@
     <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
     <property name="hibernate.connection.url">jdbc:mysql://localhost/administracionedificios</property>
     <property name="hibernate.connection.username">root</property>
-    <property name="hibernate.connection.password">dario</property>
+    <property name="hibernate.connection.password">root</property>
     
     <property name="hibernate.connection.pool_size">1</property>
     <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
     <property name="transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</property>
     
+    <mapping package="edificio"/> 
+    <mapping class="edificio.EdificioDTO"/>
     <mapping class="FacturaDTO"/>
 
   </session-factory>
