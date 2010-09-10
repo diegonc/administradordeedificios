@@ -19,7 +19,7 @@
             <li><a href="#">Cobros Consolidados</a></li>
             <li><a href="#">Expensas</a></li>
             <li><a href="#">Planes</a></li>
-            <li><a href="Usuario_Action" >Usuarios</a></li>
+            <li><a href="UsuarioAction" >Usuarios</a></li>
 		</ul>
 	</li>
 	<li class="top"><a href="#" class="top_link"><span>Edificios</span></a>
