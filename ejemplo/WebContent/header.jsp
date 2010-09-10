@@ -14,7 +14,7 @@
 
 	<li class="top"><a href="#" class="top_link"><span>Administraci&oacute;n</span></a>
 		<ul class="sub">
-			<li><a href="gastos_generales.jsp">Gastos Generales</a></li>			
+			<li><a href="gastos_generales.jsp">Generales</a></li>			
 			<li><a href="#">Gastos </a></li>
             <li><a href="#">Cobros Consolidados</a></li>
             <li><a href="#">Expensas</a></li>
@@ -43,7 +43,7 @@
 	</li>
 	<li class="top"><a href="#" class="top_link"><span>Gastos</span></a></li>
 		<ul class="sub">
-			<li><a href="#">Registrar</a></li>
+			<li><a href="tipoDeGastos.jsp">Registrar</a></li>
             <li><a href="#">Consolidar</a></li>
             <li><a href="#">Consultas</a></li>
                         
