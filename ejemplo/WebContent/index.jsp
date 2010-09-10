@@ -18,7 +18,7 @@
 		<tr>
 			<td width="5"  bgcolor="#383838"></td>
 			<td width="800" bgcolor="#F0F0F0" align="center">
-				<s:form action="Login_Action" class="form">  
+				<s:form action="LoginAction" class="form">  
 					<font>Usuario</font><input class="elegante" type ="text" name="Username" />
 					<font>Password</font><input class="elegante" type ="password" name="Password" />					
 					<s:submit/>

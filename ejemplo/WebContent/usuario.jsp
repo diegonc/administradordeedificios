@@ -31,7 +31,7 @@ function validar(thisform){
 	<td width="5"  class="borde"></td>
 	<td width="15"  class="fondo"></td>
 	<td width="770" class="fondo" align="left">
-		<form class="elegante" id="usuarioAlta" action="Usuario_Action">
+		<form class="elegante" id="usuarioAlta" action="UsuarioAction">
 			<fieldset>
 		  		<legend>Alta en el servicio</legend>
 			 		<table>
@@ -58,7 +58,7 @@ function validar(thisform){
 						  	<%} %>			 
 						</select>
 						</br></br>
-			  			<input class="btn" type="submit" value="Add"  onclick="validar()"/>
+			  			<input class="btn" type="button" value="Add"  onclick="validar()"/>
 			  		</table>
 			  	</legend>
 			</fieldset>
