@@ -2,14 +2,16 @@
 <!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" "http://struts.apache.org/dtds/struts-2.0.dtd">  
   
 <struts>  
-    <package name="default package" extends="struts-default">  
-        <action name="Login_Action" class="Login_Action">  
+    <package name="actions" extends="struts-default">  
+        <action name="LoginAction" class="actions.LoginAction">  
             <result name="success">/home.jsp</result>
             <result name="error">/error.jsp</result>  
         </action>
-        <action name="Usuario_Action" class="Usuario_Action">  
+        <action name="UsuarioAction" class="actions.UsuarioAction">  
             <result name="success">/usuario.jsp</result>              
          </action>
-  
+  		<action name="TipoDeGastosAction" class="actions.TipoDeGastosAction">  
+            <result name="success">/tipoDeGastos.jsp</result>              
+        </action>
     </package>  
 </struts>  
