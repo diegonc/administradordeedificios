@@ -1,7 +1,10 @@
 package edificio;
 import org.hibernate.*;
 import org.hibernate.cfg.AnnotationConfiguration;
+import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Expression;
+import org.hibernate.criterion.Restrictions;
+import org.hibernate.mapping.Collection;
 
 import org.apache.log4j.Logger;
 
@@ -81,7 +84,8 @@ public final class EdificioTransacBD {
 			session.close();
 		}
 	}
-
+	
+	
 	/**
 	 * Perform UPDATE statements using Hibernate's update() method
 	 */
