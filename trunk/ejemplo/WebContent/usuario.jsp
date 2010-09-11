@@ -1,4 +1,4 @@
-<jsp:include page="header.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/jspf/header.jspf"></jsp:include>
 <script type="text/javascript">
 
 function habilitarEdificio(thisform){
@@ -70,4 +70,4 @@ function validar(thisform){
 
 
 </table>
-<jsp:include page="footer.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/jspf/footer.jspf"></jsp:include>

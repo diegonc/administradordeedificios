@@ -1,4 +1,4 @@
-<jsp:include page="header.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/jspf/header.jspf"></jsp:include>
 <script type="text/javascript">
 function habilitarInputsMontos(){
 	var montoVariable= document.getElementById("montoVariable");
@@ -84,4 +84,4 @@ function habilitarInputsPlazo(){
 
 </table>
 
-<jsp:include page="footer.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/jspf/footer.jspf"></jsp:include>
