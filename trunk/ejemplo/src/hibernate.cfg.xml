@@ -18,7 +18,7 @@
     <property name="transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</property>
     
     <mapping package="edificio"/> 
-    <mapping class="edificio.dto.EdificioDTO"/>
+    <mapping class="edificio.EdificioDTO"/>
     <mapping class="FacturaDTO"/>
 
   </session-factory>
