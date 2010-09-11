@@ -33,7 +33,7 @@
 			<li><a href="#">Gastos Periodicos</a></li>            
 		</ul>
 	</li>
-	<li class="top"><a href="#" class="top_link"><span>Cobros</span></a></li>
+	<li class="top"><a href="#" class="top_link"><span>Cobros</span></a>
 		<ul class="sub">
 			<li><a href="#">Expensas</a></li>
             <li><a href="#">Planes de Pagos</a></li>
@@ -41,7 +41,7 @@
             <li><a href="#">Consultas</a></li>            
 		</ul>
 	</li>
-	<li class="top"><a href="#" class="top_link"><span>Gastos</span></a></li>
+	<li class="top"><a href="#" class="top_link"><span>Gastos</span></a>
 		<ul class="sub">
 			<li><a href="tipoDeGastos.jsp">Registrar</a></li>
             <li><a href="#">Consolidar</a></li>
