@@ -7,12 +7,12 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import edificio.EdificioDTO;
-import edificio.EdificioTransacBD;
+import edificio.EdificioAppl;
 import junit.framework.TestCase;
 
 public class EdificioTest extends TestCase {
 	private EdificioDTO edificio;
-	private EdificioTransacBD ediTransacBD;
+	private EdificioAppl ediTransacBD;
 	
 	public EdificioTest(String name) {
 		super(name);
@@ -37,7 +37,7 @@ public class EdificioTest extends TestCase {
 		edificio.setEncargado_piso("A");
 		edificio.setDia_primer_vto(1);
 		
-		ediTransacBD = new EdificioTransacBD();
+		ediTransacBD = new EdificioAppl();
 	}
 
 	protected void tearDown(int id, SessionFactory factory) throws Exception {
