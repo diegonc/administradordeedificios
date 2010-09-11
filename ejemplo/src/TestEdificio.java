@@ -4,7 +4,7 @@ import org.hibernate.criterion.Expression;
 
 import org.apache.log4j.Logger;
 
-import edificio.EdificioDTO;
+import edificio.dto.EdificioDTO;
 
 import java.util.List;
 
