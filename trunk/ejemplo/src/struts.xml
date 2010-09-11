@@ -13,5 +13,8 @@
   		<action name="TipoDeGastosAction" class="actions.TipoDeGastosAction">  
             <result name="success">/tipoDeGastos.jsp</result>              
         </action>
+        <action name="GastosAction" class="actions.GastosAction">  
+            <result name="success">/gastos.jsp</result>              
+        </action>
     </package>  
 </struts>  
