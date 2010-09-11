@@ -31,4 +31,4 @@
 </div>
   
 </body>  
-<jsp:include page="footer.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/jspf/footer.jspf"></jsp:include>
