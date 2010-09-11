@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre1.6.0">
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
 		<attributes>
 			<attribute name="owner.project.facets" value="jst.java"/>
 		</attributes>
@@ -13,18 +13,19 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry kind="lib" path="C:/Users/Dario/Desktop/TallerII/AdministracionEdificios/lib/antlr-2.7.4.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Dario/Desktop/TallerII/AdministracionEdificios/lib/asm.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Dario/Desktop/TallerII/AdministracionEdificios/lib/cglib-2.1.3.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Dario/Desktop/TallerII/AdministracionEdificios/lib/commons-collections.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Dario/Desktop/TallerII/AdministracionEdificios/lib/commons-logging.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Dario/Desktop/TallerII/AdministracionEdificios/lib/dom4j.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Dario/Desktop/TallerII/AdministracionEdificios/lib/ehcache-1.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Dario/Desktop/TallerII/AdministracionEdificios/lib/ejb3-persistence.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Dario/Desktop/TallerII/AdministracionEdificios/lib/hibernate3.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Dario/Desktop/TallerII/AdministracionEdificios/lib/hibernate-annotations.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Dario/Desktop/TallerII/AdministracionEdificios/lib/jta-1.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Dario/Desktop/TallerII/AdministracionEdificios/lib/log4j-1.2.8.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Dario/Desktop/TallerII/AdministracionEdificios/lib/mysql-connector-java-5.1.13-bin.jar"/>
+	<classpathentry kind="var" path="PROJECT_ROOT/lib/antlr-2.7.4.jar"/>
+	<classpathentry kind="var" path="PROJECT_ROOT/lib/asm.jar"/>
+	<classpathentry kind="var" path="PROJECT_ROOT/lib/cglib-2.1.3.jar"/>
+	<classpathentry kind="var" path="PROJECT_ROOT/lib/commons-collections.jar"/>
+	<classpathentry kind="var" path="PROJECT_ROOT/lib/commons-logging.jar"/>
+	<classpathentry kind="var" path="PROJECT_ROOT/lib/dom4j.jar"/>
+	<classpathentry kind="var" path="PROJECT_ROOT/lib/ehcache-1.2.jar"/>
+	<classpathentry kind="var" path="PROJECT_ROOT/lib/ejb3-persistence.jar"/>
+	<classpathentry kind="var" path="PROJECT_ROOT/lib/hibernate3.jar"/>
+	<classpathentry kind="var" path="PROJECT_ROOT/lib/hibernate-annotations.jar"/>
+	<classpathentry kind="var" path="PROJECT_ROOT/lib/jta-1.1.jar"/>
+	<classpathentry kind="var" path="PROJECT_ROOT/lib/log4j-1.2.8.jar"/>
+	<classpathentry kind="var" path="PROJECT_ROOT/lib/mysql-connector-java-5.1.13-bin.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/3"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
