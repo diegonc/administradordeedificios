@@ -56,22 +56,57 @@ function habilitarInputsPlazo(){
 		<form class="elegante" id="tipoDeGastoAlta" action="TipoDeGastosAction">
 			<fieldset>
 		  		<legend>Alta en el servicio</legend>
-			 		<table>
-			 			<label for="codigo">Codigo:</label> <input type="text" id="codigo" name="codigo" /><font color="red">*&nbsp;&nbsp;</font>
-			 			<label for="descripcion">Descripci&oacute;n:</label> <input type="text" id="descripcion" name="descripcion" /><font color="red">*&nbsp;&nbsp;</font>
-			 			</br>
-				  		<label for="tipoOrdinario"></label> <input type="radio" id="tipoOdinario" name="tipoGasto" onclick="habilitarInputsOrdinario()"/>Ordinario</br>
-				  		<label for="tipoExtraOrdinario"></label> <input type="radio" id="tipoExtraOrdinario" name="tipoGasto" onclick="habilitarInputsOrdinario()"/> Extraordinario</br>
-				  		</br>
-				  		<label for="eventual"></label> <input type="radio" id="eventual" name="gastoPlazo" disabled="disabled" onclick="habilitarInputsPlazo()"/>Eventual</br>
-				  		<label for="periodico"></label> <input type="radio" id="periodico" name="gastoPlazo" disabled="disabled" onclick="habilitarInputsPlazo()"/> Peri&oacute;dico&nbsp;&nbsp;<label for="periodo">Per&iacute;odo:</label> <input type="text" id="periodo" name="periodo" disabled="disabled" /></br>
-				  		</br>
-				  		<span>Monto</span></br>
-				  		<label for="montoFijo"></label> <input type="radio" id="montoFijo" name="tipoMonto" disabled="disabled" onclick="habilitarInputsMontos()"/> Fijo&nbsp;&nbsp;&nbsp;&nbsp;<label for="montoActual">Monto Actual:</label> <input type="text" id="montoActual" name="montoActual" disabled="disabled"/>&nbsp;&nbsp;<label for="diaLimite">D&iacute;a L&iacute;mite:</label> <input type="text" id="diaLimite" name="diaLimite" disabled="disabled"/></br>
-				  		<label for="montoVariable"></label> <input type="radio" id="montoVariable" name="tipoMonto" disabled="disabled" onclick="habilitarInputsMontos()"/> Variable&nbsp;&nbsp;&nbsp;&nbsp;<label for="montoPrevision">Monto Previsi&oacute;n:</label> <input type="text" id="montoPrevision" name="montoPrevision" disabled="disabled"/>&nbsp;&nbsp;<label for="proximoVencimiento">Prox. Vto:</label> <input type="text" id="proximoVencimiento" name="proximoVencimiento" disabled="disabled"/></br>
-				  		</br>			  		
-			  	  		
-			  			<input class="btn" type="button" value="Add"  onclick="validar()"/>
+			 		<table border="0" cellpadding="0" cellspacing="0">
+			 			<tr><td colspan="6" height="10"></td></tr>
+			 			<tr>
+				 			<td width="120" align="right"><label for="codigo">Codigo:</label> </td>
+				 			<td colspan="4" >&nbsp;&nbsp;<input type="text" id="codigo" name="codigo" /><font color="red">*&nbsp;&nbsp;</font></td>
+				 		</tr>
+				 		<tr>	
+				 			<td align="right"><label for="descripcion">Descripci&oacute;n:</label> </td>
+				 			<td colspan="4">&nbsp;&nbsp;<input type="text" id="descripcion" name="descripcion" /><font color="red">*&nbsp;&nbsp;</font></td>
+			 			</tr>
+			 			<tr><td colspan="6" height="10"></td></tr>
+				  		
+			 			<tr>
+				 			<td><label for="tipoOrdinario"></label><input type="radio" id="tipoOdinario" name="tipoGasto" onclick="habilitarInputsOrdinario()"/>Ordinario</td>
+				 			<td colspan="4"> </td>
+				 		</tr>	
+				 		<tr>	
+					  		<td><label for="tipoExtraOrdinario"></label><input type="radio" id="tipoExtraOrdinario" name="tipoGasto" onclick="habilitarInputsOrdinario()"/> Extraordinario</td>
+					  		<td colspan="4"></td>
+				  		</tr>
+				  		<tr><td colspan="6" height="10"></td></tr>
+				  		<tr>
+				  			<td> <label for="eventual"></label><input type="radio" id="eventual" name="gastoPlazo" disabled="disabled" onclick="habilitarInputsPlazo()"/>Eventual</td>
+				  			<td colspan="4"></td>
+				  		</tr>
+				  		<tr>	
+				  			<td><label for="periodico"></label> <input type="radio" id="periodico" name="gastoPlazo" disabled="disabled" onclick="habilitarInputsPlazo()"/> Peri&oacute;dico</td>
+				  			<td colspan="4">&nbsp;&nbsp;<label for="periodo">Per&iacute;odo:</label> <input type="text" id="periodo" name="periodo" disabled="disabled" /></td>
+				  		</tr>
+				  		<tr><td colspan="6" height="10"></td></tr>
+				  		<tr>
+				  		<td colspan="4"><span>Monto</span></td><td></td>
+				  		</tr>
+				  		<tr>
+				  			<td><label for="montoFijo"></label> <input type="radio" id="montoFijo" name="tipoMonto" disabled="disabled" onclick="habilitarInputsMontos()"/> Fijo</td>
+				  			<td><label for="montoActual">Monto Actual:</label> </td>
+				  			<td><input type="text" id="montoActual" name="montoActual" disabled="disabled"/></td>
+				  			<td><label for="diaLimite">&nbsp;D&iacute;a L&iacute;mite:&nbsp;</label></td> 
+				  			<td><input type="text" id="diaLimite" name="diaLimite" disabled="disabled"/></td>
+				  		</tr>
+				  		<tr><td colspan="6" height="10"></td></tr>
+				  		<tr>
+				  			<td><label for="montoVariable"></label> <input type="radio" id="montoVariable" name="tipoMonto" disabled="disabled" onclick="habilitarInputsMontos()"/> Variable</td>
+				  			<td><label for="montoPrevision">Monto Previsi&oacute;n:&nbsp;</label></td> 
+				  			<td><input type="text" id="montoPrevision" name="montoPrevision" disabled="disabled"/></td>
+				  			<td><label for="proximoVencimiento">&nbsp;Prox. Vto:&nbsp;</label></td>
+				  			<td> <input type="text" id="proximoVencimiento" name="proximoVencimiento" disabled="disabled"/></td>
+				  		</tr>			  		
+			  	  		<tr>
+			  			<td colspan="4"><input class="btn" type="submit" value="Add"  /></td>
+			  			</tr>
 			  		</table>
 			  	</legend>
 			</fieldset>
