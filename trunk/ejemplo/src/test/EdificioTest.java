@@ -1,14 +1,14 @@
 package test;
 
-import java.util.ArrayList;
+import junit.framework.TestCase;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
-import edificio.EdificioDTO;
-import edificio.EdificioAppl;
-import junit.framework.TestCase;
+import edificio.appl.EdificioAppl;
+import edificio.dto.EdificioDTO;
+import utilidades.UtilidadesConexion;
 
 public class EdificioTest extends TestCase {
 	private EdificioDTO edificio;
@@ -45,7 +45,7 @@ public class EdificioTest extends TestCase {
 	}
 
 	public void testInsertGetAndDeleteEdificio() {
-		SessionFactory factory = ediTransacBD.createSessionFactory();
+		SessionFactory factory = UtilidadesConexion.createSessionFactory();
 		int id = ediTransacBD.insertObject(factory.openSession(), this.edificio);
 		EdificioDTO edifCompara = ediTransacBD.getObject(factory, id);		
 		assertEquals(this.edificio.getNombre(), edifCompara.getNombre());
@@ -54,7 +54,7 @@ public class EdificioTest extends TestCase {
 	} 
 	
 	public void testInsertEdificioWithTheSameName() {
-		SessionFactory factory = ediTransacBD.createSessionFactory();
+		SessionFactory factory = UtilidadesConexion.createSessionFactory();
 		boolean notInsert = false;
 		int id = ediTransacBD.insertObject(factory.openSession(), this.edificio);
 		try {
@@ -70,7 +70,7 @@ public class EdificioTest extends TestCase {
 	}
 	
 	public void testGetAndUpdateCalleEdif() {
-		SessionFactory factory = ediTransacBD.createSessionFactory();
+		SessionFactory factory = UtilidadesConexion.createSessionFactory();
 		int id = ediTransacBD.insertObject(factory.openSession(), this.edificio);
 		EdificioDTO edifAModif = ediTransacBD.getObject(factory, id);
 		edifAModif.setCalle("Nueva");
@@ -82,7 +82,7 @@ public class EdificioTest extends TestCase {
 	}
 	
 	public void testExecuteQuery() {
-		SessionFactory factory = ediTransacBD.createSessionFactory();
+		SessionFactory factory = UtilidadesConexion.createSessionFactory();
 		
 		//abro la sesion y cree el query con el sete de los atributos a buscar
 		Session session = factory.openSession();	
