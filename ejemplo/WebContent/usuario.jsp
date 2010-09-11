@@ -35,30 +35,40 @@ function validar(thisform){
 			<fieldset>
 		  		<legend>Alta en el servicio</legend>
 			 		<table>
-			 			
-				  		<label for="nombre">Nombre:</label> <input type="text" id="nombre" name="nombre" /><font color="red">*&nbsp;&nbsp;</font>
-				  		<label for="apellido">Apellidos:</label>  <input type="text" id="apellido" name="apellido" size="30" /><font color="red">*</font>
-				  		</br></br>
-			  	  		<label for="dni">DNI:</label>  <input type="text" id="dni" size="10" maxlength="9" name="dni"/><font color="red">*&nbsp;&nbsp;</font>
-			 	  		<label for="contrasena">Contrase&ntilde;a:</label>  <input type="password" id="contrasena" name="contrasena" /><font color="red">*&nbsp;&nbsp;</font>
-			 			<label for="perfiles">Perfil:</label> 
-			 			<select name ="perfiles" id="perfiles" onclick="habilitarEdificio()"> 
-						  <option value="resp_gastos">Responsable de Gastos</option>
-						  <option value="resp_cobros">Responsable de Cobros</option>
-						  <option value="resp_edificios">Responsable de Edificios</option>
-						  <option value="presidente_consorcio">Presidente de Consorcio</option>
-						  <option value="concejero"> Consejero de Administrai&oacute;n</option>			 
-						</select>
-						</br></br> 
-						<label for="edificios">Edificio:</label>
-						<select name ="edificios" id="edificios" disabled="disabled">
-					  		<option value="ed0">Todos</option>
-							<%for (int i=1 ;i<20;i++){ %> 
-							<option value="ed"+<%=i %>>Edificio <%=i %></option>
-						  	<%} %>			 
-						</select>
-						</br></br>
-			  			<input class="btn" type="button" value="Add"  onclick="validar()"/>
+			 			<tr>
+					  		<td><label for="nombre">Nombre:</label></td>
+					  		<td> <input type="text" id="nombre" name="nombre" /><font color="red">*&nbsp;&nbsp;</font></td>
+					  		<td><label for="apellido">Apellidos:</label></td>
+					  		<td> <input type="text" id="apellido" name="apellido" size="30" /><font color="red">*</font></td>
+					  	</tr>
+				  		<tr>
+			  	  			<td><label for="dni">DNI:</label></td> 
+			  	  			<td> <input type="text" id="dni" size="10" maxlength="9" name="dni"/><font color="red">*&nbsp;&nbsp;</font></td>
+			 	  			<td><label for="contrasena">Contrase&ntilde;a:</label></td>
+			 	  			<td> <input type="password" id="contrasena" name="contrasena" /><font color="red">*&nbsp;&nbsp;</font></td>
+			 	  		</tr>
+			 	  		<tr>
+			 				<td><label for="perfiles">Perfil:</label></td> 
+			 				<td><select name ="perfiles" id="perfiles" onclick="habilitarEdificio()"> 
+						  		<option value="resp_gastos">Responsable de Gastos</option>
+						  		<option value="resp_cobros">Responsable de Cobros</option>
+						  		<option value="resp_edificios">Responsable de Edificios</option>
+						  		<option value="presidente_consorcio">Presidente de Consorcio</option>
+						  		<option value="concejero"> Consejero de Administrai&oacute;n</option>			 
+								</select>
+							</td>
+							<td><label for="edificios">Edificio:</label></td>
+							<td><select name ="edificios" id="edificios" disabled="disabled">
+					  			<option value="ed0">Todos</option>
+								<%for (int i=1 ;i<20;i++){ %> 
+								<option value="ed"+<%=i %>>Edificio <%=i %></option>
+						  		<%} %>			 
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td colspan=""><input class="btn" type="button" value="Add" /></td>
+						</tr>
 			  		</table>
 			  	</legend>
 			</fieldset>
