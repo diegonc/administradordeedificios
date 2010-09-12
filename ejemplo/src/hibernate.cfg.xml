@@ -14,7 +14,7 @@
     <property name="hibernate.connection.password">root</property>
     
     <property name="hibernate.connection.pool_size">1</property>
-    <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+    <property name="hibernate.dialect">org.hibernate.dialect.MySQLInnoDBDialect</property>
     <property name="transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</property>
     
     <mapping class="edificio.EdificioDTO"/>

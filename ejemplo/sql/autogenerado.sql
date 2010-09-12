@@ -47,7 +47,7 @@
         TASA_ANUAL double precision not null,
         VERSION integer,
         primary key (ID)
-    );
+    ) type=InnoDB;
 
     create table PROPIEDAD (
         id integer not null,
@@ -59,12 +59,12 @@
         ORDEN integer not null,
         version integer not null,
         propietario_dni integer not null,
-        inquilino_dni integer,
-        poderInquilino_dni integer,
-        tipoPropiedad_ID integer not null,
         poderPropietario_dni integer,
+        poderInquilino_dni integer,
+        inquilino_dni integer,
+        tipoPropiedad_ID integer not null,
         primary key (id)
-    );
+    ) type=InnoDB;
 
     create table Responsable (
         dni integer not null,
@@ -76,7 +76,7 @@
         ubicacion varchar(255),
         version integer,
         primary key (dni)
-    );
+    ) type=InnoDB;
 
     create table TIPO_PROPIEDAD (
         ID integer not null,
@@ -84,7 +84,7 @@
         NOMBRE_TIPO varchar(255) not null,
         VERSION integer,
         primary key (ID)
-    );
+    ) type=InnoDB;
 
     alter table PROPIEDAD 
         add index FK7B38234821FB2DA0 (poderPropietario_dni), 
