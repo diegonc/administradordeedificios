@@ -6,8 +6,8 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
-import edificio.appl.EdificioAppl;
-import edificio.dto.EdificioDTO;
+import edificio.EdificioAppl;
+import edificio.EdificioDTO;
 import utilidades.UtilidadesConexion;
 
 public class EdificioTest extends TestCase {
