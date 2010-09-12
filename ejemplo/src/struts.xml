@@ -16,5 +16,9 @@
         <action name="GastosAction" class="actions.GastosAction">  
             <result name="success">/gastos.jsp</result>              
         </action>
+        <action name="EdificioAction" class="actions.EdificioAction">  
+            <result name="success">/edificio.jsp</result>              
+        </action>
+        
     </package>  
 </struts>  
