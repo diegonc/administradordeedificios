@@ -6,7 +6,7 @@ import javax.persistence.Id;
 @Entity
 class Responsable {
 
-	private String dni;
+	private Integer dni;
 	private String telefono;
 	private String email;
 	
@@ -15,24 +15,24 @@ class Responsable {
 		this(null,null,null);
 	}
 
-	public Responsable(String dni) {
+	public Responsable(Integer dni) {
 		this(dni, null, null);
 	}
 
-	public Responsable(String dni, String telefono) {
+	public Responsable(Integer dni, String telefono) {
 		this(dni, telefono, null);
 	}
 
-	public Responsable(String dni, String telefono, String email) {
+	public Responsable(Integer dni, String telefono, String email) {
 		this.dni = dni;
 		this.telefono = telefono;
 		this.email = email;
 	}
 
 	@Id
-	public String getDni() { return dni; }
+	public Integer getDni() { return dni; }
 	@SuppressWarnings("unused")
-	private void setDni(String dni) { this.dni = dni; }
+	private void setDni(Integer dni) { this.dni = dni; }
 
 	public String getTelefono() { return telefono; }
 	@SuppressWarnings("unused")
