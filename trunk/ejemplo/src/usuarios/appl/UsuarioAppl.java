@@ -1,9 +1,8 @@
 package usuarios.appl;
-
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-
+import java.util.List;
+import org.hibernate.*;
+import org.hibernate.cfg.AnnotationConfiguration;
+import org.hibernate.criterion.Expression;
 import com.opensymphony.xwork2.inject.Factory;
 
 import usuarios.dto.UsuarioDTO;
@@ -16,7 +15,7 @@ public class UsuarioAppl {
 	 * @param session
 	 * @param usuario
 	 */
-	  private void insertObject( Session session, UsuarioDTO usuario )
+	  public String insertObject( Session session, UsuarioDTO usuario )
 	  {
 	    boolean commit = false;
 	    Transaction transaction = session.beginTransaction();
@@ -34,37 +33,120 @@ public class UsuarioAppl {
 	      else
 	        transaction.rollback();
 	    }
-	  }
-	
-	
-	/**
-	 * 
-	 * @param factory
-	 * @return
-	 */
-	 private String insertObject( SessionFactory factory, UsuarioDTO usuario ) {
-	    Session session = factory.openSession();
-	    try{
-	      insertObject( session, usuario );
-	    }finally{
-	      session.close();
-	    }
 	    return usuario.getDni();
 	  }
-	 
-	 public static void main(String[] args) {
-		    UsuarioDTO usuario = new UsuarioDTO();
-		    usuario.setNombre( "Dario" );
-		    usuario.setApellido("Perez Staltari");
-		    usuario.setUsuario("dmpstaltari");
-		    usuario.setPassword("dmpstaltari");
-		    usuario.setDni("30982871");
-		    usuario.setPerfil(0);
-		    SessionFactory factory = UtilidadesConexion.createSessionFactory();
-		    UsuarioAppl user = new UsuarioAppl();
-		    user.insertObject(factory, usuario);
-		    
+
+
+	/**
+	 * Obtener un SessionFactory de un archivo de configuración local.
+	 */
+	public SessionFactory createSessionFactory() {
+		AnnotationConfiguration configuration = new AnnotationConfiguration();
+		configuration.configure("/hibernate.cfg.xml");
+		return configuration.buildSessionFactory();
 	}
+
 	
+
+	/**
+	 * Perform SELECT statements using Hibernate's load() method
+	 */
+	public UsuarioDTO getObject(SessionFactory factory, String dni) {
+		Session session = factory.openSession();
+		try {
+			return (UsuarioDTO) session.load(UsuarioDTO.class, dni);
+		} finally {
+			session.close();
+		}
+	}
+
+	/**
+	 * Perform SELECT statements using Hibernate's Criteria API
+	 */
+	public UsuarioDTO queryObject(SessionFactory factory, String dni) {
+		Session session = factory.openSession();
+		try {
+			Criteria criteria = session.createCriteria(UsuarioDTO.class);
+			criteria.add(Expression.eq("DNI", dni));
+			List<?> results = criteria.list();
+			return (UsuarioDTO) results.get(0);
+		} finally {
+			session.close();
+		}
+	}
+
+	/**
+	 * Perform SELECT statements using Hibernate's Query API
+	 */
+	public int findMaxKey(SessionFactory factory) {
+		Session session = factory.openSession();
+		try {
+			Query query = session
+					.createQuery("SELECT MAX( edificio.id ) FROM EdificioDTO edificio");			
+			List<?> results = query.list();
+			return (Integer) results.get(0);
+		} finally {
+			session.close();
+		}
+	}
+
+	/**
+	 * Perform UPDATE statements using Hibernate's update() method
+	 */
+	public void updateObject(SessionFactory factory, UsuarioDTO edificio) {
+		Session session = factory.openSession();
+		try {
+			updateObject(session, edificio);
+		} finally {
+			session.close();
+		}
+	}
+
+	public void updateObject(Session session, UsuarioDTO edificio) {
+		boolean commit = false;
+		Transaction transaction = session.beginTransaction();
+		try {
+			session.update(edificio);
+			commit = true;
+		} finally {
+			if (commit) {
+				transaction.commit();
+			} else {
+				transaction.rollback();
+			}
+		}
+	}
+
+	/**
+	 * Perform DELETE statements using Hibernate's Query API
+	 */
+	public void deleteObject(SessionFactory factory, String dni) {
+		Session session = factory.openSession();
+		try {
+			deleteObject(session, dni);
+		} finally {
+			session.close();
+		}
+	}
+
+	public void deleteObject(Session session, String dni) {
+		boolean commit = false;
+		Transaction transaction = session.beginTransaction();
+
+		try {
+			Query query = session
+					.createQuery("DELETE FROM EdificioDTO factura WHERE factura.id = :id");
+			query.setString("dni", dni);
+			query.executeUpdate();
+			commit = true;
+		} finally {
+			if (commit) {
+				transaction.commit();
+			}
+			else {
+				transaction.rollback();
+			}
+		}
+	}
 
 }
