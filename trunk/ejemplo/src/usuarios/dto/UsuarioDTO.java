@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+
 @SuppressWarnings("serial")
 @Entity
 @Table (name="USUARIO")
@@ -65,7 +66,7 @@ public class UsuarioDTO  implements Serializable{
 	public void setUsuario(String usuario) {
 		this.usuario = usuario;
 	}
-	@Column(name="PERFIL_ID",nullable=false)
+	@Column(name="USUARIO_PERFIL",nullable=false)
 	public int getPerfil() {
 		return perfil;
 	}
@@ -73,6 +74,8 @@ public class UsuarioDTO  implements Serializable{
 	public void setPerfil(int perfil) {
 		this.perfil = perfil;
 	}
+
+	
 	
 		
 }
