@@ -2,6 +2,7 @@ package propiedades;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Version;
 
 @Entity
 class Responsable {
@@ -9,6 +10,11 @@ class Responsable {
 	private Integer dni;
 	private String telefono;
 	private String email;
+	private String localidad;
+	private String calle;
+	private String ubicacion;
+	private Boolean autoridad;
+	private Integer version;
 	
 	@SuppressWarnings("unused")
 	private Responsable() {
@@ -41,4 +47,42 @@ class Responsable {
 	public String getEmail() { return email; }
 	@SuppressWarnings("unused")
 	private void setEmail(String email) { this.email = email; }
+	
+	@SuppressWarnings("unused")
+	@Version
+	private Integer getVersion() { return version; }
+	@SuppressWarnings("unused")
+	private void setVersion(Integer version) { this.version = version; }
+
+	public String getLocalidad() {
+		return localidad;
+	}
+
+	public void setLocalidad(String localidad) {
+		this.localidad = localidad;
+	}
+
+	public String getCalle() {
+		return calle;
+	}
+
+	public void setCalle(String calle) {
+		this.calle = calle;
+	}
+
+	public String getUbicacion() {
+		return ubicacion;
+	}
+
+	public void setUbicacion(String ubicacion) {
+		this.ubicacion = ubicacion;
+	}
+
+	public Boolean getAutoridad() {
+		return autoridad;
+	}
+
+	public void setAutoridad(Boolean autoridad) {
+		this.autoridad = autoridad;
+	}
 }
