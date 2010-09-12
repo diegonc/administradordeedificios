@@ -19,6 +19,8 @@
     
     <mapping class="edificio.EdificioDTO"/>
     <mapping class="propiedades.Responsable"/>
+    <mapping class="propiedades.PropiedadDTO"/>
+    <mapping class="propiedades.TipoPropiedadDTO"/>
 
   </session-factory>
 
