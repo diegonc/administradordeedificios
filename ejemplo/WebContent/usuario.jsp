@@ -67,7 +67,7 @@ function validar(thisform){
 							</td>
 						</tr>
 						<tr>
-							<td colspan=""><input class="btn" type="button" value="Add" /></td>
+							<td colspan=""><s:submit /></td>
 						</tr>
 			  		</table>
 			  	</legend>
