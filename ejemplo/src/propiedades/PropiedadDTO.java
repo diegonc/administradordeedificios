@@ -17,8 +17,13 @@ public class PropiedadDTO implements Serializable{
 	private double ctaExtSaldoExp;
 	private int version;
 	private int id;
+	private TipoPropiedadDTO tipoPropiedad;
+	private Responsable propietario;
+	private Responsable inquilino;
+	private Responsable poderPropietario;
+	private Responsable poderInquilino;
 	
-	@Id @Column(name="CTA_ORD_SALDO_INT")
+	@Id 
 	public int getId() {
 		return id;
 	}
@@ -73,15 +78,51 @@ public class PropiedadDTO implements Serializable{
 		this.ctaExtSaldoExp = ctaExtSaldoExp;
 	}
 	
-	@Column(name="VERSION")
+	@Version
 	public int getVersion() {
 		return version;
 	}
 	public void setVersion(int version) {
 		this.version = version;
 	}
-	
-	
-	
 
+	@ManyToOne(optional=false)
+	public Responsable getPropietario() {
+		return propietario;
+	}
+	public void setPropietario(Responsable propietario) {
+		this.propietario = propietario;
+	}
+	
+	@ManyToOne
+	public Responsable getInquilino() {
+		return inquilino;
+	}
+	public void setInquilino(Responsable inquilino) {
+		this.inquilino = inquilino;
+	}
+	
+	@ManyToOne
+	public Responsable getPoderPropietario() {
+		return poderPropietario;
+	}
+	public void setPoderPropietario(Responsable poderPropietario) {
+		this.poderPropietario = poderPropietario;
+	}
+	
+	@ManyToOne
+	public Responsable getPoderInquilino() {
+		return poderInquilino;
+	}
+	public void setPoderInquilino(Responsable poderInquilino) {
+		this.poderInquilino = poderInquilino;
+	}
+	
+	@ManyToOne(optional=false)
+	public TipoPropiedadDTO getTipoPropiedad() {
+		return tipoPropiedad;
+	}
+	public void setTipoPropiedad(TipoPropiedadDTO tipoPropiedad) {
+		this.tipoPropiedad = tipoPropiedad;
+	}
 }
