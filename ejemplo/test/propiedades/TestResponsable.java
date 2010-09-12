@@ -23,7 +23,7 @@ public class TestResponsable extends TestCase {
 		sessionFactory.close();
 	}
 
-	private static final String dni = "15236984";
+	private static final Integer dni = 15236984;
 	private static final String email = "pepe@mail.com";
 	private static final String telefono = "5487844554";
 
