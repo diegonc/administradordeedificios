@@ -40,7 +40,8 @@
 
 body{background-color:#F5F5F5 ;}
 #contenedor{ width: 700px;  height: 600px;  margin: auto;}
-span#header {color:white;background-color:black;}
+#header {color:white;background-color:black;}
+h3#header { margin: 0; }
 td.header{color:#fff; background:#999999;}
 td.borde {background:black;}
 td.borderline {background: activeborder;}
