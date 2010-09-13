@@ -3,7 +3,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>Nicolino Propiedades</title>
-    <link rel="stylesheet" href="menu_style.css" type="text/css" />
+    <link rel="stylesheet" href="/ejemplo/menu_style.css" type="text/css" />
 </head>
 <body>
 
@@ -52,6 +52,7 @@
 	
 </ul>
 </div>
+<div class="clear-both"></div>
 
 
 
