@@ -21,4 +21,13 @@
         </action>
         
     </package>  
+
+	<package name="experimental" extends="hibernate-default">
+		<action name="listadoEdificios" method="listar"
+			class="actions.ListadoEdificios">
+			<result name="success">/listados/edificio.jsp</result>
+		</action>
+	</package>
+	
+	<constant name="struts.devMode" value="true" />
 </struts>  
