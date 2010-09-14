@@ -3,7 +3,7 @@ import java.util.List;
 import org.hibernate.*;
 import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.criterion.Expression;
-import com.opensymphony.xwork2.inject.Factory;
+
 
 import usuarios.dto.UsuarioDTO;
 import utilidades.UtilidadesConexion;
@@ -15,7 +15,7 @@ public class UsuarioAppl {
 	 * @param session
 	 * @param usuario
 	 */
-	  public String insertObject( Session session, UsuarioDTO usuario )
+	  public int insertObject( Session session, UsuarioDTO usuario )
 	  {
 	    boolean commit = false;
 	    Transaction transaction = session.beginTransaction();
@@ -75,20 +75,7 @@ public class UsuarioAppl {
 		}
 	}
 
-	/**
-	 * Perform SELECT statements using Hibernate's Query API
-	 */
-	public int findMaxKey(SessionFactory factory) {
-		Session session = factory.openSession();
-		try {
-			Query query = session
-					.createQuery("SELECT MAX( edificio.id ) FROM EdificioDTO edificio");			
-			List<?> results = query.list();
-			return (Integer) results.get(0);
-		} finally {
-			session.close();
-		}
-	}
+	
 
 	/**
 	 * Perform UPDATE statements using Hibernate's update() method
@@ -120,7 +107,7 @@ public class UsuarioAppl {
 	/**
 	 * Perform DELETE statements using Hibernate's Query API
 	 */
-	public void deleteObject(SessionFactory factory, String dni) {
+	public void deleteObject(SessionFactory factory, int dni) {
 		Session session = factory.openSession();
 		try {
 			deleteObject(session, dni);
@@ -129,14 +116,14 @@ public class UsuarioAppl {
 		}
 	}
 
-	public void deleteObject(Session session, String dni) {
+	public void deleteObject(Session session, int dni) {
 		boolean commit = false;
 		Transaction transaction = session.beginTransaction();
 
 		try {
 			Query query = session
-					.createQuery("DELETE FROM EdificioDTO factura WHERE factura.id = :id");
-			query.setString("dni", dni);
+					.createQuery("DELETE FROM USUARIO us WHERE us.dni = :dni");
+			query.setInteger("dni", dni);
 			query.executeUpdate();
 			commit = true;
 		} finally {
@@ -148,5 +135,21 @@ public class UsuarioAppl {
 			}
 		}
 	}
-
+	public static void main(String[] args) {
+		UsuarioDTO usuarioTest = new UsuarioDTO();
+		usuarioTest= new UsuarioDTO();
+		usuarioTest.setDni(31026053);
+		usuarioTest.setApellido("Chelotti");
+		usuarioTest.setNombre("Adriana");
+		usuarioTest.setPassword("adriana");
+		usuarioTest.setPerfil(1);
+		usuarioTest.setUsuario("user");
+		UsuarioAppl usuarioServ = new UsuarioAppl();
+		SessionFactory factory = usuarioServ.createSessionFactory();
+		int dniPrueba=usuarioServ.insertObject(factory.openSession(), usuarioTest);
+				
+		
+		
+		
+	}
 }
