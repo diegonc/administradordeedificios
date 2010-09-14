@@ -5,6 +5,7 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 
@@ -19,7 +20,7 @@ public class UsuarioDTO  implements Serializable{
 	
 	private String password;
 	
-	private String dni;
+	private int dni;
 	
 	private String usuario;
 	
@@ -49,13 +50,13 @@ public class UsuarioDTO  implements Serializable{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	@Column(name="DNI",nullable=false)
-	public String getDni() {
+	@Id @Column(name="DNI",nullable=false)
+	public int getDni() {
 		return dni;
 	}
 	
-	public void setDni(String dni) {
-		this.dni = dni;
+	public void setDni(int i) {
+		this.dni = i;
 	}
 	
 	@Column(name="USUARIO",nullable=false)
