@@ -10,10 +10,9 @@ import javax.persistence.*;
 public class TipoPropiedadDTO implements Serializable{
 
 	private String nombreTipo;
-	private String nombreEdificio;
+	private EdificioDTO edificio;
 	private int id;
-	private int version;
-	
+		
 	@Column(name="NOMBRE_TIPO",nullable=false)
 	public String getNombreTipo() {
 		return nombreTipo;
@@ -22,30 +21,23 @@ public class TipoPropiedadDTO implements Serializable{
 		this.nombreTipo = nombreTipo;
 	}
 	
-	//Mapeo con edificioDTO
-	@Column(name="NOMBRE_EDIFICIO",nullable=false)
-	public String getNombreEdificio() {
-		return nombreEdificio;
+	@ManyToOne
+	@JoinColumn(name="ID_EDIFICIO",nullable=false)
+	public EdificioDTO getEdificio() {
+		return edificio;
 	}
-	public void setNombreEdificio(String nombreEdificio) {
-		this.nombreEdificio = nombreEdificio;
+	public void setEdificio(EdificioDTO edificio) {
+		this.edificio = edificio;
 	}
 	
-	@Id @Column(name="ID")
+	@Id 
+	@GeneratedValue
+	@Column(name="ID",unique=true,nullable=false)
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
 	}
-	
-	@Version @Column(name="VERSION")
-	public int getVersion() {
-		return version;
-	}
-	public void setVersion(int version) {
-		this.version = version;
-	}
-	
-	
+		
 }
