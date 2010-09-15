@@ -15,13 +15,10 @@ public class ExpensaDTO implements Serializable{
 	private int id;
 	private int numeroOperacion;
 	private String tipo;
-	private int idPropiedad;
 	private PropiedadDTO propiedad;
 	private double monto;
 	private double intereses;
-	private int version;
 	
-	@Id @Column(name="ID")
 	@Id
 	@GeneratedValue
 	@Column(name="ID",unique=true,nullable=false)
@@ -48,17 +45,11 @@ public class ExpensaDTO implements Serializable{
 		this.tipo = tipo;
 	}
 	
-	//TODO mapear con la PROPIEDAD
-	@Column(name="ID_PROPIEDAD",nullable=false)
-	public int getIdPropiedad() {
-		return idPropiedad;
 	@ManyToOne
 	@JoinColumn(name="ID_PROPIEDAD",nullable=false)
 	public PropiedadDTO getPropiedad() {
 		return propiedad;
 	}
-	public void setIdPropiedad(int idPropiedad) {
-		this.idPropiedad = idPropiedad;
 	public void setIdPropiedad(PropiedadDTO propiedad) {
 		this.propiedad = propiedad;
 	}
@@ -78,15 +69,5 @@ public class ExpensaDTO implements Serializable{
 	public void setIntereses(double intereses) {
 		this.intereses = intereses;
 	}
-	
-	@Version @Column(name="VERSION")
-	public int getVersion() {
-		return version;
-	}
-	public void setVersion(int version) {
-		this.version = version;
-	}
-	
-	
 		
 }
