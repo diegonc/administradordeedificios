@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
+import edificio.EdificioDTO;
+
 @SuppressWarnings("serial")
 @Entity
 @Table(name="TIPO_PROPIEDAD")
