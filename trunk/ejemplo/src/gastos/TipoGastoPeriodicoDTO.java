@@ -7,7 +7,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
-import propiedades.EdificioDTO;
+import edificio.EdificioDTO;
+
 
 @SuppressWarnings("serial")
 @Entity

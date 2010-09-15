@@ -4,7 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
-import propiedades.EdificioDTO;
+import edificio.EdificioDTO;
+
 
 @SuppressWarnings("serial")
 @Entity
