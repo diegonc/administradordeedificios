@@ -25,8 +25,10 @@ public class PropiedadDTO implements Serializable{
 	private Responsable inquilino;
 	private Responsable poderPropietario;
 	private Responsable poderInquilino;
-	private Set<ExpensaDTO> expensas;
 	
+	/*
+	private Set<ExpensaDTO> expensas;
+		
 	@OneToMany(mappedBy="ID_PROPIEDAD")	
 	public Set<ExpensaDTO> getExpensas() {
 		return expensas;
@@ -34,9 +36,11 @@ public class PropiedadDTO implements Serializable{
 	public void setExpensas(Set<ExpensaDTO> expensas) {
 		this.expensas = expensas;
 	}
+	*/
+	
 	@Id 
 	@GeneratedValue
-	@Column(name="CTA_ORD_SALDO_INT",unique=true,nullable=false)
+	@Column(name="ID",unique=true,nullable=false)
 	public int getId() {
 		return id;
 	}
