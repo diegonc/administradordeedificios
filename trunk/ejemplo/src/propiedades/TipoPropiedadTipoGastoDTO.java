@@ -15,9 +15,10 @@ public class TipoPropiedadTipoGastoDTO implements Serializable{
 	private TipoGastoDTO tipoGasto;
 	private double coeficienteDistribucion;
 	private int id;
-	private int version;
 	
-	//@ mapear con tipoPropiedadDTO
+	
+	@ManyToOne
+	@JoinColumn(name="ID_TIPO_PROPIEDAD",nullable=false)
 	public TipoPropiedadDTO getTipoPropiedad() {
 		return tipoPropiedad;
 	}
@@ -25,7 +26,8 @@ public class TipoPropiedadTipoGastoDTO implements Serializable{
 		this.tipoPropiedad = tipoPropiedad;
 	}
 	
-	//mapear con tipoGastoDTO
+	@ManyToOne
+	@JoinColumn(name="ID_TIPO_GASTO",nullable=false)
 	public TipoGastoDTO getTipoGasto() {
 		return tipoGasto;
 	}
@@ -41,7 +43,9 @@ public class TipoPropiedadTipoGastoDTO implements Serializable{
 		this.coeficienteDistribucion = coeficienteDistribucion;
 	}
 	
-	@Id @Column(name="ID")
+	@Id 
+	@GeneratedValue
+	@Column(name="ID",unique=true,nullable=false)
 	public int getId() {
 		return id;
 	}
@@ -49,12 +53,5 @@ public class TipoPropiedadTipoGastoDTO implements Serializable{
 		this.id = id;
 	}
 	
-	@Version @Column(name="VERSION")
-	public int getVersion() {
-		return version;
-	}
-	public void setVersion(int version) {
-		this.version = version;
-	}
 	
 }
