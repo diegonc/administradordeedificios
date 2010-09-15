@@ -51,7 +51,7 @@ public class ExpensaDTO implements Serializable{
 	public PropiedadDTO getPropiedad() {
 		return propiedad;
 	}
-	public void setIdPropiedad(PropiedadDTO propiedad) {
+	public void setPropiedad(PropiedadDTO propiedad) {
 		this.propiedad = propiedad;
 	}
 	
