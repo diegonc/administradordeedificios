@@ -37,6 +37,7 @@ public class ExpensaDTO implements Serializable{
 		this.numeroOperacion = numeroOperacion;
 	}
 	
+	
 	@Column(name="ORD_EXT",nullable=false)
 	public String getTipo() {
 		return tipo;
