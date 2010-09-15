@@ -1,28 +1,20 @@
 package expensas;
 
-import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
 
 @SuppressWarnings("serial")
 @Entity
 @Table(name="EXPENSA_COBRO")
-public class ExpensaCobroDTO implements Serializable{
+@PrimaryKeyJoinColumn(name="EXPENSA_ID")
+public class ExpensaCobroDTO extends ExpensaDTO{
 
-	private int id;
 	private Date fecha;
 	private String comprobante;
-	private ExpensaDTO expensa;
-	private int version;
-	
-	@Id @Column(name="ID")
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
 	
 	@Column(name="FECHA",nullable=false)
 	public Date getFecha() {
@@ -39,22 +31,5 @@ public class ExpensaCobroDTO implements Serializable{
 	public void setComprobante(String comprobante) {
 		this.comprobante = comprobante;
 	}
-	
-	//TODO mapear con ExpensaDTO
-	public ExpensaDTO getExpensa() {
-		return expensa;
-	}
-	public void setExpensa(ExpensaDTO expensa) {
-		this.expensa = expensa;
-	}
-	
-	@Version @Column(name="VERSION")
-	public int getVersion() {
-		return version;
-	}
-	public void setVersion(int version) {
-		this.version = version;
-	}
-	
-	
+		
 }

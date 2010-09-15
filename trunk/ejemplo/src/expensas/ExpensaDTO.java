@@ -4,20 +4,27 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
+import propiedades.PropiedadDTO;
+
 @SuppressWarnings("serial")
 @Entity
 @Table(name="EXPENSA")
+@Inheritance(strategy=InheritanceType.JOINED)
 public class ExpensaDTO implements Serializable{
 
 	private int id;
 	private int numeroOperacion;
 	private String tipo;
 	private int idPropiedad;
+	private PropiedadDTO propiedad;
 	private double monto;
 	private double intereses;
 	private int version;
 	
 	@Id @Column(name="ID")
+	@Id
+	@GeneratedValue
+	@Column(name="ID",unique=true,nullable=false)
 	public int getId() {
 		return id;
 	}
@@ -45,9 +52,15 @@ public class ExpensaDTO implements Serializable{
 	@Column(name="ID_PROPIEDAD",nullable=false)
 	public int getIdPropiedad() {
 		return idPropiedad;
+	@ManyToOne
+	@JoinColumn(name="ID_PROPIEDAD",nullable=false)
+	public PropiedadDTO getPropiedad() {
+		return propiedad;
 	}
 	public void setIdPropiedad(int idPropiedad) {
 		this.idPropiedad = idPropiedad;
+	public void setIdPropiedad(PropiedadDTO propiedad) {
+		this.propiedad = propiedad;
 	}
 	
 	@Column(name="MONTO",nullable=false)
@@ -75,4 +88,5 @@ public class ExpensaDTO implements Serializable{
 	}
 	
 	
+		
 }
