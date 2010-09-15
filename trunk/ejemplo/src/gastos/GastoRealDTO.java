@@ -1,30 +1,23 @@
 package gastos;
 
-import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
 
 @SuppressWarnings("serial")
 @Entity
 @Table(name="GASTO_REAL")
-public class GastoRealDTO implements Serializable{
+@PrimaryKeyJoinColumn(name="GASTO_ID")
+public class GastoRealDTO extends GastoDTO{
 
-	private int id;
 	private String razonSocial;
 	private Date fechaPago;
 	private int numeroFacturaPago;
 	private String formaPago;
-	private GastoDTO gasto;
-	private int version;
-	
-	@Id @Column(name="ID")
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
+		
 	
 	@Column(name="RAZON_SOCIAL",nullable=false)
 	public String getRazonSocial() {
@@ -58,21 +51,5 @@ public class GastoRealDTO implements Serializable{
 		this.formaPago = formaPago;
 	}
 	
-	//TODO @OneToOne(mappedBy)
-	public GastoDTO getGasto() {
-		return gasto;
-	}
-	public void setGasto(GastoDTO gasto) {
-		this.gasto = gasto;
-	}
-	
-	@Column(name="VERSION")
-	public int getVersion() {
-		return version;
-	}
-	public void setVersion(int version) {
-		this.version = version;
-	}
-	
-	
+		
 }
