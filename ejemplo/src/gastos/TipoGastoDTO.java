@@ -7,14 +7,25 @@ import javax.persistence.*;
 @SuppressWarnings("serial")
 @Entity
 @Table(name="TIPO_GASTO")
+@Inheritance(strategy=InheritanceType.JOINED)
 public class TipoGastoDTO implements Serializable {
 
+	private int id;
 	private String codigo;
 	private String descripcion;
-	private String tipo;
-	private int version;
+		
+	@Id 
+	@GeneratedValue
+	@Column(name="ID",unique=true,nullable=false)
+	public int getId() {
+		return id;
+	}
 	
-	@Id @Column(name="CODIGO")
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	@Column(name="CODIGO",nullable=false)
 	public String getCodigo() {
 		return codigo;
 	}
@@ -29,21 +40,5 @@ public class TipoGastoDTO implements Serializable {
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
-	
-	@Column(name="TIPO",nullable=false)
-	public String getTipo() {
-		return tipo;
-	}
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
-	}
-	
-	@Column(name="VERSION")
-	public int getVersion() {
-		return version;
-	}
-	public void setVersion(int version) {
-		this.version = version;
-	}
-	
+			
 }

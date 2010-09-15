@@ -1,37 +1,23 @@
 package gastos;
 
-import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
 
-import javax.persistence.*;
+import propiedades.EdificioDTO;
 
 @SuppressWarnings("serial")
 @Entity
 @Table(name="TIPO_GASTO_PERIODICO")
-public class TipoGastoPeriodicoDTO implements Serializable {
+@PrimaryKeyJoinColumn(name="TIPO_GASTO_ID")
+public class TipoGastoPeriodicoDTO extends TipoGastoOrdinarioDTO {
 
-	private String codigo;
-	private String tipo;
 	private String periodo;
-	//TODO cambiar por EdificioDTO
-	private String edificio;
-	private int version;
-	private TipoGastoOrdinarioDTO tipoGastoOrdinario;
+	private EdificioDTO edificio;
 	
-	@Id @Column(name="CODIGO")
-	public String getCodigo() {
-		return codigo;
-	}
-	public void setCodigo(String codigo) {
-		this.codigo = codigo;
-	}
-	
-	@Column(name="TIPO",nullable=false)
-	public String getTipo() {
-		return tipo;
-	}
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
-	}
 	
 	@Column(name="PERIODO",nullable=false)
 	public String getPeriodo() {
@@ -41,31 +27,17 @@ public class TipoGastoPeriodicoDTO implements Serializable {
 		this.periodo = periodo;
 	}
 	
-	//TODO MAPEAR CON EDIFICIO
-	@Column(name="NOMBRE_EDIFICIO",nullable=false)
-	public String getEdificio() {
+	@ManyToOne
+	@JoinColumn(name="ID_EDIFICIO",nullable=false)
+	public EdificioDTO getEdificio() {
 		return edificio;
 	}
-	public void setEdificio(String edificio) {
+	
+	public void setEdificio(EdificioDTO edificio) {
 		this.edificio = edificio;
 	}
 	
-	
-	//Mapear con TIPO_GASTO_ORDINARIO
-	public TipoGastoOrdinarioDTO getTipoGastoOrdinario() {
-		return tipoGastoOrdinario;
-	}
-	public void setTipoGastoOrdinario(TipoGastoOrdinarioDTO tipoGastoOrdinario) {
-		this.tipoGastoOrdinario = tipoGastoOrdinario;
-	}
-	@Version @Column(name="VERSION")
-	public int getVersion() {
-		return version;
-	}
-	public void setVersion(int version) {
-		this.version = version;
-	}
-	
-	
+
+
 
 }
