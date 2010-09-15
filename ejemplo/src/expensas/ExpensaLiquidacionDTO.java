@@ -1,6 +1,10 @@
 package expensas;
 
 import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
 
 import javax.persistence.*;
 
@@ -8,6 +12,8 @@ import javax.persistence.*;
 @Entity
 @Table(name="EXPENSA_LIQUIDACION")
 public class ExpensaLiquidacionDTO implements Serializable{
+@PrimaryKeyJoinColumn(name="EXPENSA_ID")
+public class ExpensaLiquidacionDTO extends ExpensaDTO{
 
 	private int id;
 	private double deudaPrevia;
@@ -23,6 +29,8 @@ public class ExpensaLiquidacionDTO implements Serializable{
 		this.id = id;
 	}
 	
+		
+		
 	@Column(name="DEUDA_PREVIA",nullable=true)
 	public double getDeudaPrevia() {
 		return deudaPrevia;
@@ -54,4 +62,5 @@ public class ExpensaLiquidacionDTO implements Serializable{
 		this.version = version;
 	}
 	
+		
 }
