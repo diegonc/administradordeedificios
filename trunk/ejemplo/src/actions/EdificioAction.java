@@ -1,37 +1,36 @@
 package actions;
 
+import org.hibernate.SessionFactory;
+
+import utilidades.HibernateUtil;
+
 import com.opensymphony.xwork2.ActionSupport;
 
+import edificio.EdificioAppl;
+import edificio.EdificioDTO;
+
+
 public class EdificioAction extends ActionSupport {
+	
 	private int id;
 	private String nombre;
 	private String tipoPropiedad;
-	
 	private String calle;
-	private String numero;
+	private int numero;
 	private String localidad;
-	
 	private String encargado_nombre;
 	private String encargado_telefono;
 	private String encargado_depto;
 	private String encargado_piso;
-	
-	
-	private String apto_profesional;
-	
-	private String fdoOdinario;
-	private String fdoextraordinario;
-	
-	
+	private Boolean apto_profesional = false;
+	private Double fdoOdinario = 0.0;
+	private Double fdoextraordinario = 0.0;
 	private String formaliq_exp;
+	private Double tasa_anual = 0.0;
+	private Double amortizacion = 0.0;
+	private int dia_primer_vto;
+	private int dia_segundo_vto;
 	
-	private String tasa_anual;
-	private String amortizacion;
-	
-	
-	
-	private String dia_primer_vto;
-	private String dia_segundo_vto;
 	public int getId() {
 		return id;
 	}
@@ -56,10 +55,10 @@ public class EdificioAction extends ActionSupport {
 	public void setCalle(String calle) {
 		this.calle = calle;
 	}
-	public String getNumero() {
+	public int getNumero() {
 		return numero;
 	}
-	public void setNumero(String numero) {
+	public void setNumero(int numero) {
 		this.numero = numero;
 	}
 	public String getLocalidad() {
@@ -92,22 +91,22 @@ public class EdificioAction extends ActionSupport {
 	public void setEncargado_piso(String encargadoPiso) {
 		encargado_piso = encargadoPiso;
 	}
-	public String getApto_profesional() {
+	public Boolean getApto_profesional() {
 		return apto_profesional;
 	}
-	public void setApto_profesional(String aptoProfesional) {
+	public void setApto_profesional(Boolean aptoProfesional) {
 		apto_profesional = aptoProfesional;
 	}
-	public String getFdoOdinario() {
+	public Double getFdoOdinario() {
 		return fdoOdinario;
 	}
-	public void setFdoOdinario(String fdoOdinario) {
+	public void setFdoOdinario(Double fdoOdinario) {
 		this.fdoOdinario = fdoOdinario;
 	}
-	public String getFdoextraordinario() {
+	public Double getFdoextraordinario() {
 		return fdoextraordinario;
 	}
-	public void setFdoextraordinario(String fdoextraordinario) {
+	public void setFdoextraordinario(Double fdoextraordinario) {
 		this.fdoextraordinario = fdoextraordinario;
 	}
 	public String getFormaliq_exp() {
@@ -116,34 +115,78 @@ public class EdificioAction extends ActionSupport {
 	public void setFormaliq_exp(String formaliqExp) {
 		formaliq_exp = formaliqExp;
 	}
-	public String getTasa_anual() {
+	public Double getTasa_anual() {
 		return tasa_anual;
 	}
-	public void setTasa_anual(String tasaAnual) {
+	public void setTasa_anual(Double tasaAnual) {
 		tasa_anual = tasaAnual;
 	}
-	public String getAmortizacion() {
+	public Double getAmortizacion() {
 		return amortizacion;
 	}
-	public void setAmortizacion(String amortizacion) {
+	public void setAmortizacion(Double amortizacion) {
 		this.amortizacion = amortizacion;
 	}
-	public String getDia_primer_vto() {
+	public int getDia_primer_vto() {
 		return dia_primer_vto;
 	}
-	public void setDia_primer_vto(String diaPrimerVto) {
+	public void setDia_primer_vto(int diaPrimerVto) {
 		dia_primer_vto = diaPrimerVto;
 	}
-	public String getDia_segundo_vto() {
+	public int getDia_segundo_vto() {
 		return dia_segundo_vto;
 	}
-	public void setDia_segundo_vto(String diaSegundoVto) {
+	public void setDia_segundo_vto(int diaSegundoVto) {
 		dia_segundo_vto = diaSegundoVto;
 	}
-	public String excecute(){
-		System.out.println(this.getCalle() +""+ this.getNumero());
-		return SUCCESS;
+	
+	public EdificioDTO cargarEdificioDTO() {
+		EdificioDTO edificioToHidratar = new EdificioDTO();
+		edificioToHidratar.setAmortizacion(amortizacion);
+		//edificioToHidratar.setApto_profesional(apto_profesional);
+		edificioToHidratar.setApto_profesional(true);
+		edificioToHidratar.setCalle(calle);
+		edificioToHidratar.setDia_primer_vto(dia_primer_vto);
+		edificioToHidratar.setDia_segundo_vto(dia_segundo_vto);
+		//edificioToHidratar.setEncargado_depto(encargado_depto);
+		edificioToHidratar.setEncargado_depto("D");
+		//edificioToHidratar.setEncargado_piso(encargado_piso);
+		edificioToHidratar.setEncargado_piso("4");
+		edificioToHidratar.setEncargado_telefono(encargado_telefono);
+		edificioToHidratar.setEncargado_nombre(encargado_nombre);
+		edificioToHidratar.setFondo_extraordinario(0);
+		edificioToHidratar.setFondo_ordinario(0);
+		edificioToHidratar.setForma_liq_exp(formaliq_exp);
+		edificioToHidratar.setLocalidad(localidad);
+		edificioToHidratar.setNombre(nombre);
+		edificioToHidratar.setNumero(numero);
+		edificioToHidratar.setTasa_anual(tasa_anual);
+	
+		return edificioToHidratar;
+	}
 		
+	public String execute() {
+		//EdificioAppl edificioAppl = new EdificioAppl();
+		//SessionFactory factory = HibernateUtil.getSessionFactory();
+		System.out.println("Amor: "+amortizacion);
+		System.out.println("Apto: "+apto_profesional);
+		System.out.println("Calle: "+calle);
+		System.out.println("1vto: "+dia_primer_vto);
+		System.out.println("2vtor: "+dia_segundo_vto);
+		System.out.println("NEnca: "+encargado_nombre);
+		System.out.println("DEnca: "+encargado_depto);
+		System.out.println("PEnca: "+encargado_piso);
+		System.out.println("ETel: "+encargado_telefono);
+		System.out.println("Extra: "+fdoextraordinario);
+		System.out.println("Ordi: "+fdoOdinario);
+		System.out.println("FLiq: "+formaliq_exp);
+		System.out.println("Loca: "+localidad);
+		System.out.println("Nombre: "+nombre);
+		System.out.println("Numero: "+numero);
+		System.out.println("TasaAnul: "+tasa_anual);
+		//edificioAppl.insertEdificio(factory.openSession(), cargarEdificioDTO());
+		//factory.close();
+		return "success";
 	}
 	
 
