@@ -23,9 +23,65 @@
     </package>  
 
 	<package name="experimental" extends="hibernate-default">
+		<interceptors>
+            <!-- An example of the paramsPrepareParams trick. This stack
+                 is exactly the same as the defaultStack, except that it
+                 includes one extra interceptor before the prepare interceptor:
+                 the params interceptor.
+
+                 This is useful for when you wish to apply parameters directly
+                 to an object that you wish to load externally (such as a DAO
+                 or database or service layer), but can't load that object
+                 until at least the ID parameter has been loaded. By loading
+                 the parameters twice, you can retrieve the object in the
+                 prepare() method, allowing the second params interceptor to
+                 apply the values on the object. -->
+            <interceptor-stack name="pppStack">
+               <interceptor-ref name="exception"/>
+                <interceptor-ref name="alias"/>
+                <interceptor-ref name="servletConfig"/>
+                <interceptor-ref name="params">
+                  <param name="excludeParams">dojo\..*,^struts\..*</param>
+                </interceptor-ref>
+                <interceptor-ref name="prepare"/>
+                <interceptor-ref name="i18n"/>
+                <interceptor-ref name="chain"/>
+                <interceptor-ref name="debugging"/>
+                <interceptor-ref name="profiling"/>
+                <interceptor-ref name="scopedModelDriven"/>
+                <interceptor-ref name="modelDriven"/>
+                <interceptor-ref name="fileUpload"/>
+                <interceptor-ref name="checkbox"/>
+                <interceptor-ref name="staticParams"/>
+                <interceptor-ref name="params">
+                  <param name="excludeParams">dojo\..*,^struts\..*</param>
+                </interceptor-ref>
+                <interceptor-ref name="conversionError"/>
+                <interceptor-ref name="workflow">
+                    <param name="excludeMethods">input,back,cancel,browse</param>
+                </interceptor-ref>
+            </interceptor-stack>
+			
+			<interceptor-stack name="pppStackHibernate">
+				<interceptor-ref name="hibernateSessionInterceptor"/>
+				<interceptor-ref name="pppStack"/>
+				<interceptor-ref name="hibernateValidatorInterceptor"/>
+		    </interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="pppStackHibernate"/>
+		
 		<action name="listadoEdificios" method="listar"
 			class="actions.ListadoEdificios">
 			<result name="success">/listados/edificio.jsp</result>
+			<result name="error">/error.jsp</result>
+		</action>
+
+		<action name="listadoResponsables" method="listar"
+			class="actions.ListadoResponsables">
+			<result name="success">/listados/responsable.jsp</result>
+			<result name="edicion">/formularios/responsable.jsp</result>
+			<result name="finalizar" type="redirectAction">listadoResponsables</result>
+			<result name="error">/error.jsp</result>
 		</action>
 	</package>
 	
