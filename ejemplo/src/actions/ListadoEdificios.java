@@ -16,7 +16,6 @@ public class ListadoEdificios extends ActionSupport implements
 	private List<EdificioDTO> listaEdificios = new ArrayList<EdificioDTO>();
 	private EdificioDAO edificioDAO = new EdificioDAO();
 
-	@Override
 	public EdificioDTO getModel() {
 		return edificio;
 	}
