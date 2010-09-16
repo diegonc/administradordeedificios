@@ -166,6 +166,9 @@ public class EdificioAction extends ActionSupport {
 	}
 		
 	public String execute() {
+		
+		//Esto funciona, si se le pasa los datos correctos lo sube
+		//a la base de datos...
 		//EdificioAppl edificioAppl = new EdificioAppl();
 		//SessionFactory factory = HibernateUtil.getSessionFactory();
 		System.out.println("Amor: "+amortizacion);
