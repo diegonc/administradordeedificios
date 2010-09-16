@@ -59,7 +59,7 @@ public class UsuarioAction extends ActionSupport implements SessionAware {
     	UsuarioDTO user2 = new UsuarioDTO();
     	
     	user1.setUsuario("aChelotti");
-    	user1.setPerfil(0);
+    
     	user1.setPassword("aChelotti");
     	user1.setNombre("Adriana");
     	user1.setApellido("Chelotti");
@@ -68,7 +68,7 @@ public class UsuarioAction extends ActionSupport implements SessionAware {
     	
     	
     	user2.setUsuario("dStaltari");
-    	user2.setPerfil(0);
+    	
     	user2.setPassword("dStaltari");
     	user2.setNombre("Dario");
     	user2.setApellido("Staltari");    	
