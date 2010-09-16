@@ -1,20 +1,13 @@
 package usuarios.appl;
-import java.util.List;
-import org.hibernate.*;
-import org.hibernate.cfg.AnnotationConfiguration;
-import org.hibernate.criterion.Expression;
+import org.hibernate.Session;
 
-
+import usuarios.dto.PerfilDTO;
 import usuarios.dto.UsuarioDTO;
-import utilidades.UtilidadesConexion;
+import utilidades.HibernateUtil;
 
 public class UsuarioAppl {
 	
-	/**
-	 * 
-	 * @param session
-	 * @param usuario
-	 */
+	/*
 	  public int insertObject( Session session, UsuarioDTO usuario )
 	  {
 	    boolean commit = false;
@@ -37,9 +30,7 @@ public class UsuarioAppl {
 	  }
 
 
-	/**
-	 * Obtener un SessionFactory de un archivo de configuración local.
-	 */
+	
 	public SessionFactory createSessionFactory() {
 		AnnotationConfiguration configuration = new AnnotationConfiguration();
 		configuration.configure("/hibernate.cfg.xml");
@@ -47,10 +38,6 @@ public class UsuarioAppl {
 	}
 
 	
-
-	/**
-	 * Perform SELECT statements using Hibernate's load() method
-	 */
 	public UsuarioDTO getObject(SessionFactory factory, String dni) {
 		Session session = factory.openSession();
 		try {
@@ -60,9 +47,6 @@ public class UsuarioAppl {
 		}
 	}
 
-	/**
-	 * Perform SELECT statements using Hibernate's Criteria API
-	 */
 	public UsuarioDTO queryObject(SessionFactory factory, String dni) {
 		Session session = factory.openSession();
 		try {
@@ -75,11 +59,6 @@ public class UsuarioAppl {
 		}
 	}
 
-	
-
-	/**
-	 * Perform UPDATE statements using Hibernate's update() method
-	 */
 	public void updateObject(SessionFactory factory, UsuarioDTO edificio) {
 		Session session = factory.openSession();
 		try {
@@ -104,9 +83,7 @@ public class UsuarioAppl {
 		}
 	}
 
-	/**
-	 * Perform DELETE statements using Hibernate's Query API
-	 */
+
 	public void deleteObject(SessionFactory factory, int dni) {
 		Session session = factory.openSession();
 		try {
@@ -135,19 +112,97 @@ public class UsuarioAppl {
 			}
 		}
 	}
+*/
+	public void addUsuario(UsuarioDTO usuario)
+	{
+		Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        session.save(usuario);
+        session.getTransaction().commit();
+        HibernateUtil.getSessionFactory().close();
+	}
+	
+	public void removeUsuario(int idUsuario)
+	{
+		Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        UsuarioDTO usuario = (UsuarioDTO) session.load(UsuarioDTO.class, idUsuario);
+        session.delete(usuario);
+        session.getTransaction().commit();
+        HibernateUtil.getSessionFactory().close();
+	}
+	
+	public void addPerfil(PerfilDTO perfil)
+	{
+		Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        session.save(perfil);
+        session.getTransaction().commit();
+        HibernateUtil.getSessionFactory().close();
+	}
+	
+	public void removePerfil(int idPerfil)
+	{
+		Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        PerfilDTO perfil = (PerfilDTO) session.load(PerfilDTO.class, idPerfil);
+        session.delete(perfil);
+        session.getTransaction().commit();
+        HibernateUtil.getSessionFactory().close();
+	}
+	
+	public void updatePerfil(int idPerfil,PerfilDTO perfilNuevo)
+	{
+		Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        PerfilDTO perfil = (PerfilDTO) session.load(PerfilDTO.class, idPerfil);
+        perfil.setDescripcion(perfilNuevo.getDescripcion());
+        session.update(perfil);
+        session.getTransaction().commit();
+        HibernateUtil.getSessionFactory().close();
+		
+	}
+	
+	public PerfilDTO getPerfil(int idPerfil)
+	{
+		Session session = HibernateUtil.getSessionFactory().openSession();
+        PerfilDTO perfil = (PerfilDTO) session.load(PerfilDTO.class, idPerfil);
+        HibernateUtil.getSessionFactory().close();
+        return perfil;
+		
+	}
+	
 	public static void main(String[] args) {
-		UsuarioDTO usuarioTest = new UsuarioDTO();
-		usuarioTest= new UsuarioDTO();
-		usuarioTest.setDni(31026053);
-		usuarioTest.setApellido("Chelotti");
-		usuarioTest.setNombre("Adriana");
-		usuarioTest.setPassword("adriana");
-		usuarioTest.setPerfil(1);
-		usuarioTest.setUsuario("user");
-		UsuarioAppl usuarioServ = new UsuarioAppl();
-		SessionFactory factory = usuarioServ.createSessionFactory();
-		int dniPrueba=usuarioServ.insertObject(factory.openSession(), usuarioTest);
-				
+		
+		UsuarioAppl usuarioAppl = new UsuarioAppl();
+		
+		/*
+		PerfilDTO perfil = new PerfilDTO();
+		perfil.setDescripcion("Administrador");
+		usuarioAppl.addPerfil(perfil);
+		*/
+		
+		//usuarioAppl.removePerfil(1);
+		
+		//usuarioAppl.updatePerfil(2, perfil);
+		
+		/*
+		PerfilDTO perfil = usuarioAppl.getPerfil(2);
+		System.out.println(perfil.toString());
+		
+		UsuarioDTO usuario = new UsuarioDTO();
+		usuario.setPerfil(perfil);
+		usuario.setDni(31026053);
+		usuario.setApellido("Chelotti");
+		usuario.setNombre("Adriana");
+		usuario.setPassword("adriana");
+		usuario.setUsuario("user");
+		
+		usuarioAppl.addUsuario(usuario);
+		*/
+		
+		
+		usuarioAppl.removeUsuario(1);
 		
 		
 		

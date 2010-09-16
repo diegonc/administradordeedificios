@@ -5,7 +5,10 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 
@@ -24,8 +27,21 @@ public class UsuarioDTO  implements Serializable{
 	
 	private String usuario;
 	
-	private int perfil;
+	private PerfilDTO perfil;
 	
+	private int id;
+	
+	@Id
+	@GeneratedValue
+	@Column(name="ID",unique=true,nullable=false)
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	@Column(name="NOMBRE",nullable=false)
 	public String getNombre() {
 		return nombre;
@@ -50,7 +66,8 @@ public class UsuarioDTO  implements Serializable{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	@Id @Column(name="DNI",nullable=false)
+	
+	@Column(name="DNI",nullable=false)
 	public int getDni() {
 		return dni;
 	}
@@ -67,12 +84,14 @@ public class UsuarioDTO  implements Serializable{
 	public void setUsuario(String usuario) {
 		this.usuario = usuario;
 	}
-	@Column(name="USUARIO_PERFIL",nullable=false)
-	public int getPerfil() {
+	
+	@ManyToOne
+	@JoinColumn(name="ID_PERFIL",nullable=false)
+	public PerfilDTO getPerfil() {
 		return perfil;
 	}
 	
-	public void setPerfil(int perfil) {
+	public void setPerfil(PerfilDTO perfil) {
 		this.perfil = perfil;
 	}
 

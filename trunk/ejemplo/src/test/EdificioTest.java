@@ -8,7 +8,7 @@ import org.hibernate.SessionFactory;
 
 import edificio.EdificioAppl;
 import edificio.EdificioDTO;
-import utilidades.UtilidadesConexion;
+import utilidades.HibernateUtil;
 
 public class EdificioTest extends TestCase {
 	private EdificioDTO edificio;
@@ -45,7 +45,7 @@ public class EdificioTest extends TestCase {
 	}
 
 	public void testInsertGetAndDeleteEdificio() {
-		SessionFactory factory = UtilidadesConexion.createSessionFactory();
+		SessionFactory factory = HibernateUtil.getSessionFactory();
 		int id = ediTransacBD.insertObject(factory.openSession(), this.edificio);
 		EdificioDTO edifCompara = ediTransacBD.getObject(factory, id);		
 		assertEquals(this.edificio.getNombre(), edifCompara.getNombre());
@@ -54,7 +54,7 @@ public class EdificioTest extends TestCase {
 	} 
 	
 	public void testInsertEdificioWithTheSameName() {
-		SessionFactory factory = UtilidadesConexion.createSessionFactory();
+		SessionFactory factory = HibernateUtil.getSessionFactory();
 		boolean notInsert = false;
 		int id = ediTransacBD.insertObject(factory.openSession(), this.edificio);
 		try {
@@ -70,7 +70,7 @@ public class EdificioTest extends TestCase {
 	}
 	
 	public void testGetAndUpdateCalleEdif() {
-		SessionFactory factory = UtilidadesConexion.createSessionFactory();
+		SessionFactory factory = HibernateUtil.getSessionFactory();
 		int id = ediTransacBD.insertObject(factory.openSession(), this.edificio);
 		EdificioDTO edifAModif = ediTransacBD.getObject(factory, id);
 		edifAModif.setCalle("Nueva");
@@ -82,8 +82,8 @@ public class EdificioTest extends TestCase {
 	}
 	
 	public void testExecuteQuery() {
-		SessionFactory factory = UtilidadesConexion.createSessionFactory();
-		
+		SessionFactory factory = HibernateUtil.getSessionFactory();
+				
 		//abro la sesion y cree el query con el sete de los atributos a buscar
 		Session session = factory.openSession();	
 		String calle = "Medrano";
