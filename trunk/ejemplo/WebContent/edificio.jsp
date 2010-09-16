@@ -1,4 +1,26 @@
 <jsp:include page="/WEB-INF/jspf/header.jspf"></jsp:include>
+<script type="text/javascript">
+
+function validar(thisform) {
+	validado=true;
+	var nombre = document.getElementById("nombre");
+	var calle = document.getElementById("calle");
+	if(nombre.value=="") { 
+		alert("Debe completar el nombre"); 
+		validado=false;
+	} 
+	if(calle.value=="" && validado == true) { 
+		alert("Debe completar la calle"); 
+		validado=false;
+	}
+	if (validado==true) {
+		document.altaEdificio.submit();
+	} else {
+
+	}
+	return validado;
+}
+</script>
 <table  cellpadding="0" cellspacing="0" >
 <tr>
 	<td width="5"  class="borde"></td>
@@ -11,7 +33,7 @@
 <td width="5"  class="borde"></td>
 	<td width="15"  class="fondo"></td>
 	<td width="770" class="fondo" align="left">
-		<form class="elegante" id="gastoEdificio" action="EdificioAction">
+		<form class="elegante" name="altaEdificio" id="altaEdificio" action="EdificioAction">
 			<fieldset>
 		  		<legend>Alta en el servicio</legend>
 			 		<table  border="0" cellpadding="0" cellspacing="0" border="2">
@@ -77,7 +99,7 @@
 				 			
 			 			</tr>
 				  		<tr>
-			  			<td colspan="8"><input class="btn" type="submit" value="Add"  /></td>
+			  			<td colspan="8"><input class="btn" type="button" value="Add" onclick="validar()" /></td>
 			  			</tr>
 			  		</table>			  	
 			</fieldset>
