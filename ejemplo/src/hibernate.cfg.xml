@@ -47,6 +47,10 @@
     <mapping class="propiedades.TipoPropiedadDTO"/>
     <mapping class="propiedades.TipoPropiedadTipoGastoDTO"/>
     
+     <!-- package usuarios -->
+    <mapping class="usuarios.dto.PerfilDTO"/>
+    <mapping class="usuarios.dto.UsuarioDTO"/>
+    
         
     
   </session-factory>
