@@ -39,7 +39,7 @@ public class ListadoResponsables extends ActionSupport implements Preparable {
 		this.dni = dni;
 	}
 	
-	@Override
+	
 	public void prepare() throws Exception {
 		/* paramsPrepareParamsStack
 		 *    Se carga el objeto en la sesión, para que la segunda vez
