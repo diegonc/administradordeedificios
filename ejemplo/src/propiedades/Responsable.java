@@ -5,7 +5,7 @@ import javax.persistence.Id;
 import javax.persistence.Version;
 
 @Entity
-class Responsable {
+public class Responsable {
 
 	private Integer dni;
 	private String telefono;
@@ -17,7 +17,7 @@ class Responsable {
 	private Integer version;
 	
 	@SuppressWarnings("unused")
-	private Responsable() {
+	public Responsable() {
 		this(null,null,null);
 	}
 
@@ -38,15 +38,15 @@ class Responsable {
 	@Id
 	public Integer getDni() { return dni; }
 	@SuppressWarnings("unused")
-	private void setDni(Integer dni) { this.dni = dni; }
+	public void setDni(Integer dni) { this.dni = dni; }
 
 	public String getTelefono() { return telefono; }
 	@SuppressWarnings("unused")
-	private void setTelefono(String telefono) { this.telefono = telefono; }
+	public void setTelefono(String telefono) { this.telefono = telefono; }
 
 	public String getEmail() { return email; }
 	@SuppressWarnings("unused")
-	private void setEmail(String email) { this.email = email; }
+	public void setEmail(String email) { this.email = email; }
 	
 	@SuppressWarnings("unused")
 	@Version
