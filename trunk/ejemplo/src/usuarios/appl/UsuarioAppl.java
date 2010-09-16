@@ -1,4 +1,9 @@
 package usuarios.appl;
+import java.util.ArrayList;
+import java.util.List;
+
+
+import org.hibernate.Query;
 import org.hibernate.Session;
 
 import usuarios.dto.PerfilDTO;
@@ -163,6 +168,15 @@ public class UsuarioAppl {
 		
 	}
 	
+	public List<PerfilDTO> getPerfiles()
+	{
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Query q = session.createQuery("select p from PerfilDTO p order by p.descripcion ");
+		HibernateUtil.getSessionFactory().close();
+		return q.list();
+	}
+	
+	
 	public PerfilDTO getPerfil(int idPerfil)
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
@@ -176,33 +190,39 @@ public class UsuarioAppl {
 		
 		UsuarioAppl usuarioAppl = new UsuarioAppl();
 		
-		/*
-		PerfilDTO perfil = new PerfilDTO();
-		perfil.setDescripcion("Administrador");
-		usuarioAppl.addPerfil(perfil);
-		*/
+		//PerfilDTO perfil = new PerfilDTO();
+		//perfil.setDescripcion("Responsable de Gastos");
+		//usuarioAppl.addPerfil(perfil);
 		
-		//usuarioAppl.removePerfil(1);
 		
-		//usuarioAppl.updatePerfil(2, perfil);
+		//usuarioAppl.removePerfil(5);
 		
-		/*
-		PerfilDTO perfil = usuarioAppl.getPerfil(2);
+		//usuarioAppl.updatePerfil(5, perfil);
+		
+		
+		/*PerfilDTO perfil = usuarioAppl.getPerfil(3);
 		System.out.println(perfil.toString());
 		
 		UsuarioDTO usuario = new UsuarioDTO();
 		usuario.setPerfil(perfil);
-		usuario.setDni(31026053);
-		usuario.setApellido("Chelotti");
-		usuario.setNombre("Adriana");
-		usuario.setPassword("adriana");
-		usuario.setUsuario("user");
+		usuario.setDni(30761872);
+		usuario.setApellido("Perez Staltari");
+		usuario.setNombre("Dario");
+		usuario.setPassword("dario");
+		usuario.setUsuario("user2");
 		
-		usuarioAppl.addUsuario(usuario);
-		*/
+		usuarioAppl.addUsuario(usuario);*/
+		
+		List<PerfilDTO> perfiles = usuarioAppl.getPerfiles();
+		
+		for(PerfilDTO p: perfiles)
+		{
+			System.out.println(p.toString());
+		}
 		
 		
-		usuarioAppl.removeUsuario(1);
+		
+		//usuarioAppl.removeUsuario(1);
 		
 		
 		
