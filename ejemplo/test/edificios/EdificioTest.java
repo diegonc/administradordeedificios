@@ -1,4 +1,4 @@
-package test;
+package edificios;
 
 import junit.framework.TestCase;
 
@@ -46,38 +46,38 @@ public class EdificioTest extends TestCase {
 
 	public void testInsertGetAndDeleteEdificio() {
 		SessionFactory factory = HibernateUtil.getSessionFactory();
-		int id = ediTransacBD.insertObject(factory.openSession(), this.edificio);
-		EdificioDTO edifCompara = ediTransacBD.getObject(factory, id);		
+		int id = ediTransacBD.insertEdificio(factory.openSession(), this.edificio);
+		EdificioDTO edifCompara = ediTransacBD.getEdificio(factory, id);		
 		assertEquals(this.edificio.getNombre(), edifCompara.getNombre());
-		ediTransacBD.deleteObject(factory, id);
+		ediTransacBD.deleteEdificio(factory, id);
 		factory.close();
 	} 
 	
 	public void testInsertEdificioWithTheSameName() {
 		SessionFactory factory = HibernateUtil.getSessionFactory();
 		boolean notInsert = false;
-		int id = ediTransacBD.insertObject(factory.openSession(), this.edificio);
+		int id = ediTransacBD.insertEdificio(factory.openSession(), this.edificio);
 		try {
-			ediTransacBD.insertObject(factory.openSession(), this.edificio);
+			ediTransacBD.insertEdificio(factory.openSession(), this.edificio);
 		} catch (Exception e) {
 			if (e.getMessage().contains("could not insert")) {
 				notInsert = true;
 			}
 		}
 		assertTrue(notInsert);
-		ediTransacBD.deleteObject(factory, id);
+		ediTransacBD.deleteEdificio(factory, id);
 		factory.close();
 	}
 	
 	public void testGetAndUpdateCalleEdif() {
 		SessionFactory factory = HibernateUtil.getSessionFactory();
-		int id = ediTransacBD.insertObject(factory.openSession(), this.edificio);
-		EdificioDTO edifAModif = ediTransacBD.getObject(factory, id);
+		int id = ediTransacBD.insertEdificio(factory.openSession(), this.edificio);
+		EdificioDTO edifAModif = ediTransacBD.getEdificio(factory, id);
 		edifAModif.setCalle("Nueva");
-		ediTransacBD.updateObject(factory, edifAModif);
-		EdificioDTO edifAModifSegudno =  ediTransacBD.getObject(factory, id);
+		ediTransacBD.updateEdificio(factory, edifAModif);
+		EdificioDTO edifAModifSegudno =  ediTransacBD.getEdificio(factory, id);
 		assertEquals(edifAModifSegudno.getCalle(), "Nueva");
-		ediTransacBD.deleteObject(factory, id);
+		ediTransacBD.deleteEdificio(factory, id);
 		factory.close();
 	}
 	
@@ -91,13 +91,13 @@ public class EdificioTest extends TestCase {
 		query.setString("calle", calle);
 		
 		
-		int id = ediTransacBD.insertObject(factory.openSession(), this.edificio);
+		int id = ediTransacBD.insertEdificio(factory.openSession(), this.edificio);
 		this.edificio.setNombre("Edificio del Sol II");
-		int id2 = ediTransacBD.insertObject(factory.openSession(), this.edificio);
+		int id2 = ediTransacBD.insertEdificio(factory.openSession(), this.edificio);
 		//ArrayList<EdificioDTO> result = (ArrayList<EdificioDTO>) ediTransacBD.executeQuery(factory ,query);
 		//assertEquals(result.size(), 2);
-		ediTransacBD.deleteObject(factory, id);
-		ediTransacBD.deleteObject(factory, id2);
+		ediTransacBD.deleteEdificio(factory, id);
+		ediTransacBD.deleteEdificio(factory, id2);
 		factory.close();
 		
 	}

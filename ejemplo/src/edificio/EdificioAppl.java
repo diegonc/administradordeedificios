@@ -27,7 +27,7 @@ public final class EdificioAppl {
 		return configuration.buildSessionFactory();
 	}
 
-	public int insertObject(Session session, EdificioDTO edificio) {
+	public int insertEdificio(Session session, EdificioDTO edificio) {
 		boolean commit = false;
 		Transaction transaction = session.beginTransaction();
 		try {
@@ -46,7 +46,7 @@ public final class EdificioAppl {
 	/**
 	 * Perform SELECT statements using Hibernate's load() method
 	 */
-	public EdificioDTO getObject(SessionFactory factory, int id) {
+	public EdificioDTO getEdificio(SessionFactory factory, int id) {
 		Session session = factory.openSession();
 		try {
 			return (EdificioDTO) session.load(EdificioDTO.class, id);
@@ -89,16 +89,16 @@ public final class EdificioAppl {
 	/**
 	 * Perform UPDATE statements using Hibernate's update() method
 	 */
-	public void updateObject(SessionFactory factory, EdificioDTO edificio) {
+	public void updateEdificio(SessionFactory factory, EdificioDTO edificio) {
 		Session session = factory.openSession();
 		try {
-			updateObject(session, edificio);
+			updateEdifcio(session, edificio);
 		} finally {
 			session.close();
 		}
 	}
 
-	public void updateObject(Session session, EdificioDTO edificio) {
+	public void updateEdifcio(Session session, EdificioDTO edificio) {
 		boolean commit = false;
 		Transaction transaction = session.beginTransaction();
 		try {
@@ -116,16 +116,16 @@ public final class EdificioAppl {
 	/**
 	 * Perform DELETE statements using Hibernate's Query API
 	 */
-	public void deleteObject(SessionFactory factory, int id) {
+	public void deleteEdificio(SessionFactory factory, int id) {
 		Session session = factory.openSession();
 		try {
-			deleteObject(session, id);
+			deleteEdificioWithPk(session, id);
 		} finally {
 			session.close();
 		}
 	}
 
-	public void deleteObject(Session session, Integer pk) {
+	public void deleteEdificioWithPk(Session session, Integer pk) {
 		boolean commit = false;
 		Transaction transaction = session.beginTransaction();
 

@@ -40,8 +40,10 @@
 				 			<td>&nbsp;&nbsp;<input type="text" id="encargado_nombre" name="encargado_nombre" size="15"/></td>
 				 			<td align="right" ><label for="encargado_telefono">Tel:</label> </td>
 				 			<td>&nbsp;&nbsp;<input type="text" id="encargado_telefono" name="encargado_telefono" size="9"/></td>
-				 			<td align="right" ><label for="encargado_piso">Piso:</label> &nbsp;&nbsp;<select id="encargado_piso" name="encargado_piso" ></select></td>
-				 			<td align="right" colspan="3"><label for="encargado_depto">Depto:</label> &nbsp;&nbsp;<select id="encargado_depto" name="encargado_depto" ></select></td>
+				 			<td align="right" ><label for="encargado_piso">Piso:</label> &nbsp;&nbsp;
+				 			<select id="encargado_piso" name="encargado_piso" > <option>1ero</option><option>2do</option></select></td>
+				 			<td align="right" ><label for="encargado_depto">Depto:</label> &nbsp;&nbsp;
+				 			<select id="encargado_depto" name="encargado_depto" > <option>1ero</option><option>2do</option></select></td>
 			 			</tr>			
 			 			<tr><td colspan="8" height="10"></td></tr>	  		
 			 			<tr>

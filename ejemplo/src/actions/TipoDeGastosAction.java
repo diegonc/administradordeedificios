@@ -26,7 +26,7 @@ public class TipoDeGastosAction extends ActionSupport {
 
 	
 	public String execute() {
-		System.out.println("codigo:"+this.getCodigo());
+		System.out.println("codigo seguro: "+this.getCodigo());
 		return "success";
 	}
 	

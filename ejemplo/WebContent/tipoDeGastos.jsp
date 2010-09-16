@@ -62,7 +62,7 @@ function habilitarInputsPlazo(){
 				 			<td width="120" align="right"><label for="codigo">Codigo:</label> </td>
 				 			<td colspan="4" >&nbsp;&nbsp;<input type="text" id="codigo" name="codigo" /><font color="red">*&nbsp;&nbsp;</font></td>
 				 		</tr>
-				 		<tr>	
+				 		<tr>
 				 			<td align="right"><label for="descripcion">Descripci&oacute;n:</label> </td>
 				 			<td colspan="4">&nbsp;&nbsp;<input type="text" id="descripcion" name="descripcion" /><font color="red">*&nbsp;&nbsp;</font></td>
 			 			</tr>
