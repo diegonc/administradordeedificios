@@ -39,17 +39,17 @@
 				<td><s:property value="ubicacion" /></td>
 				<td><s:property value="autoridad" /></td>
 				<td>
-					<s:url id="url" action="listadoResponsables!editar">
-						<s:param name="dni" value="dni"/>
+					<s:url id="url" action="responsablesFormulario!editar">
+						<s:param name="dni" value="dni" />
 					</s:url>
-					<a href="<s:property value='#url'/>">Editar</a>
+					<a href="<s:property value='#url' />">Editar</a>
 				</td>
 			</tr>
 		</s:iterator>
 		</table>
 	</s:if>
-	<s:url id="url" action="listadoResponsables!crear"/>
-	<a href="<s:property value='#url'/>">Agregar Responsable</a>
+	<s:url id="url" action="responsablesFormulario!crear" />
+	<a href="<s:property value='#url' />">Agregar Responsable</a>
 	</div>
 </div>
 <jsp:include page="/WEB-INF/jspf/footer.jspf" />

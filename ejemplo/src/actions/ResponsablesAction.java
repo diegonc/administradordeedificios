@@ -8,7 +8,7 @@ import propiedades.ResponsableDAO;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.Preparable;
 
-public class ListadoResponsables extends ActionSupport implements Preparable {
+public class ResponsablesAction extends ActionSupport implements Preparable {
 
 	private Responsable entidad;
 	private List<Responsable> lista;
@@ -66,7 +66,7 @@ public class ListadoResponsables extends ActionSupport implements Preparable {
 	
 	public String grabar() {
 		dao.grabar(entidad);
-		return "finalizar";
+		return SUCCESS;
 	}
 	
 	public String borrar() {

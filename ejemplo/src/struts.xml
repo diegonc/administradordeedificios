@@ -68,7 +68,6 @@
 				<interceptor-ref name="hibernateValidatorInterceptor"/>
 		    </interceptor-stack>
 		</interceptors>
-		<default-interceptor-ref name="pppStackHibernate"/>
 		
 		<action name="listadoEdificios" method="listar"
 			class="actions.ListadoEdificios">
@@ -76,12 +75,16 @@
 			<result name="error">/error.jsp</result>
 		</action>
 
-		<action name="listadoResponsables" method="listar"
-			class="actions.ListadoResponsables">
-			<result name="success">/listados/responsable.jsp</result>
-			<result name="edicion">/formularios/responsable.jsp</result>
-			<result name="finalizar" type="redirectAction">listadoResponsables</result>
+		<action name="responsablesListado" method="listar"
+			class="actions.ResponsablesAction">
+			<result name="success">/responsablesListado.jsp</result>
+		</action>
+
+		<action name="responsablesFormulario" class="actions.ResponsablesAction">
+			<result name="success" type="redirectAction">responsablesListado</result>
+			<result name="edicion">/responsablesFormulario.jsp</result>
 			<result name="error">/error.jsp</result>
+			<interceptor-ref name="pppStackHibernate" />
 		</action>
 	</package>
 	
