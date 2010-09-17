@@ -1,7 +1,5 @@
 package usuarios.appl;
-import java.util.ArrayList;
 import java.util.List;
-
 
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -168,6 +166,15 @@ public class UsuarioAppl {
 		
 	}
 	
+	public PerfilDTO getPerfil(int idPerfil)
+	{
+		Session session = HibernateUtil.getSessionFactory().openSession();
+        PerfilDTO perfil = (PerfilDTO) session.load(PerfilDTO.class, idPerfil);
+        HibernateUtil.getSessionFactory().close();
+        return perfil;
+	}
+		
+	@SuppressWarnings("unchecked")
 	public List<PerfilDTO> getPerfiles()
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
@@ -177,14 +184,7 @@ public class UsuarioAppl {
 	}
 	
 	
-	public PerfilDTO getPerfil(int idPerfil)
-	{
-		Session session = HibernateUtil.getSessionFactory().openSession();
-        PerfilDTO perfil = (PerfilDTO) session.load(PerfilDTO.class, idPerfil);
-        HibernateUtil.getSessionFactory().close();
-        return perfil;
-		
-	}
+	
 	
 	public static void main(String[] args) {
 		

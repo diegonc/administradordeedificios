@@ -1,6 +1,6 @@
 package propiedades;
 
-import gastos.TipoGastoDTO;
+import gastos.dto.TipoGastoDTO;
 
 import java.io.Serializable;
 
