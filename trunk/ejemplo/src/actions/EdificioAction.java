@@ -12,6 +12,7 @@ import edificio.EdificioDTO;
 
 public class EdificioAction extends ActionSupport {
 	
+	
 	private int id;
 	private String nombre;
 	private String tipoPropiedad;
@@ -22,12 +23,12 @@ public class EdificioAction extends ActionSupport {
 	private String encargado_telefono;
 	private String encargado_depto;
 	private String encargado_piso;
-	private Boolean apto_profesional = false;
+	private Boolean apto_profesional;
 	private Double fdoOdinario = 0.0;
 	private Double fdoextraordinario = 0.0;
 	private String formaliq_exp;
-	private Double tasa_anual = 0.0;
-	private Double amortizacion = 0.0;
+	private Double tasa_anual;
+	private Double amortizacion;
 	private int dia_primer_vto;
 	private int dia_segundo_vto;
 	
@@ -143,19 +144,18 @@ public class EdificioAction extends ActionSupport {
 	public EdificioDTO cargarEdificioDTO() {
 		EdificioDTO edificioToHidratar = new EdificioDTO();
 		edificioToHidratar.setAmortizacion(amortizacion);
-		//edificioToHidratar.setApto_profesional(apto_profesional);
-		edificioToHidratar.setApto_profesional(true);
+		if (apto_profesional == null) {
+			edificioToHidratar.setApto_profesional(false);
+		} else {
+			edificioToHidratar.setApto_profesional(true);
+		}
 		edificioToHidratar.setCalle(calle);
 		edificioToHidratar.setDia_primer_vto(dia_primer_vto);
 		edificioToHidratar.setDia_segundo_vto(dia_segundo_vto);
-		//edificioToHidratar.setEncargado_depto(encargado_depto);
-		edificioToHidratar.setEncargado_depto("D");
-		//edificioToHidratar.setEncargado_piso(encargado_piso);
-		edificioToHidratar.setEncargado_piso("4");
+		edificioToHidratar.setEncargado_depto(encargado_depto);
+		edificioToHidratar.setEncargado_piso(encargado_piso);
 		edificioToHidratar.setEncargado_telefono(encargado_telefono);
 		edificioToHidratar.setEncargado_nombre(encargado_nombre);
-		edificioToHidratar.setFondo_extraordinario(0);
-		edificioToHidratar.setFondo_ordinario(0);
 		edificioToHidratar.setForma_liq_exp(formaliq_exp);
 		edificioToHidratar.setLocalidad(localidad);
 		edificioToHidratar.setNombre(nombre);
@@ -169,8 +169,8 @@ public class EdificioAction extends ActionSupport {
 		
 		//Esto funciona, si se le pasa los datos correctos lo sube
 		//a la base de datos...
-		//EdificioAppl edificioAppl = new EdificioAppl();
-		//SessionFactory factory = HibernateUtil.getSessionFactory();
+		EdificioAppl edificioAppl = new EdificioAppl();
+		SessionFactory factory = HibernateUtil.getSessionFactory();
 		System.out.println("Amor: "+amortizacion);
 		System.out.println("Apto: "+apto_profesional);
 		System.out.println("Calle: "+calle);
@@ -187,10 +187,8 @@ public class EdificioAction extends ActionSupport {
 		System.out.println("Nombre: "+nombre);
 		System.out.println("Numero: "+numero);
 		System.out.println("TasaAnul: "+tasa_anual);
-		//edificioAppl.insertEdificio(factory.openSession(), cargarEdificioDTO());
-		//factory.close();
+		edificioAppl.insertEdificio(factory.openSession(), cargarEdificioDTO());
+		factory.close();
 		return "success";
 	}
-	
-
 }
