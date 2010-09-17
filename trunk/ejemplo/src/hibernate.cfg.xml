@@ -29,16 +29,16 @@
     <mapping class="expensas.ExpensaLiquidacionDTO"/>
     
     <!-- package gastos -->
-    <mapping class="gastos.GastoDTO"/>
-    <mapping class="gastos.GastoPrevisionDTO"/>
-    <mapping class="gastos.GastoRealDTO"/>
-    <mapping class="gastos.TipoGastoDTO"/>
-    <mapping class="gastos.TipoGastoEventualDTO"/>
-    <mapping class="gastos.TipoGastoExtraordinarioDTO"/>
-    <mapping class="gastos.TipoGastoMontoFijoDTO"/>
-    <mapping class="gastos.TipoGastoMontoVariableDTO"/>
-    <mapping class="gastos.TipoGastoOrdinarioDTO"/>
-    <mapping class="gastos.TipoGastoPeriodicoDTO"/>
+    <mapping class="gastos.dto.GastoDTO"/>
+    <mapping class="gastos.dto.GastoPrevisionDTO"/>
+    <mapping class="gastos.dto.GastoRealDTO"/>
+    <mapping class="gastos.dto.TipoGastoDTO"/>
+    <mapping class="gastos.dto.TipoGastoEventualDTO"/>
+    <mapping class="gastos.dto.TipoGastoExtraordinarioDTO"/>
+    <mapping class="gastos.dto.TipoGastoMontoFijoDTO"/>
+    <mapping class="gastos.dto.TipoGastoMontoVariableDTO"/>
+    <mapping class="gastos.dto.TipoGastoOrdinarioDTO"/>
+    <mapping class="gastos.dto.TipoGastoPeriodicoDTO"/>
     
     
     <!-- package propiedades -->
