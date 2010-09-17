@@ -30,9 +30,7 @@ public class EdificioDTO implements Serializable{
 	private String encargado_piso;
 	private int dia_primer_vto;
 	private int dia_segundo_vto;
-	private int version;
-	
-	
+		
 	
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
@@ -186,13 +184,6 @@ public class EdificioDTO implements Serializable{
 	@Id @Column(name="ID") @GeneratedValue( strategy=IDENTITY )  
 	public int getId() {
 		return id;
-	}
-	public void setVersion(int version) {
-		this.version = version;
-	}
-    @Version @Column(name="VERSION")
-	public int getVersion() {
-		return version;
 	}
 	
 }
