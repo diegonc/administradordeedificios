@@ -1,19 +1,17 @@
 package beans;
 
-import java.util.LinkedList;
 import java.util.List;
-
 import usuarios.dto.UsuarioDTO;
 
 public class UsuariosBean {
 	
-	private LinkedList<UsuarioDTO> users;
+	private List<UsuarioDTO> users;
 
-	public LinkedList<UsuarioDTO> getUsers() {
+	public List<UsuarioDTO> getUsers() {
 		return users;
 	}
 
-	public void setUsers(LinkedList<UsuarioDTO> users) {
+	public void setUsers(List<UsuarioDTO> users) {
 		this.users = users;
 	}
 	
