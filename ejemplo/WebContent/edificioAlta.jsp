@@ -2,6 +2,8 @@
 <script type="text/javascript">
 
 function validar(thisform) {
+	
+	
 	validado=true;
 	var nombre = document.getElementById("nombre");
 	var calle = document.getElementById("calle");
@@ -49,14 +51,15 @@ function validar(thisform) {
 		alert("Debe completar el monto de la amortizacion y debe ser un mumero"); 
 		validado=false;
 	}
-	if(isNaN(dia_primer_vto.value) && validado == true ) { 
+	if((isNaN(dia_primer_vto.value) || (dia_primer_vto.value < 1) || (dia_primer_vto.value > 15)) && validado == true ) { 
 		alert("Debe completar el dia del primer vto"); 
 		validado=false;
 	} 
-	if((dia_segundo_vto.value=="" || isNaN(dia_segundo_vto.value)) && validado == true ) { 
+	if((isNaN(dia_segundo_vto.value)|| (dia_segundo_vto.value < 1) || (dia_segundo_vto.value > 15)) && validado == true ) { 
 		alert("Debe completar el dia del segundo vto"); 
 		validado=false;
 	} 
+	
 	if (validado==true) {
 		document.altaEdificio.submit();
 	} else {
@@ -79,7 +82,7 @@ function validar(thisform) {
 	<td width="770" class="fondo" align="left">
 		<form class="elegante" name="altaEdificio" id="altaEdificio" action="EdificioAction">
 			<fieldset>
-		  		<legend>Alta en el servicio</legend>
+		  		<legend>Alta de Edificios</legend>
 			 		<table  border="0" cellpadding="0" cellspacing="0" border="2">
 			 			<tr><td colspan="8" height="10"></td></tr>
 			 			<tr>
@@ -124,8 +127,6 @@ function validar(thisform) {
 				  		</tr>
 				  		<tr><td colspan="8" height="10"></td></tr>
 				  		<tr>	
-				  			<td align="right" ><label for="plan" ></label>  Planes de Pago:&nbsp;</td>
-				  			<td >&nbsp;&nbsp;<select id="plan" name="plan" ><option>Ninguno</option><option>Plan1</option></select></td>
 				  			<td align="right" ><label for="tasa_anual" ></label>  Tasa Anual:&nbsp;</td>
 				  			<td>&nbsp;&nbsp;<input type="text" id="tasa_anual" name="tasa_anual" size="2"/></input></td>
 				  			<td align="right" ><label for="amortizacion" ></label>  Amortizacion:&nbsp;</td>

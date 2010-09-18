@@ -1,5 +1,6 @@
 package actions;
 
+import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 
 import utilidades.HibernateUtil;
@@ -10,6 +11,7 @@ import edificio.EdificioAppl;
 import edificio.EdificioDTO;
 
 
+@SuppressWarnings("serial")
 public class EdificioAction extends ActionSupport {
 	
 	
@@ -166,29 +168,15 @@ public class EdificioAction extends ActionSupport {
 	}
 		
 	public String execute() {
-		
-		//Esto funciona, si se le pasa los datos correctos lo sube
-		//a la base de datos...
 		EdificioAppl edificioAppl = new EdificioAppl();
-		SessionFactory factory = HibernateUtil.getSessionFactory();
-		System.out.println("Amor: "+amortizacion);
-		System.out.println("Apto: "+apto_profesional);
-		System.out.println("Calle: "+calle);
-		System.out.println("1vto: "+dia_primer_vto);
-		System.out.println("2vtor: "+dia_segundo_vto);
-		System.out.println("NEnca: "+encargado_nombre);
-		System.out.println("DEnca: "+encargado_depto);
-		System.out.println("PEnca: "+encargado_piso);
-		System.out.println("ETel: "+encargado_telefono);
-		System.out.println("Extra: "+fdoextraordinario);
-		System.out.println("Ordi: "+fdoOdinario);
-		System.out.println("FLiq: "+formaliq_exp);
-		System.out.println("Loca: "+localidad);
-		System.out.println("Nombre: "+nombre);
-		System.out.println("Numero: "+numero);
-		System.out.println("TasaAnul: "+tasa_anual);
-		edificioAppl.insertEdificio(factory.openSession(), cargarEdificioDTO());
-		factory.close();
-		return "success";
+		SessionFactory factory = HibernateUtil.getSessionFactory();		
+		try {
+			edificioAppl.insertEdificio(factory.openSession(), cargarEdificioDTO());
+			factory.close();
+			return "success";
+		} catch (HibernateException he) {
+			factory.close();
+			return "error";
+		}
 	}
 }
