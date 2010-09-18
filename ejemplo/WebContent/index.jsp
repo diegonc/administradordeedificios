@@ -11,9 +11,7 @@
 <li class="top"><a href="#" class="top_link"><span>Login</span></a></li>
 </ul>
 </div>
-
-
-	<table id="tablaLogin" height ="200" cellpadding="0" cellspacing="0">
+<table id="tablaLogin" height ="200" cellpadding="0" cellspacing="0">
 		<tr><td height="5" bgcolor="#383838" colspan="3"></td></tr>
 		<tr>
 			<td width="5"  bgcolor="#383838"></td>

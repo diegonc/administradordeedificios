@@ -1,10 +1,10 @@
 <jsp:include page="/WEB-INF/jspf/header.jspf"></jsp:include>
 <%@ page language="java" contentType="text/html" import="java.util.*"%>
 <%@ page language="java" contentType="text/html" import="usuarios.dto.*"%>
-<jsp:useBean id="lista" scope="session" class="beans.UsuariosBean"/>
+<jsp:useBean id="listado" scope="session" class="beans.UsuariosBean"/>
 
 <%
-	LinkedList<UsuarioDTO> usuarios = lista.getUsers();
+	List<UsuarioDTO> usuarios = listado.getUsers();
 %>
 <table  cellpadding="0" cellspacing="0" >
 <tr>
@@ -13,7 +13,7 @@
 	<td width="5" class="borde"></td>
 </tr>
 </table>
-<table id="tablaUsuarioListado" height ="300" cellpadding="0" cellspacing="0"  >
+<table id="tablaUsuariosListado" height ="300" cellpadding="0" cellspacing="0"  >
 <tr>
 	<td width="5"  class="borde"></td>
 	<td width="800" align="center">
@@ -31,15 +31,17 @@
 			<tr>
 				<td><%= usuarioDTO.getUsuario()%></td>
 				<td><%= usuarioDTO.getPassword()%></td>
-				<td><%= usuarioDTO.getPerfil()%></td>
+				<td><%= usuarioDTO.getPerfil().getDescripcion()%></td>
 				<td><%= usuarioDTO.getNombre()%></td>
 				<td><%= usuarioDTO.getApellido()%></td>
 				<td><%= usuarioDTO.getDni()%></td>
-				<td><a href="usuario.jsp">Modificar</a></td>		
+				<td><a href="UsuarioAction?+dni=<%=usuarioDTO.getDni()%>">Modificar</a></td>
+				<td><a href="UsuarioAction">Eliminar</a></td>		
 			</tr>	
 		<%} %>			
-		
+			
 		</table> 
+		<a href="UsuarioAction">Agregar Usuario</a>
 	</td>
 	<td width="5" class="borde"></td>
 </tr>
