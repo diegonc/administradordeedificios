@@ -1,18 +1,13 @@
 package actions;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Map;
-import java.util.Vector;
+
+import javax.servlet.jsp.PageContext;
 
 import org.apache.struts2.interceptor.SessionAware;
-
-import usuarios.dto.UsuarioDTO;
-
-
-import beans.UsuariosBean;
-
+import usuarios.appl.UsuarioAppl;
+import usuarios.dto.PerfilDTO;
+import beans.PerfilesBean;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -53,35 +48,18 @@ public class UsuarioAction extends ActionSupport implements SessionAware {
 		this.contrasena = contrasena;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public String execute() {
+		UsuarioAppl usuarioAppl = new UsuarioAppl();
+		PerfilesBean perfiles = new PerfilesBean();
+		List<PerfilDTO> listaPerfiles =  usuarioAppl.getPerfiles();
+		perfiles.setPerfiles(listaPerfiles);
 		
-    	UsuarioDTO user1 = new UsuarioDTO();
-    	UsuarioDTO user2 = new UsuarioDTO();
-    	
-    	user1.setUsuario("aChelotti");
-    
-    	user1.setPassword("aChelotti");
-    	user1.setNombre("Adriana");
-    	user1.setApellido("Chelotti");
-    	user1.setDni(31026053);
-    	
-    	
-    	
-    	user2.setUsuario("dStaltari");
-    	
-    	user2.setPassword("dStaltari");
-    	user2.setNombre("Dario");
-    	user2.setApellido("Staltari");    	
-    	user2.setDni(30672871);
-    	
-    	LinkedList<UsuarioDTO> lista = new LinkedList<UsuarioDTO>();
-    	lista.add(user1);
-    	lista.add(user2);
-    	UsuariosBean listaUsuarios = new UsuariosBean();
-    	listaUsuarios.setUsers(lista);
-    	
-    	Map session = ActionContext.getContext().getSession();
-         session.put("lista",listaUsuarios);
+		
+		
+		
+		Map session = ActionContext.getContext().getSession();
+        session.put("perfiles",perfiles);
         this.setSession(session);
          
                        
