@@ -55,6 +55,18 @@ public final class EdificioAppl {
 		}
 	}
 
+	public List<EdificioDTO> getAllEdificios(SessionFactory factory) {
+		Session session = factory.openSession();
+		try {
+			Query query = session
+			.createQuery("SELECT edificio FROM EdificioDTO edificio");			
+			List<EdificioDTO> results = query.list();
+			return results; 
+		} finally {
+			session.close();
+		}
+	}
+	
 	/**
 	 * Perform SELECT statements using Hibernate's Criteria API
 	 */

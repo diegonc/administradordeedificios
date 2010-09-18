@@ -3,6 +3,10 @@
 <%@ page language="java" contentType="text/html" import="edificio.*"%>
 <jsp:useBean id="lista" scope="session" class="beans.EdificiosBean"/>
 
+<%
+	ArrayList<EdificioDTO> edificios = lista.getEdificios();
+%>
+
 <table cellpadding="0" cellspacing="0">
 	<tr>
 		<td width="5" class="borde"></td>
@@ -18,12 +22,24 @@
 		<td width="5" class="borde"></td>
 		<td width="15" class="fondo"></td>
 		<td width="770" class="fondo" align="left">
-		<form class="elegante" name="altaEdificio" id="altaEdificio"
-			action="EdificioAction">
 		<fieldset><legend>Listado de Edificios</legend>
-
-		<a href="altaEdificio.jsp">Agregar Edificio</a></fieldset>
-		</form>
+		<table width="500" border="1" class="listado" >
+			<tr>
+				<td>Nombre</td>
+				<td>Calle</td>
+				<td></td>
+			</tr>	
+		<%for (EdificioDTO edificioDTO : edificios) {  %>		
+			<tr>
+				<td><%= edificioDTO.getNombre()%></td>
+				<td><%= edificioDTO.getCalle()%></td>
+				<td><a href="edificioModif.jsp">Modificar</a></td>		
+			</tr>	
+		<%} %>				
+		
+		</table> 
+		<a href="edificioAlta.jsp">Agregar Edificio</a>
+		</fieldset>				
 		</td>
 		<td width="15" class="fondo"></td>
 		<td width="5" class="borde"></td>

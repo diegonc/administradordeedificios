@@ -1,17 +1,17 @@
 package beans;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import edificio.EdificioDTO;
 
 public class EdificiosBean {
 	
-	private LinkedList<EdificioDTO> edificio;
+	private ArrayList<EdificioDTO> edificio;
 
-	public LinkedList<EdificioDTO> getEdificios() {
+	public ArrayList<EdificioDTO> getEdificios() {
 		return edificio;
 	}
 
-	public void setUsers(LinkedList<EdificioDTO> edif) {
+	public void setEdificios(ArrayList<EdificioDTO> edif) {
 		this.edificio = edif;
 	}
 	

@@ -21,9 +21,12 @@
             <result name="success">/gastos.jsp</result>              
         </action>
         <action name="EdificioAction" class="actions.EdificioAction">  
+            <result name="success">/edificio.jsp</result> 
+             <result name="error">/edificioError.jsp</result>               
+        </action>
+        <action name="EdificioListarAction" class="actions.EdificioListarAction">  
             <result name="success">/edificio.jsp</result>              
         </action>
-        
     </package>  
 
 	<package name="experimental" extends="hibernate-default">
