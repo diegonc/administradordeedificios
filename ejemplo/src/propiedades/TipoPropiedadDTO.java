@@ -14,6 +14,8 @@ public class TipoPropiedadDTO implements Serializable{
 	private String nombreTipo;
 	private EdificioDTO edificio;
 	private int id;
+	private double montoExp;
+	private double divisor;
 		
 	@Column(name="NOMBRE_TIPO",nullable=false)
 	public String getNombreTipo() {
@@ -40,6 +42,20 @@ public class TipoPropiedadDTO implements Serializable{
 	}
 	public void setId(int id) {
 		this.id = id;
+	}
+	
+	public double getMontoExp() {
+		return montoExp;
+	}
+	public void setMontoExp(double montoExp) {
+		this.montoExp = montoExp;
+	}
+	
+	public double getDivisor() {
+		return divisor;
+	}
+	public void setDivisor(double divisor) {
+		this.divisor = divisor;
 	}
 		
 }

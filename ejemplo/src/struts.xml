@@ -70,13 +70,26 @@
 		</interceptors>
 
 		<action name="responsablesListado" method="listar"
-			class="actions.ResponsablesAction">
+				class="actions.ResponsablesAction">
 			<result name="success">/responsablesListado.jsp</result>
 		</action>
 
 		<action name="responsablesFormulario" class="actions.ResponsablesAction">
 			<result name="success" type="redirectAction">responsablesListado</result>
 			<result name="edicion">/responsablesFormulario.jsp</result>
+			<result name="error">/error.jsp</result>
+			<interceptor-ref name="pppStackHibernate" />
+		</action>
+		
+		<action name="tiposPropiedadesListado" method="listar"
+			class="actions.TiposPropiedadesAction">
+			<result name="success">/tiposPropiedadesListado.jsp</result>
+		</action>
+
+		<action name="tiposPropiedadesFormulario"
+				class="actions.TiposPropiedadesAction">
+			<result name="success" type="redirectAction">tiposPropiedadesListado</result>
+			<result name="edicion">/tiposPropiedadesFormulario.jsp</result>
 			<result name="error">/error.jsp</result>
 			<interceptor-ref name="pppStackHibernate" />
 		</action>
