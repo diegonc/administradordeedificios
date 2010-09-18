@@ -27,14 +27,14 @@
 			 			<tr><td colspan="6" height="10"></td></tr>
 				  		
 			 			<tr>
-				 			<td><label for="previsional"></label><input type="radio" id="previsional" name="previsional" onclick="habilitarPrevisional()"/>Previsional</td>
+				 			<td><label for="previsional"></label><input type="radio" id="previsional" name="tipo_gasto" />Previsional</td>
 				 			<td align="right"><label for="anio">Anio:&nbsp;</label> </td>
 				  			<td><input type="text" id="anio" name="anio" disabled="disabled"/></td>
 				  			<td align="right" widht="150"><label for="mes">&nbsp;Mes:&nbsp;</label></td> 
 				  			<td><input type="text" id="mes" name="mes" disabled="disabled"/></td>
 				 		</tr>
 				 		<tr>
-				 			<td><label for="real"></label><input type="radio" id="real" name="real" onclick="habilitarReal()"/>Real &nbsp;</td>
+				 			<td><label for="real"></label><input type="radio" id="real" name="tipo_gasto"/>Real &nbsp;</td>
 				 			<td width="120" align="right"><label for="razon_social">Razon Social:&nbsp;</label> </td>
 				  			<td><input type="text" id="razon_social" name="razon_social" disabled="disabled"/></td>
 				  			 <td colspan="2"></td>
