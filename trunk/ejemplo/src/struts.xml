@@ -8,8 +8,12 @@
             <result name="error">/error.jsp</result>  
         </action>
         <action name="UsuarioAction" class="actions.UsuarioAction">  
-            <result name="success">/usuario_listado.jsp</result>              
+            <result name="success">/usuario.jsp</result>              
          </action>
+        <action name="GetListadoUsuariosAction" class="actions.GetListadoUsuariosAction">
+               <result name="success">/usuario_listado.jsp</result>              
+         </action> 
+         
   		<action name="TipoDeGastosAction" class="actions.TipoDeGastosAction">  
             <result name="success">/tipoDeGastos.jsp</result>              
         </action>
