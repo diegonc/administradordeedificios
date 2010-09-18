@@ -183,6 +183,14 @@ public class UsuarioAppl {
 		return q.list();
 	}
 	
+	@SuppressWarnings("unchecked")
+	public List<UsuarioDTO> getUsuarios()
+	{
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Query q = session.createQuery("select u from UsuarioDTO u order by u.usuario");
+		HibernateUtil.getSessionFactory().close();
+		return q.list();
+	}
 	
 	
 	
