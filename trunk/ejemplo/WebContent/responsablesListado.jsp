@@ -1,26 +1,4 @@
 <jsp:include page="/WEB-INF/jspf/header.jspf" />
-<style type="text/css">
-<!--
-	.contenido div {
-		padding: 1px; /* sin padding no se pinta correctamente el fondo. */ 
-	}
-
-	.titulo {
-		color:white;
-		background-color:black;
-	}
-
-	.titulo h3 {
-		text-align: center;
-		margin: 0;
-	}
-
-	.cuerpo {
-		background-color: grey;
-	}
-
--->
-</style>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <div class="contenido">
 	<div class="titulo">

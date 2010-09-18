@@ -50,3 +50,21 @@ table.principal{heigth:400; wid}
 form.elegante input { padding: .2em;}
 table.listado{border-color: teal; border-width: 2;}
 .clear-both { clear: both; }
+
+.contenido div {
+	padding: 1px; /* sin padding no se pinta correctamente el fondo. */ 
+}
+
+.titulo {
+	color:white;
+	background-color:black;
+}
+
+.titulo h3 {
+	text-align: center;
+	margin: 0;
+}
+
+.cuerpo {
+	background-color: grey;
+}
