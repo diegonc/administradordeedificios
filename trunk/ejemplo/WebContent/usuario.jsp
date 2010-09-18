@@ -1,5 +1,9 @@
 <jsp:include page="/WEB-INF/jspf/header.jspf"></jsp:include>
 <script type="text/javascript">
+<%@ page language="java" contentType="text/html" import="java.util.List"%>
+<%@ page language="java" contentType="text/html" import="usuarios.dto.UsuarioDTO"%>
+<%@ page language="java" contentType="text/html" import="usuarios.dto.PerfilDTO"%>
+<jsp:useBean id="perfiles" scope="session" class="beans.PerfilesBean"/>
 
 function habilitarEdificio(thisform){
 	var opcion = document.getElementById("perfiles");
@@ -26,7 +30,7 @@ function validar(thisform){
 	<td width="5" class="borde"></td>
 </tr>
 </table>
-<table id="tablaGastoGrales" height ="300" cellpadding="0" cellspacing="0" >
+<table id="tablaUsuarios" height ="300" cellpadding="0" cellspacing="0" >
 <tr>
 	<td width="5"  class="borde"></td>
 	<td width="15"  class="fondo"></td>
@@ -50,11 +54,11 @@ function validar(thisform){
 			 	  		<tr>
 			 				<td><label for="perfiles">Perfil:</label></td> 
 			 				<td><select name ="perfiles" id="perfiles" onclick="habilitarEdificio()"> 
-						  		<option value="resp_gastos">Responsable de Gastos</option>
-						  		<option value="resp_cobros">Responsable de Cobros</option>
-						  		<option value="resp_edificios">Responsable de Edificios</option>
-						  		<option value="presidente_consorcio">Presidente de Consorcio</option>
-						  		<option value="concejero"> Consejero de Administrai&oacute;n</option>			 
+						
+						<%--LinkedList<PerfilDTO> lista = perfiles.getPerfiles();	
+							for (PerfilDTO it :lista) {
+							}
+						--%>			 
 								</select>
 							</td>
 							<td><label for="edificios">Edificio:</label></td>
@@ -67,11 +71,14 @@ function validar(thisform){
 							</td>
 						</tr>
 						<tr>
-							<td colspan=""><s:submit /></td>
+							<td height="14" colspan="4"></td>
 						</tr>
+												
 			  		</table>
 			  	</legend>
 			</fieldset>
+			<a href="GetListadoUsuariosAction">Aceptar</a></br>
+			<a href="GetListadoUsuariosAction">Cancelaar</a></br>
 		</form>
 	</td>
 	<td width="15"  class="fondo"></td>
