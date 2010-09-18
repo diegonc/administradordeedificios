@@ -68,12 +68,6 @@
 				<interceptor-ref name="hibernateValidatorInterceptor"/>
 		    </interceptor-stack>
 		</interceptors>
-		
-		<action name="listadoEdificios" method="listar"
-			class="actions.ListadoEdificios">
-			<result name="success">/listados/edificio.jsp</result>
-			<result name="error">/error.jsp</result>
-		</action>
 
 		<action name="responsablesListado" method="listar"
 			class="actions.ResponsablesAction">
