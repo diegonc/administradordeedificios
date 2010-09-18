@@ -18,8 +18,6 @@
     <property name="transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</property>
     
     
-    <mapping class="FacturaDTO"/>
-    
     <!-- package edificio -->
     <mapping class="edificio.EdificioDTO"/>
     
