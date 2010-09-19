@@ -68,3 +68,6 @@ table.listado{border-color: teal; border-width: 2;}
 .cuerpo {
 	background-color: grey;
 }
+.error {
+	color:red;
+}
