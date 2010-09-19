@@ -25,26 +25,22 @@ public class GetListadoUsuariosAction extends ActionSupport implements SessionAw
 
 	public String execute() {
 		UsuarioAppl usuarioAppl = new UsuarioAppl();
-		
 		List<UsuarioDTO> listaUsuario = usuarioAppl.getUsuarios() ;
-		
-		
-		
+			
 		UsuariosBean listado = new UsuariosBean();
 		listado.setUsers(listaUsuario);
 		
-		Map session = ActionContext.getContext().getSession();
+		Map<String,Object> session = ActionContext.getContext().getSession();
         session.put("listado",listado);
-        this.setSession(session);
-         
-                    
-
+        setSession(session);
+        
+        
     	 return "success";
     }
 
 	public void setSession(Map<String, Object> arg0) {
 		// TODO Auto-generated method stub
-		this.session=arg0;
-		
+		this.session = arg0;
 	}
+
 }
