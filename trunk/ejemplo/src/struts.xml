@@ -1,14 +1,15 @@
-<?xml version="1.0" encoding="UTF-8" ?>  
 <!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" "http://struts.apache.org/dtds/struts-2.0.dtd">  
   
 <struts>  
     <package name="actions" extends="struts-default">  
         <action name="LoginAction" class="actions.LoginAction">  
             <result name="success">/home.jsp</result>
-            <result name="error">/error.jsp</result>  
+            <result name="error">/index.jsp</result>  
         </action>
         <action name="UsuarioAction" class="actions.UsuarioAction">  
             <result name="success">/usuario.jsp</result>              
+            <result name="add" type="redirectAction">GetListadoUsuariosAction</result>
+            <result name="error">/usuario.jsp</result>
          </action>
         <action name="GetListadoUsuariosAction" class="actions.GetListadoUsuariosAction">
                <result name="success">/usuario_listado.jsp</result>              
