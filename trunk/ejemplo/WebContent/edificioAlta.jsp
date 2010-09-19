@@ -2,8 +2,6 @@
 <script type="text/javascript">
 
 function validar(thisform) {
-	
-	
 	validado=true;
 	var nombre = document.getElementById("nombre");
 	var calle = document.getElementById("calle");
@@ -27,8 +25,8 @@ function validar(thisform) {
 		alert("Debe completar la calle"); 
 		validado=false;
 	}
-	if(isNaN(numero.value) && validado == true) { 
-		alert("Debe completar el número"); 
+	if( (numero.value=="" || isNaN(numero.value)) && validado == true) { 
+		alert("Debe completar el numero"); 
 		validado=false;
 	}
 	if(localidad.value=="" && validado == true) { 
@@ -41,6 +39,14 @@ function validar(thisform) {
 	}
 	if(encargado_telefono.value=="" && validado == true) { 
 		alert("Debe completar el telefono del encargado"); 
+		validado=false;
+	}
+	if( (encargado_piso.value=="" || isNaN(encargado_piso.value)) && validado == true ) { 
+		alert("El piso debe ser un numero"); 
+		validado=false;
+	}
+	if(encargado_depto.value=="" && validado == true) { 
+		alert("Debe completar el depto del encargado"); 
 		validado=false;
 	}
 	if(isNaN(tasa_anual.value) && validado == true ) { 
@@ -62,8 +68,6 @@ function validar(thisform) {
 	
 	if (validado==true) {
 		document.altaEdificio.submit();
-	} else {
-		alert("No se ha cargado el Edificio");
 	}
 	return validado;
 }
@@ -88,9 +92,6 @@ function validar(thisform) {
 			 			<tr>
 			 				<td align="right"><label for="nombre">Nombre:</label> </td>
 				 			<td>&nbsp;&nbsp;<input type="text" id="nombre" name="nombre" size="15"/></td>
-				 			<td align="right" width="250"><label for="tipoPropiedad">Tipo Propiedad:</label> </td>
-				 			<td colspan="4">&nbsp;&nbsp;<select id="tipoPropiedad" name="tipoProdiedad" ><option>tipo1</option><option>tipo2</option></select></td>
-				 			
 				 		</tr>
 				 		<tr><td  colspan="8" height="3"></td></tr>
 				 		<tr><td  colspan="8">Domicilio</td>	</tr>
@@ -110,9 +111,9 @@ function validar(thisform) {
 				 			<td align="right" ><label for="encargado_telefono">Tel:</label> </td>
 				 			<td>&nbsp;&nbsp;<input type="text" id="encargado_telefono" name="encargado_telefono" size="9"/></td>
 				 			<td align="right" ><label for="encargado_piso">Piso</label> &nbsp;&nbsp;
-				 			<select id="encargado_piso" name="encargado_piso" > <option>1ero</option><option>2do</option></select></td>
+				 			<input type="text" id="encargado_piso" name="encargado_piso" size="2" /> 
 				 			<td align="right" ><label for="encargado_depto">Departamento</label> &nbsp;&nbsp;
-				 			<select id="encargado_depto" name="encargado_depto" > <option>A</option><option>B</option></select></td>
+				 			<input type="text" id="encargado_depto" name="encargado_depto" size="2" />
 			 			</tr>			
 			 			<tr><td colspan="8" height="10"></td></tr>	  		
 			 			<tr>

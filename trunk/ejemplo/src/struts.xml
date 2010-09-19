@@ -28,6 +28,10 @@
         <action name="EdificioListarAction" class="actions.EdificioListarAction">  
             <result name="success">/edificio.jsp</result>              
         </action>
+        <action name="EdificioModifAction" class="actions.EdificioModifAction">  
+            <result name="success">/edificio.jsp</result> 
+             <result name="error">/edificioError.jsp</result>               
+        </action>
     </package>  
 
 	<package name="experimental" extends="hibernate-default">
