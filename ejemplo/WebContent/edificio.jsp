@@ -26,14 +26,14 @@
 		<table width="500" border="1" class="listado" >
 			<tr>
 				<td>Nombre</td>
-				<td>Calle</td>
+				<td></td>
 				<td></td>
 			</tr>	
 		<%for (EdificioDTO edificioDTO : edificios) {  %>		
 			<tr>
 				<td><%= edificioDTO.getNombre()%></td>
-				<td><%= edificioDTO.getCalle()%></td>
-				<td><a href="edificioModif.jsp">Modificar</a></td>		
+				<td><a href="edificioModif.jsp?id=<%= edificioDTO.getId()%>">Modificar</a></td>	
+				<td><a href="edificioDelete.jsp?id=<%= edificioDTO.getId()%>">Eliminar</a></td>		
 			</tr>	
 		<%} %>				
 		

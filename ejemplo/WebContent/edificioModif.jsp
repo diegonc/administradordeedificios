@@ -1,8 +1,17 @@
 <jsp:include page="/WEB-INF/jspf/header.jspf"></jsp:include>
+<%@ page language="java" contentType="text/html" import="java.util.*"%>
+<%@ page language="java" contentType="text/html" import="edificio.*"%>
+<%@ page language="java" contentType="text/html" import="utilidades.*"%>
+<%@ page language="java" contentType="text/html" import="org.hibernate.*"%>
+<%
+	EdificioAppl edifAppl = new EdificioAppl();
+	SessionFactory factory = HibernateUtil.getSessionFactory();	
+	int id = Integer.parseInt(request.getParameter("id"));
+	EdificioDTO edificio = edifAppl.getEdificio(factory,id);
+%>
+
 <script type="text/javascript">
 function validar(thisform) {
-	
-	
 	validado=true;
 	var nombre = document.getElementById("nombre");
 	var calle = document.getElementById("calle");
@@ -26,8 +35,8 @@ function validar(thisform) {
 		alert("Debe completar la calle"); 
 		validado=false;
 	}
-	if(isNaN(numero.value) && validado == true) { 
-		alert("Debe completar el número"); 
+	if( (numero.value=="" || isNaN(numero.value)) && validado == true) { 
+		alert("Debe completar el numero"); 
 		validado=false;
 	}
 	if(localidad.value=="" && validado == true) { 
@@ -40,6 +49,14 @@ function validar(thisform) {
 	}
 	if(encargado_telefono.value=="" && validado == true) { 
 		alert("Debe completar el telefono del encargado"); 
+		validado=false;
+	}
+	if( (encargado_piso.value=="" || isNaN(encargado_piso.value)) && validado == true ) { 
+		alert("El piso debe ser un numero"); 
+		validado=false;
+	}
+	if(encargado_depto.value=="" && validado == true) { 
+		alert("Debe completar el depto del encargado"); 
 		validado=false;
 	}
 	if(isNaN(tasa_anual.value) && validado == true ) { 
@@ -58,15 +75,12 @@ function validar(thisform) {
 		alert("Debe completar el dia del segundo vto"); 
 		validado=false;
 	} 
-	
 	if (validado==true) {
-		alert("Todavia falta el action de Modficar");
-	//	document.altaEdificio.submit();
-	} else {
-		alert("No se ha cargado el Edificio");
+		document.modifEdificio.submit();
 	}
 	return validado;
 }
+
 </script>
 <table  cellpadding="0" cellspacing="0" >
 <tr>
@@ -80,39 +94,40 @@ function validar(thisform) {
 <td width="5"  class="borde"></td>
 	<td width="15"  class="fondo"></td>
 	<td width="770" class="fondo" align="left">
-		<form class="elegante" name="altaEdificio" id="altaEdificio" action="EdificioModifAction">
+		<form class="elegante" name="modifEdificio" id="modifEdificio" action="EdificioModifAction">
 			<fieldset>
 		  		<legend>Modificar de Edificios</legend>
 			 		<table  border="0" cellpadding="0" cellspacing="0" border="2">
 			 			<tr><td colspan="8" height="10"></td></tr>
 			 			<tr>
 			 				<td align="right"><label for="nombre">Nombre:</label> </td>
-				 			<td>&nbsp;&nbsp;<input type="text" id="nombre" name="nombre" size="15"/></td>
-				 			<td align="right" width="250"><label for="tipoPropiedad">Tipo Propiedad:</label> </td>
-				 			<td colspan="4">&nbsp;&nbsp;<select id="tipoPropiedad" name="tipoProdiedad" ><option>tipo1</option><option>tipo2</option></select></td>
-				 			
+				 			<td>&nbsp;&nbsp;<input type="text" id="nombre" name="nombre" value="<%=edificio.getNombre() %>" readonly size="15"/></td>	
+				 			<td>&nbsp;&nbsp;<input type="text" id="id" name="id" value="<%=edificio.getId() %>" readonly size="15"/></td>	
+				 			<td>&nbsp;&nbsp;<input type="text" id="fdoOdinario" name="fdoOdinario" value="<%=edificio.getFondo_ordinario() %>" readonly size="15"/></td>
+				 			<td>&nbsp;&nbsp;<input type="text" id="fdoextraordinario" name="fdoextraordinario" value="<%=edificio.getFondo_extraordinario() %>" readonly size="15"/></td> 
+				 			<td>No Editable</td>			
 				 		</tr>
 				 		<tr><td  colspan="8" height="3"></td></tr>
 				 		<tr><td  colspan="8">Domicilio</td>	</tr>
 				 		<tr>	
 				 			<td align="right"><label for="calle">Calle:</label> </td>
-				 			<td>&nbsp;&nbsp;<input type="text" id="calle" name="calle" size="15"/></td>
+				 			<td>&nbsp;&nbsp;<input type="text" id="calle" name="calle" value="<%=edificio.getCalle() %>" size="15"/></td>
 				 			<td align="right"><label for="numero">Nro:</label> </td>
-				 			<td >&nbsp;&nbsp;<input type="text" id="numero" name="numero" size="2"/></td>
+				 			<td >&nbsp;&nbsp;<input type="text" id="numero" name="numero" value="<%=edificio.getNumero() %>" size="2"/></td>
 				 			<td align="right"><label for="localidad">Localidad:</label> </td>
-				 			<td colspan="3">&nbsp;&nbsp;<input type="text" id="localidad" name="localidad" size="15" /></td>
+				 			<td colspan="3">&nbsp;&nbsp;<input type="text" id="localidad" name="localidad" value="<%=edificio.getLocalidad() %>" size="15" /></td>
 			 			</tr>
 			 			<tr><td colspan="8" height="10"></td></tr>
 				 		<tr><td colspan="8">Encargado</td></tr>
 			 			<tr>	
 				 			<td align="right"><label for="encargado_nombre">Nombre:</label> </td>
-				 			<td>&nbsp;&nbsp;<input type="text" id="encargado_nombre" name="encargado_nombre" size="15"/></td>
+				 			<td>&nbsp;&nbsp;<input type="text" id="encargado_nombre" name="encargado_nombre" value="<%=edificio.getEncargado_nombre() %>" size="15"/></td>
 				 			<td align="right" ><label for="encargado_telefono">Tel:</label> </td>
-				 			<td>&nbsp;&nbsp;<input type="text" id="encargado_telefono" name="encargado_telefono" size="9"/></td>
+				 			<td>&nbsp;&nbsp;<input type="text" id="encargado_telefono" name="encargado_telefono" value="<%=edificio.getEncargado_telefono() %>" size="9"/></td>
 				 			<td align="right" ><label for="encargado_piso">Piso</label> &nbsp;&nbsp;
-				 			<select id="encargado_piso" name="encargado_piso" > <option>1ero</option><option>2do</option></select></td>
+				 			<input type="text" id="encargado_piso" name="encargado_piso" value="<%=edificio.getEncargado_piso() %>" size="2"/>
 				 			<td align="right" ><label for="encargado_depto">Departamento</label> &nbsp;&nbsp;
-				 			<select id="encargado_depto" name="encargado_depto" > <option>A</option><option>B</option></select></td>
+				 			<input type="text" id="encargado_depto" name="encargado_depto" value="<%=edificio.getEncargado_depto() %>" size="2"/>
 			 			</tr>			
 			 			<tr><td colspan="8" height="10"></td></tr>	  		
 			 			<tr>
@@ -128,9 +143,9 @@ function validar(thisform) {
 				  		<tr><td colspan="8" height="10"></td></tr>
 				  		<tr>	
 				  			<td align="right" ><label for="tasa_anual" ></label>  Tasa Anual:&nbsp;</td>
-				  			<td>&nbsp;&nbsp;<input type="text" id="tasa_anual" name="tasa_anual" size="2"/></input></td>
+				  			<td>&nbsp;&nbsp;<input type="text" id="tasa_anual" name="tasa_anual" value="<%=edificio.getTasa_anual() %>" size="2"/></input></td>
 				  			<td align="right" ><label for="amortizacion" ></label>  Amortizacion:&nbsp;</td>
-				  			<td>&nbsp;&nbsp;<input type="text" id="amortizacion" name="amortizacion" size="3"/></input></td>
+				  			<td>&nbsp;&nbsp;<input type="text" id="amortizacion" name="amortizacion" value="<%=edificio.getAmortizacion() %>" size="3"/></input></td>
 				  			<td colspan="2"></td>
 				  			
 				  		</tr>
@@ -138,9 +153,9 @@ function validar(thisform) {
 				 		<tr><td colspan="8">Fondo</td></tr>
 				  		<tr>	
 				 			<td align="right"><label for="dia_primer_vto">Primer Vto:</label> </td>
-				 			<td>&nbsp;&nbsp;<input type="text" id="dia_primer_vto" name="dia_primer_vto" size="9"/></td>
+				 			<td>&nbsp;&nbsp;<input type="text" id="dia_primer_vto" name="dia_primer_vto" value="<%=edificio.getDia_primer_vto() %>" size="9"/></td>
 				 			<td align="right" ><label for="dia_segundo_vto"> Seg Vta:</label> </td>
-				 			<td>&nbsp;&nbsp;<input type="text" id="dia_segundo_vto" name="dia_segundo_vto" size="9"/></td>
+				 			<td>&nbsp;&nbsp;<input type="text" id="dia_segundo_vto" name="dia_segundo_vto" value="<%=edificio.getDia_segundo_vto() %>" size="9"/></td>
 				 			
 			 			</tr>
 				  		<tr>
