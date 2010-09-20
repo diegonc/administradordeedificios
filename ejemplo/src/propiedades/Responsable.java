@@ -16,7 +16,6 @@ public class Responsable {
 	private Boolean autoridad;
 	private Integer version;
 	
-	@SuppressWarnings("unused")
 	public Responsable() {
 		this(null,null,null);
 	}
@@ -37,15 +36,12 @@ public class Responsable {
 
 	@Id
 	public Integer getDni() { return dni; }
-	@SuppressWarnings("unused")
 	public void setDni(Integer dni) { this.dni = dni; }
 
 	public String getTelefono() { return telefono; }
-	@SuppressWarnings("unused")
 	public void setTelefono(String telefono) { this.telefono = telefono; }
 
 	public String getEmail() { return email; }
-	@SuppressWarnings("unused")
 	public void setEmail(String email) { this.email = email; }
 	
 	@SuppressWarnings("unused")
