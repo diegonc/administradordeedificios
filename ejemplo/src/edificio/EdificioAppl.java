@@ -157,4 +157,21 @@ public final class EdificioAppl {
 		}
 	}
 
+	public EdificioDTO buscarEdificioPorNombre(Session session,
+			String nombreEdificio) {
+		@SuppressWarnings("unchecked")
+		List<EdificioDTO> edificios = session
+				.createQuery("from EdificioDTO e where e.nombre = :nombre")
+				.setString("nombre", nombreEdificio).list();
+
+		if (edificios.size() > 1)
+			_logger.warn(String
+					.format("Base de datos inconsistente: el edificio '%s' está repetido.",
+							nombreEdificio));
+		else if (edificios.isEmpty())
+			return null;
+
+		return edificios.get(0);
+	}
+
 }

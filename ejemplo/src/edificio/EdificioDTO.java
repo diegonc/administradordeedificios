@@ -3,10 +3,18 @@ package edificio;
 import static javax.persistence.GenerationType.IDENTITY;
 
 import java.io.Serializable;
+import java.util.Set;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import org.hibernate.annotations.Proxy;
+
+import propiedades.TipoPropiedadDTO;
 
 @SuppressWarnings("serial")
 @Entity 
@@ -185,5 +193,20 @@ public class EdificioDTO implements Serializable{
 	public int getId() {
 		return id;
 	}
+
+	private Set<TipoPropiedadDTO> tipoPropiedades;
 	
+	@OneToMany(mappedBy="edificio")
+	public Set<TipoPropiedadDTO> getTipoPropiedades() {
+		return tipoPropiedades;
+	}
+	public void setTipoPropiedades(Set<TipoPropiedadDTO> tipoPropiedades) {
+		this.tipoPropiedades = tipoPropiedades;
+	}
+
+	public void agregarTipo(TipoPropiedadDTO entidad) {
+		tipoPropiedades.add(entidad);
+		entidad.setEdificio(this);
+	}
+
 }
