@@ -22,6 +22,12 @@
 					</s:url>
 					<a href="<s:property value='#url' />">Editar</a>
 				</td>
+				<td>
+					<s:url id="url" action="responsablesFormulario!borrar">
+						<s:param name="dni" value="dni" />
+					</s:url>
+					<a href="<s:property value='#url' />">Borrar</a>
+				</td>
 			</tr>
 		</s:iterator>
 		</table>
