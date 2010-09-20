@@ -1,4 +1,4 @@
 <script type="text/javascript"> 
-	alert("Se ha intentado cargar un edificio que ya existía");
+	alert("No se ha podido realizar la operación pedida");
 	location.href="edificio.jsp";
 </script>

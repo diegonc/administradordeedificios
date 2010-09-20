@@ -32,6 +32,10 @@
             <result name="success">/edificio.jsp</result> 
              <result name="error">/edificioError.jsp</result>               
         </action>
+        <action name="EdificioDeleteAction" class="actions.EdificioDeleteAction">  
+            <result name="success">/edificio.jsp</result> 
+             <result name="error">/edificioError.jsp</result>               
+        </action>
     </package>  
 
 	<package name="experimental" extends="hibernate-default">

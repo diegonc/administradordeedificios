@@ -23,7 +23,6 @@ function validar(thisform) {
 	var encargado_depto = document.getElementById("encargado_depto");
 	var tasa_anual = document.getElementById("tasa_anual");
 	var amortizacion = document.getElementById("amortizacion");
-	var amortizacion = document.getElementById("amortizacion");
 	var dia_primer_vto = document.getElementById("dia_primer_vto");
 	var dia_segundo_vto = document.getElementById("dia_segundo_vto");
 	
@@ -76,6 +75,7 @@ function validar(thisform) {
 		validado=false;
 	} 
 	if (validado==true) {
+		alert("amortizacion");
 		document.modifEdificio.submit();
 	}
 	return validado;
@@ -102,10 +102,10 @@ function validar(thisform) {
 			 			<tr>
 			 				<td align="right"><label for="nombre">Nombre:</label> </td>
 				 			<td>&nbsp;&nbsp;<input type="text" id="nombre" name="nombre" value="<%=edificio.getNombre() %>" readonly size="15"/></td>	
-				 			<td>&nbsp;&nbsp;<input type="text" id="id" name="id" value="<%=edificio.getId() %>" readonly size="15"/></td>	
-				 			<td>&nbsp;&nbsp;<input type="text" id="fdoOdinario" name="fdoOdinario" value="<%=edificio.getFondo_ordinario() %>" readonly size="15"/></td>
-				 			<td>&nbsp;&nbsp;<input type="text" id="fdoextraordinario" name="fdoextraordinario" value="<%=edificio.getFondo_extraordinario() %>" readonly size="15"/></td> 
-				 			<td>No Editable</td>			
+				 			<td>No Editable</td>	
+				 			<td>&nbsp;&nbsp;<input type="text" style="display: none;" id="id" name="id" value="<%=edificio.getId() %>" readonly size="15"/></td>	
+				 			<td>&nbsp;&nbsp;<input type="text" style="display: none;" id="fdoOdinario" name="fdoOdinario" value="<%=edificio.getFondo_ordinario() %>" readonly size="15"/></td>
+				 			<td>&nbsp;&nbsp;<input type="text" style="display: none;" id="fdoextraordinario" name="fdoextraordinario" value="<%=edificio.getFondo_extraordinario() %>" readonly size="15"/></td> 
 				 		</tr>
 				 		<tr><td  colspan="8" height="3"></td></tr>
 				 		<tr><td  colspan="8">Domicilio</td>	</tr>
@@ -125,9 +125,9 @@ function validar(thisform) {
 				 			<td align="right" ><label for="encargado_telefono">Tel:</label> </td>
 				 			<td>&nbsp;&nbsp;<input type="text" id="encargado_telefono" name="encargado_telefono" value="<%=edificio.getEncargado_telefono() %>" size="9"/></td>
 				 			<td align="right" ><label for="encargado_piso">Piso</label> &nbsp;&nbsp;
-				 			<input type="text" id="encargado_piso" name="encargado_piso" value="<%=edificio.getEncargado_piso() %>" size="2"/>
+				 			<input type="text" id="encargado_piso" name="encargado_piso" value="<%=edificio.getEncargado_piso() %>" size="2"/></td>
 				 			<td align="right" ><label for="encargado_depto">Departamento</label> &nbsp;&nbsp;
-				 			<input type="text" id="encargado_depto" name="encargado_depto" value="<%=edificio.getEncargado_depto() %>" size="2"/>
+				 			<input type="text" id="encargado_depto" name="encargado_depto" value="<%=edificio.getEncargado_depto() %>" size="2"/></td>
 			 			</tr>			
 			 			<tr><td colspan="8" height="10"></td></tr>	  		
 			 			<tr>
@@ -138,7 +138,7 @@ function validar(thisform) {
 				  		<tr><td class="borderline" colspan="8" height="10"></td></tr>
 				  		<tr>	
 				  			<td align="right" ><label for="formaliq_exp">Forma Liq.:&nbsp;</label>  </td>
-				  			<td colspan="7">&nbsp;&nbsp;<select  id="formaliq_exp" name="formaliq_exp"> <option>forma1</option><option>forma2</option></select></td>
+				  			<td colspan="7">&nbsp;&nbsp;<select  id="formaliq_exp" name="formaliq_exp"> <option>FIJO</option><option>PRORRATEO</option></select></td>
 				  		</tr>
 				  		<tr><td colspan="8" height="10"></td></tr>
 				  		<tr>	
