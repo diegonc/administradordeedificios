@@ -5,7 +5,14 @@
 		<h3>[Edificio] » Tipos de Propiedad</h3>
 	</div>
 	<div class="cuerpo">
-	<s:if test="lista.size() > 0">
+	<s:form action="tiposPropiedadesListado" method="GET">
+	<s:select label="Edificio" 
+		headerKey="-1" headerValue="-- Seleccione un edificio --"
+		list="edificios" 
+		key="nombreEdificio" />
+	<s:submit method="listar" value="Actualizar" />
+	</s:form>
+	<s:if test="lista != null && lista.size() > 0">
 		<table>
 		<s:iterator value="lista">
 			<tr>
@@ -13,17 +20,27 @@
 				<td><s:property value="montoExp" /></td>
 				<td><s:property value="divisor" /></td>
 				<td>
-					<s:url id="url" action="tiposPropiedadesFormulario!editar">
+					<s:url id="url" action="tiposPropiedadesFormulario!editar" escapeAmp="false">
+						<s:param name="nombreEdificio" value="nombreEdificio" />
 						<s:param name="nombreTipo" value="nombreTipo" />
 					</s:url>
 					<a href="<s:property value='#url' />">Editar</a>
+				</td>
+				<td>
+					<s:url id="url" action="tiposPropiedadesFormulario!borrar" escapeAmp="false">
+						<s:param name="nombreEdificio" value="nombreEdificio" />
+						<s:param name="nombreTipo" value="nombreTipo" />
+					</s:url>
+					<a href="<s:property value='#url' />">borrar</a>
 				</td>
 			</tr>
 		</s:iterator>
 		</table>
 	</s:if>
-	<s:url id="url" action="tiposPropiedadesFormulario!crear" />
-	<a href="<s:property value='#url' />">Agregar Responsable</a>
+	<s:url id="url" action="tiposPropiedadesFormulario!crear">
+		<s:param name="nombreEdificio" value="nombreEdificio" />
+	</s:url>
+	<a href="<s:property value='#url' />">Agregar</a>
 	</div>
 </div>
 <jsp:include page="/WEB-INF/jspf/footer.jspf" />
