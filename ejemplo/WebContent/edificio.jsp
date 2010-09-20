@@ -22,6 +22,7 @@
 		<td width="5" class="borde"></td>
 		<td width="15" class="fondo"></td>
 		<td width="770" class="fondo" align="left">
+		<a href="EdificioListarAction">Actualizar</a>
 		<fieldset><legend>Listado de Edificios</legend>
 		<table width="500" border="1" class="listado" >
 			<tr>

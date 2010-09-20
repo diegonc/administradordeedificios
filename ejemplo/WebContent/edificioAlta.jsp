@@ -13,7 +13,6 @@ function validar(thisform) {
 	var encargado_depto = document.getElementById("encargado_depto");
 	var tasa_anual = document.getElementById("tasa_anual");
 	var amortizacion = document.getElementById("amortizacion");
-	var amortizacion = document.getElementById("amortizacion");
 	var dia_primer_vto = document.getElementById("dia_primer_vto");
 	var dia_segundo_vto = document.getElementById("dia_segundo_vto");
 	
@@ -124,7 +123,7 @@ function validar(thisform) {
 				  		<tr><td class="borderline" colspan="8" height="10"></td></tr>
 				  		<tr>	
 				  			<td align="right" ><label for="formaliq_exp">Forma Liq.:&nbsp;</label>  </td>
-				  			<td colspan="7">&nbsp;&nbsp;<select  id="formaliq_exp" name="formaliq_exp"> <option>forma1</option><option>forma2</option></select></td>
+				  			<td colspan="7">&nbsp;&nbsp;<select  id="formaliq_exp" name="formaliq_exp"> <option>FIJO</option><option>PRORRATEO</option></select></td>
 				  		</tr>
 				  		<tr><td colspan="8" height="10"></td></tr>
 				  		<tr>	
@@ -146,7 +145,7 @@ function validar(thisform) {
 			 			</tr>
 				  		<tr>
 			  			<td colspan="8"><input class="btn" type="button" value="Add" onclick="validar()" /></td>
-			  			<td> <a href="edificio.jsp">Volver</a> </td>
+			  			<td> <a href="EdificioListarAction">Volver</a> </td>
 			  			</tr>
 			  		</table>			  	
 			</fieldset>
