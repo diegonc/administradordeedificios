@@ -100,7 +100,10 @@
 
 		<action name="tiposPropiedadesFormulario"
 				class="actions.TiposPropiedadesAction">
-			<result name="success" type="redirectAction">tiposPropiedadesListado</result>
+			<result name="success" type="redirectAction">
+				<param name="actionName">tiposPropiedadesListado</param>
+				<param name="nombreEdificio">${nombreEdificio}</param>
+			</result>
 			<result name="edicion">/tiposPropiedadesFormulario.jsp</result>
 			<result name="error">/error.jsp</result>
 			<interceptor-ref name="pppStackHibernate" />
