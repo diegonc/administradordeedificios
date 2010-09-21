@@ -75,7 +75,6 @@ function validar(thisform) {
 		validado=false;
 	} 
 	if (validado==true) {
-		alert("amortizacion");
 		document.modifEdificio.submit();
 	}
 	return validado;
