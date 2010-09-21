@@ -2,7 +2,7 @@
 <table  cellpadding="0" cellspacing="0" >
 <tr>
 	<td width="5"  class="borde"></td>
-	<td width="800" class="borde" align="center"> <span id="header"><h>Gastos</h></td>
+	<td width="800" class="borde" align="center"> <span id="header"><h>Gastos</h></span></td>
 	<td width="5" class="borde"></td>
 </tr>
 </table>
@@ -18,11 +18,11 @@
 			 			<tr><td colspan="6" height="10"></td></tr>
 			 			<tr>
 				 			<td width="120" align="right"><label for="codigo">Edificio:</label> </td>
-				 			<td colspan="4" >&nbsp;&nbsp;<select id="edificio" name="edificio" /></td>
+				 			<td colspan="4" >&nbsp;&nbsp;<select id="edificio" name="edificio" /></select></td>
 				 		</tr>
 				 		<tr>	
 				 			<td align="right"><label for="gasto">Tipo de Gasto:</label> </td>
-				 			<td colspan="4">&nbsp;&nbsp;<select id="gasto" name="gasto" /></td>
+				 			<td colspan="4">&nbsp;&nbsp;<select id="gasto" name="gasto" /></select></td>
 			 			</tr>
 			 			<tr><td colspan="6" height="10"></td></tr>
 				  		
@@ -30,7 +30,7 @@
 				 			<td><label for="previsional"></label><input type="radio" id="previsional" name="tipo_gasto" />Previsional</td>
 				 			<td align="right"><label for="anio">Anio:&nbsp;</label> </td>
 				  			<td><input type="text" id="anio" name="anio" disabled="disabled"/></td>
-				  			<td align="right" widht="150"><label for="mes">&nbsp;Mes:&nbsp;</label></td> 
+				  			<td align="right" width="150"><label for="mes">&nbsp;Mes:&nbsp;</label></td> 
 				  			<td><input type="text" id="mes" name="mes" disabled="disabled"/></td>
 				 		</tr>
 				 		<tr>
@@ -60,7 +60,7 @@
 			  			<td colspan="4"><input class="btn" type="submit" value="Add"  /></td>
 			  			</tr>
 			  		</table>
-			  	</legend>
+			  	
 			</fieldset>
 		</form>
 	</td>
