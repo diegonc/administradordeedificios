@@ -113,6 +113,22 @@
 			<result name="error">/error.jsp</result>
 			<interceptor-ref name="pppStackHibernate" />
 		</action>
+		
+		<action name="propiedadesListado" method="listar"
+			class="actions.PropiedadesAction">
+			<result name="success">/propiedadesListado.jsp</result>
+		</action>
+
+		<action name="propiedadesFormulario"
+				class="actions.PropiedadesAction">
+			<result name="success" type="redirectAction">
+				<param name="actionName">propiedadesListado</param>
+				<param name="nombreEdificio">${nombreEdificio}</param>
+			</result>
+			<result name="edicion">/propiedadesFormulario.jsp</result>
+			<result name="error">/error.jsp</result>
+			<interceptor-ref name="pppStackHibernate" />
+		</action>
 	</package>
 
 	<constant name="hibernatePlugin.customSessionFactoryClass" value="utilidades.HibernateUtil" />
