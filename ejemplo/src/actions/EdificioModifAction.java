@@ -25,8 +25,8 @@ public class EdificioModifAction extends ActionSupport {
 	private Double fdoOdinario;
 	private Double fdoextraordinario;
 	private String formaliq_exp;
-	private Double tasa_anual;
-	private Double amortizacion;
+	private double tasa_anual;
+	private double amortizacion;
 	private int dia_primer_vto;
 	private int dia_segundo_vto;
 
@@ -142,19 +142,19 @@ public class EdificioModifAction extends ActionSupport {
 		formaliq_exp = formaliqExp;
 	}
 
-	public Double getTasa_anual() {
+	public double getTasa_anual() {
 		return tasa_anual;
 	}
 
-	public void setTasa_anual(Double tasaAnual) {
+	public void setTasa_anual(double tasaAnual) {
 		tasa_anual = tasaAnual;
 	}
 
-	public Double getAmortizacion() {
+	public double getAmortizacion() {
 		return amortizacion;
 	}
 
-	public void setAmortizacion(Double amortizacion) {
+	public void setAmortizacion(double amortizacion) {
 		this.amortizacion = amortizacion;
 	}
 

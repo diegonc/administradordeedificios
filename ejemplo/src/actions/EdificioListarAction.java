@@ -28,13 +28,19 @@ public class EdificioListarAction extends ActionSupport{
 		EdificiosBean listaEdificios = new EdificiosBean();
 		EdificioAppl edifAppl = new EdificioAppl();
 		SessionFactory factory = HibernateUtil.getSessionFactory();
-		lista = (ArrayList<EdificioDTO>) edifAppl.getAllEdificios(factory);
-		listaEdificios.setEdificios(lista);
-		Map session = ActionContext.getContext().getSession();
-        session.put("lista",listaEdificios);
-        this.setSession(session);
+		try {
+			lista = (ArrayList<EdificioDTO>) edifAppl.getAllEdificios(factory);
+			listaEdificios.setEdificios(lista);
+			Map session = ActionContext.getContext().getSession();
+	        session.put("lista",listaEdificios);
+	        this.setSession(session);
+	        return SUCCESS;
+		} catch (Exception e) {
+			return ERROR;
+		}
 		
-		return SUCCESS;
+		
+		
 	}
 	
 	public void setSession(Map<String, Object> arg0) {
