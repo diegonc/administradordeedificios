@@ -108,7 +108,6 @@ function habilitarInputsPlazo(){
 			  			<td colspan="4"><input class="btn" type="submit" value="Add"  /></td>
 			  			</tr>
 			  		</table>
-			  	</legend>
 			</fieldset>
 		</form>
 	</td>
