@@ -1,38 +1,32 @@
 package actions;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.Map;
 
+import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
-
-import usuarios.dto.UsuarioDTO;
 import utilidades.HibernateUtil;
-
-import beans.EdificiosBean;
-import beans.UsuariosBean;
-
+import beans.GastosBean;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
+import gastos.appl.GastosAppl;
+import gastos.dto.GastoDTO;
 
-import edificio.EdificioAppl;
-import edificio.EdificioDTO;
 
 @SuppressWarnings("serial")
-public class EdificioListarAction extends ActionSupport{
-	
+public class GastosModifAction extends ActionSupport {
 	private Map<String,Object> session;
 	
 	public String execute() {
-		ArrayList<EdificioDTO> lista = new ArrayList<EdificioDTO>();
-		EdificiosBean listaEdificios = new EdificiosBean();
-		EdificioAppl edifAppl = new EdificioAppl();
+		ArrayList<GastoDTO> lista = new ArrayList<GastoDTO>();
+		GastosBean listaGastos = new GastosBean();
+		GastosAppl gasAppl = new GastosAppl();
 		SessionFactory factory = HibernateUtil.getSessionFactory();
 		try {
-			lista = (ArrayList<EdificioDTO>) edifAppl.getAllEdificios(factory);
-			listaEdificios.setEdificios(lista);
+			//lista = (ArrayList<GastoDTO>) gasAppl.getAllEdificios(factory);
+			listaGastos.setEdificios(lista);
 			Map session = ActionContext.getContext().getSession();
-	        session.put("lista",listaEdificios);
+	        session.put("lista", listaGastos);
 	        this.setSession(session);
 	        return SUCCESS;
 		} catch (Exception e) {
@@ -44,4 +38,5 @@ public class EdificioListarAction extends ActionSupport{
 		// TODO Auto-generated method stub
 		this.session=arg0;
 	}
+
 }

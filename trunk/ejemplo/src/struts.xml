@@ -19,7 +19,7 @@
             <result name="success">/tipoDeGastos.jsp</result>              
         </action>
         <action name="GastosAction" class="actions.GastosAction">  
-            <result name="success">/gastos.jsp</result>              
+            <result name="success">/gastosAlta.jsp</result>              
         </action>
         <action name="EdificioAction" class="actions.EdificioAction">  
             <result name="success" type="redirectAction">EdificioListarAction</result>
