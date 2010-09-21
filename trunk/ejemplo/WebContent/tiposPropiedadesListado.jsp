@@ -21,14 +21,14 @@
 				<td><s:property value="divisor" /></td>
 				<td>
 					<s:url id="url" action="tiposPropiedadesFormulario!editar" escapeAmp="false">
-						<s:param name="nombreEdificio" value="nombreEdificio" />
+						<s:param name="nombreEdificio" value="[1].nombreEdificio" />
 						<s:param name="nombreTipo" value="nombreTipo" />
 					</s:url>
 					<a href="<s:property value='#url' />">Editar</a>
 				</td>
 				<td>
 					<s:url id="url" action="tiposPropiedadesFormulario!borrar" escapeAmp="false">
-						<s:param name="nombreEdificio" value="nombreEdificio" />
+						<s:param name="nombreEdificio" value="[1].nombreEdificio" />
 						<s:param name="nombreTipo" value="nombreTipo" />
 					</s:url>
 					<a href="<s:property value='#url' />">borrar</a>

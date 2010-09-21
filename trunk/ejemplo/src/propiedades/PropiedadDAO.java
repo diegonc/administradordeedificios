@@ -7,30 +7,28 @@ import org.hibernate.Transaction;
 import com.googlecode.s2hibernate.struts2.plugin.annotations.SessionTarget;
 import com.googlecode.s2hibernate.struts2.plugin.annotations.TransactionTarget;
 
-public class TipoPropiedadDAO {
-	
+public class PropiedadDAO {
 	@SessionTarget
 	Session session;
-	
+
 	@TransactionTarget
 	Transaction transaction;
 
-	public void grabar(TipoPropiedadDTO tipo) {
+	public void grabar(PropiedadDTO propiedad) {
 		try {
-			session.saveOrUpdate(tipo);
+			session.saveOrUpdate(propiedad);
 		} catch (HibernateException e) {
 			transaction.rollback();
 			throw e;
 		}
 	}
 
-	public void eliminar(TipoPropiedadDTO tipo) {
+	public void eliminar(PropiedadDTO propiedad) {
 		try {
-			session.delete(tipo);
+			session.delete(propiedad);
 		} catch (HibernateException e) {
 			transaction.rollback();
 			throw e;
 		}
 	}
-
 }

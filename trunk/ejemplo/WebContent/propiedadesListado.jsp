@@ -1,35 +1,23 @@
 <jsp:include page="/WEB-INF/jspf/header.jspf" />
-<style type="text/css">
-<!--
-	.contenido div {
-		padding: 1px; /* sin padding no se pinta correctamente el fondo. */ 
-	}
-
-	.titulo {
-		color:white;
-		background-color:black;
-	}
-
-	.titulo h3 {
-		text-align: center;
-		margin: 0;
-	}
-
-	.cuerpo {
-		background-color: grey;
-	}
-
--->
-</style>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <div class="contenido">
 	<div class="titulo">
-		<h3>Propiedades</h3>
+		<h3>[Edificio] » Propiedades</h3>
 	</div>
 	<div class="cuerpo">
-	<s:if test="lista.size() > 0">
+		<s:form action="propiedadesListado" method="GET">
+			<s:select label="Edificio" 
+				headerKey="-1" headerValue="-- Seleccione un edificio --"
+				list="listaEdificios" 
+				key="nombreEdificio" />
+			<s:if test="listaTiposPropiedades != null && listaTiposPropiedades.size() == 0">
+				<span>No se han definido tipos de propiedades para este edificio.</span>
+			</s:if>
+		<s:submit method="listar" value="Actualizar" />
+	</s:form>
+	<s:if test="(listaPropiedades != null) && (listaPropiedades.size() > 0)">
 		<table>
-		<s:iterator value="lista">
+		<s:iterator value="listaPropiedades" >
 			<tr>
 				<td><s:property value="nivel" /></td>
 				<td><s:property value="orden" /></td>
@@ -39,21 +27,35 @@
 					<s:property value="inquilino.dni" />
 				</td>
 				<td>
-					<s:property value="ubicacion" />
+					<s:property value="poderPropietario.dni" />
 				</td>
-				<td><s:property value="autoridad" /></td>
+				<td><s:property value="poderInquilino.dni" /></td>
 				<td>
-					<s:url id="url" action="responsablesFormulario!editar">
-						<s:param name="dni" value="dni" />
+					<s:url id="url" action="propiedadesFormulario!editar">
+						<s:param name="nombreEdificio" value="[1].nombreEdificio" />
+						<s:param name="nombreTipo" value="tipoPropiedad.nombreTipo" />
+						<s:param name="nivel" value="nivel" />
+						<s:param name="orden" value="orden" />
 					</s:url>
 					<a href="<s:property value='#url' />">Editar</a>
+				</td>
+				<td>
+					<s:url id="url" action="propiedadesFormulario!borrar">
+						<s:param name="nombreEdificio" value="[1].nombreEdificio" />
+						<s:param name="nombreTipo" value="tipoPropiedad.nombreTipo" />
+						<s:param name="nivel" value="nivel" />
+						<s:param name="orden" value="orden" />
+					</s:url>
+					<a href="<s:property value='#url' />">Borrar</a>
 				</td>
 			</tr>
 		</s:iterator>
 		</table>
 	</s:if>
-	<s:url id="url" action="responsablesFormulario!crear" />
-	<a href="<s:property value='#url' />">Agregar Responsable</a>
+	<s:url id="url" action="propiedadesFormulario!crear">
+		<s:param name="nombreEdificio" value="nombreEdificio" />
+	</s:url>
+	<a href="<s:property value='#url' />">Agregar</a>
 	</div>
 </div>
 <jsp:include page="/WEB-INF/jspf/footer.jspf" />
