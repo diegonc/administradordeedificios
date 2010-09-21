@@ -113,6 +113,12 @@
 			<interceptor-ref name="pppStackHibernate" />
 		</action>
 	</package>
-	
+
+	<constant name="hibernatePlugin.customSessionFactoryClass" value="utilidades.HibernateUtil" />
+	<constant name="hibernatePlugin.getSessionMethod" value="getSession" />
+	<constant name="hibernatePlugin.rebuildSessionFactoryMethod" value="rebuildSessionFactory" />
+	<constant name="hibernatePlugin.staticGetSessionMethod" value="true" />
+	<constant name="hibernatePlugin.closeSessionMethod" value="closeSession" />
+	<constant name="hibernatePlugin.useSessionObjectInCloseSessionMethod" value="true" />
 	<constant name="struts.devMode" value="true" />
 </struts>  
