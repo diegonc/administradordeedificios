@@ -3,6 +3,7 @@ package actions;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
 import propiedades.TipoPropiedadDAO;
@@ -72,10 +73,16 @@ public class TiposPropiedadesAction extends ActionSupport implements Preparable 
 
 	private void cargarListaEdificios() {
 		edificios = new ArrayList<String>();
-		for (Object o : session.createQuery("from EdificioDTO").list()) {
-			EdificioDTO edificio = (EdificioDTO) o;
-			edificios.add(edificio.getNombre());
+		
+		try {
+			for (Object o : session.createQuery("from EdificioDTO").list()) {
+				EdificioDTO edificio = (EdificioDTO) o;
+				edificios.add(edificio.getNombre());
+			}
+		} catch (HibernateException e) {
+			session.getTransaction().rollback();
 		}
+		
 	}
 
 	public String listar() {
@@ -141,7 +148,7 @@ public class TiposPropiedadesAction extends ActionSupport implements Preparable 
 	public String borrar() {
 		cargarTipoPropiedad(nombreTipo);
 		dao.eliminar(entidad);
-		return "borrar";
+		return SUCCESS;
 	}
 
 	public EdificioDTO getEdificioActual() {

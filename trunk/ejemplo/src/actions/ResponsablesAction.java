@@ -71,7 +71,7 @@ public class ResponsablesAction extends ActionSupport implements Preparable {
 	
 	public String borrar() {
 		dao.eliminar(dao.buscar(dni));
-		return "borrar";
+		return SUCCESS;
 	}
 
 }
