@@ -1,11 +1,12 @@
 package utilidades;
 
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
 
 public class HibernateUtil {
 	
-	  private static final SessionFactory sessionFactory = buildSessionFactory();
+	  private static SessionFactory sessionFactory = buildSessionFactory();
 
 	    private static SessionFactory buildSessionFactory() {
 	        try{
@@ -22,6 +23,19 @@ public class HibernateUtil {
 
 	    public static SessionFactory getSessionFactory() {
 	        return sessionFactory;
+	    }
+	    
+	    public static synchronized void rebuildSessionFactory() {
+	    	sessionFactory.close();
+	    	sessionFactory = buildSessionFactory();
+	    }
+	    
+	    public static synchronized Session getSession() {
+	    	return getSessionFactory().openSession();	
+	    }
+	    
+	    public static synchronized void closeSession(Session s) {
+	    	s.close();
 	    }
 
 }
