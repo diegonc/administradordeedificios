@@ -1,20 +1,20 @@
 <jsp:include page="/WEB-INF/jspf/header.jspf"></jsp:include>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<%@ page language="java" contentType="text/html" import="java.util.List"%>
+<%@ page language="java" contentType="text/html" import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html" import="usuarios.dto.UsuarioDTO"%>
-<%@ page language="java" contentType="text/html" import="usuarios.dto.PerfilDTO"%>
-<jsp:useBean id="perfilesBean" scope="session" class="beans.PerfilesBean"/>
+<%@ page language="java" contentType="text/html" import="edificio.*"%>
 <jsp:useBean id="user" scope="session" class="usuarios.dto.UsuarioDTO"/>
+<jsp:useBean id="edificios" scope="session" class="beans.EdificiosBean"/>
 
 <%
-	List<PerfilDTO> perfiles = perfilesBean.getPerfiles();
+	ArrayList<EdificioDTO> edificiosList = edificios.getEdificios();
 %>
 
 <script type="text/javascript">
+
 function habilitarEdificio(){
-	var opcion = document.getElementById("perfiles");
-	var edificios = document.getElementById("edificios");
-	edificios.disabled=(opcion.value == "presidente_consorcio")?"":"disabled";
+		var edificios = document.getElementById("edificios");
+		
 }
 function validar(){
 	validado=true;
@@ -55,7 +55,7 @@ function validar(){
 			 		<table>
 			 			<tr>
 					  		<td><label for="user.nombre">Nombre:</label></td>
-					  		<td> <input type="text" id="user.nombre" name="user.nombre"  value="%{user.nombre}"/><font color="red">*&nbsp;&nbsp;</font></td>
+					  		<td> <input type="text" id="user.nombre" name="user.nombre" /><font color="red">*&nbsp;&nbsp;</font></td>
 					  		<td><label for="user.apellido">Apellidos:</label></td>
 					  		<td> <input type="text" id="user.apellido" name="user.apellido" size="30" /><font color="red">*</font></td>
 					  	</tr>
@@ -72,21 +72,16 @@ function validar(){
 			 	  			<td> <input type="text" id="user.usuario" name="user.usuario"  /><font color="red">*&nbsp;&nbsp;</font></td>
 			 	  		</tr>
 			 	  		<tr>
-			 				<td><label for="perfiles">Perfil:</label></td> 
-			 				<td><select name ="perfiles" id="perfiles" onclick="habilitarEdificio()"> 
-						
-						<%	int idPerfil =0;
-							for (PerfilDTO it :perfiles) {%>
-								<option id="<%=idPerfil%>"><%=it.getDescripcion()%></option>
-						<% idPerfil++;
-						   }%>			 
-								</select>
+			 				<td><label for="perfiles">Perfiles:</label></td> 
+			 				<td colspan="3"> 
+								<s:checkboxlist  list="lista" name="perfilesSeleccionados" onclick="habilitarEdificio()"></s:checkboxlist>
 							</td>
+						</tr>
+						<tr>	
 							<td><label for="edificios">Edificio:</label></td>
-							<td><select name ="edificios" id="edificios" disabled="disabled">
-					  			<option value="ed0">Todos</option>
-								<%for (int i=1 ;i<20;i++){ %> 
-								<option value="ed"<%=i %>>Edificio <%=i %></option>
+							<td colspan="3"><select name ="edificios" id="edificios" disabled="disabled">
+					  			<%for (EdificioDTO edif: edificiosList){ %> 
+								<option value="<%=edif.getId() %>"><%=edif.getNombre() %></option>
 						  		<%} %>			 
 								</select>
 							</td>
