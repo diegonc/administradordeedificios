@@ -6,7 +6,7 @@ import javax.persistence.Table;
 
 @SuppressWarnings("serial")
 @Entity
-@Table(name="TIPO_GASTO_ORDINARIO")
+@Table(name="TIPO_GASTO_EXTRAORDINARIO")
 @PrimaryKeyJoinColumn(name="TIPO_GASTO_ID")
 public class TipoGastoExtraordinarioDTO extends TipoGastoDTO{
 
