@@ -1,9 +1,10 @@
+<%@ taglib prefix="s" uri="/struts-tags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml2/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>Nicolino Propiedades</title>
-    <link rel="stylesheet" href="/ejemplo/menu_style.css" type="text/css" />
+    <link rel="stylesheet" href="<s:url value='/menu_style.css'/>" type="text/css" />
 </head>
 <body>
 
@@ -24,13 +25,10 @@
 	</li>
 	<li class="top"><a href="#" class="top_link"><span>Edificios</span></a>
 		<ul class="sub">
-			<li><a href="#">Tipos de Propiedades</a></li>
-			<li><a href="#">Propiedades</a></li>
+			<li><a href="<s:url action='tiposPropiedadesListado'/>">Tipos de Propiedades</a></li>
+			<li><a href="<s:url action='propiedadesListado'/>">Propiedades</a></li>
             <li><a href="EdificioListarAction">Edificios</a></li>
-			<li><a href="#">Propietarios</a></li>
-			<li><a href="#">Inquilinos</a></li>
-			<li><a href="#">Apoderados</a></li>
-			<li><a href="#">Gastos Periodicos</a></li>            
+			<li><a href="<s:url action='responsablesListado'/>">Responsables</a></li>            
 		</ul>
 	</li>
 	<li class="top"><a href="#" class="top_link"><span>Cobros</span></a>
