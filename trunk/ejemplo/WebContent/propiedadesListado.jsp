@@ -31,7 +31,7 @@
 				</td>
 				<td><s:property value="poderInquilino.dni" /></td>
 				<td>
-					<s:url id="url" action="propiedadesFormulario!editar">
+					<s:url id="url" action="propiedadesFormulario!editar" escapeAmp="false">
 						<s:param name="nombreEdificio" value="[1].nombreEdificio" />
 						<s:param name="nombreTipo" value="tipoPropiedad.nombreTipo" />
 						<s:param name="nivel" value="nivel" />
@@ -40,7 +40,7 @@
 					<a href="<s:property value='#url' />">Editar</a>
 				</td>
 				<td>
-					<s:url id="url" action="propiedadesFormulario!borrar">
+					<s:url id="url" action="propiedadesFormulario!borrar" escapeAmp="false">
 						<s:param name="nombreEdificio" value="[1].nombreEdificio" />
 						<s:param name="nombreTipo" value="tipoPropiedad.nombreTipo" />
 						<s:param name="nivel" value="nivel" />
