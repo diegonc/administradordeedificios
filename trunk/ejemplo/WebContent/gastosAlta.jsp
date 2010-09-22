@@ -17,16 +17,25 @@
 			 		<table border="0" cellpadding="0" cellspacing="0">
 			 			<tr><td colspan="6" height="10"></td></tr>
 			 			<tr>
+							<td></td>			 			
 				 			<td width="120" align="right"><label for="codigo">Edificio:</label> </td>
-				 			<td colspan="4" >&nbsp;&nbsp;<select id="edificio" name="edificio" /></select></td>
-				 		</tr>
-				 		<tr>	
+				 			<td  >&nbsp;&nbsp;<select id="edificio" name="edificio" /></select></td>				 			
 				 			<td align="right"><label for="gasto">Tipo de Gasto:</label> </td>
-				 			<td colspan="4">&nbsp;&nbsp;<select id="gasto" name="gasto" /></select></td>
+				 			<td colspan="2">&nbsp;&nbsp;<select id="gasto" name="gasto" /></select></td>
 			 			</tr>
+			 			<tr>
+			 				<td width="120"><label for="nroFolio" >Nro Folio :</label> </td>
+				 			<td><input type="text" id="nroFolio" name="nroFolio" size="9"></input></td>				 			
+				 			<td width="120" align="right"><label for="monto" >Monto:</label> </td>
+				 			<td >&nbsp;&nbsp;<input type="text" id="monto" name="monto" size="9" /></td>
+				 			<td width="120" align="right"><label for="detalle">Detalle:</label> </td>
+				 			<td  >&nbsp;&nbsp;<input type="text" id="detalle" name="detalle" /></td>
+			 			</tr>
+			 			
 			 			<tr><td colspan="6" height="10"></td></tr>
 				  		
 			 			<tr>
+			 				<td></td>		
 				 			<td><label for="previsional"></label><input type="radio" id="previsional" name="tipo_gasto" />Previsional</td>
 				 			<td align="right"><label for="anio">Anio:&nbsp;</label> </td>
 				  			<td><input type="text" id="anio" name="anio" disabled="disabled"/></td>
@@ -34,30 +43,17 @@
 				  			<td><input type="text" id="mes" name="mes" disabled="disabled"/></td>
 				 		</tr>
 				 		<tr>
+				 			<td></td>		
 				 			<td><label for="real"></label><input type="radio" id="real" name="tipo_gasto"/>Real &nbsp;</td>
-				 			<td width="120" align="right"><label for="razon_social">Razon Social:&nbsp;</label> </td>
+				 			<td align="right"><label for="razon_social">Razon Social:&nbsp;</label> </td>
 				  			<td><input type="text" id="razon_social" name="razon_social" disabled="disabled"/></td>
-				  			 <td colspan="2"></td>
+				  			<td colspan="2"></td>
 				 		</tr>	
 				 		
 				  		<tr><td colspan="6" height="10"></td></tr>
-				  		<tr>
-				  			<td> <span>Pago</span></td>	<td colspan="4"></td>
-				  		</tr>
-				  		<tr>	
-				  			<td align="right" ><label for="fecha">Fecha:&nbsp;</label>  </td>
-				  			<td colspan="4"><input type="text" id="fecha" name="fecha" /></td>
-				  		</tr>
-				  		<tr>	
-				  			<td align="right" ><label for="nrofactura" ></label>  Nro Factura:&nbsp;</td>
-				  			<td colspan="4"><input type="text" id="nroFactura" name="nroFactura" /></td>
-				  		</tr>
-				  		<tr>	
-				  			<td align="right"><label for="forma"></label>  Forma:&nbsp;</td>
-				  			<td colspan="4"><input type="text" id="forma" name="forma" /></td>
-				  		</tr>			  		
+				  					  		
 			  	  		<tr>
-			  			<td colspan="4"><input class="btn" type="submit" value="Add"  /></td>
+			  			<td colspan="5"><input class="btn" type="submit" value="Add"  /></td>
 			  			<td> <a href="gastos.jsp">Volver</a> </td>
 			  			</tr>
 			  		</table>
