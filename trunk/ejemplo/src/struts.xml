@@ -9,6 +9,7 @@
         <action name="UsuarioAction" class="actions.UsuarioAction">  
             <result name="success">/usuario.jsp</result>              
             <result name="add" type="redirectAction">GetListadoUsuariosAction</result>
+            <result name="actualizacion" type="redirectAction">GetListadoUsuariosAction</result>
             <result name="error">/usuario.jsp</result>
          </action>
         <action name="GetListadoUsuariosAction" class="actions.GetListadoUsuariosAction">
