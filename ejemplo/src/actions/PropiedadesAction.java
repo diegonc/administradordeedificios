@@ -8,12 +8,15 @@ import org.hibernate.Session;
 
 import propiedades.PropiedadDAO;
 import propiedades.PropiedadDTO;
+import propiedades.Responsable;
 import propiedades.ResponsableDAO;
 import propiedades.TipoPropiedadDTO;
 
 import com.googlecode.s2hibernate.struts2.plugin.annotations.SessionTarget;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.Preparable;
+import com.opensymphony.xwork2.interceptor.annotations.InputConfig;
+import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 
 import edificio.EdificioAppl;
 import edificio.EdificioDTO;
@@ -42,6 +45,7 @@ public class PropiedadesAction extends ActionSupport implements Preparable {
 	@SessionTarget
 	private Session session;
 	private PropiedadDAO dao = new PropiedadDAO();
+	private ResponsableDAO daoResp = new ResponsableDAO();
 	private EdificioAppl edificioAppl = new EdificioAppl();
 
 	/* Lista de edificios disponibles. */
@@ -56,7 +60,6 @@ public class PropiedadesAction extends ActionSupport implements Preparable {
 	private TipoPropiedadDTO tipoPropiedadActual;
 	/* Propiedad editada o creada. */
 	private PropiedadDTO entidad;
-	private ResponsableDAO daoResp;
 
 	public String getNombreEdificio() {
 		return nombreEdificio;
@@ -169,12 +172,16 @@ public class PropiedadesAction extends ActionSupport implements Preparable {
 			return SUCCESS;
 		}
 		
+		cargarListaTiposPropiedades();
+		return "edicion";
+	}
+
+	private void cargarListaTiposPropiedades() {
 		listaTiposPropiedades = new ArrayList<String>();
 		if (edificioActual != null) {
 			for (TipoPropiedadDTO tipo : edificioActual.getTipoPropiedades())
 				listaTiposPropiedades.add(tipo.getNombreTipo());
 		}
-		return "edicion";
 	}
 
 	private void cargarEdificio(String nombreEdificio) {
@@ -222,11 +229,7 @@ public class PropiedadesAction extends ActionSupport implements Preparable {
 
 	public String crear() {
 		cargarEdificio(nombreEdificio);
-		listaTiposPropiedades = new ArrayList<String>();
-		if (edificioActual != null) {
-			for (TipoPropiedadDTO tipo : edificioActual.getTipoPropiedades())
-				listaTiposPropiedades.add(tipo.getNombreTipo());
-		}
+		cargarListaTiposPropiedades();
 		return "edicion";
 	}
 
@@ -240,10 +243,25 @@ public class PropiedadesAction extends ActionSupport implements Preparable {
 		}
 
 	}
+	
+	public void validateGrabar() {
+		if (entidad.getPropietario() == null)
+			addFieldError("propietario", "El responsable no existe.");
+	}
 
+	@InputConfig(methodName="validationErrors")
 	public String grabar() {
-		dao.grabar(entidad);
+		try {
+			dao.grabar(entidad);
+		} catch (Exception e) {
+			return validationErrors();
+		}
 		return SUCCESS;
+	}
+	
+	public String validationErrors() {
+		cargarListaTiposPropiedades();
+		return "edicion";
 	}
 
 	public String borrar() {
@@ -252,6 +270,20 @@ public class PropiedadesAction extends ActionSupport implements Preparable {
 		cargarPropiedad(entidad.getNivel(), entidad.getOrden());
 		dao.eliminar(entidad);
 		return SUCCESS;
+	}
+	
+	@RequiredStringValidator(message="El campo es obligatorio.")
+	public void setPropietario(String dni) {
+		if (dni.trim().length() > 0) {
+			Responsable resp = daoResp.buscar(Integer.decode(dni));
+			entidad.setPropietario(resp);
+		}
+	}
+	
+	public String getPropietario() {
+		if (entidad != null && entidad.getPropietario() != null)
+			return entidad.getPropietario().getDni().toString();
+		return null;
 	}
 
 }
