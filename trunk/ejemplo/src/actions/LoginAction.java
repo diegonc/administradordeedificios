@@ -50,7 +50,7 @@ public class LoginAction extends ActionSupport {
     	
     	if (!this.username.isEmpty()&&!this.password.isEmpty()){
     		
-    		List<UsuarioDTO> unicoUser = userAppl.getUsuarios(username);
+    		List<UsuarioDTO> unicoUser = userAppl.getUsuarioByName(username);
     		if (unicoUser.isEmpty()){
     			addActionError("Datos invalidos"); 
     			return "error";
