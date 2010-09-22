@@ -27,7 +27,5 @@
 		<tr><td height="5" bgcolor="#383838" colspan="3"></td></tr>
 	</table>
 	<s:actionerror cssClass="error"/>
-</div>
-  
-</body>  
+
 <jsp:include page="/WEB-INF/jspf/footer.jspf"></jsp:include>
