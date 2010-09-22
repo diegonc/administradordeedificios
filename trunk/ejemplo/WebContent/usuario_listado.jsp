@@ -1,11 +1,9 @@
 <jsp:include page="/WEB-INF/jspf/header.jspf"></jsp:include>
-<%@ page language="java" contentType="text/html" import="java.util.*"%>
+<%@ page language="java" contentType="text/html" import="java.util.List"%>
 <%@ page language="java" contentType="text/html" import="usuarios.dto.*"%>
 <jsp:useBean id="listado" scope="session" class="beans.UsuariosBean"/>
+<%List<UsuarioDTO> usuarios = listado.getUsers();%>
 
-<%
-	List<UsuarioDTO> usuarios = listado.getUsers();
-%>
 <table  cellpadding="0" cellspacing="0" >
 <tr>
 	<td width="5"  class="borde"></td>
@@ -17,30 +15,32 @@
 <tr>
 	<td width="5"  class="borde"></td>
 	<td width="800" align="center">
-		<table width="500" border="1" class="listado" >
-			<tr>
-				<td>Usuario</td>
-				<td>Password</td>
-				<td>Perfil</td>
-				<td>Nombre</td>
-				<td>Apellido</td>
-				<td>DNI</td>
-				<td></td>
-			</tr>	
-		<%for (UsuarioDTO usuarioDTO : usuarios) {  %>		
-			<tr>
-				<td><%= usuarioDTO.getUsuario()%></td>
-				<td><%= usuarioDTO.getPassword()%></td>
-				<td><%= usuarioDTO.getPerfil().getDescripcion()%></td>
-				<td><%= usuarioDTO.getNombre()%></td>
-				<td><%= usuarioDTO.getApellido()%></td>
-				<td><%= usuarioDTO.getDni()%></td>
-				<td><a href="UsuarioAction?+dni=<%=usuarioDTO.getDni()%>">Modificar</a></td>
-				<td><a href="UsuarioAction">Eliminar</a></td>		
-			</tr>	
-		<%} %>			
-			
-		</table> 
+		<form class="elegante" id="usuarioAlta" name="usuarioAlta" action="UsuarioAction!grabar">
+				<table width="500" border="1" class="listado" >
+					<tr>
+						<td>Usuario</td>
+						<td>Password</td>
+						<td>Perfil</td>
+						<td>Nombre</td>
+						<td>Apellido</td>
+						<td>DNI</td>
+						<td></td>
+					</tr>	
+				<%for (UsuarioDTO usuarioDTO : usuarios) {  %>		
+					<tr>
+						<td><%= usuarioDTO.getUsuario()%></td>
+						<td><%= usuarioDTO.getPassword()%></td>
+						<td><%--= usuarioDTO.getPerfil().getDescripcion()--%></td>
+						<td><%= usuarioDTO.getNombre()%></td>
+						<td><%= usuarioDTO.getApellido()%></td>
+						<td><%= usuarioDTO.getDni()%></td>
+						<td><a href="GetListadoUsuariosAction!editar?id=<%=usuarioDTO.getId()%>">Modificar</a></td>
+						<td><a href="GetListadoUsuariosAction!eliminar?&id=<%=usuarioDTO.getId()%>" >Eliminar</a></td>		
+					</tr>	
+				<%} %>			
+					
+				</table>
+			</form> 
 		<a href="UsuarioAction">Agregar Usuario</a>
 	</td>
 	<td width="5" class="borde"></td>
