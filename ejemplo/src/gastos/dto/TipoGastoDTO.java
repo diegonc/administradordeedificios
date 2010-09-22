@@ -13,6 +13,7 @@ public class TipoGastoDTO implements Serializable {
 	private int id;
 	private String codigo;
 	private String descripcion;
+	
 		
 	@Id 
 	@GeneratedValue
