@@ -3,7 +3,7 @@
 <div class="contenido">
 	<s:actionerror />
 	<s:actionmessage />
-	<s:form action="responsablesFormulario!grabar" method="post">
+	<s:form action="responsablesFormulario!grabar" method="post"  class="elegante">
 	    <s:textfield name="entidad.dni" value="%{entidad.dni}" label="DNI" size="40" />
 	    <s:textfield name="entidad.telefono" value="%{entidad.telefono}" label="Telefono" size="40" />
 	    <s:textfield name="entidad.email" value="%{entidad.email}" label="Email" size="40" />
