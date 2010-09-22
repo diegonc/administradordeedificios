@@ -9,8 +9,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import edificio.EdificioDTO;
@@ -33,7 +34,7 @@ public class UsuarioDTO  implements Serializable{
 	
 	private EdificioDTO edificio;
 	
-	private List<UsuarioPerfilDTO> perfiles;
+	private List<PerfilDTO> perfiles;
 	
 	private int id;
 	
@@ -48,17 +49,18 @@ public class UsuarioDTO  implements Serializable{
 		this.id = id;
 	}
 
-	@OneToMany
-	@JoinColumn(name="ID")
-	public List<UsuarioPerfilDTO> getPerfiles() {
+	@ManyToMany
+	@JoinTable(name = "USUARIO_PERFIL",
+	    joinColumns = {@JoinColumn(name="ID_USUARIO")},
+	    inverseJoinColumns = {@JoinColumn(name="ID_PERFIL")})
+	public List<PerfilDTO> getPerfiles() {
 		return perfiles;
 	}
-
-	public void setPerfiles(List<UsuarioPerfilDTO> perfiles) {
+	
+	public void setPerfiles(List<PerfilDTO> perfiles) {
 		this.perfiles = perfiles;
 	}
 
-	
 	@Column(name="NOMBRE",nullable=false)
 	public String getNombre() {
 		return nombre;
