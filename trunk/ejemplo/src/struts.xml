@@ -76,6 +76,9 @@
                   <param name="excludeParams">dojo\..*,^struts\..*</param>
                 </interceptor-ref>
                 <interceptor-ref name="conversionError"/>
+                <interceptor-ref name="validation">
+                    <param name="excludeMethods">crear,editar,input,back,cancel,browse</param>
+                </interceptor-ref>
                 <interceptor-ref name="workflow">
                     <param name="excludeMethods">input,back,cancel,browse</param>
                 </interceptor-ref>
@@ -84,7 +87,6 @@
 			<interceptor-stack name="pppStackHibernate">
 				<interceptor-ref name="hibernateSessionInterceptor"/>
 				<interceptor-ref name="pppStack"/>
-				<interceptor-ref name="hibernateValidatorInterceptor"/>
 		    </interceptor-stack>
 		</interceptors>
 
