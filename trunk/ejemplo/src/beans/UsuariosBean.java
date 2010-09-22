@@ -7,6 +7,16 @@ public class UsuariosBean {
 	
 	private List<UsuarioDTO> users;
 
+	private UsuarioDTO usuarioUnico;
+	
+	public UsuarioDTO getUsuarioUnico() {
+		return usuarioUnico;
+	}
+
+	public void setUsuarioUnico(UsuarioDTO usuarioUnico) {
+		this.usuarioUnico = usuarioUnico;
+	}
+
 	public List<UsuarioDTO> getUsers() {
 		return users;
 	}
