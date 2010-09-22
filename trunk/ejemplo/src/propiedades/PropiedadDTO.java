@@ -1,11 +1,14 @@
 package propiedades;
 
 import java.io.Serializable;
-import java.util.Set;
 
-import javax.persistence.*;
-
-import expensas.ExpensaDTO;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Version;
 
 @SuppressWarnings("serial")
 @Entity
@@ -26,18 +29,7 @@ public class PropiedadDTO implements Serializable{
 	private Responsable poderPropietario;
 	private Responsable poderInquilino;
 	
-	/*
-	private Set<ExpensaDTO> expensas;
 		
-	@OneToMany(mappedBy="ID_PROPIEDAD")	
-	public Set<ExpensaDTO> getExpensas() {
-		return expensas;
-	}
-	public void setExpensas(Set<ExpensaDTO> expensas) {
-		this.expensas = expensas;
-	}
-	*/
-	
 	@Id 
 	@GeneratedValue
 	@Column(name="ID",unique=true,nullable=false)

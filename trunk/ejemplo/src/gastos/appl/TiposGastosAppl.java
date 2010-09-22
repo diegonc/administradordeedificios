@@ -40,6 +40,7 @@ public class TiposGastosAppl {
         return tipoGasto;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<TipoGastoDTO> getAllTipoGasto()
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();

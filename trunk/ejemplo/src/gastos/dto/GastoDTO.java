@@ -48,7 +48,7 @@ public class GastoDTO implements Serializable{
 	}
 	
 	@ManyToOne
-	@JoinColumn(name="CODIGO_TIPO_GASTO",nullable=false)
+	@JoinColumn(name="ID_TIPO_GASTO",nullable=false)
 	public TipoGastoDTO getTipoGasto() {
 		return tipoGasto;
 	}
