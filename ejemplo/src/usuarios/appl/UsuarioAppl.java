@@ -1,4 +1,5 @@
 package usuarios.appl;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -6,6 +7,7 @@ import org.hibernate.Session;
 
 import usuarios.dto.PerfilDTO;
 import usuarios.dto.UsuarioDTO;
+import usuarios.dto.UsuarioPerfilDTO;
 import utilidades.HibernateUtil;
 
 public class UsuarioAppl {
@@ -162,8 +164,7 @@ public class UsuarioAppl {
         perfil.setDescripcion(perfilNuevo.getDescripcion());
         session.update(perfil);
         session.getTransaction().commit();
-        HibernateUtil.getSessionFactory().close();
-		
+        HibernateUtil.getSessionFactory().close();		
 	}
 	
 	public PerfilDTO getPerfil(int idPerfil)
@@ -183,6 +184,17 @@ public class UsuarioAppl {
 		return q.list();
 	}
 	
+	
+	@SuppressWarnings("unchecked")
+	public List<PerfilDTO> getPerfilesByUsuario(int idUsuario)
+	{
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Query q = session.createQuery("select p from PerfilDTO p order by p.descripcion ");
+		HibernateUtil.getSessionFactory().close();
+		return q.list();
+	}
+	
+	
 	@SuppressWarnings("unchecked")
 	public List<UsuarioDTO> getUsuarios()
 	{
@@ -193,7 +205,7 @@ public class UsuarioAppl {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<UsuarioDTO> getUsuarios(String username)
+	public List<UsuarioDTO> getUsuarioByName(String username)
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Query q = session.createQuery("select u from UsuarioDTO u  where u.usuario= :username");
@@ -202,41 +214,66 @@ public class UsuarioAppl {
 		return q.list();
 	}
 	
+	@SuppressWarnings("unchecked")
+	public UsuarioDTO getUsuario(Integer id)
+	{
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Query q = session.createQuery("select u from UsuarioDTO u  where u.id= :id");
+		q.setInteger("id",id);
+		HibernateUtil.getSessionFactory().close();
+		if (!q.list().isEmpty())
+		return (UsuarioDTO) q.list().get(0);
+		return new UsuarioDTO();
+	}
+	
 	
 	public static void main(String[] args) {
 		
 		UsuarioAppl usuarioAppl = new UsuarioAppl();
 		
-		//PerfilDTO perfil = new PerfilDTO();
-		//perfil.setDescripcion("Responsable de Gastos");
-		//usuarioAppl.addPerfil(perfil);
+		PerfilDTO perfil1 = usuarioAppl.getPerfil(3);
+		PerfilDTO perfil2 = usuarioAppl.getPerfil(4);
+		PerfilDTO perfil3 = usuarioAppl.getPerfil(1);
 		
-		
-		//usuarioAppl.removePerfil(5);
-		
-		//usuarioAppl.updatePerfil(5, perfil);
-		
-		
-		/*PerfilDTO perfil = usuarioAppl.getPerfil(3);
-		System.out.println(perfil.toString());
-		
+							
 		UsuarioDTO usuario = new UsuarioDTO();
-		usuario.setPerfil(perfil);
-		usuario.setDni(30761872);
+		usuario.setDni(307610082);
 		usuario.setApellido("Perez Staltari");
 		usuario.setNombre("Dario");
 		usuario.setPassword("dario");
-		usuario.setUsuario("user2");
+		usuario.setUsuario("user29");
 		
-		usuarioAppl.addUsuario(usuario);*/
+		usuarioAppl.addUsuario(usuario);
+		UsuarioPerfilDTO up1 = new UsuarioPerfilDTO();
+		up1.setPerfil(perfil1);
+		up1.setUsuario(usuario);
 		
-		List<PerfilDTO> perfiles = usuarioAppl.getPerfiles();
+		UsuarioPerfilDTO up2 = new UsuarioPerfilDTO();
+		up2.setPerfil(perfil2);
+		up2.setUsuario(usuario);
+		
+		UsuarioPerfilDTO up3 = new UsuarioPerfilDTO();
+		up3.setPerfil(perfil3);
+		up3.setUsuario(usuario);
+		
+		
+		List<UsuarioPerfilDTO> perfiles = new ArrayList<UsuarioPerfilDTO>();
+		
+		perfiles.add(up1);
+		perfiles.add(up2);
+		perfiles.add(up3);
+		
+		usuario.setPerfiles(perfiles);		
+		
+		//usuarioAppl.addUsuario(usuario);
+		
+		/*List<PerfilDTO> perfiles = usuarioAppl.getPerfiles();
 		
 		for(PerfilDTO p: perfiles)
 		{
 			System.out.println(p.toString());
 		}
-		
+		*/
 		
 		
 		//usuarioAppl.removeUsuario(1);

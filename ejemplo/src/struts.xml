@@ -12,7 +12,9 @@
             <result name="error">/usuario.jsp</result>
          </action>
         <action name="GetListadoUsuariosAction" class="actions.GetListadoUsuariosAction">
-               <result name="success">/usuario_listado.jsp</result>              
+               <result name="success">/usuario_listado.jsp</result>   
+               <result name="eliminar" type="redirectAction">GetListadoUsuariosAction</result>
+               <result name="edicion">/usuarioEditar.jsp</result>
          </action> 
          
   		<action name="TipoDeGastosAction" class="actions.TipoDeGastosAction">  
