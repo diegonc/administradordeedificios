@@ -2,6 +2,7 @@ package usuarios.dto;
 
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,7 +10,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import edificio.EdificioDTO;
 
 
 @SuppressWarnings("serial")
@@ -27,7 +31,9 @@ public class UsuarioDTO  implements Serializable{
 	
 	private String usuario;
 	
-	private PerfilDTO perfil;
+	private EdificioDTO edificio;
+	
+	private List<UsuarioPerfilDTO> perfiles;
 	
 	private int id;
 	
@@ -42,6 +48,17 @@ public class UsuarioDTO  implements Serializable{
 		this.id = id;
 	}
 
+	@OneToMany
+	@JoinColumn(name="ID")
+	public List<UsuarioPerfilDTO> getPerfiles() {
+		return perfiles;
+	}
+
+	public void setPerfiles(List<UsuarioPerfilDTO> perfiles) {
+		this.perfiles = perfiles;
+	}
+
+	
 	@Column(name="NOMBRE",nullable=false)
 	public String getNombre() {
 		return nombre;
@@ -86,16 +103,14 @@ public class UsuarioDTO  implements Serializable{
 	}
 	
 	@ManyToOne
-	@JoinColumn(name="ID_PERFIL",nullable=false)
-	public PerfilDTO getPerfil() {
-		return perfil;
+	@JoinColumn(name="ID_EDIFICIO",nullable=true)
+	public EdificioDTO getEdificio() {
+		return edificio;
 	}
 	
-	public void setPerfil(PerfilDTO perfil) {
-		this.perfil = perfil;
+	public void setEdificio(EdificioDTO edificio) {
+		this.edificio = edificio;
 	}
 
-	
-	
-		
+				
 }

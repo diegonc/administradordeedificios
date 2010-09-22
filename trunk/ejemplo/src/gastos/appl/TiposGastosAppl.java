@@ -4,7 +4,9 @@ import gastos.dto.TipoGastoDTO;
 import gastos.dto.TipoGastoMontoFijoDTO;
 
 import java.util.Date;
+import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 
 import utilidades.HibernateUtil;
@@ -36,6 +38,14 @@ public class TiposGastosAppl {
 		TipoGastoDTO tipoGasto = (TipoGastoDTO) session.load(TipoGastoDTO.class, idTipoGasto);
         HibernateUtil.getSessionFactory().close();
         return tipoGasto;
+	}
+	
+	public List<TipoGastoDTO> getAllTipoGasto()
+	{
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Query q = session.createQuery("select tg from TipoGastoDTO tg order by tg.descripcion ");
+		HibernateUtil.getSessionFactory().close();
+		return q.list();
 	}
 
 	/*	public void updateTipoGasto(int idTipoGasto,TipoGastoDTO tipoGastoNuevo)

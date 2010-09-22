@@ -48,6 +48,8 @@
      <!-- package usuarios -->
     <mapping class="usuarios.dto.PerfilDTO"/>
     <mapping class="usuarios.dto.UsuarioDTO"/>
+    <mapping class="usuarios.dto.UsuarioPerfilDTO"/>
+    
     
         
     
