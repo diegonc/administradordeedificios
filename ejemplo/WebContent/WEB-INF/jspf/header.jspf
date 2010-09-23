@@ -41,7 +41,7 @@
 	</li>
 	<li class="top"><a href="#" class="top_link"><span>Gastos</span></a>
 		<ul class="sub">
-			<li><a href="tipoDeGastos.jsp">Registrar</a></li>
+			<li><a href="GetListadoTipoDeGastoAction">Tipo de Gastos</a></li>
             <li><a href="#">Consolidar</a></li>
             <li><a href="#">Consultas</a></li>
                         
