@@ -71,3 +71,11 @@ table.listado{border-color: teal; border-width: 2;}
 .error {
 	color:red;
 }
+.listado_impar{
+	background-color:#F0F0F0;
+	width: 200;
+}
+.listado_par{
+	background-color:silver;
+	width: 200;
+}
