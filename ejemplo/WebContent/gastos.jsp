@@ -2,7 +2,6 @@
 <%@ page language="java" contentType="text/html" import="java.util.*"%>
 <%@ page language="java" contentType="text/html" import="edificio.*"%>
 <jsp:useBean id="lista" scope="session" class="beans.EdificiosBean"/>
-
 <%
 	ArrayList<EdificioDTO> edificios = lista.getEdificios();
 %>
@@ -34,7 +33,7 @@
 				<td><%= edificioDTO.getNombre()%></td>
 				<td><a href="gastosConsulta.jsp?id=<%= edificioDTO.getId()%>">Consultar</a></td>
 				<td><a href="gastosAlta.jsp?id=<%= edificioDTO.getId()%>">Agregar</a></td>	
-				<td><a href="gastosModifElim.jsp?id=<%= edificioDTO.getId()%>">Eliminar/Modificar</a></td>		
+				<td><a href="GastosListarModifElimAction?id=<%= edificioDTO.getId()%>">Eliminar/Modificar</a></td>		
 			</tr>	
 		<%} %>				
 		
