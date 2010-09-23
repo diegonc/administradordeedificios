@@ -13,8 +13,12 @@
 <script type="text/javascript">
 
 function habilitarEdificio(){
-		var edificios = document.getElementById("edificios");
-		
+	
+	var edificios = document.getElementById("user.edificio.id");	
+	var perfilesSeleccionados = document.getElementsByName("perfilesSeleccionados");
+	edificios.disabled=perfilesSeleccionados[1].checked==true?"":"disabled";
+	
+	
 }
 function validar(){
 	validado=true;
@@ -25,6 +29,8 @@ function validar(){
 	var apellido = document.getElementById("user.apellido");
 	var dni = document.getElementById("user.dni");
 	var contrasena = document.getElementById("user.password");
+	var perfilesSeleccionados = document.getElementsByName("perfilesSeleccionados");
+	
 	if(nombre.value==""){ alert("Debe completar el nombre"); validado=false;}
 	if(validado==true)if(apellido.value==""){ alert("Debe completar el apellido"); validado=false;}
 	if(validado==true)if(user.value==""){ alert("Debe completar el nombre de usuario"); validado=false;}
@@ -32,6 +38,19 @@ function validar(){
 	if(validado==true)if(isNaN(dni.value)){ alert("El dni debe ser un valor numerico"); validado=false;}
 	if(validado==true)if(contrasena.value==""){ alert("Debe completar la contrasena");validado=false;}
 	
+	if(validado==true){
+		var i=1;
+		var perfilCheck = false;
+		for (i=0;i<5;i++){
+			if (perfilesSeleccionados[i].checked==true){
+				perfilCheck=true;
+			}
+		}
+		if (perfilCheck==false) {
+			alert("Debe asignar algun perfil");
+			validado=false;
+		}
+	}
 	if (validado==false)return false;
 	document.usuarioAlta.submit();
 	return true;
@@ -72,14 +91,14 @@ function validar(){
 			 	  			<td> <input type="text" id="user.usuario" name="user.usuario"  /><font color="red">*&nbsp;&nbsp;</font></td>
 			 	  		</tr>
 			 	  		<tr>
-			 				<td><label for="perfiles">Perfiles:</label></td> 
+			 				<td><label for="perfilesSeleccionados">Perfiles:</label></td> 
 			 				<td colspan="3"> 
-								<s:checkboxlist  list="lista" name="perfilesSeleccionados" onclick="habilitarEdificio()"></s:checkboxlist>
+								<s:checkboxlist  list="lista" name="perfilesSeleccionados"  onclick="habilitarEdificio()"></s:checkboxlist>
 							</td>
 						</tr>
 						<tr>	
-							<td><label for="edificios">Edificio:</label></td>
-							<td colspan="3"><select name ="edificios" id="edificios" disabled="disabled">
+							<td><label for="user.edificio.id">Edificio:</label></td>
+							<td colspan="3"><select name ="user.edificio.id" id="user.edificio.id" disabled="disabled">
 					  			<%for (EdificioDTO edif: edificiosList){ %> 
 								<option value="<%=edif.getId() %>"><%=edif.getNombre() %></option>
 						  		<%} %>			 
