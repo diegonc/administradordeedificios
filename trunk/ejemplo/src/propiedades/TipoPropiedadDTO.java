@@ -19,6 +19,7 @@ public class TipoPropiedadDTO implements Serializable {
 	private double montoExp;
 	private double divisor;
 	private List<PropiedadDTO> propiedades;
+	private List<TipoPropiedadTipoGastoDTO> tipoGastos;
 
 	@Column(name = "NOMBRE_TIPO", nullable = false)
 	public String getNombreTipo() {
@@ -73,5 +74,14 @@ public class TipoPropiedadDTO implements Serializable {
 
 	public void setPropiedades(List<PropiedadDTO> propiedades) {
 		this.propiedades = propiedades;
+	}
+
+	@OneToMany(mappedBy = "tipoPropiedad")
+	public List<TipoPropiedadTipoGastoDTO> getTipoGastos() {
+		return tipoGastos;
+	}
+
+	public void setTipoGastos(List<TipoPropiedadTipoGastoDTO> tipoGastos) {
+		this.tipoGastos = tipoGastos;
 	}
 }

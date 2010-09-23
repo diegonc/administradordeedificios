@@ -8,12 +8,13 @@ import javax.persistence.*;
 
 @SuppressWarnings("serial")
 @Entity
-@Table(name="TIPO_PROPIEDAD_TIPO_GASTO")
+@Table(name="TIPO_PROPIEDAD_TIPO_GASTO",
+	uniqueConstraints=@UniqueConstraint(columnNames={"ID_TIPO_PROPIEDAD", "ID_TIPO_GASTO"}))
 public class TipoPropiedadTipoGastoDTO implements Serializable{
 
 	private TipoPropiedadDTO tipoPropiedad;
 	private TipoGastoDTO tipoGasto;
-	private double coeficienteDistribucion;
+	private Double coeficienteDistribucion;
 	private int id;
 	
 	
@@ -36,10 +37,10 @@ public class TipoPropiedadTipoGastoDTO implements Serializable{
 	}
 	
 	@Column(name="COEFICIENTE_DISTRIBUCION",nullable=true)
-	public double getCoeficienteDistribucion() {
+	public Double getCoeficienteDistribucion() {
 		return coeficienteDistribucion;
 	}
-	public void setCoeficienteDistribucion(double coeficienteDistribucion) {
+	public void setCoeficienteDistribucion(Double coeficienteDistribucion) {
 		this.coeficienteDistribucion = coeficienteDistribucion;
 	}
 	
