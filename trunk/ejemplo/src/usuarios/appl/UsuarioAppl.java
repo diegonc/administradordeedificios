@@ -79,11 +79,20 @@ public class UsuarioAppl {
 	@SuppressWarnings("unchecked")
 	public List<PerfilDTO> getPerfiles()
 	{
-		Query q = session.createQuery("select p from PerfilDTO p order by p.descripcion ");
+		Query q = session.createQuery("select p from PerfilDTO p order by p.id ");
 		return q.list();
 	}
 	
+	@SuppressWarnings("unchecked")
+	public PerfilDTO getPerfilByDescripcion(String descripcion)
+	{
+		System.out.println();
+		Query q = session.createQuery("select p from PerfilDTO p where p.descripcion =:descrip ");
+		q.setString("descrip", descripcion);
+		return (PerfilDTO) q.uniqueResult();
 		
+	}
+	
 	@SuppressWarnings("unchecked")
 	public List<UsuarioDTO> getUsuarios()
 	{
