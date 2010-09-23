@@ -16,8 +16,7 @@
 		<td width="5" class="borde"></td>
 	</tr>
 </table>
-<table id="tablaGastoGrales" height="300" cellpadding="0"
-	cellspacing="0" border="0">
+<table id="tablaEdificios" height="300" cellpadding="0" cellspacing="0" border="0">
 	<tr>
 		<td width="5" class="borde"></td>
 		<td width="15" class="fondo"></td>
@@ -31,7 +30,7 @@
 			</tr>	
 		<%for (EdificioDTO edificioDTO : edificios) {  %>		
 			<tr>
-				<td><%= edificioDTO.getNombre()%></td>
+				<td><a href="edificioVer.jsp?id=<%= edificioDTO.getId()%>"><%= edificioDTO.getNombre()%></a></td>
 				<td><a href="edificioModif.jsp?id=<%= edificioDTO.getId()%>">Modificar</a></td>	
 				<td><a href="edificioDelete.jsp?id=<%= edificioDTO.getId()%>">Eliminar</a></td>		
 			</tr>	

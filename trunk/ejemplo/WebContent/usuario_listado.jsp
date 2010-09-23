@@ -34,9 +34,7 @@
 						if ((i%2)==0)estilo = "listado_impar";
 						i++;
 						String idEdificio =(usuarioDTO.getEdificio()==null)?"--":usuarioDTO.getEdificio().getNombre();
-						List<PerfilDTO> perfiles = usuarioDTO.getPerfiles();
-						
-						
+						List<PerfilDTO> perfiles = usuarioDTO.getPerfiles();	
 				%>		
 					<tr>
 						<td class=<%=estilo%>><%= usuarioDTO.getUsuario()%></td>

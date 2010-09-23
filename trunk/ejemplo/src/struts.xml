@@ -24,6 +24,12 @@
         <action name="GastosAction" class="actions.GastosAction">  
             <result name="success">/gastosAlta.jsp</result>              
         </action>
+        <action name="EdificioGastosListarAction" class="actions.EdificioGastosListarAction">  
+            <result name="success">/gastos.jsp</result>             
+        </action>
+        <action name="GastosModifAction" class="actions.GastosModifAction">  
+            <result name="success">/gastosListado.jsp</result>              
+        </action>
         <action name="EdificioAction" class="actions.EdificioAction">  
             <result name="success" type="redirectAction">EdificioListarAction</result>
              <result name="error">/edificioError.jsp</result>               
