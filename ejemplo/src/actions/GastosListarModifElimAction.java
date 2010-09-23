@@ -14,7 +14,7 @@ import gastos.dto.GastoDTO;
 
 
 @SuppressWarnings("serial")
-public class GastosModifAction extends ActionSupport {
+public class GastosListarModifElimAction extends ActionSupport {
 	private Map<String,Object> session;
 	
 	public String execute() {
@@ -24,10 +24,10 @@ public class GastosModifAction extends ActionSupport {
 		SessionFactory factory = HibernateUtil.getSessionFactory();
 		try {
 			//lista = (ArrayList<GastoDTO>) gasAppl.getAllEdificios(factory);
-			listaGastos.setEdificios(lista);
-			Map session = ActionContext.getContext().getSession();
-	        session.put("lista", listaGastos);
-	        this.setSession(session);
+			//listaGastos.setEdificios(lista);
+			//Map session = ActionContext.getContext().getSession();
+	        //session.put("lista", listaGastos);
+	        //this.setSession(session);
 	        return SUCCESS;
 		} catch (Exception e) {
 			return ERROR;
