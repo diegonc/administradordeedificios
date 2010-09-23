@@ -16,26 +16,44 @@
 	<td width="5"  class="borde"></td>
 	<td width="800" align="center">
 		<form class="elegante" id="usuarioAlta" name="usuarioAlta" action="UsuarioAction!grabar">
-				<table width="500" border="1" class="listado" >
+				<table width="600" border="1" class="listado" cellpadding="0" cellspacing="0" >
 					<tr>
-						<td>Usuario</td>
-						<td>Password</td>
-						<td>Perfil</td>
-						<td>Nombre</td>
-						<td>Apellido</td>
-						<td>DNI</td>
-						<td></td>
+						<td class="listado_par">Usuario</td>
+						<td class="listado_par">Password</td>
+						<td class="listado_par">Nombre</td>
+						<td class="listado_par">Apellido</td>
+						<td class="listado_par">Dni</td>
+						<td class="listado_par">Perfiles</td>
+						<td class="listado_par">Depto</td>
+						<td class="listado_par"></td>
+						<td class="listado_par"></td>
 					</tr>	
-				<%for (UsuarioDTO usuarioDTO : usuarios) {  %>		
+				<%	int i=0;
+					for (UsuarioDTO usuarioDTO : usuarios) {
+						String estilo = "listado_par";
+						if ((i%2)==0)estilo = "listado_impar";
+						i++;
+						String idEdificio =(usuarioDTO.getEdificio()==null)?"--":usuarioDTO.getEdificio().getNombre();
+						List<PerfilDTO> perfiles = usuarioDTO.getPerfiles();
+						
+						
+				%>		
 					<tr>
-						<td><%= usuarioDTO.getUsuario()%></td>
-						<td><%= usuarioDTO.getPassword()%></td>
-						<td><%--= usuarioDTO.getPerfil().getDescripcion()--%></td>
-						<td><%= usuarioDTO.getNombre()%></td>
-						<td><%= usuarioDTO.getApellido()%></td>
-						<td><%= usuarioDTO.getDni()%></td>
-						<td><a href="GetListadoUsuariosAction!editar?id=<%=usuarioDTO.getId()%>">Modificar</a></td>
-						<td><a href="GetListadoUsuariosAction!eliminar?&id=<%=usuarioDTO.getId()%>" >Eliminar</a></td>		
+						<td class=<%=estilo%>><%= usuarioDTO.getUsuario()%></td>
+						<td class=<%=estilo%>><%= usuarioDTO.getPassword()%></td>
+						<td class=<%=estilo%>><%= usuarioDTO.getNombre()%></td>
+						<td class=<%=estilo%>><%= usuarioDTO.getApellido()%></td>
+						<td class=<%=estilo%>><%= usuarioDTO.getDni()%></td>
+						<td class=<%=estilo%> align="left">
+							<ul >
+									<%for(PerfilDTO p: perfiles){%>
+									<li ><%=p.getDescripcion()%> &nbsp;</li>
+								<%} %>
+							</ul>
+						</td>
+						<td class=<%=estilo%>><%= idEdificio%></td>	
+						<td class=<%=estilo%>><a href="GetListadoUsuariosAction!editar?id=<%=usuarioDTO.getId()%>">Modificar</a></td>
+						<td class=<%=estilo%>><a href="GetListadoUsuariosAction!eliminar?&id=<%=usuarioDTO.getId()%>" >Eliminar</a></td>		
 					</tr>	
 				<%} %>			
 					
