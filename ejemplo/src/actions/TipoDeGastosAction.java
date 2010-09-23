@@ -1,4 +1,12 @@
 package actions;
+import java.util.ArrayList;
+import java.util.Map;
+
+import org.hibernate.SessionFactory;
+
+import utilidades.HibernateUtil;
+import edificio.EdificioAppl;
+import edificio.EdificioDTO;
 import gastos.appl.TiposGastosAppl;
 import gastos.dto.TipoGastoDTO;
 import gastos.dto.TipoGastoEventualDTO;
@@ -6,9 +14,13 @@ import gastos.dto.TipoGastoExtraordinarioDTO;
 import gastos.dto.TipoGastoMontoFijoDTO;
 import gastos.dto.TipoGastoMontoVariableDTO;
 
+import beans.EdificiosBean;
+
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 
+@SuppressWarnings("serial")
 public class TipoDeGastosAction extends ActionSupport {
 	
 	private String codigo;
@@ -22,14 +34,15 @@ public class TipoDeGastosAction extends ActionSupport {
 	private String tipoMonto;
 	
 	private TipoGastoExtraordinarioDTO tgExtraordinario;
+	
 	private TipoGastoEventualDTO tgEventual;
+	
 	private TipoGastoMontoFijoDTO tgMontoFijo;
+	
 	private TipoGastoMontoVariableDTO tgMontoVariable;
 	
 	private TiposGastosAppl tipoGastoAppl = new TiposGastosAppl();
-	
-	
-	
+		
 	public TipoGastoExtraordinarioDTO getTgExtraordinario() {
 		return tgExtraordinario;
 	}
@@ -102,8 +115,26 @@ public class TipoDeGastosAction extends ActionSupport {
 		this.descripcion = descripcion;
 	}
 
+	public String actualizar(){
+		
+		return "actualizacion";
+	}
+	
+	@SuppressWarnings("unchecked")
+	public String cargaEdificios()
+	{
+		EdificiosBean listaEdificios = new EdificiosBean();
+		EdificioAppl edifAppl = new EdificioAppl();
+		SessionFactory factory = HibernateUtil.getSessionFactory();
+		ArrayList<EdificioDTO> listaE = (ArrayList<EdificioDTO>) edifAppl.getAllEdificios(factory);
+		listaEdificios.setEdificios(listaE);	
+		Map session = ActionContext.getContext().getSession();
+	    session.put("edificios",listaEdificios);
+	    return "cargaEdificios";
+	}
 	
 	public String execute() {
+		
 		TipoGastoDTO tipoGasto = null;
 		if (this.getTipoGasto().equals("extraordinario")){
 			this.tgExtraordinario.setCodigo(this.codigo);
@@ -126,6 +157,7 @@ public class TipoDeGastosAction extends ActionSupport {
 			this.tgMontoVariable.setCodigo(this.codigo);
 			this.tgMontoVariable.setDescripcion(this.descripcion);
 			this.tgMontoVariable.setPeriodo(this.tgMontoFijo.getPeriodo());
+			this.tgMontoVariable.setEdificio(this.tgMontoFijo.getEdificio());
 			tipoGasto=this.tgMontoVariable;
 	}
 		

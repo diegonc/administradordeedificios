@@ -87,9 +87,13 @@ public class TiposGastosAppl {
 		//tgmv.setProximoVencimiento(new Date());
 		
 		
-		gastosAppl.addTipoGasto(tgmf);		
+		//gastosAppl.addTipoGasto(tgmf);		
 		
-		//gastosAppl.removeTipoGasto(6);
+		gastosAppl.removeTipoGasto(1);
+		gastosAppl.removeTipoGasto(2);
+		gastosAppl.removeTipoGasto(3);
+		gastosAppl.removeTipoGasto(4);
+		gastosAppl.removeTipoGasto(8);
 		
 		//TipoGastoDTO tg = gastosAppl.getTipoGasto(6);
 		
