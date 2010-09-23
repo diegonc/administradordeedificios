@@ -100,12 +100,11 @@ public class UsuarioAction extends ActionSupport implements SessionAware {
 		ArrayList<EdificioDTO> listaE = (ArrayList<EdificioDTO>) edifAppl.getAllEdificios(factory);
 		listaEdificios.setEdificios(listaE);
 		   
-		
-		List<PerfilDTO> listaPerfiles =  usuarioAppl.getPerfiles();
-			
 		Map session = ActionContext.getContext().getSession();
 	    session.put("edificios",listaEdificios);
-               
+        
+	    List<PerfilDTO> listaPerfiles =  usuarioAppl.getPerfiles();
+	    
         this.lista= new ArrayList<String>();
         for (PerfilDTO p :listaPerfiles) {
         	lista.add(p.getDescripcion());

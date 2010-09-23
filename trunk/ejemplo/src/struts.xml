@@ -17,9 +17,16 @@
                <result name="eliminar" type="redirectAction">GetListadoUsuariosAction</result>
                <result name="edicion">/usuarioEditar.jsp</result>
          </action> 
-         
+         <action name="GetListadoTipoDeGastoAction" class="actions.GetListadoTipoDeGastoAction">
+               <result name="success">/tipoGasto_listado.jsp</result>   
+               <result name="eliminar" type="redirectAction">GetListadoTipoDeGastoAction</result>
+               <result name="edicion">/tipoGastoEditar.jsp</result>
+         </action> 
+                  
   		<action name="TipoDeGastosAction" class="actions.TipoDeGastosAction">  
-            <result name="success">/tipoDeGastos.jsp</result>              
+            <result name="success" type="redirectAction">GetListadoTipoDeGastoAction</result>              
+            <result name="cargaEdificios">/tipoDeGastos.jsp</result>
+            <result name="actualizacion" type="redirectAction">GetListadoTipoDeGastoAction</result>
         </action>
         <action name="GastosAction" class="actions.GastosAction">  
             <result name="success">/gastosAlta.jsp</result>              

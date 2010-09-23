@@ -14,7 +14,6 @@ import usuarios.dto.PerfilDTO;
 import usuarios.dto.UsuarioDTO;
 import utilidades.HibernateUtil;
 import beans.EdificiosBean;
-import beans.PerfilesBean;
 import beans.UsuariosBean;
 
 import com.opensymphony.xwork2.ActionContext;
@@ -112,8 +111,8 @@ public class GetListadoUsuariosAction extends ActionSupport implements SessionAw
 		return "edicion";
 	}
 	public String execute() {
-		UsuarioAppl usuarioAppl = new UsuarioAppl();
-		List<UsuarioDTO> listaUsuario = usuarioAppl.getUsuarios() ;
+		
+		List<UsuarioDTO> listaUsuario = userAppl.getUsuarios() ;
 			
 		UsuariosBean listado = new UsuariosBean();
 		listado.setUsers(listaUsuario);
