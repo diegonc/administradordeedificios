@@ -12,15 +12,9 @@
 <div>
 <ul class="menu">
 	<li class="top"><a href="home.jsp" class="top_link"><span>Home</span></a></li>
-
 	<li class="top"><a href="#" class="top_link"><span>Administraci&oacute;n</span></a>
 		<ul class="sub">
-			<li><a href="gastos_generales.jsp">Generales</a></li>			
-			<li><a href="gastos.jsp">Gastos </a></li>
-            <li><a href="#">Cobros Consolidados</a></li>
-            <li><a href="#">Expensas</a></li>
-            <li><a href="#">Planes</a></li>
-            <li><a href="GetListadoUsuariosAction" >Usuarios</a></li>
+			 <li><a href="GetListadoUsuariosAction" >Usuarios</a></li>
 		</ul>
 	</li>
 	<li class="top"><a href="#" class="top_link"><span>Edificios</span></a>
@@ -31,20 +25,10 @@
 			<li><a href="<s:url action='responsablesListado'/>">Responsables</a></li>            
 		</ul>
 	</li>
-	<li class="top"><a href="#" class="top_link"><span>Cobros</span></a>
-		<ul class="sub">
-			<li><a href="#">Expensas</a></li>
-            <li><a href="#">Planes de Pagos</a></li>
-            <li><a href="#">Consolidar</a></li>
-            <li><a href="#">Consultas</a></li>            
-		</ul>
-	</li>
 	<li class="top"><a href="#" class="top_link"><span>Gastos</span></a>
 		<ul class="sub">
 			<li><a href="GetListadoTipoDeGastoAction">Tipo de Gastos</a></li>
-            <li><a href="#">Consolidar</a></li>
-            <li><a href="#">Consultas</a></li>
-                        
+			<li><a href="gastos.jsp">Gastos </a></li>                    
 		</ul>
 	</li>
 	
