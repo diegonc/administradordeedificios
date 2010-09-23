@@ -15,7 +15,7 @@ public class GastoRealDTO extends GastoDTO{
 
 	private String razonSocial;
 	private Date fechaPago;
-	private int numeroFacturaPago;
+	private Integer numeroFacturaPago;
 	private String formaPago;
 		
 	
@@ -27,7 +27,7 @@ public class GastoRealDTO extends GastoDTO{
 		this.razonSocial = razonSocial;
 	}
 	
-	@Column(name="FECHA_PAGO",nullable=false)
+	@Column(name="FECHA_PAGO")
 	public Date getFechaPago() {
 		return fechaPago;
 	}
@@ -35,15 +35,15 @@ public class GastoRealDTO extends GastoDTO{
 		this.fechaPago = fechaPago;
 	}
 	
-	@Column(name="NRO_FACTURA_PAGO",nullable=false)
-	public int getNumeroFacturaPago() {
+	@Column(name="NRO_FACTURA_PAGO")
+	public Integer getNumeroFacturaPago() {
 		return numeroFacturaPago;
 	}
-	public void setNumeroFacturaPago(int numeroFacturaPago) {
+	public void setNumeroFacturaPago(Integer numeroFacturaPago) {
 		this.numeroFacturaPago = numeroFacturaPago;
 	}
 	
-	@Column(name="FORMA_PAGO",nullable=false)
+	@Column(name="FORMA_PAGO")
 	public String getFormaPago() {
 		return formaPago;
 	}

@@ -31,6 +31,18 @@
         <action name="GastosAction" class="actions.GastosAction">  
             <result name="success">/gastosAlta.jsp</result>              
         </action>
+        <action name="GastosListarModifElimAction" class="actions.GastosListarModifElimAction">  
+            <result name="success">/gastosModifElim.jsp</result>  
+             <result name="error">/gastoError.jsp</result>               
+        </action>
+        <action name="GastoRealDeleteAction" class="actions.GastoRealDeleteAction">  
+            <result name="success" type="redirectAction">EdificioGastosListarAction</result>  
+             <result name="error">/gastoError.jsp</result>               
+        </action>
+         <action name="GastoPrevisionDeleteAction" class="actions.GastoPrevisionDeleteAction">  
+            <result name="success" type="redirectAction">EdificioGastosListarAction</result>  
+             <result name="error">/gastoError.jsp</result>               
+        </action>  
         <action name="EdificioGastosListarAction" class="actions.EdificioGastosListarAction">  
             <result name="success">/gastos.jsp</result>             
         </action>
