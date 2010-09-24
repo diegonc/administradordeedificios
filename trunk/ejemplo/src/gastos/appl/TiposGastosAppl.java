@@ -140,7 +140,7 @@ public class TiposGastosAppl {
 		
 		tgmf.setDescripcion("Agua");
 		tgmf.setCodigo("AGUA");
-		tgmf.setDiaLimite(new Date());
+		tgmf.setDiaLimite(1);
 		tgmf.setMontoActual(76.45);
 		tgmf.setPeriodo("3/2010");
 				
