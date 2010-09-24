@@ -84,4 +84,17 @@ public class TipoPropiedadDTO implements Serializable {
 	public void setTipoGastos(List<TipoPropiedadTipoGastoDTO> tipoGastos) {
 		this.tipoGastos = tipoGastos;
 	}
+
+	public void addTipoGasto(TipoPropiedadTipoGastoDTO tptg) {
+		tptg.setTipoPropiedad(this);
+		tipoGastos.add(tptg);
+	}
+
+	public TipoPropiedadTipoGastoDTO getTipoGasto(String codigo) {
+		for (TipoPropiedadTipoGastoDTO tptg : tipoGastos) {
+			if (tptg.getTipoGasto().getCodigo().equals(codigo))
+				return tptg;
+		}
+		return null;
+	}
 }
