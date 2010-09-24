@@ -17,7 +17,7 @@
 
     alter table GASTO 
         drop 
-        foreign key FK40752F446FF4F2C;
+        foreign key FK40752F411C5FF6A;
 
     alter table GASTO_PREVISION 
         drop 
@@ -37,11 +37,11 @@
 
     alter table PROPIEDAD 
         drop 
-        foreign key FK7B382348340888E4;
+        foreign key FK7B38234894A43229;
 
     alter table PROPIEDAD 
         drop 
-        foreign key FK7B38234894A43229;
+        foreign key FK7B382348340888E4;
 
     alter table PROPIEDAD 
         drop 
@@ -50,6 +50,10 @@
     alter table TIPO_GASTO_EVENTUAL 
         drop 
         foreign key FKE7BAC7DCC53C9B5;
+
+    alter table TIPO_GASTO_EXTRAORDINARIO 
+        drop 
+        foreign key FKEAD5D4A36250324E;
 
     alter table TIPO_GASTO_MONTO_FIJO 
         drop 
@@ -85,7 +89,15 @@
 
     alter table USUARIO 
         drop 
-        foreign key FK22E07F0EC8D3214B;
+        foreign key FK22E07F0E38684391;
+
+    alter table USUARIO_PERFIL 
+        drop 
+        foreign key FK7299701DC8D3214B;
+
+    alter table USUARIO_PERFIL 
+        drop 
+        foreign key FK7299701D91B27973;
 
     drop table if exists EDIFICIO;
 
@@ -111,6 +123,8 @@
 
     drop table if exists TIPO_GASTO_EVENTUAL;
 
+    drop table if exists TIPO_GASTO_EXTRAORDINARIO;
+
     drop table if exists TIPO_GASTO_MONTO_FIJO;
 
     drop table if exists TIPO_GASTO_MONTO_VARIABLE;
@@ -125,7 +139,7 @@
 
     drop table if exists USUARIO;
 
-    drop table if exists factura1;
+    drop table if exists USUARIO_PERFIL;
 
     create table EDIFICIO (
         ID integer not null auto_increment,
@@ -178,7 +192,7 @@
         MONTO double precision not null,
         NRO_FOLIO integer not null,
         ID_EDIFICIO integer not null,
-        CODIGO_TIPO_GASTO integer not null,
+        ID_TIPO_GASTO integer not null,
         primary key (ID)
     ) type=InnoDB;
 
@@ -191,9 +205,9 @@
 
     create table GASTO_REAL (
         GASTO_ID integer not null,
-        FECHA_PAGO datetime not null,
-        FORMA_PAGO varchar(255) not null,
-        NRO_FACTURA_PAGO integer not null,
+        FECHA_PAGO datetime,
+        FORMA_PAGO varchar(255),
+        NRO_FACTURA_PAGO integer,
         RAZON_SOCIAL varchar(255) not null,
         primary key (GASTO_ID)
     ) type=InnoDB;
@@ -213,11 +227,11 @@
         NIVEL integer not null,
         ORDEN integer not null,
         version integer not null,
-        propietario_dni integer not null,
-        poderInquilino_dni integer,
-        poderPropietario_dni integer,
-        tipoPropiedad_ID integer not null,
         inquilino_dni integer,
+        poderInquilino_dni integer,
+        tipoPropiedad_ID integer not null,
+        poderPropietario_dni integer,
+        propietario_dni integer not null,
         primary key (ID)
     ) type=InnoDB;
 
@@ -237,10 +251,16 @@
         ID integer not null auto_increment unique,
         CODIGO varchar(255) not null,
         DESCRIPCION varchar(255) not null,
+        TIPO varchar(255) not null,
         primary key (ID)
     ) type=InnoDB;
 
     create table TIPO_GASTO_EVENTUAL (
+        TIPO_GASTO_ID integer not null,
+        primary key (TIPO_GASTO_ID)
+    ) type=InnoDB;
+
+    create table TIPO_GASTO_EXTRAORDINARIO (
         TIPO_GASTO_ID integer not null,
         primary key (TIPO_GASTO_ID)
     ) type=InnoDB;
@@ -285,7 +305,8 @@
         COEFICIENTE_DISTRIBUCION double precision,
         ID_TIPO_PROPIEDAD integer not null,
         ID_TIPO_GASTO integer not null,
-        primary key (ID)
+        primary key (ID),
+        unique (ID_TIPO_PROPIEDAD, ID_TIPO_GASTO)
     ) type=InnoDB;
 
     create table USUARIO (
@@ -295,15 +316,15 @@
         NOMBRE varchar(255) not null,
         PASSWORD varchar(255) not null,
         USUARIO varchar(255) not null,
-        ID_PERFIL integer not null,
+        ID_EDIFICIO integer,
         primary key (ID)
     ) type=InnoDB;
 
-    create table factura1 (
-        fa_id integer not null auto_increment,
-        fa_name varchar(255),
-        fa_version integer,
-        primary key (fa_id)
+    create table USUARIO_PERFIL (
+        ID integer not null auto_increment unique,
+        ID_USUARIO integer not null,
+        ID_PERFIL integer not null,
+        primary key (ID)
     ) type=InnoDB;
 
     alter table EXPENSA 
@@ -331,9 +352,9 @@
         references EDIFICIO (ID);
 
     alter table GASTO 
-        add index FK40752F446FF4F2C (CODIGO_TIPO_GASTO), 
-        add constraint FK40752F446FF4F2C 
-        foreign key (CODIGO_TIPO_GASTO) 
+        add index FK40752F411C5FF6A (ID_TIPO_GASTO), 
+        add constraint FK40752F411C5FF6A 
+        foreign key (ID_TIPO_GASTO) 
         references TIPO_GASTO (ID);
 
     alter table GASTO_PREVISION 
@@ -361,16 +382,16 @@
         references Responsable (dni);
 
     alter table PROPIEDAD 
-        add index FK7B382348340888E4 (inquilino_dni), 
-        add constraint FK7B382348340888E4 
-        foreign key (inquilino_dni) 
-        references Responsable (dni);
-
-    alter table PROPIEDAD 
         add index FK7B38234894A43229 (tipoPropiedad_ID), 
         add constraint FK7B38234894A43229 
         foreign key (tipoPropiedad_ID) 
         references TIPO_PROPIEDAD (ID);
+
+    alter table PROPIEDAD 
+        add index FK7B382348340888E4 (inquilino_dni), 
+        add constraint FK7B382348340888E4 
+        foreign key (inquilino_dni) 
+        references Responsable (dni);
 
     alter table PROPIEDAD 
         add index FK7B3823488F574992 (propietario_dni), 
@@ -383,6 +404,12 @@
         add constraint FKE7BAC7DCC53C9B5 
         foreign key (TIPO_GASTO_ID) 
         references TIPO_GASTO_ORDINARIO (TIPO_GASTO_ID);
+
+    alter table TIPO_GASTO_EXTRAORDINARIO 
+        add index FKEAD5D4A36250324E (TIPO_GASTO_ID), 
+        add constraint FKEAD5D4A36250324E 
+        foreign key (TIPO_GASTO_ID) 
+        references TIPO_GASTO (ID);
 
     alter table TIPO_GASTO_MONTO_FIJO 
         add index FK54EBABF6D7503EFE (TIPO_GASTO_ID), 
@@ -433,7 +460,19 @@
         references TIPO_GASTO (ID);
 
     alter table USUARIO 
-        add index FK22E07F0EC8D3214B (ID_PERFIL), 
-        add constraint FK22E07F0EC8D3214B 
+        add index FK22E07F0E38684391 (ID_EDIFICIO), 
+        add constraint FK22E07F0E38684391 
+        foreign key (ID_EDIFICIO) 
+        references EDIFICIO (ID);
+
+    alter table USUARIO_PERFIL 
+        add index FK7299701DC8D3214B (ID_PERFIL), 
+        add constraint FK7299701DC8D3214B 
         foreign key (ID_PERFIL) 
         references PERFIL (ID);
+
+    alter table USUARIO_PERFIL 
+        add index FK7299701D91B27973 (ID_USUARIO), 
+        add constraint FK7299701D91B27973 
+        foreign key (ID_USUARIO) 
+        references USUARIO (ID);
