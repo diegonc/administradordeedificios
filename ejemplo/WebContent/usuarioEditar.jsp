@@ -20,7 +20,9 @@ function habilitarEdificio(){
 	var edificios = document.getElementById("user.edificio.id");	
 	var perfilesSeleccionados = document.getElementsByName("perfilesSeleccionados");
 	edificios.disabled=perfilesSeleccionados[1].checked==true?"":"disabled";
-	
+	if(edificios.disabled==true){
+		edificios.disabled=perfilesSeleccionados[3].checked==true?"":"disabled";
+	}
 	
 }
 function cargarPerfiles(){

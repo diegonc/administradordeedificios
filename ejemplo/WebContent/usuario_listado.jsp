@@ -49,7 +49,7 @@
 						</td>
 						<td><%= idEdificio%></td>	
 						<td><a href="GetListadoUsuariosAction!editar?id=<%=usuarioDTO.getId()%>">Modificar</a></td>
-						<td><a href="GetListadoUsuariosAction!eliminar?&id=<%=usuarioDTO.getId()%>" onclick="alert(confirm('wfw'))" >Eliminar</a></td>		
+						<td><a href="GetListadoUsuariosAction!eliminar?&id=<%=usuarioDTO.getId()%>" >Eliminar</a></td>		
 					</tr>	
 				<%} %>			
 					
