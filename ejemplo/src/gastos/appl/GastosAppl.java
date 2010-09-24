@@ -1,23 +1,32 @@
 package gastos.appl;
 
-import edificio.EdificioDTO;
 import gastos.dto.GastoDTO;
 import gastos.dto.GastoPrevisionDTO;
 import gastos.dto.GastoRealDTO;
 
-import java.util.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
-
-import javassist.bytecode.Descriptor.Iterator;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
+import utilidades.HibernateUtil;
+
 public class GastosAppl {
+	
+	public void addGasto(GastoDTO gasto)
+	{
+		Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        session.save(gasto);
+        session.getTransaction().commit();
+        HibernateUtil.getSessionFactory().close();
+	}
+	
 	
 	private List<GastoRealDTO> prepararResultado(List<GastoRealDTO> results, int id) {
 		ArrayList<GastoRealDTO> listaLimpia = new ArrayList<GastoRealDTO>();
@@ -31,6 +40,7 @@ public class GastosAppl {
 		return listaLimpia;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public ArrayList<GastoRealDTO> getGastosPendientesPorEdificio(SessionFactory factory, int id) {
 		Session session = factory.openSession();
 		try {
@@ -72,7 +82,6 @@ public class GastosAppl {
 		ArrayList<GastoPrevisionDTO> listaLimpia = new ArrayList<GastoPrevisionDTO>();
 		java.util.Iterator<GastoPrevisionDTO> iter = results.iterator();
 		Date fecha = new Date();
-		java.sql.Date fechaSQL = new java.sql.Date(fecha.getTime());
 		Calendar calendario = Calendar.getInstance();
 		calendario.setTime(fecha); // fecha es el Date de antes.
 		int anio = calendario.get(Calendar.YEAR);
@@ -87,6 +96,7 @@ public class GastosAppl {
 		return listaLimpia;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public ArrayList<GastoPrevisionDTO> getGastosPrevistoFuturosPorEdificio(SessionFactory factory, int id) {
 		Session session = factory.openSession();
 		try {

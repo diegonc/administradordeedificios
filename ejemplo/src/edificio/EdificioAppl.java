@@ -1,16 +1,14 @@
 package edificio;
-import org.hibernate.*;
-import org.hibernate.cfg.AnnotationConfiguration;
-import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.criterion.Expression;
-import org.hibernate.criterion.Restrictions;
-import org.hibernate.mapping.Collection;
+import java.util.List;
 
 import org.apache.log4j.Logger;
-
-import edificio.EdificioDTO;
-
-import java.util.List;
+import org.hibernate.Criteria;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.AnnotationConfiguration;
+import org.hibernate.criterion.Expression;
 
 /**
  * Manipulación de una tabla simple con llave sencilla.
@@ -55,6 +53,7 @@ public final class EdificioAppl {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<EdificioDTO> getAllEdificios(SessionFactory factory) {
 		Session session = factory.openSession();
 		try {

@@ -105,25 +105,25 @@ public class TiposGastosAppl {
 		return q.list();
 	}
 
-	/*	public void updateTipoGasto(int idTipoGasto,TipoGastoDTO tipoGastoNuevo)
-	{
+	@SuppressWarnings("unchecked")
+	public List<TipoGastoDTO> getTiposGastosPorEdificio(int idEdificio) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
-        TipoGastoDTO tipoGasto = (TipoGastoDTO) session.load(TipoGastoDTO.class, idTipoGasto);
-        tipoGasto.setDescripcion(tipoGastoNuevo.getDescripcion());
-        session.update(tipoGasto);
-        session.getTransaction().commit();
-        HibernateUtil.getSessionFactory().close();
+		try {
+			Query query = session
+			.createQuery("select tg from TipoGastoDTO tg where tg.id not in " +
+					"(select tgPeriodico.id from TipoGastoPeriodicoDTO tgPeriodico " +
+					"where tgPeriodico.edificio.id <> :edificio)");	
+								
+			query.setParameter("edificio", idEdificio); 
+			List<TipoGastoDTO> results = query.list();
+		
+			return results; 
+		
+		}finally {
+			session.close();
+		}
 	}
-
-	public TipoGastoMontoFijoDTO getTipoGastoMontoFijo(int idTipoGasto)
-	{
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		TipoGastoMontoFijoDTO tgmf = (TipoGastoMontoFijoDTO) session.load(TipoGastoMontoFijoDTO.class, idTipoGasto);
-        HibernateUtil.getSessionFactory().close();
-        return tgmf;
-	}
-	*/
+	
 	
 	public static void main(String[] args) {
 		
@@ -132,6 +132,11 @@ public class TiposGastosAppl {
 		TipoGastoMontoFijoDTO tgmf = new TipoGastoMontoFijoDTO();
 		
 		//TipoGastoMontoVariableDTO tgmv = new TipoGastoMontoVariableDTO();
+		
+		for(TipoGastoDTO tg: gastosAppl.getTiposGastosPorEdificio(1)){
+			System.out.println(tg.getDescripcion());
+		};
+		
 		
 		tgmf.setDescripcion("Agua");
 		tgmf.setCodigo("AGUA");
