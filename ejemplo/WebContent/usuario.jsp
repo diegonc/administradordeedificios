@@ -70,7 +70,7 @@ function validar(){
 	<td width="770" class="fondo" align="left">
 		<form class="elegante" id="usuarioAlta" name="usuarioAlta" action="UsuarioAction!grabar">
 			<fieldset>
-		  		<legend>Alta en el servicio</legend>
+		  		<legend>Agregar Usuario</legend>
 			 		<table>
 			 			<tr>
 					  		<td><label for="user.nombre">Nombre:</label></td>

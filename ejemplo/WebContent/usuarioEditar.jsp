@@ -17,7 +17,7 @@
 <script type="text/javascript">
 function habilitarEdificio(){
 	
-	var edificios = document.getElementById("edificios");	
+	var edificios = document.getElementById("user.edificio.id");	
 	var perfilesSeleccionados = document.getElementsByName("perfilesSeleccionados");
 	edificios.disabled=perfilesSeleccionados[1].checked==true?"":"disabled";
 	
@@ -25,10 +25,13 @@ function habilitarEdificio(){
 }
 function cargarPerfiles(){
 	var perfilesSeleccionados = document.getElementsByName("perfilesSeleccionados");
-	var i=1;
+	var i=0;
+	var j=0;
 	for (i=0;i<5;i++){
+		k=i+1;
 		<%for(PerfilDTO p: perfiles){%>
-			if (i==<%=p.getId()%>) perfilesSeleccionados[i].checked="checked";
+			
+			if (k==<%=p.getId()%>) perfilesSeleccionados[i].checked="checked";
 		<%}%>
 	}
 	
@@ -68,6 +71,11 @@ function validar(){
 	document.usuarioAlta.submit();
 	return true;
 }
+
+function seleccionarEdificio(){
+	document.getElementById("user.edificio.id").value="<%=usuario.getId()%>";
+	
+}
 </script>
 <table  cellpadding="0" cellspacing="0" >
 <tr>
@@ -83,7 +91,7 @@ function validar(){
 	<td width="770" class="fondo" align="left">
 		<form class="elegante" id="usuarioAlta" name="usuarioAlta" action="UsuarioAction!actualizar">
 			<fieldset>
-		  		<legend>Alta en el servicio</legend>
+		  		<legend>Modificar Usuario</legend>
 			 		<table border="0" cellpadding="0" cellspacing="0">
 			 			<tr>
 					  		<td><label for="user.nombre">Nombre:</label></td>
@@ -93,7 +101,7 @@ function validar(){
 					  	</tr>
 				  		<tr>
 			  	  			<td><label for="user.dni">DNI:</label></td> 
-			  	  			<td> <input type="text" id="user.dni" name="user.dni" size="10" maxlength="9" value="<%=usuario.getDni()%>" disabled /><font color="red">*&nbsp;&nbsp;</font></td>
+			  	  			<td> <input type="text" id="user.dni" name="user.dni" size="10" maxlength="9" value="<%=usuario.getDni()%>" readOnly /><font color="red">*&nbsp;&nbsp;</font></td>
 			 	  			<td><label for="user.password">Contrase&ntilde;a:</label></td>
 			 	  			<td> <input type="password" id="user.password" name="user.password"  value="<%=usuario.getPassword()%>" /><font color="red">*&nbsp;&nbsp;</font></td>
 			 	  		</tr>
@@ -101,33 +109,43 @@ function validar(){
 			  	  			<td></td> 
 			  	  			<td> </td>
 			 	  			<td><label for="user.usuario">Usuario:</label></td>
-			 	  			<td> <input type="text" id="user.usuario" name="user.usuario" disabled  value="<%=usuario.getUsuario()%>"/><font color="red">*&nbsp;&nbsp;</font></td>
+			 	  			<td> <input type="text" id="user.usuario" name="user.usuario"   value="<%=usuario.getUsuario()%>"/><font color="red">*&nbsp;&nbsp;</font></td>
 			 	  		</tr>
 			 	  		
 			 	  		<tr>
 			 				<td><label for="perfiles">Perfiles:</label></td> 
-			 				<td colspan="3"> 
+			 				<td colspan="3" width="300"> 
 								<s:checkboxlist list="lista" name="perfilesSeleccionados" onclick="habilitarEdificio()"></s:checkboxlist>							
 							</td>						
 						</tr>
-						<script>cargarPerfiles()</script>
+						<script type="text/javascript">cargarPerfiles()</script>
 						<tr>	
-							<td><label for="edificios">Edificio:</label></td>
-							<td colspan="3"><select name ="edificios" id="edificios" disabled="disabled">
-					  			<%for (EdificioDTO edif: edificiosList){ %> 
-								<option value="<%=edif.getId()%>"><%=edif.getNombre()%></option>
-						  		<%} %>
+							<td><label for="user.edificio.id">Edificio:</label></td>
+							<td colspan="3"><select name ="user.edificio.id" id="user.edificio.id" disabled="disabled"  >
+					  			<%for (EdificioDTO edif: edificiosList){ %>
+					  				<%if (usuario.getEdificio()!=null){ %>
+							  			<%if (edif.getId()== (usuario.getEdificio().getId())){ %> 
+											<option value="<%=edif.getId()%>" selected="selected"><%=edif.getNombre()%></option>
+								  		<%}else{ %>
+								  			<option value="<%=edif.getId()%>"><%=edif.getNombre()%></option>
+								  		<%} 
+					  				}else{
+					  					%>
+					  					 <option value="<%=edif.getId()%>"><%=edif.getNombre()%></option>
+					  			<%
+					  				}
+						  		}%>
 								</select>
 							</td>
 						</tr>
 			 	  		
 						<tr>
 							<td height="14" colspan="4"></td>
-						</tr>
-												
+						</tr>												
 			  		</table>
 			  	</fieldset>
 			  	<s:actionerror />
+			  <input type="hidden" value="<%=usuario.getId()%>" id="id" name="id">	
 			<input type="button" value="Aceptar"  onclick="validar()" >
 			<input type="submit" value="Cancelar" name="redirectAction:GetListadoUsuariosAction">
 		</form>
