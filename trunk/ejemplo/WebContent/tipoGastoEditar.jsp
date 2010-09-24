@@ -14,23 +14,40 @@
 	java.text.SimpleDateFormat sdf=new java.text.SimpleDateFormat("dd/MM/yyyy");
 %>
 <script type="text/javascript">
-
-function validar(){
-	validado=true;
-
-	<%--var nombre = document.getElementById("user.nombre");
-	var user = document.getElementById("user.usuario");
-	var apellido = document.getElementById("user.apellido");
-	var dni = document.getElementById("user.dni");
-	var contrasena = document.getElementById("user.password");
-	if(nombre.value==""){ alert("Debe completar el nombre"); validado=false;}
-	if(validado==true)if(apellido.value==""){ alert("Debe completar el apellido"); validado=false;}
-	if(validado==true)if(user.value==""){ alert("Debe completar el nombre de usuario"); validado=false;}
-	if(validado==true)if(dni.value==""){ alert("Debe completar el dni"); validado=false;}
-	if(validado==true)if(isNaN(dni.value)){ alert("El dni debe ser un valor numerico"); validado=false;}
-	if(validado==true)if(contrasena.value==""){ alert("Debe completar la contrasena");validado=false;}
+	var tipoG="<%=tipoGasto.getTipo()%>";
 	
-	if (validado==false)return false;--%>
+	function validar(){
+		validado=true;
+	
+		var codigo = document.getElementById("codigo");
+		var descripcion = document.getElementById("descripcion");
+		var periodoFijo =	document.getElementById("tgMontoFijo.periodo");
+		var periodoVariable =	document.getElementById("tgMontoVariable.periodo");
+		var diaLimite = document.getElementById("tgMontoFijo.diaLimite");
+		var montoActual = document.getElementById("tgMontoFijo.montoActual");
+		var montoPrevision = document.getElementById("tgMontoVariable.montoPrevision");
+		var proximoVencimiento=document.getElementById("tgMontoVariable.proximoVencimiento");
+				
+		if(codigo.value==""){ alert("Debe completar el codigo"); validado=false;}
+		if(validado==true)if(descripcion.value==""){ alert("Debe completar la descripcion"); validado=false;}
+
+		if(validado==true)if (tipoG=="PMF"){
+			if(periodoFijo.value==""){ alert("Debe completar el periodo"); validado=false;}
+			if(validado==true){
+				if(montoActual.value==""){ alert("Debe completar el monto actual"); validado=false;}
+				if(validado==true)if(isNaN(montoActual.value)){ alert("El monto actual debe ser un valor numerico."); validado=false;}
+				if(diaLimite.value==""){ alert("Debe completar el dia limite"); validado=false;}
+				if(validado==true)if(isNaN(diaLimite.value)||(diaLimite.value<1 && diaLimite.value>31)){ alert("El dia limite debe ser un valor de 1 a 31."); validado=false;}
+			}
+		}
+		if(validado==true)if (tipoG=="PMV"){		
+			if(periodoVariable.value==""){ alert("Debe completar el periodo"); validado=false;}
+			if(montoPrevision.value==""){ alert("Debe completar el monto previsional"); validado=false;}
+			if(validado==true)if(isNaN(montoPrevision.value)){ alert("El monto previsional debe ser un valor numerico"); validado=false;}
+			if(validado==true)if(proximoVencimiento.value==""){ alert("Debe completar el proximo Vto"); validado=false;}
+			if(validado==true)if(/^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/.test(proximoVencimiento.value)==false ){ alert("El formato de fecha del proximo vencimiento deber ser dd/mm/aaaa"); validado=false;}
+		}
+	if (validado==false) return false;
 	document.tipoDeGastoAlta.submit();
 	return true;
 }
@@ -133,7 +150,7 @@ function habilitarInputsPlazo(){
 					  			<td><label for="tgMontoFijo.montoActual">Monto Actual:</label> </td>
 					  			<td><input type="text" id="tgMontoFijo.montoActual" name="tgMontoFijo.montoActual" value="<%=((TipoGastoMontoFijoDTO)tipoGasto).getMontoActual()%>"/></td>
 					  			<td><label for="tgMontoFijo.diaLimite">&nbsp;D&iacute;a L&iacute;mite:&nbsp;</label></td> 
-					  			<td colspan="2"><input type="text" id="tgMontoFijo.diaLimite" name="tgMontoFijo.diaLimite" value="<%=sdf.format(((TipoGastoMontoFijoDTO)tipoGasto).getDiaLimite())%>"/></td>
+					  			<td colspan="2"><input type="text" id="tgMontoFijo.diaLimite" name="tgMontoFijo.diaLimite" value="<%=((TipoGastoMontoFijoDTO)tipoGasto).getDiaLimite()%>"/></td>
 					  		</tr>
 					  		<tr><td colspan="5" height="10"></td></tr>
 				  		

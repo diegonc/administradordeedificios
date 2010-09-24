@@ -1,7 +1,5 @@
 package gastos.dto;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
@@ -13,14 +11,14 @@ import javax.persistence.Table;
 @PrimaryKeyJoinColumn(name="TIPO_GASTO_ID")
 public class TipoGastoMontoFijoDTO extends TipoGastoPeriodicoDTO {
 
-	private Date diaLimite;
+	private int diaLimite;
 	private double montoActual;
 		
 	@Column(name="DIA_LIMITE",nullable=false)
-	public Date getDiaLimite() {
+	public int getDiaLimite() {
 		return diaLimite;
 	}
-	public void setDiaLimite(Date diaLimite) {
+	public void setDiaLimite(int diaLimite) {
 		this.diaLimite = diaLimite;
 	}
 	
