@@ -8,6 +8,7 @@ import org.hibernate.Session;
 
 import propiedades.TipoPropiedadDAO;
 import propiedades.TipoPropiedadDTO;
+import usuarios.dto.AdministradorDePermisos;
 
 import com.googlecode.s2hibernate.struts2.plugin.annotations.SessionTarget;
 import com.opensymphony.xwork2.ActionSupport;
@@ -73,16 +74,20 @@ public class TiposPropiedadesAction extends ActionSupport implements Preparable 
 
 	private void cargarListaEdificios() {
 		edificios = new ArrayList<String>();
-		
-		try {
-			for (Object o : session.createQuery("from EdificioDTO").list()) {
-				EdificioDTO edificio = (EdificioDTO) o;
-				edificios.add(edificio.getNombre());
+		//Carga la lista segun el perfil que tiene el usuario que se logea
+		AdministradorDePermisos administrador = AdministradorDePermisos.getInstancia();
+		if (!administrador.visibleTodosLosEdificios()){
+			edificios.add(administrador.getUser().getEdificio().getNombre());
+		}else{
+			try {
+				for (Object o : session.createQuery("from EdificioDTO").list()) {
+					EdificioDTO edificio = (EdificioDTO) o;
+					edificios.add(edificio.getNombre());
+				}
+			} catch (HibernateException e) {
+				session.getTransaction().rollback();
 			}
-		} catch (HibernateException e) {
-			session.getTransaction().rollback();
 		}
-		
 	}
 
 	public String listar() {

@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.hibernate.SessionFactory;
 
+import usuarios.dto.AdministradorDePermisos;
 import usuarios.dto.UsuarioDTO;
 import utilidades.HibernateUtil;
 
@@ -28,8 +29,14 @@ public class EdificioListarAction extends ActionSupport{
 		EdificiosBean listaEdificios = new EdificiosBean();
 		EdificioAppl edifAppl = new EdificioAppl();
 		SessionFactory factory = HibernateUtil.getSessionFactory();
+		AdministradorDePermisos administrador = AdministradorDePermisos.getInstancia();
+		
 		try {
-			lista = (ArrayList<EdificioDTO>) edifAppl.getAllEdificios(factory);
+			if (!administrador.visibleTodosLosEdificios()){
+				lista.add(administrador.getUser().getEdificio());
+			}else{
+				lista = (ArrayList<EdificioDTO>) edifAppl.getAllEdificios(factory);
+			}
 			listaEdificios.setEdificios(lista);
 			Map session = ActionContext.getContext().getSession();
 	        session.put("lista",listaEdificios);
