@@ -14,19 +14,33 @@
 
 	function validar(){
 		validado=true;
-		<%--var nombre = document.getElementById("user.nombre");
-		var user = document.getElementById("user.usuario");
-		var apellido = document.getElementById("user.apellido");
-		var dni = document.getElementById("user.dni");
-		var contrasena = document.getElementById("user.password");
-		if(nombre.value==""){ alert("Debe completar el nombre"); validado=false;}
-		if(validado==true)if(apellido.value==""){ alert("Debe completar el apellido"); validado=false;}
-		if(validado==true)if(user.value==""){ alert("Debe completar el nombre de usuario"); validado=false;}
-		if(validado==true)if(dni.value==""){ alert("Debe completar el dni"); validado=false;}
-		if(validado==true)if(isNaN(dni.value)){ alert("El dni debe ser un valor numerico"); validado=false;}
-		if(validado==true)if(contrasena.value==""){ alert("Debe completar la contrasena");validado=false;}
+		var folio = document.getElementById("nroFolio");
+		var monto = document.getElementById("monto");
+		var detalle = document.getElementById("detalle");
+		var previsional= document.getElementById("previsional");
+		var real= document.getElementById("real");
+		var anio = document.getElementById("gastoPrevision.anio");
+		var mes = document.getElementById("gastoPrevision.mes");
+		var razon = document.getElementById("gastoReal.razonSocial");
+	
 		
-		if (validado==false)return false;--%>
+		if(folio.value==""){ alert("Debe completar el nroFolio"); validado=false;}
+		if(validado==true) if(isNaN(folio.value)){ alert("El nroFolio debe ser un valor numerico"); validado=false;}
+		if(validado==true)if(monto.value==""){ alert("Debe completar el monto"); validado=false;}
+		if(validado==true)if(isNaN(monto.value)){ alert("El monto debe ser un valor numerico"); validado=false;}
+		if(validado==true)if(detalle.value==""){ alert("Debe completar el detalle"); validado=false;}
+		if(validado==true) if (previsional.checked==true){
+			if(anio.value==""){ alert("Debe completar el año"); validado=false;}
+			if(validado==true)if(isNaN(anio.value)){ alert("El año debe ser un valor numerico"); validado=false;}
+			if(validado==true) if(mes.value==""){ alert("Debe completar el mes"); validado=false;}
+			if(validado==true)if(isNaN(mes.value)){ alert("El mes debe ser un valor numerico"); validado=false;}
+		}
+		if(validado==true) if (real.checked==true){
+			if(razon.value==""){ alert("Debe completar la razon social"); validado=false;}
+			
+		}
+	
+		if (validado==false)return false;
 		document.gastoAlta.submit();
 		return true;
 	}
@@ -83,12 +97,13 @@
 				  		
 			 			<tr>
 			 				<td></td>		
-				 			<td><label for="previsional"></label><input type="radio" id="previsional" name="tipo" value="previsional" onclick="habilitarInputsGastos()"/>Previsional</td>
+				 			<td><label for="previsional"></label><input type="radio" id="previsional" name="tipo" value="previsional" onclick="habilitarInputsGastos()" checked="checked"/>Previsional</td>
 				 			<td align="right"><label for="gastoPrevision.anio">Anio:&nbsp;</label> </td>
-				  			<td><input type="text" id="gastoPrevision.anio" name="gastoPrevision.anio" disabled="disabled"/></td>
+				  			<td><input type="text" id="gastoPrevision.anio" name="gastoPrevision.anio" /></td>
 				  			<td align="right" width="150"><label for="gastoPrevision.mes">&nbsp;Mes:&nbsp;</label></td> 
-				  			<td><input type="text" id="gastoPrevision.mes" name="gastoPrevision.mes" disabled="disabled"/></td>
+				  			<td><input type="text" id="gastoPrevision.mes" name="gastoPrevision.mes" /></td>
 				 		</tr>
+				 		
 				 		<tr>
 				 			<td></td>		
 				 			<td><label for="real"></label><input type="radio" id="real" name="tipo" value="real" onclick="habilitarInputsGastos()"/>Real &nbsp;</td>
