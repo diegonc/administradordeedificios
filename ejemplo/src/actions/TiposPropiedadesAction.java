@@ -2,12 +2,15 @@ package actions;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
 import propiedades.TipoPropiedadDAO;
 import propiedades.TipoPropiedadDTO;
+import propiedades.TipoPropiedadTipoGastoDTO;
 import usuarios.dto.AdministradorDePermisos;
 
 import com.googlecode.s2hibernate.struts2.plugin.annotations.SessionTarget;
@@ -16,6 +19,8 @@ import com.opensymphony.xwork2.Preparable;
 
 import edificio.EdificioAppl;
 import edificio.EdificioDTO;
+import gastos.appl.TiposGastosAppl;
+import gastos.dto.TipoGastoDTO;
 
 public class TiposPropiedadesAction extends ActionSupport implements Preparable {
 
@@ -27,7 +32,7 @@ public class TiposPropiedadesAction extends ActionSupport implements Preparable 
 	private String nombreEdificio;
 	/*
 	 * Nombre del tipo de propiedad que se va a modificar o borrar. O null si el
-	 * usuario a鷑 no ha especificado ninguno.
+	 * usuario a锟絥 no ha especificado ninguno.
 	 */
 	private String nombreTipo;
 
@@ -74,6 +79,7 @@ public class TiposPropiedadesAction extends ActionSupport implements Preparable 
 
 	private void cargarListaEdificios() {
 		edificios = new ArrayList<String>();
+
 		//Carga la lista segun el perfil que tiene el usuario que se logea
 		AdministradorDePermisos administrador = AdministradorDePermisos.getInstancia();
 		if (!administrador.visibleTodosLosEdificios()){
@@ -98,21 +104,6 @@ public class TiposPropiedadesAction extends ActionSupport implements Preparable 
 			lista = edificioActual.getTipoPropiedades();
 		}
 		return SUCCESS;
-	}
-
-	public String editar() {
-		if (!tieneClave())
-			return SUCCESS;
-
-		cargarTipoPropiedad(nombreTipo);
-
-		if (entidad == null) {
-			addActionError(String.format(
-					"El tipo '%s' no existe en el edificio '%s'.", nombreTipo,
-					nombreEdificio));
-			return SUCCESS;
-		}
-		return "edicion";
 	}
 
 	private void cargarTipoPropiedad(String nombreTipo) {
@@ -178,6 +169,141 @@ public class TiposPropiedadesAction extends ActionSupport implements Preparable 
 
 	public void setNombreEdificio(String nombreEdificio) {
 		this.nombreEdificio = nombreEdificio;
+	}
+
+	// ///////////////////////////////////////////////////////
+	/*
+	 * Edici贸n de tipo de propiedad y asociaciones con tipos de gastos.
+	 * 
+	 * listar() --[usuario selecciona Agregar/Editar]--> editar() editar()
+	 * --[usuario selecciona Acceptar]--> grabar() editar() --[usuario
+	 * selecciona Agregar Tipo]--> agregarTipo() editar() --[usuario selecciona
+	 * Borrar Tipo]--> borrarTipo() agregarTipo() --[usuario selecciona Agregar
+	 * Tipo]--> agregarTipo() agregarTipo() --[usuario selecciona Borrar
+	 * Tipo]--> borrarTipo() borrarTipo() --[usuario selecciona Agregar Tipo]-->
+	 * agregarTipo() borrarTipo() --[usuario selecciona Borrar Tipo]-->
+	 * borrarTipo() agregarTipo() --[usuario selecciona Acceptar]--> grabar()
+	 * borrarTipo() --[usuario selecciona Acceptar]--> grabar()
+	 * 
+	 * editar(): Se carga la lista de tipos de gastos del objeto a editar en la
+	 * colecci贸n Action.tiposGastos.
+	 * 
+	 * agregarTipo(): Se modifica la colecci贸n Action.tiposGastos agregando el
+	 * tipo seleccionado. No se recupera la lista del objeto nuevamente.
+	 * 
+	 * borrarTipo(): Se modifica la colecci贸n Action.tiposGastos quitando el
+	 * tipo seleccionado. No se recupera la lista del objeto nuevamente.
+	 * 
+	 * grabar(): Reemplaza la lista del objeto con la colecci贸n
+	 * Action.tiposGastos realizando un merge.
+	 */
+	/* Codigos del tipo a agregar */
+	private String[] codigosTipoGastoAAgregar = {};
+	/* Codigos del tipo a borrar */
+	private String[] codigosTipoGastoABorrar = {};
+	/*
+	 * Codigo->Descripcion de los tipos de gastos que el tipo de propiedad aun
+	 * no tiene.
+	 */
+	private Map<String, String> mapaTiposGastosDisponibles = new HashMap<String, String>();
+	/* Codigo->TPTGDTO de los tipos de gastos asociados al tipo de propiedad. */
+	private Map<String, TipoPropiedadTipoGastoDTO> tiposGastos = new HashMap<String, TipoPropiedadTipoGastoDTO>();
+
+	public Map<String, TipoPropiedadTipoGastoDTO> getTiposGastos() {
+		return tiposGastos;
+	}
+
+	public void setTiposGastos(
+			Map<String, TipoPropiedadTipoGastoDTO> tiposGastos) {
+		this.tiposGastos = tiposGastos;
+	}
+
+	public String editar() {
+		if (!tieneClave())
+			return SUCCESS;
+
+		cargarTipoPropiedad(nombreTipo);
+
+		if (entidad == null) {
+			addActionError(String.format(
+					"El tipo '%s' no existe en el edificio '%s'.", nombreTipo,
+					nombreEdificio));
+			return SUCCESS;
+		}
+
+		cargarTiposGastosAsociados();
+		cargarTiposGastosDisponibles();
+
+		return "edicion";
+	}
+
+	public String agregarTipos() {
+
+		for (String c : codigosTipoGastoAAgregar) {
+			TipoPropiedadTipoGastoDTO tptg = new TipoPropiedadTipoGastoDTO();
+			tptg.setTipoGasto(new TiposGastosAppl().getTipoGastoPorCodigo(c));
+			tiposGastos.put(c, tptg);
+		}
+
+		cargarTiposGastosDisponibles();
+
+		return "edicion";
+	}
+
+	public String borrarTipos() {
+
+		for (String c : codigosTipoGastoABorrar) {
+			tiposGastos.remove(c);
+		}
+
+		cargarTiposGastosDisponibles();
+
+		return "edicion";
+	}
+
+	private void cargarTiposGastosDisponibles() {
+		mapaTiposGastosDisponibles = new HashMap<String, String>();
+		for (TipoGastoDTO tg : listarTodosTiposGastos()) {
+			if (!tiposGastos.containsKey(tg.getCodigo()))
+				mapaTiposGastosDisponibles.put(tg.getCodigo(),
+						tg.getDescripcion());
+		}
+	}
+
+	private Collection<TipoGastoDTO> listarTodosTiposGastos() {
+		return new TiposGastosAppl().getAllTipoGasto();
+	}
+
+	private void cargarTiposGastosAsociados() {
+		tiposGastos = new HashMap<String, TipoPropiedadTipoGastoDTO>();
+		for (TipoPropiedadTipoGastoDTO tg : entidad.getTipoGastos()) {
+			tiposGastos.put(tg.getTipoGasto().getCodigo(), tg);
+		}
+	}
+
+	public Map<String, String> getMapaTiposGastosDisponibles() {
+		return mapaTiposGastosDisponibles;
+	}
+
+	public void setMapaTiposGastosDisponibles(
+			Map<String, String> mapaTipoGastosDisponibles) {
+		this.mapaTiposGastosDisponibles = mapaTipoGastosDisponibles;
+	}
+
+	public String[] getCodigosTipoGastoAAgregar() {
+		return codigosTipoGastoAAgregar;
+	}
+
+	public void setCodigosTipoGastoAAgregar(String[] codigosTipoGastoAAgregar) {
+		this.codigosTipoGastoAAgregar = codigosTipoGastoAAgregar;
+	}
+
+	public String[] getCodigosTipoGastoABorrar() {
+		return codigosTipoGastoABorrar;
+	}
+
+	public void setCodigosTipoGastoABorrar(String[] codigosTipoGastoABorrar) {
+		this.codigosTipoGastoABorrar = codigosTipoGastoABorrar;
 	}
 
 }

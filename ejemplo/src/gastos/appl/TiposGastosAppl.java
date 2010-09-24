@@ -157,6 +157,16 @@ public class TiposGastosAppl {
 		
 	}
 
+	public TipoGastoDTO getTipoGastoPorCodigo(String codigo) {
+		Session session = HibernateUtil.getSession();
+		try {
+			TipoGastoDTO tipoGasto = (TipoGastoDTO) session
+					.createQuery("from TipoGastoDTO t where t.codigo = :c")
+					.setString("c", codigo).list().get(0);
+			return tipoGasto;
+		} finally {
+			session.close();
+		}
+	}
 
-	
 }

@@ -94,6 +94,7 @@
                 <interceptor-ref name="modelDriven"/>
                 <interceptor-ref name="fileUpload"/>
                 <interceptor-ref name="checkbox"/>
+                <interceptor-ref name="multiselect"/>
                 <interceptor-ref name="staticParams"/>
                 <interceptor-ref name="params">
                   <param name="excludeParams">dojo\..*,^struts\..*</param>

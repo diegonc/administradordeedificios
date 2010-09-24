@@ -16,6 +16,7 @@
     <property name="hibernate.connection.pool_size">1</property>
     <property name="hibernate.dialect">org.hibernate.dialect.MySQLInnoDBDialect</property>
     <property name="transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</property>
+    <property name="hibernate.hbm2ddl.auto">update</property>
     
     
     <!-- package edificio -->
