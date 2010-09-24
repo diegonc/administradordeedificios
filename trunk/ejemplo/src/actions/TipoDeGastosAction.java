@@ -42,6 +42,16 @@ public class TipoDeGastosAction extends ActionSupport {
 	private TipoGastoMontoVariableDTO tgMontoVariable;
 	
 	private TiposGastosAppl tipoGastoAppl = new TiposGastosAppl();
+	
+	private int id;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 		
 	public TipoGastoExtraordinarioDTO getTgExtraordinario() {
 		return tgExtraordinario;
@@ -115,11 +125,6 @@ public class TipoDeGastosAction extends ActionSupport {
 		this.descripcion = descripcion;
 	}
 
-	public String actualizar(){
-		
-		return "actualizacion";
-	}
-	
 	@SuppressWarnings("unchecked")
 	public String cargaEdificios()
 	{
@@ -133,38 +138,72 @@ public class TipoDeGastosAction extends ActionSupport {
 	    return "cargaEdificios";
 	}
 	
-	public String execute() {
+	public String actualizar(){
+		TipoGastoDTO tipoGasto = null;
+		if (this.getTipoGasto().equals(TipoGastoDTO.tipoExtraordinario)){
+			this.tgExtraordinario.setTipo(TipoGastoDTO.tipoExtraordinario);
+			this.tgExtraordinario.setCodigo(this.codigo);
+			this.tgExtraordinario.setDescripcion(this.descripcion);
+			tipoGasto=this.tgExtraordinario;
+		}
+		else if (this.getTipoGasto().equals(TipoGastoDTO.tipoEventual)){
+			this.tgEventual.setTipo(TipoGastoDTO.tipoEventual);	
+			this.tgEventual.setCodigo(this.codigo);
+			this.tgEventual.setDescripcion(this.descripcion);
+			tipoGasto=this.tgEventual;
+		}
+		else if (this.getTipoGasto().equals(TipoGastoDTO.tipoPeriodicoMontoFijo)){
+			this.tgMontoFijo.setTipo(TipoGastoDTO.tipoPeriodicoMontoFijo);	
+			this.tgMontoFijo.setCodigo(this.codigo);
+			this.tgMontoFijo.setDescripcion(this.descripcion);
+			tipoGasto=this.tgMontoFijo;
+		}
+		else if (this.getTipoGasto().equals(TipoGastoDTO.tipoPeriodicoMontoVariable)){
+			this.tgMontoVariable.setTipo(TipoGastoDTO.tipoPeriodicoMontoVariable);
+			this.tgMontoVariable.setCodigo(this.codigo);
+			this.tgMontoVariable.setDescripcion(this.descripcion);
+			this.tgMontoVariable.setPeriodo(this.tgMontoVariable.getPeriodo());
+			this.tgMontoVariable.setEdificio(this.tgMontoVariable.getEdificio());
+			tipoGasto=this.tgMontoVariable;
+		}
+	
+		this.tipoGastoAppl.updateTipoGasto(tipoGasto, id);
+		return "actualizacion";
+	}
+	
+	public String execute(){
 		
 		TipoGastoDTO tipoGasto = null;
 		if (this.getTipoGasto().equals("extraordinario")){
+			this.tgExtraordinario.setTipo(TipoGastoDTO.tipoExtraordinario);
 			this.tgExtraordinario.setCodigo(this.codigo);
 			this.tgExtraordinario.setDescripcion(this.descripcion);
 			tipoGasto=this.tgExtraordinario;
 			
 		}
 		else if (this.getTipoGasto().equals("ordinario")&&this.getGastoPlazo().equals("eventual")){
-				this.tgEventual.setCodigo(this.codigo);
-				this.tgEventual.setDescripcion(this.descripcion);
-				tipoGasto=this.tgEventual;
+			this.tgEventual.setTipo(TipoGastoDTO.tipoEventual);	
+			this.tgEventual.setCodigo(this.codigo);
+			this.tgEventual.setDescripcion(this.descripcion);
+			tipoGasto=this.tgEventual;
 						
 		}
 		else if (this.getTipoGasto().equals("ordinario")&&this.getGastoPlazo().equals("periodico")&&this.getTipoMonto().equals("fijo")){
-				this.tgMontoFijo.setCodigo(this.codigo);
-				this.tgMontoFijo.setDescripcion(this.descripcion);
-				tipoGasto=this.tgMontoFijo;
+			this.tgMontoFijo.setTipo(TipoGastoDTO.tipoPeriodicoMontoFijo);	
+			this.tgMontoFijo.setCodigo(this.codigo);
+			this.tgMontoFijo.setDescripcion(this.descripcion);
+			tipoGasto=this.tgMontoFijo;
 		}
 		else if (this.getTipoGasto().equals("ordinario")&&this.getGastoPlazo().equals("periodico")&&this.getTipoMonto().equals("variable")){
+			this.tgMontoVariable.setTipo(TipoGastoDTO.tipoPeriodicoMontoVariable);
 			this.tgMontoVariable.setCodigo(this.codigo);
 			this.tgMontoVariable.setDescripcion(this.descripcion);
 			this.tgMontoVariable.setPeriodo(this.tgMontoFijo.getPeriodo());
 			this.tgMontoVariable.setEdificio(this.tgMontoFijo.getEdificio());
 			tipoGasto=this.tgMontoVariable;
-	}
-		
-		if (tipoGasto!=null)
+		}
+	
 		this.tipoGastoAppl.addTipoGasto(tipoGasto);
-		
-		System.out.println("codigo seguro: "+this.getCodigo());
 		return "success";
 	}
 	

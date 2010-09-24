@@ -22,6 +22,8 @@ import edificio.EdificioAppl;
 import edificio.EdificioDTO;
 import gastos.appl.TiposGastosAppl;
 import gastos.dto.TipoGastoDTO;
+import gastos.dto.TipoGastoMontoFijoDTO;
+import gastos.dto.TipoGastoMontoVariableDTO;
 
 
 
@@ -37,9 +39,33 @@ public class GetListadoTipoDeGastoAction extends ActionSupport implements Sessio
 				
 		private TipoGastoDTO tipoGasto;
 		
+		private TipoGastoMontoFijoDTO tipoGastoMontoFijo;
+		
+		private TipoGastoMontoVariableDTO tipoGastoMontoVariable;
+		
 		private ArrayList<String> lista ;
 
-		
+				
+		public TipoGastoMontoFijoDTO getTipoGastoMontoFijo() {
+			return tipoGastoMontoFijo;
+		}
+
+
+		public void setTipoGastoMontoFijo(TipoGastoMontoFijoDTO tipoGastoMontoFijo) {
+			this.tipoGastoMontoFijo = tipoGastoMontoFijo;
+		}
+
+
+		public TipoGastoMontoVariableDTO getTipoGastoMontoVable() {
+			return tipoGastoMontoVariable;
+		}
+
+
+		public void setTipoGastoMontoVable(TipoGastoMontoVariableDTO tipoGastoMontoVable) {
+			this.tipoGastoMontoVariable = tipoGastoMontoVable;
+		}
+
+
 		public Integer getId() {
 			return id;
 		}
@@ -85,12 +111,24 @@ public class GetListadoTipoDeGastoAction extends ActionSupport implements Sessio
 			   			
 			this.tipoGasto = tipoGastoAppl.getTipoGasto(this.id);
 			
+			TiposGastosBean tipoGastoEditar = new TiposGastosBean();
+			
+			if(tipoGasto.getTipo().equals(TipoGastoDTO.tipoPeriodicoMontoFijo))
+			{
+				this.tipoGastoMontoFijo = tipoGastoAppl.getTipoGastoMontoFijo(this.id);
+				tipoGastoEditar.setTipoGastoUnico(this.tipoGastoMontoFijo);
+			}
+			else if(tipoGasto.getTipo().equals(TipoGastoDTO.tipoPeriodicoMontoVariable))
+			{
+				this.tipoGastoMontoVariable = tipoGastoAppl.getTipoGastoMontoVariable(this.id);
+				tipoGastoEditar.setTipoGastoUnico(this.tipoGastoMontoVariable);
+			}
+			else tipoGastoEditar.setTipoGastoUnico(this.tipoGasto);
+			
+			
 			Map session = ActionContext.getContext().getSession();
 		    session.put("edificios",listaEdificios);
-	        
-			TiposGastosBean tipoGastoEditar = new TiposGastosBean();
-			tipoGastoEditar.setTipoGastoUnico(this.tipoGasto);
-			
+	        			
 	        session.put("tipoGastoBean",tipoGastoEditar);
 	        setSession(session);
 	    

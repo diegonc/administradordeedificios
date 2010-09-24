@@ -1,7 +1,10 @@
 package gastos.appl;
 
 import gastos.dto.TipoGastoDTO;
+import gastos.dto.TipoGastoEventualDTO;
+import gastos.dto.TipoGastoExtraordinarioDTO;
 import gastos.dto.TipoGastoMontoFijoDTO;
+import gastos.dto.TipoGastoMontoVariableDTO;
 
 import java.util.Date;
 import java.util.List;
@@ -18,6 +21,44 @@ public class TiposGastosAppl {
 		Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         session.save(tipoGasto);
+        session.getTransaction().commit();
+        HibernateUtil.getSessionFactory().close();
+	}
+	
+		
+	public void updateTipoGasto(TipoGastoDTO nuevoTipoGasto,int idTipoGasto)
+	{
+		Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        if(nuevoTipoGasto.getTipo().equals(TipoGastoDTO.tipoExtraordinario)){
+        	TipoGastoExtraordinarioDTO tipoGastoExtraordinario = (TipoGastoExtraordinarioDTO) session.load(TipoGastoExtraordinarioDTO.class, idTipoGasto);
+        	tipoGastoExtraordinario.setDescripcion(nuevoTipoGasto.getDescripcion());
+        	session.update(tipoGastoExtraordinario);
+        }
+        else if(nuevoTipoGasto.getTipo().equals(TipoGastoDTO.tipoEventual)){
+        	TipoGastoEventualDTO tipoGastoEventual = (TipoGastoEventualDTO) session.load(TipoGastoEventualDTO.class, idTipoGasto);
+        	tipoGastoEventual.setDescripcion(nuevoTipoGasto.getDescripcion());
+        	session.update(tipoGastoEventual);
+        }
+        else if(nuevoTipoGasto.getTipo().equals(TipoGastoDTO.tipoPeriodicoMontoFijo)){
+        	TipoGastoMontoFijoDTO tipoGastoMontoFijo = (TipoGastoMontoFijoDTO) session.load(TipoGastoMontoFijoDTO.class, idTipoGasto);
+        	tipoGastoMontoFijo.setDescripcion(nuevoTipoGasto.getDescripcion());
+        	tipoGastoMontoFijo.setDiaLimite(((TipoGastoMontoFijoDTO)nuevoTipoGasto).getDiaLimite());
+        	tipoGastoMontoFijo.setEdificio(((TipoGastoMontoFijoDTO)nuevoTipoGasto).getEdificio());
+        	tipoGastoMontoFijo.setMontoActual(((TipoGastoMontoFijoDTO)nuevoTipoGasto).getMontoActual());
+        	tipoGastoMontoFijo.setPeriodo(((TipoGastoMontoFijoDTO)nuevoTipoGasto).getPeriodo());
+        	session.update(tipoGastoMontoFijo);
+        }
+        else if(nuevoTipoGasto.getTipo().equals(TipoGastoDTO.tipoPeriodicoMontoVariable)){
+        	TipoGastoMontoVariableDTO tipoGastoMontoVariable = (TipoGastoMontoVariableDTO) session.load(TipoGastoMontoVariableDTO.class, idTipoGasto);
+        	tipoGastoMontoVariable.setDescripcion(nuevoTipoGasto.getDescripcion());
+        	tipoGastoMontoVariable.setProximoVencimiento(((TipoGastoMontoVariableDTO)nuevoTipoGasto).getProximoVencimiento());
+        	tipoGastoMontoVariable.setEdificio(((TipoGastoMontoVariableDTO)nuevoTipoGasto).getEdificio());
+        	tipoGastoMontoVariable.setMontoPrevision(((TipoGastoMontoVariableDTO)nuevoTipoGasto).getMontoPrevision());
+        	tipoGastoMontoVariable.setPeriodo(((TipoGastoMontoVariableDTO)nuevoTipoGasto).getPeriodo());
+        	session.update(tipoGastoMontoVariable);
+        }
+
         session.getTransaction().commit();
         HibernateUtil.getSessionFactory().close();
 	}
@@ -39,6 +80,21 @@ public class TiposGastosAppl {
         HibernateUtil.getSessionFactory().close();
         return tipoGasto;
 	}
+	
+	public TipoGastoMontoFijoDTO getTipoGastoMontoFijo(int id) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		TipoGastoMontoFijoDTO tipoGasto = (TipoGastoMontoFijoDTO) session.load(TipoGastoMontoFijoDTO.class, id);
+        HibernateUtil.getSessionFactory().close();
+        return tipoGasto;
+	}
+	
+	public TipoGastoMontoVariableDTO getTipoGastoMontoVariable(int id) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		TipoGastoMontoVariableDTO tipoGasto = (TipoGastoMontoVariableDTO) session.load(TipoGastoMontoVariableDTO.class, id);
+        HibernateUtil.getSessionFactory().close();
+        return tipoGasto;
+	}
+	
 	
 	@SuppressWarnings("unchecked")
 	public List<TipoGastoDTO> getAllTipoGasto()
@@ -89,13 +145,18 @@ public class TiposGastosAppl {
 		
 		//gastosAppl.addTipoGasto(tgmf);		
 		
-		gastosAppl.removeTipoGasto(1);
+		/*gastosAppl.removeTipoGasto(1);
 		gastosAppl.removeTipoGasto(2);
 		gastosAppl.removeTipoGasto(3);
 		gastosAppl.removeTipoGasto(4);
-		gastosAppl.removeTipoGasto(8);
+		gastosAppl.removeTipoGasto(8);*/
+		
+		gastosAppl.getTipoGasto(11);
 		
 		//TipoGastoDTO tg = gastosAppl.getTipoGasto(6);
 		
 	}
+
+
+	
 }

@@ -11,6 +11,7 @@
 function validar(){
 	validado=true;
 
+
 	<%--var nombre = document.getElementById("user.nombre");
 	var user = document.getElementById("user.usuario");
 	var apellido = document.getElementById("user.apellido");

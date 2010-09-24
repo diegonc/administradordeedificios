@@ -10,11 +10,24 @@ import javax.persistence.*;
 @Inheritance(strategy=InheritanceType.JOINED)
 public class TipoGastoDTO implements Serializable {
 
+	public static final String tipoPeriodicoMontoFijo = "PMF";
+	public static final String tipoPeriodicoMontoVariable = "PMV";
+	public static final String tipoExtraordinario = "EXT";
+	public static final String tipoEventual = "EVE";
 	private int id;
 	private String codigo;
 	private String descripcion;
+	private String tipo;
 	
-		
+	@Column(name="TIPO",nullable=false)
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+
 	@Id 
 	@GeneratedValue
 	@Column(name="ID",unique=true,nullable=false)
