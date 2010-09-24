@@ -6,11 +6,11 @@ public class AdministradorDePermisos {
 	
 	public final static String ADMINISTRADOR = "Administrador";
 	
-	public final static String RESPONSABLE_CONSORCIO = "Concejero de Administracion";
+	public final static String CONCEJERO_ADMINISTRACION = "Concejero de Administracion";
 	
 	public final static String EMPLEADO = "Empleado";
 	
-	public final static String PRESIDENTE_DE_CONSORCIO = "Responsable de consorcio";
+	public final static String PRESIDENTE_DE_CONSORCIO = "Presidente de consorcio";
 	
 	public final static String ENCARGADO_DE_EDIFICIO = "Encargado de Edificio";
 	
@@ -39,7 +39,20 @@ public class AdministradorDePermisos {
 		}
 		return permiso;
 	}
+	public boolean visibleEdificioMenu(){
+		
+		if((this.user.getPerfiles().size()==1)&&(this.user.getPerfiles().get(0).equals(AdministradorDePermisos.ENCARGADO_DE_EDIFICIO))){
+			return false;
+		}
+		return true;
+	}
 	
+	public boolean visibleTodosLosEdificios(){
+		if (tienePermisos(ADMINISTRADOR)||tienePermisos(EMPLEADO)){
+			return true;
+		}
+		return false;
+	}
 	
 	
 
