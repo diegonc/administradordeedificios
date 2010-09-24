@@ -9,7 +9,7 @@
 	GastosAppl gastoAppl = new GastosAppl();
 	SessionFactory factory = HibernateUtil.getSessionFactory();	
 	int id = Integer.parseInt(request.getParameter("id"));
-	GastoRealDTO gasto = gastoAppl.getGastosPendientesPorid(factory,id);
+	GastoRealDTO gasto = gastoAppl.getGastosRealesPendientesPorid(factory,id);
 %>
 
 <script type="text/javascript">

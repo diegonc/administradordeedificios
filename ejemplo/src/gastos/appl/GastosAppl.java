@@ -52,7 +52,7 @@ public class GastosAppl {
 		}
 	}
 	
-	public GastoRealDTO getGastosPendientesPorid(SessionFactory factory, int id) {
+	public GastoRealDTO getGastosRealesPendientesPorid(SessionFactory factory, int id) {
 		Session session = factory.openSession();
 		try {
 			Query q = session.createQuery("select u from GastoRealDTO u where u.id=:id");	
@@ -89,7 +89,7 @@ public class GastosAppl {
 		
 		while (iter.hasNext()) {
 			GastoPrevisionDTO gasto = iter.next();
-			if (gasto.getEdificio().getId() == id && gasto.getAnio() >= anio &&  gasto.getMes() > mes) {
+			if (gasto.getEdificio().getId() == id && gasto.getAnio() >= anio && (gasto.getAnio() == anio &&  gasto.getMes() > mes)) {
 			   listaLimpia.add(gasto);
 			}
 		}
@@ -146,6 +146,57 @@ public class GastosAppl {
 				transaction.rollback();
 			}
 		}
+	}
+	
+	public void updateGastoReal(SessionFactory factory, GastoRealDTO gastoReal) {
+		Session session = factory.openSession();
+		try {
+			updateGastoReal(session, gastoReal);
+		} finally {
+			session.close();
+		}
+	}
+
+	public void updateGastoReal(Session session,  GastoRealDTO gastoReal) {
+		boolean commit = false;
+		Transaction transaction = session.beginTransaction();
+		try {
+			session.update(gastoReal);
+			commit = true;
+		} finally {
+			if (commit) {
+				transaction.commit();
+			} else {
+				transaction.rollback();
+			}
+		}
+	}
+
+	public void updateGastoPrevision(SessionFactory factory,
+			GastoPrevisionDTO gastoProvi) {
+		Session session = factory.openSession();
+		try {
+			updateGastoReal(session, gastoProvi);
+		} finally {
+			session.close();
+		}
+		
+	}
+
+	public void updateGastoReal(Session session, GastoPrevisionDTO gastoProvi) {
+		boolean commit = false;
+		Transaction transaction = session.beginTransaction();
+		try {
+			session.update(gastoProvi);
+			commit = true;
+		} finally {
+			if (commit) {
+				transaction.commit();
+			} else {
+				transaction.rollback();
+			}
+		}
+		
 	}
 
 }
