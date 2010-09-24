@@ -23,6 +23,7 @@
 		</ul>
 	</li>
 <%} %>	
+<%if (administrador.visibleEdificioMenu()){ %>
 	<li class="top"><a href="#" class="top_link"><span>Edificios</span></a>
 		<ul class="sub">
 			<li><a href="<s:url action='tiposPropiedadesListado'/>">Tipos de Propiedades</a></li>
@@ -31,9 +32,12 @@
 			<li><a href="<s:url action='responsablesListado'/>">Responsables</a></li>            
 		</ul>
 	</li>
+<% }%>	
 	<li class="top"><a href="#" class="top_link"><span>Gastos</span></a>
 		<ul class="sub">
+		<%if (administrador.tienePermisos(AdministradorDePermisos.ADMINISTRADOR)){ %>
 			<li><a href="GetListadoTipoDeGastoAction">Tipo de Gastos</a></li>
+		<%} %>	
 			<li><a href="EdificioGastosListarAction">Gastos </a></li>                    
 		</ul>
 	</li>
