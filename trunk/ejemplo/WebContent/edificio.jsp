@@ -2,7 +2,7 @@
 <%@ page language="java" contentType="text/html" import="java.util.*"%>
 <%@ page language="java" contentType="text/html" import="edificio.*"%>
 <jsp:useBean id="lista" scope="session" class="beans.EdificiosBean"/>
-
+<%@ page language="java" contentType="text/html" import="usuarios.dto.*"%>
 <%
 	ArrayList<EdificioDTO> edificios = lista.getEdificios();
 %>
@@ -37,7 +37,10 @@
 		<%} %>				
 		
 		</table> 
-		<a href="edificioAlta.jsp">Agregar Edificio</a>
+		<% AdministradorDePermisos administra = AdministradorDePermisos.getInstancia();
+			if (administra.visibleTodosLosEdificios()){%>
+				<a href="edificioAlta.jsp">Agregar Edificio</a>
+		<%	} %>
 		</fieldset>				
 		</td>
 		<td width="15" class="fondo"></td>
