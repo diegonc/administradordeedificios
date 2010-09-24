@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import javax.validation.ConstraintViolationException;
+
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
@@ -178,7 +180,12 @@ public class TiposPropiedadesAction extends ActionSupport implements Preparable 
 
 	public String borrar() {
 		cargarTipoPropiedad(nombreTipo);
-		dao.eliminar(entidad);
+		try {
+			dao.eliminar(entidad);
+		} catch (HibernateException e) {
+			addActionError("No se puede eliminar el tipo de propiedad mientras este asociado a propiedades o tipos de gastos.");
+			return "error";
+		}
 		return SUCCESS;
 	}
 

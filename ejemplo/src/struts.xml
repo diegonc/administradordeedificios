@@ -148,7 +148,7 @@
 				<param name="nombreEdificio">${nombreEdificio}</param>
 			</result>
 			<result name="edicion">/tiposPropiedadesFormulario.jsp</result>
-			<result name="error">/error.jsp</result>
+			<result name="error">/errorTiposPropiedades.jsp</result>
 			<interceptor-ref name="pppStackHibernate" />
 		</action>
 		

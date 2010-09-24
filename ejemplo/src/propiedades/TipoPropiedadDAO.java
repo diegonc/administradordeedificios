@@ -27,8 +27,10 @@ public class TipoPropiedadDAO {
 	public void eliminar(TipoPropiedadDTO tipo) {
 		try {
 			session.delete(tipo);
+			transaction.commit();
 		} catch (HibernateException e) {
 			transaction.rollback();
+			session.close();
 			throw e;
 		}
 	}
