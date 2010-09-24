@@ -22,6 +22,9 @@
 		var anio = document.getElementById("gastoPrevision.anio");
 		var mes = document.getElementById("gastoPrevision.mes");
 		var razon = document.getElementById("gastoReal.razonSocial");
+		var nroFactura = document.getElementById("gastoReal.numeroFacturaPago");
+		var fecha = document.getElementById("gastoReal.fechaPago");
+		var forma = document.getElementById("gastoReal.formaPago");
 	
 		
 		if(folio.value==""){ alert("Debe completar el nroFolio"); validado=false;}
@@ -37,7 +40,11 @@
 		}
 		if(validado==true) if (real.checked==true){
 			if(razon.value==""){ alert("Debe completar la razon social"); validado=false;}
-			
+			if(validado==true)if(fecha.value==""){ alert("Debe completar la fecha de pago"); validado=false;}
+			if(validado==true)if(/^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/.test(fecha.value)==false ){ alert("El formato de fecha de pago deber ser dd/mm/aaaa"); validado=false;}
+			if(validado==true)if(nroFactura.value==""){ alert("Debe completar el numero de factura"); validado=false;}
+			if(validado==true)if(isNaN(nroFactura.value)){ alert("El numero de factura debe ser un valor numerico"); validado=false;}
+			if(validado==true)if(forma.value==""){ alert("Debe completar la forma de pago"); validado=false;}
 		}
 	
 		if (validado==false)return false;
@@ -51,6 +58,9 @@
 		document.getElementById("gastoPrevision.anio").disabled=(previsional.checked==true)?"":"disabled";
 		document.getElementById("gastoPrevision.mes").disabled=(previsional.checked==true)? "":"disabled";
 		document.getElementById("gastoReal.razonSocial").disabled=(real.checked==true)?"":"disabled";
+		document.getElementById("gastoReal.numeroFacturaPago").disabled=(real.checked==true)?"":"disabled";
+		document.getElementById("gastoReal.fechaPago").disabled=(real.checked==true)? "":"disabled";
+		document.getElementById("gastoReal.formaPago").disabled=(real.checked==true)?"":"disabled";
 	}
 	
 	
@@ -113,7 +123,23 @@
 				 		</tr>	
 				 		
 				  		<tr><td colspan="6" height="10"></td></tr>
-						  	
+						 
+				  		<tr>
+				  			<td> <span>Pago</span></td>	<td colspan="4"></td>
+				  		</tr>
+				  		<tr>	
+				  			<td align="right" ><label for="gastoReal.fechaPago">Fecha:&nbsp;</label>  </td>
+				  			<td colspan="4"><input type="text" id="gastoReal.fechaPago" name="gastoReal.fechaPago" disabled="disabled" /></td>
+				  		</tr>
+				  		<tr>	
+				  			<td align="right" ><label for="gastoReal.numeroFacturaPago" ></label>  Nro Factura:&nbsp;</td>
+				  			<td colspan="4"><input type="text" id="gastoReal.numeroFacturaPago" name="gastoReal.numeroFacturaPago" disabled="disabled" /></td>
+				  		</tr>
+				  		<tr>	
+				  			<td align="right"><label for="gastoReal.formaPago"></label>  Forma:&nbsp;</td>
+				  			<td colspan="4"><input type="text" id="gastoReal.formaPago" name="gastoReal.formaPago" disabled="disabled"/></td>
+				  		</tr>			  		
+			  	  		 	
 			  		</table>
 			  		<input type="hidden" id="idEdificio" name="idEdificio" value="<%=edificio%>" >
 			  	
