@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.hibernate.SessionFactory;
 
+import usuarios.dto.AdministradorDePermisos;
 import usuarios.dto.UsuarioDTO;
 import utilidades.HibernateUtil;
 
@@ -29,12 +30,18 @@ public class EdificioGastosListarAction extends ActionSupport{
 		EdificioAppl edifAppl = new EdificioAppl();
 		SessionFactory factory = HibernateUtil.getSessionFactory();
 		try {
-			lista = (ArrayList<EdificioDTO>) edifAppl.getAllEdificios(factory);
-			listaEdificios.setEdificios(lista);
-			Map session = ActionContext.getContext().getSession();
-	        session.put("lista",listaEdificios);
-	        this.setSession(session);
-	        return SUCCESS;
+			//Carga la lista segun el perfil que tiene el usuario que se logea
+			AdministradorDePermisos administrador = AdministradorDePermisos.getInstancia();
+			if (!administrador.visibleTodosLosEdificios()){
+				lista.add(administrador.getUser().getEdificio());
+			}else{
+				lista = (ArrayList<EdificioDTO>) edifAppl.getAllEdificios(factory);
+			}
+				listaEdificios.setEdificios(lista);
+				Map session = ActionContext.getContext().getSession();
+		        session.put("lista",listaEdificios);
+		        this.setSession(session);
+		        return SUCCESS;
 		} catch (Exception e) {
 			return ERROR;
 		}	
