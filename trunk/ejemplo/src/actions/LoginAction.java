@@ -3,6 +3,7 @@ package actions;
 import java.util.List;
 
 import usuarios.appl.UsuarioAppl;
+import usuarios.dto.AdministradorDePermisos;
 import usuarios.dto.UsuarioDTO;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -51,6 +52,8 @@ public class LoginAction extends ActionSupport {
     	if (!this.username.isEmpty()&&!this.password.isEmpty()){
     		
     		List<UsuarioDTO> unicoUser = userAppl.getUsuarioByName(username);
+    		AdministradorDePermisos admin = AdministradorDePermisos.getInstancia();
+    		admin.setUser(unicoUser.get(0));
     		if (unicoUser.isEmpty()){
     			addActionError("Datos invalidos"); 
     			return "error";
