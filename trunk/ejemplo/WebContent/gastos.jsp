@@ -1,9 +1,12 @@
 <jsp:include page="/WEB-INF/jspf/header.jspf"></jsp:include>
 <%@ page language="java" contentType="text/html" import="java.util.*"%>
 <%@ page language="java" contentType="text/html" import="edificio.*"%>
+<%@ page language="java" contentType="text/html" import="usuarios.dto.*"%>
 <jsp:useBean id="lista" scope="session" class="beans.EdificiosBean"/>
+
 <%
 	ArrayList<EdificioDTO> edificios = lista.getEdificios();
+	AdministradorDePermisos administra = AdministradorDePermisos.getInstancia();
 %>
 
 <table cellpadding="0" cellspacing="0">
@@ -26,13 +29,13 @@
 				<td>Nombre</td>
 				<td></td>
 				<td></td>
-				<td></td>
+				<%if (administra.visibleTodosLosEdificios()){%><td></td><%} %>
 			</tr>	
 		<% for (EdificioDTO edificioDTO : edificios) {  %>		
 			<tr>
 				<td><%= edificioDTO.getNombre()%></td>
 				<td><a href="gastosConsulta.jsp?id=<%= edificioDTO.getId()%>">Consultar</a></td>
-				<td><a href="gastosAlta.jsp?id=<%= edificioDTO.getId()%>">Agregar</a></td>	
+				<%if (administra.visibleTodosLosEdificios()){%><td><a href="gastosAlta.jsp?id=<%= edificioDTO.getId()%>">Agregar</a></td><%} %>	
 				<td><a href="GastosListarModifElimAction?id=<%= edificioDTO.getId()%>">Eliminar/Modificar</a></td>		
 			</tr>	
 		<%} %>				
