@@ -167,6 +167,11 @@
 			<result name="error">/error.jsp</result>
 			<interceptor-ref name="pppStackHibernate" />
 		</action>
+
+		<action name="consultaGastos" method="input"
+			class="actions.ConsultaGastosAction">
+			<result name="success">/gastosConsulta.jsp</result>
+		</action>
 	</package>
 
 	<constant name="hibernatePlugin.customSessionFactoryClass" value="utilidades.HibernateUtil" />
