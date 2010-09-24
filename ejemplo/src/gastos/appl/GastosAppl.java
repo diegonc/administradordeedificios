@@ -33,7 +33,7 @@ public class GastosAppl {
 		java.util.Iterator<GastoRealDTO> iter = results.iterator();
 		while (iter.hasNext()) {
 			GastoRealDTO gasto = iter.next();
-			if (gasto.getEdificio().getId() == id && gasto.getNumeroFacturaPago() == null) {
+			if (gasto.getEdificio().getId() == id) {
 			   listaLimpia.add(gasto);
 			}
 		}
