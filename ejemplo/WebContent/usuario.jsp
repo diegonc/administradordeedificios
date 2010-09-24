@@ -90,7 +90,7 @@ function validar(){
 			  	  			<td></td> 
 			  	  			<td> </td>
 			 	  			<td><label for="user.usuario">Usuario:</label></td>
-			 	  			<td> <input type="text" id="user.usuario" name="user.usuario" readonly="readonly" /><font color="red">*&nbsp;&nbsp;</font></td>
+			 	  			<td> <input type="text" id="user.usuario" name="user.usuario" /><font color="red">*&nbsp;&nbsp;</font></td>
 			 	  		</tr>
 			 	  		<tr>
 			 				<td><label for="perfilesSeleccionados">Perfiles:</label></td> 
