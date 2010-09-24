@@ -4,8 +4,11 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+
 
 @SuppressWarnings("serial")
 @Entity
@@ -17,7 +20,6 @@ public class GastoRealDTO extends GastoDTO{
 	private Date fechaPago;
 	private Integer numeroFacturaPago;
 	private String formaPago;
-		
 	
 	@Column(name="RAZON_SOCIAL",nullable=false)
 	public String getRazonSocial() {
@@ -50,6 +52,4 @@ public class GastoRealDTO extends GastoDTO{
 	public void setFormaPago(String formaPago) {
 		this.formaPago = formaPago;
 	}
-	
-		
 }

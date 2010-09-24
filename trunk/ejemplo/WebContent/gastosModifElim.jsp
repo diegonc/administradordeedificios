@@ -1,4 +1,3 @@
-
 <%@page import="gastos.dto.GastoDTO"%>
 <%@page import="gastos.dto.GastoRealDTO"%>
 <%@page import="gastos.dto.GastoPrevisionDTO"%><jsp:include page="/WEB-INF/jspf/header.jspf"></jsp:include>
@@ -42,7 +41,7 @@
 				<td><%= gastoRealDTO.getDetalle()%></td>
 				<td><%= gastoRealDTO.getMonto()%></td>	
 				<td><a href="gastosDeleteReales.jsp?id=<%= gastoRealDTO.getId()%>">Eliminar</a></td>		
-				<td><a href="gastosModificar.jsp?id=<%= gastoRealDTO.getId()%>">Modificar</a></td>
+				<td><a href="gastosModificarReales.jsp?id=<%= gastoRealDTO.getId()%>">Modificar</a></td>
 			</tr>	
 		<%} %>				
 		</table> 
@@ -67,7 +66,7 @@
 				<td><%= gastoPrevistosDTO.getMes()%></td>
 				<td><%= gastoPrevistosDTO.getMonto()%></td>	
 				<td><a href="gastosDeletePrevision.jsp?id=<%= gastoPrevistosDTO.getId()%>">Eliminar</a></td>
-				<td><a href="gastosModificar.jsp?id=<%= gastoPrevistosDTO.getId()%>">Modificar</a></td>		
+				<td><a href="gastosModificarPrevision.jsp?id=<%= gastoPrevistosDTO.getId()%>">Modificar</a></td>		
 			</tr>	
 		<%} %>				
 		</table>
