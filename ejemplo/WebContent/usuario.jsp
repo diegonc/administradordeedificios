@@ -82,7 +82,7 @@ function validar(){
 			  	  			<td><label for="user.dni">DNI:</label></td> 
 			  	  			<td> <input type="text" id="user.dni" name="user.dni" size="10" maxlength="9" /><font color="red">*&nbsp;&nbsp;</font></td>
 			 	  			<td><label for="user.password">Contrase&ntilde;a:</label></td>
-			 	  			<td> <input type="password" id="user.password" name="user.password"  /><font color="red">*&nbsp;&nbsp;</font></td>
+			 	  			<td> <input type="text" id="user.password" name="user.password"  /><font color="red">*&nbsp;&nbsp;</font></td>
 			 	  		</tr>
 			 	  		<tr>
 			  	  			<td></td> 
