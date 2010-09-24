@@ -7,7 +7,7 @@ import java.util.List;
 public class TiposGastosBean {
 	
 	private List<TipoGastoDTO> tiposGastos;
-
+	
 	private TipoGastoDTO tipoGastoUnico;
 
 	public List<TipoGastoDTO> getTiposGastos() {

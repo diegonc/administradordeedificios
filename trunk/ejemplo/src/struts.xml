@@ -29,7 +29,8 @@
             <result name="actualizacion" type="redirectAction">GetListadoTipoDeGastoAction</result>
         </action>
         <action name="GastosAction" class="actions.GastosAction">  
-            <result name="success">/gastosAlta.jsp</result>              
+            <result name="success" type="redirectAction">EdificioGastosListarAction</result>
+            <result name="cargaTiposDeGastos">/gastosAlta.jsp</result>              
         </action>
         <action name="GastosListarModifElimAction" class="actions.GastosListarModifElimAction">  
             <result name="success">/gastosModifElim.jsp</result>  

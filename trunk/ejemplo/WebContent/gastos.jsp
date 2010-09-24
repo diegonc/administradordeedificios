@@ -35,7 +35,7 @@
 			<tr>
 				<td><%= edificioDTO.getNombre()%></td>
 				<td><a href="gastosConsulta.jsp?id=<%= edificioDTO.getId()%>">Consultar</a></td>
-				<%if (administra.visibleTodosLosEdificios()){%><td><a href="gastosAlta.jsp?id=<%= edificioDTO.getId()%>">Agregar</a></td><%} %>	
+				<%if (administra.visibleTodosLosEdificios()){%><td><a href="GastosAction!cargaTiposDeGastos?idEdificio=<%= edificioDTO.getId()%>">Agregar</a></td><%} %>	
 				<td><a href="GastosListarModifElimAction?id=<%= edificioDTO.getId()%>">Eliminar/Modificar</a></td>		
 			</tr>	
 		<%} %>				

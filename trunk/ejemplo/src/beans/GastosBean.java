@@ -8,7 +8,7 @@ import gastos.dto.GastoRealDTO;
 public class GastosBean {
 	private List<GastoRealDTO> gastosReales;
 	private List<GastoPrevisionDTO> gastosPrevistos;
-	
+		
 	public List<GastoRealDTO> getGastosReales() {
 		return gastosReales;
 	}
