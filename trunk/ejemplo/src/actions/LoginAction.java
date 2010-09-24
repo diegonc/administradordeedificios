@@ -53,12 +53,15 @@ public class LoginAction extends ActionSupport {
     		
     		List<UsuarioDTO> unicoUser = userAppl.getUsuarioByName(username);
     		AdministradorDePermisos admin = AdministradorDePermisos.getInstancia();
-    		admin.setUser(unicoUser.get(0));
+    		 
+    		
     		if (unicoUser.isEmpty()){
     			addActionError("Datos invalidos"); 
     			return "error";
     		}
-    		if (((UsuarioDTO)unicoUser.get(0)).getPassword().equals(this.password) )
+    		if (((UsuarioDTO)unicoUser.get(0)).getPassword().equals(this.password) ){
+    			admin.setUser(unicoUser.get(0));
+    		}
     			return "success";
     		
     	}
