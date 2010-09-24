@@ -69,11 +69,21 @@ public class UsuarioAction extends ActionSupport implements SessionAware {
 	}
 	public String actualizar(){
 		
+		
+		List<PerfilDTO> perfiles = new ArrayList<PerfilDTO>();
+		String[] perfilesTokens = this.perfilesSeleccionados.split(", ");
+		for (int i = 0; i < perfilesTokens.length; i++) {
+			PerfilDTO perfil =this.usuarioAppl.getPerfilByDescripcion(perfilesTokens[i]);
+			perfiles.add(perfil);
+		}
+		user.setPerfiles(perfiles);
+		this.usuarioAppl.updateUsuario(user, this.getId());
+		
 		return "actualizacion";
 	}
 	public String grabar(){
 		boolean error=false;
-		System.out.println(this.user.getApellido());
+		
 		List<PerfilDTO> perfiles = new ArrayList<PerfilDTO>();
 		String[] perfilesTokens = this.perfilesSeleccionados.split(", ");
 		for (int i = 0; i < perfilesTokens.length; i++) {
