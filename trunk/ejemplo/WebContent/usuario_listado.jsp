@@ -30,28 +30,26 @@
 					</tr>	
 				<%	int i=0;
 					for (UsuarioDTO usuarioDTO : usuarios) {
-						String estilo = "listado_par";
-						if ((i%2)==0)estilo = "listado_impar";
-						i++;
+					
 						String idEdificio =(usuarioDTO.getEdificio()==null)?"--":usuarioDTO.getEdificio().getNombre();
 						List<PerfilDTO> perfiles = usuarioDTO.getPerfiles();	
 				%>		
 					<tr>
-						<td class=<%=estilo%>><%= usuarioDTO.getUsuario()%></td>
-						<td class=<%=estilo%>><%= usuarioDTO.getPassword()%></td>
-						<td class=<%=estilo%>><%= usuarioDTO.getNombre()%></td>
-						<td class=<%=estilo%>><%= usuarioDTO.getApellido()%></td>
-						<td class=<%=estilo%>><%= usuarioDTO.getDni()%></td>
-						<td class=<%=estilo%> align="left">
+						<td><%= usuarioDTO.getUsuario()%></td>
+						<td><%= usuarioDTO.getPassword()%></td>
+						<td><%= usuarioDTO.getNombre()%></td>
+						<td><%= usuarioDTO.getApellido()%></td>
+						<td><%= usuarioDTO.getDni()%></td>
+						<td align="left">
 							<ul >
 									<%for(PerfilDTO p: perfiles){%>
 									<li ><%=p.getDescripcion()%> &nbsp;</li>
 								<%} %>
 							</ul>
 						</td>
-						<td class=<%=estilo%>><%= idEdificio%></td>	
-						<td class=<%=estilo%>><a href="GetListadoUsuariosAction!editar?id=<%=usuarioDTO.getId()%>">Modificar</a></td>
-						<td class=<%=estilo%>><a href="GetListadoUsuariosAction!eliminar?&id=<%=usuarioDTO.getId()%>" >Eliminar</a></td>		
+						<td><%= idEdificio%></td>	
+						<td><a href="GetListadoUsuariosAction!editar?id=<%=usuarioDTO.getId()%>">Modificar</a></td>
+						<td><a href="GetListadoUsuariosAction!eliminar?&id=<%=usuarioDTO.getId()%>" onclick="alert(confirm('wfw'))" >Eliminar</a></td>		
 					</tr>	
 				<%} %>			
 					
