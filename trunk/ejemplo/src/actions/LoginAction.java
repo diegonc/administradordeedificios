@@ -61,8 +61,13 @@ public class LoginAction extends ActionSupport {
     		}
     		if (((UsuarioDTO)unicoUser.get(0)).getPassword().equals(this.password) ){
     			admin.setUser(unicoUser.get(0));
-    		}
     			return "success";
+    		}else{
+    			addActionError("Datos invalidos"); 
+    			return "error";
+    		
+    		}
+    		
     		
     	}
     	return "error";
