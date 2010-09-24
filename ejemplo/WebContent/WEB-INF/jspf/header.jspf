@@ -7,16 +7,22 @@
     <link rel="stylesheet" href="<s:url value='/menu_style.css'/>" type="text/css" />
 </head>
 <body>
+<%@ page language="java" contentType="text/html" import="usuarios.dto.*"%>
+<%AdministradorDePermisos administrador = AdministradorDePermisos.getInstancia();
 
+%>
 <div id="contenedor">
 <div>
 <ul class="menu">
 	<li class="top"><a href="home.jsp" class="top_link"><span>Home</span></a></li>
+<%if (administrador.tienePermisos(AdministradorDePermisos.ADMINISTRADOR)){ %>
 	<li class="top"><a href="#" class="top_link"><span>Administraci&oacute;n</span></a>
+	
 		<ul class="sub">
 			 <li><a href="GetListadoUsuariosAction" >Usuarios</a></li>
 		</ul>
 	</li>
+<%} %>	
 	<li class="top"><a href="#" class="top_link"><span>Edificios</span></a>
 		<ul class="sub">
 			<li><a href="<s:url action='tiposPropiedadesListado'/>">Tipos de Propiedades</a></li>
@@ -31,7 +37,7 @@
 			<li><a href="EdificioGastosListarAction">Gastos </a></li>                    
 		</ul>
 	</li>
-	
+	<li class="top"><a href="salir.jsp" class="top_link"><span>Salir</span></a></li>	
 </ul>
 </div>
 <div class="clear-both"></div>
