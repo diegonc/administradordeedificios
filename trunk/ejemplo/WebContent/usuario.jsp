@@ -16,8 +16,10 @@ function habilitarEdificio(){
 	
 	var edificios = document.getElementById("user.edificio.id");	
 	var perfilesSeleccionados = document.getElementsByName("perfilesSeleccionados");
-	edificios.disabled=perfilesSeleccionados[1].checked==true?"":"disabled";
-	
+	edificios.disabled=perfilesSeleccionados[1].checked==true?"":"disabled";	
+	if(edificios.disabled=="disabled"){
+		edificios.disabled=perfilesSeleccionados[3].checked==true?"":"disabled";
+	}
 	
 }
 function validar(){
@@ -88,7 +90,7 @@ function validar(){
 			  	  			<td></td> 
 			  	  			<td> </td>
 			 	  			<td><label for="user.usuario">Usuario:</label></td>
-			 	  			<td> <input type="text" id="user.usuario" name="user.usuario"  /><font color="red">*&nbsp;&nbsp;</font></td>
+			 	  			<td> <input type="text" id="user.usuario" name="user.usuario" readonly="readonly" /><font color="red">*&nbsp;&nbsp;</font></td>
 			 	  		</tr>
 			 	  		<tr>
 			 				<td><label for="perfilesSeleccionados">Perfiles:</label></td> 
