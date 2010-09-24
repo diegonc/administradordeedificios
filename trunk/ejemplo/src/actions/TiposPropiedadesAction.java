@@ -3,6 +3,7 @@ package actions;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import org.hibernate.HibernateException;
@@ -11,6 +12,7 @@ import org.hibernate.Session;
 import propiedades.TipoPropiedadDAO;
 import propiedades.TipoPropiedadDTO;
 import propiedades.TipoPropiedadTipoGastoDTO;
+import propiedades.TipoPropiedadTipoGastoDAO;
 import usuarios.dto.AdministradorDePermisos;
 
 import com.googlecode.s2hibernate.struts2.plugin.annotations.SessionTarget;
@@ -40,6 +42,7 @@ public class TiposPropiedadesAction extends ActionSupport implements Preparable 
 	@SessionTarget
 	private Session session;
 	private TipoPropiedadDAO dao = new TipoPropiedadDAO();
+	private TipoPropiedadTipoGastoDAO daoTPTG = new TipoPropiedadTipoGastoDAO();
 	private EdificioAppl edificioAppl = new EdificioAppl();
 
 	/** Edificio seleccionado. */
@@ -133,12 +136,44 @@ public class TiposPropiedadesAction extends ActionSupport implements Preparable 
 
 	public void prepareGrabar() throws Exception {
 		cargarTipoPropiedad(entidad.getNombreTipo());
+		
+		for (String c : tiposGastos.keySet()) {
+			TipoPropiedadTipoGastoDTO tptg = new TipoPropiedadTipoGastoDTO();
+			tptg.setTipoGasto(new TiposGastosAppl().getTipoGastoPorCodigo(c));
+			tiposGastos.put(c, tptg);
+		}
 	}
 
 	public String grabar() {
 		edificioActual.agregarTipo(entidad);
+		mergeTiposGastos();
 		dao.grabar(entidad);
 		return SUCCESS;
+	}
+
+	public void mergeTiposGastos() {
+		/* Se remueven los que no estan */
+		Iterator<TipoPropiedadTipoGastoDTO> it = entidad.getTipoGastos().iterator();
+		while (it.hasNext()) {
+			TipoPropiedadTipoGastoDTO tptg = it.next();
+			String codigo = tptg.getTipoGasto().getCodigo();
+			if (!tiposGastos.containsKey(codigo)) {
+				daoTPTG.eliminar(tptg);
+				it.remove();
+			}	
+		}
+
+		/* Se actualizan los que estan y se agrega el resto */
+		for (TipoPropiedadTipoGastoDTO tptg : tiposGastos.values()) {
+			TipoPropiedadTipoGastoDTO actual = entidad.getTipoGasto(tptg.getTipoGasto().getCodigo());
+			if (actual != null) {
+				actual.setCoeficienteDistribucion(tptg.getCoeficienteDistribucion());
+			} else {
+				entidad.addTipoGasto(tptg);
+				actual = tptg;
+			}
+			daoTPTG.grabar(actual);
+		}
 	}
 
 	public String borrar() {
@@ -175,27 +210,28 @@ public class TiposPropiedadesAction extends ActionSupport implements Preparable 
 	/*
 	 * Edición de tipo de propiedad y asociaciones con tipos de gastos.
 	 * 
-	 * listar() --[usuario selecciona Agregar/Editar]--> editar() editar()
-	 * --[usuario selecciona Acceptar]--> grabar() editar() --[usuario
-	 * selecciona Agregar Tipo]--> agregarTipo() editar() --[usuario selecciona
-	 * Borrar Tipo]--> borrarTipo() agregarTipo() --[usuario selecciona Agregar
-	 * Tipo]--> agregarTipo() agregarTipo() --[usuario selecciona Borrar
-	 * Tipo]--> borrarTipo() borrarTipo() --[usuario selecciona Agregar Tipo]-->
-	 * agregarTipo() borrarTipo() --[usuario selecciona Borrar Tipo]-->
-	 * borrarTipo() agregarTipo() --[usuario selecciona Acceptar]--> grabar()
+	 * listar() --[usuario selecciona Agregar/Editar]--> editar()
+	 * editar() --[usuario selecciona Acceptar]--> grabar()
+	 * editar() --[usuario selecciona Agregar Tipo]--> agregarTipo()
+	 * editar() --[usuario selecciona Borrar Tipo]--> borrarTipo()
+	 * agregarTipo() --[usuario selecciona Agregar Tipo]--> agregarTipo()
+	 * agregarTipo() --[usuario selecciona Borrar Tipo]--> borrarTipo()
+	 * borrarTipo() --[usuario selecciona Agregar Tipo]--> agregarTipo()
+	 * borrarTipo() --[usuario selecciona Borrar Tipo]--> borrarTipo()
+	 * agregarTipo() --[usuario selecciona Acceptar]--> grabar()
 	 * borrarTipo() --[usuario selecciona Acceptar]--> grabar()
 	 * 
 	 * editar(): Se carga la lista de tipos de gastos del objeto a editar en la
-	 * colección Action.tiposGastos.
+	 *           colección Action.tiposGastos.
 	 * 
 	 * agregarTipo(): Se modifica la colección Action.tiposGastos agregando el
-	 * tipo seleccionado. No se recupera la lista del objeto nuevamente.
+	 *                tipo seleccionado. No se recupera la lista del objeto nuevamente.
 	 * 
 	 * borrarTipo(): Se modifica la colección Action.tiposGastos quitando el
-	 * tipo seleccionado. No se recupera la lista del objeto nuevamente.
+	 *               tipo seleccionado. No se recupera la lista del objeto nuevamente.
 	 * 
 	 * grabar(): Reemplaza la lista del objeto con la colección
-	 * Action.tiposGastos realizando un merge.
+	 *           Action.tiposGastos realizando un merge.
 	 */
 	/* Codigos del tipo a agregar */
 	private String[] codigosTipoGastoAAgregar = {};
