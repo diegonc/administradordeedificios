@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import edificio.EdificioDTO;
@@ -18,8 +19,8 @@ public class TipoPropiedadDTO implements Serializable {
 	private int id;
 	private double montoExp;
 	private double divisor;
-	private List<PropiedadDTO> propiedades;
-	private List<TipoPropiedadTipoGastoDTO> tipoGastos;
+	private List<PropiedadDTO> propiedades = new ArrayList<PropiedadDTO>();
+	private List<TipoPropiedadTipoGastoDTO> tipoGastos = new ArrayList<TipoPropiedadTipoGastoDTO>();
 
 	@Column(name = "NOMBRE_TIPO", nullable = false)
 	public String getNombreTipo() {
