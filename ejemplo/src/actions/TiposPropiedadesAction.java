@@ -133,6 +133,9 @@ public class TiposPropiedadesAction extends ActionSupport implements Preparable 
 	}
 
 	public String crear() {
+		entidad = new TipoPropiedadDTO();
+		cargarTiposGastosAsociados();
+		cargarTiposGastosDisponibles();
 		return "edicion";
 	}
 
