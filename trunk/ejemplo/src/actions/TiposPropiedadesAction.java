@@ -97,6 +97,7 @@ public class TiposPropiedadesAction extends ActionSupport implements Preparable 
 				}
 			} catch (HibernateException e) {
 				session.getTransaction().rollback();
+				session.close();
 			}
 		}
 	}
@@ -153,6 +154,10 @@ public class TiposPropiedadesAction extends ActionSupport implements Preparable 
 		edificioActual.agregarTipo(entidad);
 		mergeTiposGastos();
 		dao.grabar(entidad);
+		return SUCCESS;
+	}
+
+	public String cancelar() {
 		return SUCCESS;
 	}
 
