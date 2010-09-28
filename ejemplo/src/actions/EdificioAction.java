@@ -30,9 +30,9 @@ public class EdificioAction extends ActionSupport {
 	private Double fdoextraordinario = 0.0;
 	private String formaliq_exp;
 	private double tasa_anual;
-	private double amortizacion;
+	private String amortizacion;
 	private int dia_primer_vto;
-	private int dia_segundo_vto;
+	private Integer dia_segundo_vto;
 	
 	public int getId() {
 		return id;
@@ -124,10 +124,10 @@ public class EdificioAction extends ActionSupport {
 	public void setTasa_anual(double tasaAnual) {
 		tasa_anual = tasaAnual;
 	}
-	public double getAmortizacion() {
+	public String getAmortizacion() {
 		return amortizacion;
 	}
-	public void setAmortizacion(double amortizacion) {
+	public void setAmortizacion(String amortizacion) {
 		this.amortizacion = amortizacion;
 	}
 	public int getDia_primer_vto() {
@@ -153,7 +153,11 @@ public class EdificioAction extends ActionSupport {
 		}
 		edificioToHidratar.setCalle(calle);
 		edificioToHidratar.setDia_primer_vto(dia_primer_vto);
-		edificioToHidratar.setDia_segundo_vto(dia_segundo_vto);
+		if (dia_segundo_vto == null) {
+			edificioToHidratar.setDia_segundo_vto(0);
+		} else {
+			edificioToHidratar.setDia_segundo_vto(dia_segundo_vto);
+		}
 		edificioToHidratar.setEncargado_depto(encargado_depto);
 		edificioToHidratar.setEncargado_piso(encargado_piso);
 		edificioToHidratar.setEncargado_telefono(encargado_telefono);

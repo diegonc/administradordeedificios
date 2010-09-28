@@ -27,7 +27,7 @@ public class EdificioTest extends TestCase {
 		edificio.setForma_liq_exp("Como se pueda");
 		edificio.setApto_profesional(true);
 		edificio.setTasa_anual(43);
-		edificio.setAmortizacion(100);
+		edificio.setAmortizacion("ALEMAN");
 		edificio.setCalle("Medrano");
 		edificio.setNumero(222);
 		edificio.setLocalidad("CABA");

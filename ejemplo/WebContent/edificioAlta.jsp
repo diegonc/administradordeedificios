@@ -12,7 +12,6 @@ function validar(thisform) {
 	var encargado_piso = document.getElementById("encargado_piso");
 	var encargado_depto = document.getElementById("encargado_depto");
 	var tasa_anual = document.getElementById("tasa_anual");
-	var amortizacion = document.getElementById("amortizacion");
 	var dia_primer_vto = document.getElementById("dia_primer_vto");
 	var dia_segundo_vto = document.getElementById("dia_segundo_vto");
 	
@@ -52,15 +51,11 @@ function validar(thisform) {
 		alert("Debe completar el monto de la tasa anual y debe ser un numero"); 
 		validado=false;
 	}
-	if(isNaN(amortizacion.value) && validado == true ) { 
-		alert("Debe completar el monto de la amortizacion y debe ser un mumero"); 
-		validado=false;
-	}
 	if((isNaN(dia_primer_vto.value) || (dia_primer_vto.value < 1) || (dia_primer_vto.value > 15)) && validado == true ) { 
 		alert("Debe completar el dia del primer vto"); 
 		validado=false;
 	} 
-	if((isNaN(dia_segundo_vto.value)|| (dia_segundo_vto.value < 1) || (dia_segundo_vto.value > 15)) && validado == true ) { 
+	if((dia_segundo_vto.value!="") && (isNaN(dia_segundo_vto.value)|| (dia_segundo_vto.value < 1) || (dia_segundo_vto.value > 15)) && validado == true ) { 
 		alert("Debe completar el dia del segundo vto"); 
 		validado=false;
 	} 
@@ -89,11 +84,11 @@ function validar(thisform) {
 			 		<table  border="0" cellpadding="0" cellspacing="0" border="2">
 			 			<tr><td colspan="8" height="10"></td></tr>
 			 			<tr>
-			 				<td align="right"><label for="nombre">Nombre:</label> </td>
-				 			<td>&nbsp;&nbsp;<input type="text" id="nombre" name="nombre" size="15"/></td>
+			 				<td align="right"><label for="nombre">Nombre:</label></td>
+				 			<td>&nbsp;&nbsp;<input type="text" id="nombre" name="nombre" size="15"/></input><font color="red">*&nbsp;&nbsp;</font> </td>
 				 		</tr>
 				 		<tr><td  colspan="8" height="3"></td></tr>
-				 		<tr><td  colspan="8">Domicilio</td>	</tr>
+				 		<tr><td  colspan="8">Domicilio<font color="red"> *&nbsp;&nbsp;</font></td>	</tr>
 				 		<tr>	
 				 			<td align="right"><label for="calle">Calle:</label> </td>
 				 			<td>&nbsp;&nbsp;<input type="text" id="calle" name="calle" size="15"/></td>
@@ -103,7 +98,7 @@ function validar(thisform) {
 				 			<td colspan="3">&nbsp;&nbsp;<input type="text" id="localidad" name="localidad" size="15" /></td>
 			 			</tr>
 			 			<tr><td colspan="8" height="10"></td></tr>
-				 		<tr><td colspan="8">Encargado</td></tr>
+				 		<tr><td colspan="8">Encargado<font color="red"> *&nbsp;&nbsp;</font> </td></tr>
 			 			<tr>	
 				 			<td align="right"><label for="encargado_nombre">Nombre:</label> </td>
 				 			<td>&nbsp;&nbsp;<input type="text" id="encargado_nombre" name="encargado_nombre" size="15"/></td>
@@ -111,7 +106,7 @@ function validar(thisform) {
 				 			<td>&nbsp;&nbsp;<input type="text" id="encargado_telefono" name="encargado_telefono" size="9"/></td>
 				 			<td align="right" ><label for="encargado_piso">Piso</label> &nbsp;&nbsp;
 				 			<input type="text" id="encargado_piso" name="encargado_piso" size="2" /> 
-				 			<td align="right" ><label for="encargado_depto">Departamento</label> &nbsp;&nbsp;
+				 			<td align="right" ><label for="encargado_depto">Departamento  </label> &nbsp;&nbsp;
 				 			<input type="text" id="encargado_depto" name="encargado_depto" size="2" />
 			 			</tr>			
 			 			<tr><td colspan="8" height="10"></td></tr>	  		
@@ -128,9 +123,9 @@ function validar(thisform) {
 				  		<tr><td colspan="8" height="10"></td></tr>
 				  		<tr>	
 				  			<td align="right" ><label for="tasa_anual" ></label>  Tasa Anual:&nbsp;</td>
-				  			<td>&nbsp;&nbsp;<input type="text" id="tasa_anual" name="tasa_anual" size="2"/></input></td>
+				  			<td>&nbsp;&nbsp;<input type="text" id="tasa_anual" name="tasa_anual" size="2"/></input><font color="red">*&nbsp;&nbsp;</font></td>
 				  			<td align="right" ><label for="amortizacion" ></label>  Amortizacion:&nbsp;</td>
-				  			<td>&nbsp;&nbsp;<input type="text" id="amortizacion" name="amortizacion" size="3"/></input></td>
+				  			<td colspan="7">&nbsp;&nbsp;<select  id="amortizacion" name="amortizacion"> <option>ALEMAN</option><option>FRANCÉS</option></select></td>
 				  			<td colspan="2"></td>
 				  			
 				  		</tr>
@@ -138,7 +133,7 @@ function validar(thisform) {
 				 		<tr><td colspan="8">Fondo</td></tr>
 				  		<tr>	
 				 			<td align="right"><label for="dia_primer_vto">Primer Vto:</label> </td>
-				 			<td>&nbsp;&nbsp;<input type="text" id="dia_primer_vto" name="dia_primer_vto" size="9"/></td>
+				 			<td>&nbsp;&nbsp;<input type="text" id="dia_primer_vto" name="dia_primer_vto" size="9"/><font color="red">*&nbsp;&nbsp;</font></td>
 				 			<td align="right" ><label for="dia_segundo_vto"> Seg Vta:</label> </td>
 				 			<td>&nbsp;&nbsp;<input type="text" id="dia_segundo_vto" name="dia_segundo_vto" size="9"/></td>
 				 			

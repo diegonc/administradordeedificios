@@ -47,7 +47,8 @@
 		</table> 
 
 		</fieldset>	
-		<fieldset><legend>Listado de Gastos Previstos Futuros</legend>
+		<fieldset>
+		<legend>Listado de Gastos Previstos Futuros</legend>
 		<table width="500" border="1" class="listado" >
 			<tr>
 				<td>Gasto</td>
@@ -70,7 +71,8 @@
 			</tr>	
 		<%} %>				
 		</table>
-		<a href="EdificioGastosListarAction">Volver</a>		 
+		</fieldset>	
+		<a href="EdificioGastosListarAction">Volver</a>	
 		</td>
 		<td width="15" class="fondo"></td>
 		<td width="5" class="borde"></td>
