@@ -20,6 +20,8 @@ import usuarios.dto.AdministradorDePermisos;
 import com.googlecode.s2hibernate.struts2.plugin.annotations.SessionTarget;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.Preparable;
+import com.opensymphony.xwork2.util.logging.Logger;
+import com.opensymphony.xwork2.util.logging.LoggerFactory;
 
 import edificio.EdificioAppl;
 import edificio.EdificioDTO;
@@ -27,6 +29,8 @@ import gastos.appl.TiposGastosAppl;
 import gastos.dto.TipoGastoDTO;
 
 public class TiposPropiedadesAction extends ActionSupport implements Preparable {
+	
+	private static final Logger LOG = LoggerFactory.getLogger(TiposPropiedadesAction.class);
 
 	/* Parametros de la accion */
 	/*
@@ -192,9 +196,13 @@ public class TiposPropiedadesAction extends ActionSupport implements Preparable 
 	public String borrar() {
 		cargarTipoPropiedad(nombreTipo);
 		try {
+			// XXX: entidad ya se cargo desde this.session
+			dao.setSession(session);
+			dao.setTransaction(session.getTransaction());
 			dao.eliminar(entidad);
 		} catch (HibernateException e) {
 			addActionError("No se puede eliminar el tipo de propiedad mientras este asociado a propiedades o tipos de gastos.");
+			LOG.error("Error al borrar entidad.", e);
 			return "error";
 		}
 		return SUCCESS;
