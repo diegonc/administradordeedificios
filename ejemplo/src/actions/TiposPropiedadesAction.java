@@ -153,6 +153,9 @@ public class TiposPropiedadesAction extends ActionSupport implements Preparable 
 	public String grabar() {
 		edificioActual.agregarTipo(entidad);
 		mergeTiposGastos();
+		// XXX: entidad ya se cargo desde this.session
+		dao.setSession(session);
+		dao.setTransaction(session.getTransaction());
 		dao.grabar(entidad);
 		return SUCCESS;
 	}
