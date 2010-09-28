@@ -71,6 +71,13 @@ table.listado{border-color: teal; border-width: 2;}
 .error {
 	color:red;
 }
+.errorMessage {
+	color:red;
+}
+.required {
+	color: red;
+}
+
 .listado_impar{
 	background-color:#F0F0F0;
 	width: 200;
