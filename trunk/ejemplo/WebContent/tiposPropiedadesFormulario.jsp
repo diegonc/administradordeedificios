@@ -19,7 +19,7 @@
 		    	<tr>
 		    	<th>Codigo</th>
 		    	<th>Coeficiente de distribucion</th>
-		    	<th><s:submit value="Borrar" method="borrarTipos"/></th>
+		    	<th><s:submit theme="simple" value="Borrar" method="borrarTipos"/></th>
 		    	</tr>
 		    </thead>
 		    <tbody>

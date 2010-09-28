@@ -22,6 +22,10 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.Preparable;
 import com.opensymphony.xwork2.util.logging.Logger;
 import com.opensymphony.xwork2.util.logging.LoggerFactory;
+import com.opensymphony.xwork2.validator.annotations.ConversionErrorFieldValidator;
+import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
+import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
+import com.opensymphony.xwork2.validator.annotations.Validations;
 
 import edificio.EdificioAppl;
 import edificio.EdificioDTO;
@@ -29,7 +33,7 @@ import gastos.appl.TiposGastosAppl;
 import gastos.dto.TipoGastoDTO;
 
 public class TiposPropiedadesAction extends ActionSupport implements Preparable {
-	
+
 	private static final Logger LOG = LoggerFactory.getLogger(TiposPropiedadesAction.class);
 
 	/* Parametros de la accion */
@@ -91,9 +95,9 @@ public class TiposPropiedadesAction extends ActionSupport implements Preparable 
 
 		//Carga la lista segun el perfil que tiene el usuario que se logea
 		AdministradorDePermisos administrador = AdministradorDePermisos.getInstancia();
-		if (!administrador.visibleTodosLosEdificios()){
+		if (!administrador.visibleTodosLosEdificios()) {
 			edificios.add(administrador.getUser().getEdificio().getNombre());
-		}else{
+		} else {
 			try {
 				for (Object o : session.createQuery("from EdificioDTO").list()) {
 					EdificioDTO edificio = (EdificioDTO) o;
@@ -146,7 +150,7 @@ public class TiposPropiedadesAction extends ActionSupport implements Preparable 
 
 	public void prepareGrabar() throws Exception {
 		cargarTipoPropiedad(entidad.getNombreTipo());
-		
+
 		for (String c : tiposGastos.keySet()) {
 			TipoPropiedadTipoGastoDTO tptg = new TipoPropiedadTipoGastoDTO();
 			tptg.setTipoGasto(new TiposGastosAppl().getTipoGastoPorCodigo(c));
@@ -154,6 +158,15 @@ public class TiposPropiedadesAction extends ActionSupport implements Preparable 
 		}
 	}
 
+	@Validations(
+		requiredStrings = {
+			@RequiredStringValidator(fieldName = "nombreEdificio", message = "El nombre del edificio es obligatorio."),
+			@RequiredStringValidator(fieldName = "entidad.nombreTipo", message = "El nombre de tipo de propiedad es obligatorio.")
+		},
+		conversionErrorFields = {
+			@ConversionErrorFieldValidator(fieldName = "entidad.montoExp", message = "El campo debe ser numerico."),
+			@ConversionErrorFieldValidator(fieldName = "entidad.divisor", message = "El campo debe ser numerico.")
+		})
 	public String grabar() {
 		edificioActual.agregarTipo(entidad);
 		mergeTiposGastos();
@@ -177,7 +190,7 @@ public class TiposPropiedadesAction extends ActionSupport implements Preparable 
 			if (!tiposGastos.containsKey(codigo)) {
 				daoTPTG.eliminar(tptg);
 				it.remove();
-			}	
+			}
 		}
 
 		/* Se actualizan los que estan y se agrega el resto */
@@ -193,8 +206,11 @@ public class TiposPropiedadesAction extends ActionSupport implements Preparable 
 		}
 	}
 
-	public String borrar() {
+	public void prepareBorrar() {
 		cargarTipoPropiedad(nombreTipo);
+	}
+
+	public String borrar() {
 		try {
 			// XXX: entidad ya se cargo desde this.session
 			dao.setSession(session);
