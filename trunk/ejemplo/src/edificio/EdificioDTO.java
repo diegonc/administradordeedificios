@@ -29,7 +29,7 @@ public class EdificioDTO implements Serializable{
 	private String forma_liq_exp;
 	private boolean apto_profesional;
 	private double tasa_anual;
-	private double amortizacion;
+	private String amortizacion;
 	private String calle;
 	private int numero;
 	private String localidad;
@@ -97,12 +97,12 @@ public class EdificioDTO implements Serializable{
 		return tasa_anual;
 	}
 	
-	public void setAmortizacion(double amortizacion) {
+	public void setAmortizacion(String amortizacion) {
 		this.amortizacion = amortizacion;
 	}
 	
 	@Column(name="AMORTIZACION",nullable=false)
-	public double getAmortizacion() {
+	public String getAmortizacion() {
 		return amortizacion;
 	}
 	

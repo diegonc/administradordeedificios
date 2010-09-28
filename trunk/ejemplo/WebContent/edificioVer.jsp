@@ -62,20 +62,24 @@
 			 			<tr><td colspan="8" height="10"></td></tr>	  		
 			 			<tr>
 				 			<td><label for="apto_profesional">Apto Profesional</label></td>
-				 			 <td colspan="7">&nbsp;&nbsp;<input type="checkbox" value="true" id="apto_profesional" readonly name="apto_profesional" readonly/></td>
+				 			<%if(edificio.getApto_profesional()==true) { %>
+				 				<td colspan="7">&nbsp;&nbsp;<label for="apto_profesional">SI</label></td>
+				 			<% 	 } else { %>
+				 				<td colspan="7">&nbsp;&nbsp;<label for="apto_profesional">NO</label></td>
+				 		    <% }    %>
 				 		</tr>				 		
 				  		<tr><td colspan="8" height="10"></td></tr>  		
 				  		<tr><td class="borderline" colspan="8" height="10"></td></tr>
 				  		<tr>	
 				  			<td align="right" ><label for="formaliq_exp">Forma Liq.:&nbsp;</label>  </td>
-				  			<td colspan="7">&nbsp;&nbsp;<select  id="formaliq_exp" name="formaliq_exp"> <option>FIJO</option><option>PRORRATEO</option></select></td>
+				  			<td colspan="7">&nbsp;&nbsp;<input type="text" id="formaliq_exp" name="formaliq_exp" value="<%=edificio.getForma_liq_exp() %>" readonly size="10"/></input></td>
 				  		</tr>
 				  		<tr><td colspan="8" height="10"></td></tr>
 				  		<tr>	
 				  			<td align="right" ><label for="tasa_anual" ></label>  Tasa Anual:&nbsp;</td>
 				  			<td>&nbsp;&nbsp;<input type="text" id="tasa_anual" name="tasa_anual" value="<%=edificio.getTasa_anual() %>" readonly size="2"/></input></td>
 				  			<td align="right" ><label for="amortizacion" ></label>  Amortizacion:&nbsp;</td>
-				  			<td>&nbsp;&nbsp;<input type="text" id="amortizacion" name="amortizacion" value="<%=edificio.getAmortizacion() %>" readonly size="3"/></input></td>
+				  			<td>&nbsp;&nbsp;<input type="text" id="amortizacion" name="amortizacion" value="<%=edificio.getAmortizacion() %>" readonly size="10"/></input></td>
 				  			<td colspan="2"></td>
 				  			
 				  		</tr>

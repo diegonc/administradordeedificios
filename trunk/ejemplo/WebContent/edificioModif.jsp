@@ -22,7 +22,6 @@ function validar(thisform) {
 	var encargado_piso = document.getElementById("encargado_piso");
 	var encargado_depto = document.getElementById("encargado_depto");
 	var tasa_anual = document.getElementById("tasa_anual");
-	var amortizacion = document.getElementById("amortizacion");
 	var dia_primer_vto = document.getElementById("dia_primer_vto");
 	var dia_segundo_vto = document.getElementById("dia_segundo_vto");
 	
@@ -62,15 +61,11 @@ function validar(thisform) {
 		alert("Debe completar el monto de la tasa anual y debe ser un numero"); 
 		validado=false;
 	}
-	if(isNaN(amortizacion.value) && validado == true ) { 
-		alert("Debe completar el monto de la amortizacion y debe ser un mumero"); 
-		validado=false;
-	}
 	if((isNaN(dia_primer_vto.value) || (dia_primer_vto.value < 1) || (dia_primer_vto.value > 15)) && validado == true ) { 
 		alert("Debe completar el dia del primer vto"); 
 		validado=false;
 	} 
-	if((isNaN(dia_segundo_vto.value)|| (dia_segundo_vto.value < 1) || (dia_segundo_vto.value > 15)) && validado == true ) { 
+	if((dia_segundo_vto.value!="") && (isNaN(dia_segundo_vto.value)|| (dia_segundo_vto.value < 1) || (dia_segundo_vto.value > 15)) && validado == true ) { 
 		alert("Debe completar el dia del segundo vto"); 
 		validado=false;
 	} 
@@ -101,13 +96,12 @@ function validar(thisform) {
 			 			<tr>
 			 				<td align="right"><label for="nombre">Nombre:</label> </td>
 				 			<td>&nbsp;&nbsp;<input type="text" id="nombre" name="nombre" value="<%=edificio.getNombre() %>" readonly size="15"/></td>	
-				 			<td>No Editable</td>	
 				 			<td>&nbsp;&nbsp;<input type="text" style="display: none;" id="id" name="id" value="<%=edificio.getId() %>" readonly size="15"/></td>	
 				 			<td>&nbsp;&nbsp;<input type="text" style="display: none;" id="fdoOdinario" name="fdoOdinario" value="<%=edificio.getFondo_ordinario() %>" readonly size="15"/></td>
-				 			<td>&nbsp;&nbsp;<input type="text" style="display: none;" id="fdoextraordinario" name="fdoextraordinario" value="<%=edificio.getFondo_extraordinario() %>" readonly size="15"/></td> 
+				 			<td>&nbsp;&nbsp;<input type="text" style="display: none;" id="fdoextraordinario" name="fdoextraordinario" value="<%=edificio.getFondo_extraordinario() %>" readonly size="15"/></td>
 				 		</tr>
 				 		<tr><td  colspan="8" height="3"></td></tr>
-				 		<tr><td  colspan="8">Domicilio</td>	</tr>
+				 		<tr><td  colspan="8">Domicilio<font color="red">*&nbsp;&nbsp;</font></td>	</tr>
 				 		<tr>	
 				 			<td align="right"><label for="calle">Calle:</label> </td>
 				 			<td>&nbsp;&nbsp;<input type="text" id="calle" name="calle" value="<%=edificio.getCalle() %>" size="15"/></td>
@@ -117,7 +111,7 @@ function validar(thisform) {
 				 			<td colspan="3">&nbsp;&nbsp;<input type="text" id="localidad" name="localidad" value="<%=edificio.getLocalidad() %>" size="15" /></td>
 			 			</tr>
 			 			<tr><td colspan="8" height="10"></td></tr>
-				 		<tr><td colspan="8">Encargado</td></tr>
+				 		<tr><td colspan="8">Encargado<font color="red"> *&nbsp;&nbsp;</font></td></tr>
 			 			<tr>	
 				 			<td align="right"><label for="encargado_nombre">Nombre:</label> </td>
 				 			<td>&nbsp;&nbsp;<input type="text" id="encargado_nombre" name="encargado_nombre" value="<%=edificio.getEncargado_nombre() %>" size="15"/></td>
@@ -142,9 +136,9 @@ function validar(thisform) {
 				  		<tr><td colspan="8" height="10"></td></tr>
 				  		<tr>	
 				  			<td align="right" ><label for="tasa_anual" ></label>  Tasa Anual:&nbsp;</td>
-				  			<td>&nbsp;&nbsp;<input type="text" id="tasa_anual" name="tasa_anual" value="<%=edificio.getTasa_anual() %>" size="2"/></input></td>
+				  			<td>&nbsp;&nbsp;<input type="text" id="tasa_anual" name="tasa_anual" value="<%=edificio.getTasa_anual() %>" size="2"/></input><font color="red">*&nbsp;&nbsp;</font></td>
 				  			<td align="right" ><label for="amortizacion" ></label>  Amortizacion:&nbsp;</td>
-				  			<td>&nbsp;&nbsp;<input type="text" id="amortizacion" name="amortizacion" value="<%=edificio.getAmortizacion() %>" size="3"/></input></td>
+				  			<td colspan="7">&nbsp;&nbsp;<select  id="amortizacion" name="amortizacion"> <option>ALEMAN</option><option>FRANCÉS</option></select></td>
 				  			<td colspan="2"></td>
 				  			
 				  		</tr>
@@ -152,7 +146,7 @@ function validar(thisform) {
 				 		<tr><td colspan="8">Fondo</td></tr>
 				  		<tr>	
 				 			<td align="right"><label for="dia_primer_vto">Primer Vto:</label> </td>
-				 			<td>&nbsp;&nbsp;<input type="text" id="dia_primer_vto" name="dia_primer_vto" value="<%=edificio.getDia_primer_vto() %>" size="9"/></td>
+				 			<td>&nbsp;&nbsp;<input type="text" id="dia_primer_vto" name="dia_primer_vto" value="<%=edificio.getDia_primer_vto() %>" size="9"/><font color="red">*&nbsp;&nbsp;</font></td>
 				 			<td align="right" ><label for="dia_segundo_vto"> Seg Vta:</label> </td>
 				 			<td>&nbsp;&nbsp;<input type="text" id="dia_segundo_vto" name="dia_segundo_vto" value="<%=edificio.getDia_segundo_vto() %>" size="9"/></td>
 				 			
