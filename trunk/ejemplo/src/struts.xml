@@ -76,6 +76,8 @@
 
 	<package name="experimental" extends="hibernate-default">
 		<interceptors>
+			<interceptor name="conversionError" class="utilidades.SilentConversionErrorInterceptor"/>
+
             <!-- An example of the paramsPrepareParams trick. This stack
                  is exactly the same as the defaultStack, except that it
                  includes one extra interceptor before the prepare interceptor:
@@ -109,7 +111,7 @@
                 <interceptor-ref name="params">
                   <param name="excludeParams">dojo\..*,^struts\..*</param>
                 </interceptor-ref>
-                <interceptor-ref name="conversionError"/>
+		<interceptor-ref name="conversionError" />
                 <interceptor-ref name="validation">
                     <param name="excludeMethods">crear,editar,input,back,cancel,browse</param>
                 </interceptor-ref>
