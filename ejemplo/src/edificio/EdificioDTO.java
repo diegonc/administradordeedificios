@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.Proxy;
 
@@ -18,7 +19,7 @@ import propiedades.TipoPropiedadDTO;
 
 @SuppressWarnings("serial")
 @Entity 
-@Table(name="EDIFICIO")
+@Table(name="EDIFICIO", uniqueConstraints=@UniqueConstraint(columnNames="NOMBRE"))
 @Proxy( lazy=false )
 public class EdificioDTO implements Serializable{
 	private int id;
