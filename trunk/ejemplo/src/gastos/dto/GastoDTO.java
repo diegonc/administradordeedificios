@@ -30,11 +30,11 @@ public class GastoDTO implements Serializable{
 	}
 	
 	@Column (name="MONTO",nullable=false)
-	public double getMonto() {
+	public double getMonto(){
 		return monto;
 	}
-	
-	public void setMonto(double monto) {
+
+	public void setMonto(double monto){
 		this.monto = monto;
 	}
 	

@@ -23,7 +23,7 @@ public class GastoRealModifAction extends ActionSupport {
 	
 	private int id;
 	private int folio;
-	private Double monto;
+	private double monto;
 	private String detalle;
 	private String razon_social;
 	
@@ -43,11 +43,11 @@ public class GastoRealModifAction extends ActionSupport {
 		this.folio = folio;
 	}
 
-	public Double getMonto() {
+	public double getMonto() {
 		return monto;
 	}
 
-	public void setMonto(Double monto) {
+	public void setMonto(double monto) {
 		this.monto = monto;
 	}
 

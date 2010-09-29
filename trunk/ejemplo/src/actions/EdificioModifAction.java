@@ -28,7 +28,7 @@ public class EdificioModifAction extends ActionSupport {
 	private double tasa_anual;
 	private String amortizacion;
 	private int dia_primer_vto;
-	private int dia_segundo_vto;
+	private Integer dia_segundo_vto;
 
 	public int getId() {
 		return id;
@@ -170,7 +170,7 @@ public class EdificioModifAction extends ActionSupport {
 		return dia_segundo_vto;
 	}
 
-	public void setDia_segundo_vto(int diaSegundoVto) {
+	public void setDia_segundo_vto(Integer diaSegundoVto) {
 		dia_segundo_vto = diaSegundoVto;
 	}
 
@@ -185,7 +185,11 @@ public class EdificioModifAction extends ActionSupport {
 		}
 		edificioToHidratar.setCalle(calle);
 		edificioToHidratar.setDia_primer_vto(dia_primer_vto);
-		edificioToHidratar.setDia_segundo_vto(dia_segundo_vto);
+		if (dia_segundo_vto == null) {
+			edificioToHidratar.setDia_segundo_vto(0);
+		} else {
+			edificioToHidratar.setDia_segundo_vto(dia_segundo_vto);
+		}
 		edificioToHidratar.setEncargado_depto(encargado_depto);
 		edificioToHidratar.setEncargado_piso(encargado_piso);
 		edificioToHidratar.setEncargado_telefono(encargado_telefono);

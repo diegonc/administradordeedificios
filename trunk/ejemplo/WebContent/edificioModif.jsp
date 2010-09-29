@@ -65,7 +65,8 @@ function validar(thisform) {
 		alert("Debe completar el dia del primer vto"); 
 		validado=false;
 	} 
-	if((dia_segundo_vto.value!="") && (isNaN(dia_segundo_vto.value)|| (dia_segundo_vto.value < 1) || (dia_segundo_vto.value > 15)) && validado == true ) { 
+	if((dia_segundo_vto.value!="") && (isNaN(dia_segundo_vto.value) || (dia_segundo_vto.value < 0) 
+					|| (dia_segundo_vto.value > 15)) && validado == true ) { 
 		alert("Debe completar el dia del segundo vto"); 
 		validado=false;
 	} 

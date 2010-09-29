@@ -23,7 +23,7 @@ public class GastoPrevisionModifAction extends ActionSupport {
 	private int edificio_id;
 	private int folio;
 	private int id;
-	private Double monto;
+	private double monto;
 	private String detalle;
 	private int mes;
 	private int anio;
@@ -60,11 +60,11 @@ public class GastoPrevisionModifAction extends ActionSupport {
 		this.folio = folio;
 	}
 
-	public Double getMonto() {
+	public double getMonto() {
 		return monto;
 	}
 
-	public void setMonto(Double monto) {
+	public void setMonto(double monto) {
 		this.monto = monto;
 	}
 
