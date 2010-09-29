@@ -139,7 +139,7 @@ public class EdificioAction extends ActionSupport {
 	public int getDia_segundo_vto() {
 		return dia_segundo_vto;
 	}
-	public void setDia_segundo_vto(int diaSegundoVto) {
+	public void setDia_segundo_vto(Integer diaSegundoVto) {
 		dia_segundo_vto = diaSegundoVto;
 	}
 	
