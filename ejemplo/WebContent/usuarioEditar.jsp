@@ -1,43 +1,15 @@
 <jsp:include page="/WEB-INF/jspf/header.jspf"></jsp:include>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<%@ page language="java" contentType="text/html" import="java.util.ArrayList"%>
-<%@ page language="java" contentType="text/html" import="java.util.List"%>
 <%@ page language="java" contentType="text/html" import="usuarios.dto.UsuarioDTO"%>
-<%@ page language="java" contentType="text/html" import="usuarios.dto.PerfilDTO"%>
-<%@ page language="java" contentType="text/html" import="edificio.*"%>
-<jsp:useBean id="edificios" scope="session" class="beans.EdificiosBean"/>
 <jsp:useBean id="usuarioBean" scope="session" class="beans.UsuariosBean"/>
 
 <%
-	ArrayList<EdificioDTO> edificiosList = edificios.getEdificios();
 	UsuarioDTO usuario = usuarioBean.getUsuarioUnico();
-	List<PerfilDTO> perfiles = usuario.getPerfiles();	
+
 %>
 
 <script type="text/javascript">
-function habilitarEdificio(){
-	
-	var edificios = document.getElementById("user.edificio.id");	
-	var perfilesSeleccionados = document.getElementsByName("perfilesSeleccionados");
-	edificios.disabled=perfilesSeleccionados[1].checked==true?"":"disabled";
-	if(edificios.disabled==true){
-		edificios.disabled=perfilesSeleccionados[3].checked==true?"":"disabled";
-	}
-	
-}
-function cargarPerfiles(){
-	var perfilesSeleccionados = document.getElementsByName("perfilesSeleccionados");
-	var i=0;
-	var j=0;
-	for (i=0;i<5;i++){
-		k=i+1;
-		<%for(PerfilDTO p: perfiles){%>
-			
-			if (k==<%=p.getId()%>) perfilesSeleccionados[i].checked="checked";
-		<%}%>
-	}
-	
-}
+
 function validar(){
 	validado=true;
 	
@@ -46,7 +18,7 @@ function validar(){
 	var apellido = document.getElementById("user.apellido");
 	var dni = document.getElementById("user.dni");
 	var contrasena = document.getElementById("user.password");
-	var perfilesSeleccionados = document.getElementsByName("perfilesSeleccionados");
+	
 	
 	if(nombre.value==""){ alert("Debe completar el nombre"); validado=false;}
 	if(validado==true)if(apellido.value==""){ alert("Debe completar el apellido"); validado=false;}
@@ -54,30 +26,12 @@ function validar(){
 	if(validado==true)if(dni.value==""){ alert("Debe completar el dni"); validado=false;}
 	if(validado==true)if(isNaN(dni.value)){ alert("El dni debe ser un valor numerico"); validado=false;}
 	if(validado==true)if(contrasena.value==""){ alert("Debe completar la contrasena");validado=false;}
-	if(validado==true){
-		var i=1;
-		var perfilCheck = false;
-		for (i=0;i<5;i++){
-			if (perfilesSeleccionados[i].checked==true){
-				perfilCheck=true;
-			}
-		}
-		if (perfilCheck==false) {
-			alert("Debe asignar algun perfil");
-			validado=false;
-		}
-	}
-	
-	
 	if (validado==false)return false;
 	document.usuarioAlta.submit();
 	return true;
 }
 
-function seleccionarEdificio(){
-	document.getElementById("user.edificio.id").value="<%=usuario.getId()%>";
-	
-}
+
 </script>
 <table  cellpadding="0" cellspacing="0" >
 <tr>
@@ -101,6 +55,9 @@ function seleccionarEdificio(){
 					  		<td><label for="user.apellido">Apellidos:</label></td>
 					  		<td> <input type="text" id="user.apellido" name="user.apellido" size="30" value="<%=usuario.getApellido()%>"/><font color="red">*</font></td>
 					  	</tr>
+					  	<tr>
+							<td height="14" colspan="4"></td>
+						</tr>
 				  		<tr>
 			  	  			<td><label for="user.dni">DNI:</label></td> 
 			  	  			<td> <input type="text" id="user.dni" name="user.dni" size="10" maxlength="9" value="<%=usuario.getDni()%>" readOnly /><font color="red">*&nbsp;&nbsp;</font></td>
@@ -108,39 +65,14 @@ function seleccionarEdificio(){
 			 	  			<td> <input type="text" id="user.password" name="user.password"  value="<%=usuario.getPassword()%>" /><font color="red">*&nbsp;&nbsp;</font></td>
 			 	  		</tr>
 			 	  		<tr>
+							<td height="14" colspan="4"></td>
+						</tr>
+			 	  		<tr>
 			  	  			<td></td> 
 			  	  			<td> </td>
 			 	  			<td><label for="user.usuario">Usuario:</label></td>
 			 	  			<td> <input type="text" id="user.usuario" name="user.usuario"   value="<%=usuario.getUsuario()%>"/><font color="red">*&nbsp;&nbsp;</font></td>
 			 	  		</tr>
-			 	  		
-			 	  		<tr>
-			 				<td><label for="perfiles">Perfiles:</label></td> 
-			 				<td colspan="3" width="300"> 
-								<s:checkboxlist list="lista" name="perfilesSeleccionados" onclick="habilitarEdificio()"></s:checkboxlist>							
-							</td>						
-						</tr>
-						<script type="text/javascript">cargarPerfiles()</script>
-						<tr>	
-							<td><label for="user.edificio.id">Edificio:</label></td>
-							<td colspan="3"><select name ="user.edificio.id" id="user.edificio.id" disabled="disabled"  >
-					  			<%for (EdificioDTO edif: edificiosList){ %>
-					  				<%if (usuario.getEdificio()!=null){ %>
-							  			<%if (edif.getId()== (usuario.getEdificio().getId())){ %> 
-											<option value="<%=edif.getId()%>" selected="selected"><%=edif.getNombre()%></option>
-								  		<%}else{ %>
-								  			<option value="<%=edif.getId()%>"><%=edif.getNombre()%></option>
-								  		<%} 
-					  				}else{
-					  					%>
-					  					 <option value="<%=edif.getId()%>"><%=edif.getNombre()%></option>
-					  			<%
-					  				}
-						  		}%>
-								</select>
-							</td>
-						</tr>
-			 	  		
 						<tr>
 							<td height="14" colspan="4"></td>
 						</tr>												
