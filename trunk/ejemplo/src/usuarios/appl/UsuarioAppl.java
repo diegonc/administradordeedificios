@@ -33,7 +33,6 @@ public class UsuarioAppl {
         usuario.setPassword(nuevoUsuario.getPassword());
         usuario.setUsuario(nuevoUsuario.getUsuario());
         usuario.setPerfiles(nuevoUsuario.getPerfiles());
-        usuario.setEdificio(nuevoUsuario.getEdificio());
         session.update(usuario);
         session.getTransaction().commit();
     }

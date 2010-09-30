@@ -33,7 +33,8 @@ public class EdificioListarAction extends ActionSupport{
 		
 		try {
 			if (!administrador.visibleTodosLosEdificios()){
-				lista.add(administrador.getUser().getEdificio());
+				//TODO no existe mas un solo edificio asociado a un usuario
+				//lista.add(administrador.getUser().getEdificio());
 			}else{
 				lista = (ArrayList<EdificioDTO>) edifAppl.getAllEdificios(factory);
 			}

@@ -96,7 +96,8 @@ public class TiposPropiedadesAction extends ActionSupport implements Preparable 
 		//Carga la lista segun el perfil que tiene el usuario que se logea
 		AdministradorDePermisos administrador = AdministradorDePermisos.getInstancia();
 		if (!administrador.visibleTodosLosEdificios()) {
-			edificios.add(administrador.getUser().getEdificio().getNombre());
+			//TODO no existe mas un solo edificio asociado por usuario
+			//edificios.add(administrador.getUser().getEdificio().getNombre());
 		} else {
 			try {
 				for (Object o : session.createQuery("from EdificioDTO").list()) {
