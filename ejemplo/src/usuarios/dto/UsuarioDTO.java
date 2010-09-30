@@ -11,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import edificio.EdificioDTO;
@@ -32,12 +31,25 @@ public class UsuarioDTO  implements Serializable{
 	
 	private String usuario;
 	
-	private EdificioDTO edificio;
+	private int id;
+	
+	private List<EdificioDTO> edificios;
 	
 	private List<PerfilDTO> perfiles;
 	
-	private int id;
 	
+	@ManyToMany
+	@JoinTable(name = "USUARIO_PERFIL_EDIFICIO",
+	    joinColumns = {@JoinColumn(name="ID_USUARIO")},
+	    inverseJoinColumns = {@JoinColumn(name="ID_PERFIL")})
+	public List<PerfilDTO> getPerfiles() {
+		return perfiles;
+	}
+
+	public void setPerfiles(List<PerfilDTO> perfiles) {
+		this.perfiles = perfiles;
+	}
+
 	@Id
 	@GeneratedValue
 	@Column(name="ID",unique=true,nullable=false)
@@ -50,15 +62,15 @@ public class UsuarioDTO  implements Serializable{
 	}
 
 	@ManyToMany
-	@JoinTable(name = "USUARIO_PERFIL",
-	    joinColumns = {@JoinColumn(name="ID_USUARIO")},
-	    inverseJoinColumns = {@JoinColumn(name="ID_PERFIL")})
-	public List<PerfilDTO> getPerfiles() {
-		return perfiles;
+	@JoinTable(name = "USUARIO_PERFIL_EDIFICIO",
+	    joinColumns = {@JoinColumn(name="ID_USUARIO"),@JoinColumn(name="ID_PERFIL")},
+	    inverseJoinColumns = {@JoinColumn(name="ID_EDIFICIO")})
+	public List<EdificioDTO> getEdificios() {
+		return edificios;
 	}
 	
-	public void setPerfiles(List<PerfilDTO> perfiles) {
-		this.perfiles = perfiles;
+	public void setEdificios(List<EdificioDTO> edificios) {
+		this.edificios = edificios;
 	}
 
 	@Column(name="NOMBRE",nullable=false)
@@ -104,15 +116,5 @@ public class UsuarioDTO  implements Serializable{
 		this.usuario = usuario;
 	}
 	
-	@ManyToOne
-	@JoinColumn(name="ID_EDIFICIO",nullable=true)
-	public EdificioDTO getEdificio() {
-		return edificio;
-	}
-	
-	public void setEdificio(EdificioDTO edificio) {
-		this.edificio = edificio;
-	}
-
-				
+					
 }
