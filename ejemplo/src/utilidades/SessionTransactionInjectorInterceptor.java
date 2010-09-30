@@ -450,7 +450,7 @@ public class SessionTransactionInjectorInterceptor extends GenericInterceptor im
 						Session hibernateSession = getHibernateSessionFromFactory(sessionFactoryName);
 						String setterName = getSetterName(campo.getName());
 						try {
-							Method setterMethod = targetObject.getClass().getDeclaredMethod(setterName, Session.class);
+							Method setterMethod = targetObject.getClass().getMethod(setterName, Session.class);
 							setterMethod.invoke(targetObject, hibernateSession);
 						} catch (Exception e) {
 							campo.set(targetObject, hibernateSession);
