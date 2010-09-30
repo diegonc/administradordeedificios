@@ -29,6 +29,7 @@ public class EdificioModifAction extends ActionSupport {
 	private String amortizacion;
 	private int dia_primer_vto;
 	private Integer dia_segundo_vto;
+	private String mora;
 
 	public int getId() {
 		return id;
@@ -199,8 +200,9 @@ public class EdificioModifAction extends ActionSupport {
 		edificioToHidratar.setNombre(nombre);
 		edificioToHidratar.setNumero(numero);
 		edificioToHidratar.setTasa_anual(tasa_anual);
-		edificioToHidratar.setFondo_extraordinario(fdoextraordinario/10);
-		edificioToHidratar.setFondo_ordinario(fdoOdinario/10);
+		edificioToHidratar.setFondo_extraordinario(fdoextraordinario);
+		edificioToHidratar.setFondo_ordinario(fdoOdinario);
+		edificioToHidratar.setMora(mora);
 		return edificioToHidratar;
 	}
 
@@ -216,5 +218,13 @@ public class EdificioModifAction extends ActionSupport {
 			factory.close();
 			return "error";
 		}
+	}
+
+	public void setMora(String mora) {
+		this.mora = mora;
+	}
+
+	public String getMora() {
+		return mora;
 	}
 }
