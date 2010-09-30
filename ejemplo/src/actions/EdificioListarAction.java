@@ -1,18 +1,10 @@
 package actions;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.Map;
-
 import org.hibernate.SessionFactory;
-
-import usuarios.dto.AdministradorDePermisos;
-import usuarios.dto.UsuarioDTO;
 import utilidades.HibernateUtil;
-
 import beans.EdificiosBean;
-import beans.UsuariosBean;
-
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -29,15 +21,10 @@ public class EdificioListarAction extends ActionSupport{
 		EdificiosBean listaEdificios = new EdificiosBean();
 		EdificioAppl edifAppl = new EdificioAppl();
 		SessionFactory factory = HibernateUtil.getSessionFactory();
-		AdministradorDePermisos administrador = AdministradorDePermisos.getInstancia();
-		
+			
 		try {
-			if (!administrador.visibleTodosLosEdificios()){
-				//TODO no existe mas un solo edificio asociado a un usuario
-				//lista.add(administrador.getUser().getEdificio());
-			}else{
-				lista = (ArrayList<EdificioDTO>) edifAppl.getAllEdificios(factory);
-			}
+			//TODO: permisos
+			lista = (ArrayList<EdificioDTO>) edifAppl.getAllEdificios(factory);
 			listaEdificios.setEdificios(lista);
 			Map session = ActionContext.getContext().getSession();
 	        session.put("lista",listaEdificios);
