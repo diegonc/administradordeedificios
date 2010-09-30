@@ -1,7 +1,5 @@
 package actions;
 
-
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -81,30 +79,12 @@ public class GetListadoUsuariosAction extends ActionSupport implements SessionAw
 	
 	
 	public String editar(){
-		 //recupero los edificios
-		EdificiosBean listaEdificios = new EdificiosBean();
-		EdificioAppl edifAppl = new EdificioAppl();
-		SessionFactory factory = HibernateUtil.getSessionFactory();
-		ArrayList<EdificioDTO> listaE = (ArrayList<EdificioDTO>) edifAppl.getAllEdificios(factory);
-		listaEdificios.setEdificios(listaE);
-		   
-		
+
 		if(this.id!=null)
 		this.user = userAppl.getUsuario(id.intValue());
-		
-		List<PerfilDTO> listaPerfiles =  userAppl.getPerfiles();
-        this.lista= new ArrayList<String>();
-        for (PerfilDTO p :listaPerfiles) {
-        	lista.add(p.getDescripcion());
-			
-		}
-
 		Map session = ActionContext.getContext().getSession();
-	    session.put("edificios",listaEdificios);
-        
 		UsuariosBean userEditar = new UsuariosBean();
 		userEditar.setUsuarioUnico(this.user);
-		
         session.put("usuarioBean",userEditar);
         setSession(session);
     
@@ -113,15 +93,12 @@ public class GetListadoUsuariosAction extends ActionSupport implements SessionAw
 	public String execute() {
 		
 		List<UsuarioDTO> listaUsuario = userAppl.getUsuarios() ;
-			
 		UsuariosBean listado = new UsuariosBean();
-		listado.setUsers(listaUsuario);
-		
+		listado.setUsers(listaUsuario);		
 		Map<String,Object> session = ActionContext.getContext().getSession();
         session.put("listado",listado);
         setSession(session);
-        
-        
+              
     	 return "success";
     }
 

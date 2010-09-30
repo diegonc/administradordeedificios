@@ -32,14 +32,11 @@ public class UsuarioAction extends ActionSupport implements SessionAware {
 	
 	private UsuarioDTO user ;
 	
-	private PerfilDTO perfil;
-	
 	private Integer id;
 	
 	private ArrayList<String> lista ;
 	
-	private String perfilesSeleccionados;
-	
+		
 	public ArrayList<String> getLista() {
 		return lista;
 	}
@@ -55,12 +52,8 @@ public class UsuarioAction extends ActionSupport implements SessionAware {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public String getPerfilesSeleccionados() {
-		return perfilesSeleccionados;
-	}
-	public void setPerfilesSeleccionados(String perfilesSeleccionados) {
-		this.perfilesSeleccionados = perfilesSeleccionados;
-	}
+	
+	
 	public UsuarioDTO getUser() {
 		return user;
 	}
@@ -69,58 +62,26 @@ public class UsuarioAction extends ActionSupport implements SessionAware {
 	}
 	public String actualizar(){
 		
-		
-		List<PerfilDTO> perfiles = new ArrayList<PerfilDTO>();
-		String[] perfilesTokens = this.perfilesSeleccionados.split(", ");
-		for (int i = 0; i < perfilesTokens.length; i++) {
-			PerfilDTO perfil =this.usuarioAppl.getPerfilByDescripcion(perfilesTokens[i]);
-			perfiles.add(perfil);
-		}
-		user.setPerfiles(perfiles);
 		this.usuarioAppl.updateUsuario(user, this.getId());
 		
 		return "actualizacion";
 	}
 	public String grabar(){
 		boolean error=false;
-		
-		List<PerfilDTO> perfiles = new ArrayList<PerfilDTO>();
-		String[] perfilesTokens = this.perfilesSeleccionados.split(", ");
-		for (int i = 0; i < perfilesTokens.length; i++) {
-			PerfilDTO perfil =this.usuarioAppl.getPerfilByDescripcion(perfilesTokens[i]);
-			perfiles.add(perfil);
-		}
-		user.setPerfiles(perfiles);
+	
 		this.usuarioAppl.addUsuario(user);
 		
 		if (error){
 		addActionError("El usuario que quiere ingresar ya es existente.");
 		return "error";
 		}
-		System.out.println(this.perfilesSeleccionados);
+	
 		return "add";
 	}
 	
 	@SuppressWarnings("unchecked")
 	public String execute() {
-		 //recupero los edificios
-		EdificiosBean listaEdificios = new EdificiosBean();
-		EdificioAppl edifAppl = new EdificioAppl();
-		SessionFactory factory = HibernateUtil.getSessionFactory();
-		ArrayList<EdificioDTO> listaE = (ArrayList<EdificioDTO>) edifAppl.getAllEdificios(factory);
-		listaEdificios.setEdificios(listaE);
-		   
-		Map session = ActionContext.getContext().getSession();
-	    session.put("edificios",listaEdificios);
-        
-	    List<PerfilDTO> listaPerfiles =  usuarioAppl.getPerfiles();
-	    
-        this.lista= new ArrayList<String>();
-        for (PerfilDTO p :listaPerfiles) {
-        	lista.add(p.getDescripcion());
-			
-		}
-
+		
         if(this.id!=null){
         	user=usuarioAppl.getUsuario(this.id.intValue());
         	  session.put("user",user);
