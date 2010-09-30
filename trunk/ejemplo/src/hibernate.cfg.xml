@@ -49,7 +49,7 @@
      <!-- package usuarios -->
     <mapping class="usuarios.dto.PerfilDTO"/>
     <mapping class="usuarios.dto.UsuarioDTO"/>
-    <mapping class="usuarios.dto.UsuarioPerfilDTO"/>
+    <mapping class="usuarios.dto.UsuarioPerfilEdificioDTO"/>
     
     
         
