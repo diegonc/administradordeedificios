@@ -23,16 +23,11 @@
 						<td class="listado_par">Nombre</td>
 						<td class="listado_par">Apellido</td>
 						<td class="listado_par">Dni</td>
-						<td class="listado_par">Perfiles</td>
-						<td class="listado_par">Depto</td>
 						<td class="listado_par"></td>
 						<td class="listado_par"></td>
 					</tr>	
 				<%	int i=0;
-					for (UsuarioDTO usuarioDTO : usuarios) {
-					
-						String idEdificio =(usuarioDTO.getEdificio()==null)?"--":usuarioDTO.getEdificio().getNombre();
-						List<PerfilDTO> perfiles = usuarioDTO.getPerfiles();	
+					for (UsuarioDTO usuarioDTO : usuarios) {						
 				%>		
 					<tr>
 						<td><%= usuarioDTO.getUsuario()%></td>
@@ -40,15 +35,7 @@
 						<td><%= usuarioDTO.getNombre()%></td>
 						<td><%= usuarioDTO.getApellido()%></td>
 						<td><%= usuarioDTO.getDni()%></td>
-						<td align="left">
-							<ul >
-									<%for(PerfilDTO p: perfiles){%>
-									<li ><%=p.getDescripcion()%> &nbsp;</li>
-								<%} %>
-							</ul>
-						</td>
-						<td><%= idEdificio%></td>	
-						<td><a href="GetListadoUsuariosAction!editar?id=<%=usuarioDTO.getId()%>">Modificar</a></td>
+						<td><a href="GetListadoUsuariosAction!editar?id=<%=usuarioDTO.getId()%>" onclick="confirm("esta seguro?")">Modificar</a></td>
 						<td><a href="GetListadoUsuariosAction!eliminar?&id=<%=usuarioDTO.getId()%>" >Eliminar</a></td>		
 					</tr>	
 				<%} %>			
