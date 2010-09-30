@@ -66,7 +66,7 @@ public class UsuarioAction extends ActionSupport implements SessionAware {
 		return "add";
 	}
 	
-	@SuppressWarnings("unchecked")
+	
 	public String execute() {
 		
         if(this.id!=null){
