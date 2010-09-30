@@ -6,7 +6,6 @@ import gastos.dto.TipoGastoExtraordinarioDTO;
 import gastos.dto.TipoGastoMontoFijoDTO;
 import gastos.dto.TipoGastoMontoVariableDTO;
 
-import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Query;
