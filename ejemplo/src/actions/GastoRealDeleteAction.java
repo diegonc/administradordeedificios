@@ -3,7 +3,6 @@ package actions;
 import org.hibernate.SessionFactory;
 import utilidades.HibernateUtil;
 import com.opensymphony.xwork2.ActionSupport;
-import edificio.EdificioAppl;
 import gastos.appl.GastosAppl;
 
 @SuppressWarnings("serial")
