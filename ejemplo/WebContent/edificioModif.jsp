@@ -11,6 +11,15 @@
 %>
 
 <script type="text/javascript">
+
+function habilita(){
+	var punitorio= document.getElementById("punitorio");
+	var afecha= document.getElementById("afecha");
+	
+	document.getElementById("dia_segundo_vto").disabled=(afecha.checked==true)?"":"disabled";
+	document.getElementById("dia_segundo_vto").disabled=(punitorio.checked==true)?"":"disabled";
+}
+
 function validar(thisform) {
 	validado=true;
 	var nombre = document.getElementById("nombre");
@@ -24,6 +33,10 @@ function validar(thisform) {
 	var tasa_anual = document.getElementById("tasa_anual");
 	var dia_primer_vto = document.getElementById("dia_primer_vto");
 	var dia_segundo_vto = document.getElementById("dia_segundo_vto");
+
+	var punitorio= document.getElementById("punitorio");
+	var afecha= document.getElementById("afecha");
+	var diferido= document.getElementById("diferido");
 	
 	if(nombre.value=="") { 
 		alert("Debe completar el nombre"); 
@@ -70,6 +83,14 @@ function validar(thisform) {
 		alert("Debe completar el dia del segundo vto"); 
 		validado=false;
 	} 
+	if ((punitorio.checked==true) && (dia_segundo_vto.value=="") && validado == true ) {
+		alert("Si es punitorio debe completar el dia del segundo vto"); 
+		validado=false;
+	}
+	if ((dia_primer_vto.value > dia_segundo_vto.value) && (validado == true) && (punitorio.checked==true)){
+		alert("El segundo vto debe ser posterior al primero"); 
+		validado=false;
+	}
 	if (validado==true) {
 		document.modifEdificio.submit();
 	}
@@ -143,6 +164,12 @@ function validar(thisform) {
 				  			<td colspan="2"></td>
 				  			
 				  		</tr>
+				  		<tr><td colspan="8">Calculo de Interes</td></tr>
+				  		<tr>	
+				 			<td>&nbsp;&nbsp;<label for="punitorio"></label><input type="radio" id="punitorio" name="mora" value="punitorio"  checked="checked" onclick="habilita()"/>Punitorio</td>
+				 			<td>&nbsp;&nbsp;<label for="afecha"></label><input type="radio" id="afecha" name="mora" value="afecha" onclick="habilita()" />A fecha de pago &nbsp;</td>
+			 				<td>&nbsp;&nbsp;<label for="diferido"></label><input type="radio" id="diferido" name="mora" value="diferido" onclick="habilita()" />Diferido &nbsp;</td>
+			 			</tr>
 				  		<tr><td colspan="8" height="10"></td></tr>
 				 		<tr><td colspan="8">Fondo</td></tr>
 				  		<tr>	

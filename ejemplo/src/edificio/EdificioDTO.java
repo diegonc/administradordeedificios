@@ -39,7 +39,7 @@ public class EdificioDTO implements Serializable{
 	private String encargado_piso;
 	private int dia_primer_vto;
 	private int dia_segundo_vto;
-		
+	private String mora;
 	
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
@@ -208,6 +208,14 @@ public class EdificioDTO implements Serializable{
 	public void agregarTipo(TipoPropiedadDTO entidad) {
 		tipoPropiedades.add(entidad);
 		entidad.setEdificio(this);
+	}
+
+	public void setMora(String mora) {
+		this.mora = mora;
+	}
+
+	public String getMora() {
+		return mora;
 	}
 
 }

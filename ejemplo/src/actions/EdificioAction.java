@@ -33,6 +33,7 @@ public class EdificioAction extends ActionSupport {
 	private String amortizacion;
 	private int dia_primer_vto;
 	private Integer dia_segundo_vto;
+	private String mora;
 	
 	public int getId() {
 		return id;
@@ -142,6 +143,12 @@ public class EdificioAction extends ActionSupport {
 	public void setDia_segundo_vto(Integer diaSegundoVto) {
 		dia_segundo_vto = diaSegundoVto;
 	}
+	public void setMora(String mora) {
+		this.mora = mora;
+	}
+	public String getMora() {
+		return mora;
+	}
 	
 	public EdificioDTO cargarEdificioDTO() {
 		EdificioDTO edificioToHidratar = new EdificioDTO();
@@ -167,7 +174,7 @@ public class EdificioAction extends ActionSupport {
 		edificioToHidratar.setNombre(nombre);
 		edificioToHidratar.setNumero(numero);
 		edificioToHidratar.setTasa_anual(tasa_anual);
-	
+		edificioToHidratar.setMora(mora);
 		return edificioToHidratar;
 	}
 		
@@ -183,4 +190,5 @@ public class EdificioAction extends ActionSupport {
 			return "error";
 		}
 	}
+	
 }
