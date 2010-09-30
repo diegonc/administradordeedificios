@@ -35,7 +35,7 @@
 						<td><%= usuarioDTO.getNombre()%></td>
 						<td><%= usuarioDTO.getApellido()%></td>
 						<td><%= usuarioDTO.getDni()%></td>
-						<td><a href="GetListadoUsuariosAction!editar?id=<%=usuarioDTO.getId()%>" onclick="confirm("esta seguro?")">Modificar</a></td>
+						<td><a href="GetListadoUsuariosAction!editar?id=<%=usuarioDTO.getId()%>" onclick="confirm('Esta seguro?')">Modificar</a></td>
 						<td><a href="GetListadoUsuariosAction!eliminar?&id=<%=usuarioDTO.getId()%>" >Eliminar</a></td>		
 					</tr>	
 				<%} %>			
