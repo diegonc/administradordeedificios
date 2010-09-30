@@ -37,10 +37,7 @@
 		<%} %>				
 		
 		</table> 
-		<% AdministradorDePermisos administra = AdministradorDePermisos.getInstancia();
-			if (administra.visibleTodosLosEdificios()){%>
-				<a href="edificioAlta.jsp">Agregar Edificio</a>
-		<%	} %>
+			<a href="edificioAlta.jsp">Agregar Edificio</a>
 		</fieldset>				
 		</td>
 		<td width="15" class="fondo"></td>
