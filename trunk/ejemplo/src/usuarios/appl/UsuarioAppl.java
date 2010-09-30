@@ -5,8 +5,12 @@ import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
+import edificio.EdificioAppl;
+import edificio.EdificioDTO;
+
 import usuarios.dto.PerfilDTO;
 import usuarios.dto.UsuarioDTO;
+import usuarios.dto.UsuarioPerfilEdificioDTO;
 import utilidades.HibernateUtil;
 
 public class UsuarioAppl {
@@ -82,7 +86,6 @@ public class UsuarioAppl {
 		return q.list();
 	}
 	
-	@SuppressWarnings("unchecked")
 	public PerfilDTO getPerfilByDescripcion(String descripcion)
 	{
 		System.out.println();
@@ -116,22 +119,132 @@ public class UsuarioAppl {
 		return new UsuarioDTO();
 	}
 	
+	
+	public void addEdificiosByUsuarioPerfil(int idUsuario,int idPerfil,List<Integer> edificios){
+		session.beginTransaction();
+		
+		UsuarioDTO usuario = (UsuarioDTO) session.load(UsuarioDTO.class, idUsuario);
+		PerfilDTO perfil = (PerfilDTO) session.load(PerfilDTO.class, idPerfil);
+		
+		for(int idEdificio: edificios)
+		{
+			EdificioDTO edificio = (EdificioDTO) session.load(EdificioDTO.class, idEdificio);
+			UsuarioPerfilEdificioDTO usuarioPerfilEdificio = new UsuarioPerfilEdificioDTO();
+			
+			usuarioPerfilEdificio.setUsuario(usuario);
+			usuarioPerfilEdificio.setPerfil(perfil);
+			usuarioPerfilEdificio.setEdificio(edificio);
+			
+			session.save(usuarioPerfilEdificio);
+		}
+	
+        session.getTransaction().commit();
+	}
+	
+	public void addUsuarioPerfilEdificio(int idUsuario,int idPerfil,Integer idEdificio){
+		session.beginTransaction();
+		
+		UsuarioDTO usuario = (UsuarioDTO) session.load(UsuarioDTO.class, idUsuario);
+		PerfilDTO perfil = (PerfilDTO) session.load(PerfilDTO.class, idPerfil);
+		
+        
+		UsuarioPerfilEdificioDTO usuarioPerfilEdificio = new UsuarioPerfilEdificioDTO();
+		
+		usuarioPerfilEdificio.setUsuario(usuario);
+		usuarioPerfilEdificio.setPerfil(perfil);
+		
+		if(idEdificio!=null)
+		{
+			EdificioDTO edificio = (EdificioDTO) session.load(EdificioDTO.class, idEdificio);
+			usuarioPerfilEdificio.setEdificio(edificio);
+		}
+		
+		session.save(usuarioPerfilEdificio);
+        session.getTransaction().commit();
+	}
+	
+	public void removeUsuarioPerfilEdificio(int idUsuario,int idPerfil,Integer idEdificio){
+		session.beginTransaction();
+		
+		String consulta = "delete upe from UsuarioPerfilEdificioDTO upe where upe.usuario =:usuario";
+		
+		if(idEdificio != null)
+		{
+			consulta = consulta + " and upe.edificio =:edificio";
+		}
+		
+        Query q = session.createQuery("delete upe from UsuarioPerfilEdificioDTO upe where upe.usuario =:usuario" +
+        							  " and upe.perfil =:perfil");
+        
+        q.setParameter("usuario", idUsuario);
+        q.setParameter("perfil", idPerfil);
+        
+        if(idEdificio != null)
+        {	
+        	q.setParameter("edificio", idEdificio);
+        }
+        
+        q.executeUpdate();
+        session.getTransaction().commit();
+	}
+	
+	public void removeUsuarioPerfil(int idUsuario,int idPerfil){
+		session.beginTransaction();
+        Query q = session.createQuery("delete upe from UsuarioPerfilEdificioDTO upe where upe.usuario =:usuario" +
+        							  " and upe.perfil =:perfil");
+        q.setParameter("usuario", idUsuario);
+        q.setParameter("perfil", idPerfil);
+        q.executeUpdate();
+        session.getTransaction().commit();
+	}
+	
+	
+	@SuppressWarnings("unchecked")
+	public List<EdificioDTO> getEdificiosByUsuarioPerfil(int idUsuario,int idPerfil){
+		Query q = session.createQuery("select upe from UsuarioPerfilEdificioDTO upe where upe.usuario =:usuario" +
+        							  " and upe.perfil =:perfil");
+        q.setParameter("usuario", idUsuario);
+        q.setParameter("perfil", idPerfil);
+        return q.list();
+	}
+	
 	public static void main(String[] args) {
 		
 		UsuarioAppl usuarioAppl = new UsuarioAppl();
+		EdificioAppl edificioAppl = new EdificioAppl();
+		
+		List<EdificioDTO> edificios = new ArrayList<EdificioDTO>();
+		EdificioDTO edificio1 = edificioAppl.getEdificio(HibernateUtil.getSessionFactory(), 1);
+		EdificioDTO edificio2 = edificioAppl.getEdificio(HibernateUtil.getSessionFactory(), 2);
+		
+		edificios.add(edificio1);
+		edificios.add(edificio2);
+		
+		List<Integer> listEdificios = new ArrayList<Integer>();
+		
+		for(EdificioDTO edif: edificios){
+			listEdificios.add(edif.getId());
+		}
+				
 		
 		PerfilDTO perfil1 = usuarioAppl.getPerfil(3);
 		PerfilDTO perfil2 = usuarioAppl.getPerfil(4);
 		PerfilDTO perfil3 = usuarioAppl.getPerfil(2);
 		
-		List<PerfilDTO> perfiles = new ArrayList<PerfilDTO>();
+		UsuarioDTO usuario = usuarioAppl.getUsuario(1);
 		
-		perfiles.add(perfil1);
-		perfiles.add(perfil2);
-		perfiles.add(perfil3);
+		
+		usuarioAppl.addEdificiosByUsuarioPerfil(usuario.getId(), perfil1.getId(), listEdificios);
+		usuarioAppl.addEdificiosByUsuarioPerfil(usuario.getId(), perfil2.getId(), listEdificios);
+		
+		listEdificios.remove(1);
+		
+		usuarioAppl.addEdificiosByUsuarioPerfil(usuario.getId(), perfil3.getId(), listEdificios);
+		
+		
 		
 			
-		UsuarioDTO usuario = new UsuarioDTO();
+		/*UsuarioDTO usuario = new UsuarioDTO();
 		
 		usuario.setApellido("Chelotti");
 		usuario.setNombre("Adriana Gretel");
@@ -140,7 +253,7 @@ public class UsuarioAppl {
 		usuario.setUsuario("achelotti");
 		usuario.setPerfiles(perfiles);
 		
-		usuarioAppl.addUsuario(usuario);
+		usuarioAppl.addUsuario(usuario);*/
 		//usuario.setNombre("Adriana");
 		//usuarioAppl.updateUsuario(usuario, 9);
 		//usuarioAppl.removeUsuario(9);

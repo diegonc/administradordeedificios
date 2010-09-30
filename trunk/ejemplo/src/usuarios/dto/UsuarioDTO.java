@@ -33,8 +33,6 @@ public class UsuarioDTO  implements Serializable{
 	
 	private int id;
 	
-	private List<EdificioDTO> edificios;
-	
 	private List<PerfilDTO> perfiles;
 	
 	
@@ -59,18 +57,6 @@ public class UsuarioDTO  implements Serializable{
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	@ManyToMany
-	@JoinTable(name = "USUARIO_PERFIL_EDIFICIO",
-	    joinColumns = {@JoinColumn(name="ID_USUARIO"),@JoinColumn(name="ID_PERFIL")},
-	    inverseJoinColumns = {@JoinColumn(name="ID_EDIFICIO")})
-	public List<EdificioDTO> getEdificios() {
-		return edificios;
-	}
-	
-	public void setEdificios(List<EdificioDTO> edificios) {
-		this.edificios = edificios;
 	}
 
 	@Column(name="NOMBRE",nullable=false)
