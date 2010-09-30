@@ -8,7 +8,6 @@ import utilidades.HibernateUtil;
 import edificio.EdificioDTO;
 import gastos.appl.GastosAppl;
 import gastos.dto.GastoPrevisionDTO;
-import gastos.dto.GastoRealDTO;
 import gastos.dto.TipoGastoDTO;
 
 import com.opensymphony.xwork2.ActionSupport;

@@ -5,20 +5,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.struts2.interceptor.SessionAware;
-import org.hibernate.SessionFactory;
-
 import usuarios.appl.UsuarioAppl;
-import usuarios.dto.PerfilDTO;
 import usuarios.dto.UsuarioDTO;
-import utilidades.HibernateUtil;
-import beans.EdificiosBean;
 import beans.UsuariosBean;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
-
-import edificio.EdificioAppl;
-import edificio.EdificioDTO;
 
 public class GetListadoUsuariosAction extends ActionSupport implements SessionAware{
 
