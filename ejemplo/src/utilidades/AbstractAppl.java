@@ -1,36 +1,37 @@
-package propiedades;
+package utilidades;
+
+import com.opensymphony.xwork2.util.logging.Logger;
+import com.opensymphony.xwork2.util.logging.LoggerFactory;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import com.googlecode.s2hibernate.struts2.plugin.annotations.SessionTarget;
-import com.googlecode.s2hibernate.struts2.plugin.annotations.TransactionTarget;
+public abstract class AbstractAppl {
 
-public class TipoPropiedadDAO {
-	
-	@SessionTarget
-	Session session;
-	
-	@TransactionTarget
-	Transaction transaction;
+	private static final Logger LOG = LoggerFactory.getLogger(AbstractAppl.class);
 
-	public void grabar(TipoPropiedadDTO tipo) {
+	protected Session session;
+	protected Transaction transaction;
+
+	public void grabar(Object o) {
 		try {
-			session.saveOrUpdate(tipo);
+			session.saveOrUpdate(o);
 		} catch (HibernateException e) {
 			transaction.rollback();
+			session.close();
+			LOG.debug("Error al grabar objeto.", e);
 			throw e;
 		}
 	}
 
-	public void eliminar(TipoPropiedadDTO tipo) {
+	public void eliminar(Object o) {
 		try {
-			session.delete(tipo);
-			transaction.commit();
+			session.delete(o);
 		} catch (HibernateException e) {
 			transaction.rollback();
 			session.close();
+			LOG.debug("Error al eliminar objeto.", e);
 			throw e;
 		}
 	}
@@ -48,5 +49,4 @@ public class TipoPropiedadDAO {
 	public void setTransaction(Transaction transaction) {
 		this.transaction = transaction;
 	}
-
 }

@@ -78,7 +78,50 @@
 		<interceptors>
 			<interceptor name="conversionError" class="utilidades.SilentConversionErrorInterceptor"/>
 			<interceptor name="hibernateSessionInterceptor" class="utilidades.SessionTransactionInjectorInterceptor"/>
-			
+
+			<interceptor-stack name="headStack">
+				<interceptor-ref name="exception"/>
+				<interceptor-ref name="alias"/>
+				<interceptor-ref name="servletConfig"/>
+				<interceptor-ref name="i18n"/>
+				<interceptor-ref name="chain"/>
+				<interceptor-ref name="debugging"/>
+				<interceptor-ref name="scopedModelDriven"/>
+				<interceptor-ref name="modelDriven"/>
+				<interceptor-ref name="fileUpload"/>
+				<interceptor-ref name="checkbox"/>
+				<interceptor-ref name="multiselect"/>
+			</interceptor-stack>
+
+			<interceptor-stack name="tailStack">
+				<interceptor-ref name="prepare"/>
+				<interceptor-ref name="staticParams"/>
+				<interceptor-ref name="actionMappingParams"/>
+				<interceptor-ref name="params">
+					<param name="excludeParams">dojo\..*,^struts\..*</param>
+				</interceptor-ref>
+				<interceptor-ref name="conversionError"/>
+				<interceptor-ref name="validation">
+					<param name="excludeMethods">input,back,cancel,browse</param>
+				</interceptor-ref>
+				<interceptor-ref name="workflow">
+					<param name="excludeMethods">input,back,cancel,browse</param>
+				</interceptor-ref>
+			</interceptor-stack>
+
+			<interceptor-stack name="defaultStack">
+				<interceptor-ref name="headStack" />
+				<interceptor-ref name="tailStack" />
+			</interceptor-stack>
+
+			<interceptor-stack name="paramsPrepareParamsStack">
+				<interceptor-ref name="headStack" />
+				<interceptor-ref name="params">
+					<param name="excludeParams">dojo\..*,^struts\..*</param>
+				</interceptor-ref>
+				<interceptor-ref name="tailStack" />
+			</interceptor-stack>
+
 			<interceptor-stack name="pppStackHibernate">
 				<interceptor-ref name="hibernateSessionInterceptor"/>
 				<interceptor-ref name="paramsPrepareParamsStack"/>

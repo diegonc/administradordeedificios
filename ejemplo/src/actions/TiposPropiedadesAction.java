@@ -6,16 +6,16 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.hibernate.HibernateException;
-import org.hibernate.Session;
 
-import propiedades.TipoPropiedadDAO;
+import propiedades.TipoPropiedadAppl;
 import propiedades.TipoPropiedadDTO;
 import propiedades.TipoPropiedadTipoGastoDTO;
-import propiedades.TipoPropiedadTipoGastoDAO;
-import com.googlecode.s2hibernate.struts2.plugin.annotations.SessionTarget;
-import com.opensymphony.xwork2.ActionSupport;
+import propiedades.TipoPropiedadTipoGastoAppl;
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.Preparable;
+import com.opensymphony.xwork2.interceptor.annotations.InputConfig;
 import com.opensymphony.xwork2.util.logging.Logger;
 import com.opensymphony.xwork2.util.logging.LoggerFactory;
 import com.opensymphony.xwork2.validator.annotations.ConversionErrorFieldValidator;
@@ -26,8 +26,9 @@ import edificio.EdificioAppl;
 import edificio.EdificioDTO;
 import gastos.appl.TiposGastosAppl;
 import gastos.dto.TipoGastoDTO;
+import utilidades.SessionAwareAction;
 
-public class TiposPropiedadesAction extends ActionSupport implements Preparable {
+public class TiposPropiedadesAction extends SessionAwareAction implements Preparable {
 
 	private static final Logger LOG = LoggerFactory.getLogger(TiposPropiedadesAction.class);
 
@@ -44,10 +45,8 @@ public class TiposPropiedadesAction extends ActionSupport implements Preparable 
 	private String nombreTipo;
 
 	/* Atributos soporte */
-	@SessionTarget
-	private Session session;
-	private TipoPropiedadDAO dao = new TipoPropiedadDAO();
-	private TipoPropiedadTipoGastoDAO daoTPTG = new TipoPropiedadTipoGastoDAO();
+	private TipoPropiedadAppl dao = new TipoPropiedadAppl();
+	private TipoPropiedadTipoGastoAppl daoTPTG = new TipoPropiedadTipoGastoAppl();
 	private EdificioAppl edificioAppl = new EdificioAppl();
 
 	/** Edificio seleccionado. */
@@ -55,7 +54,7 @@ public class TiposPropiedadesAction extends ActionSupport implements Preparable 
 	/** Lista de edificios disponibles. */
 	private Collection<String> edificios;
 
-	private TipoPropiedadDTO entidad;
+	private TipoPropiedadDTO entidad = new TipoPropiedadDTO();
 	private Collection<TipoPropiedadDTO> lista;
 
 	public TipoPropiedadDTO getEntidad() {
@@ -82,7 +81,40 @@ public class TiposPropiedadesAction extends ActionSupport implements Preparable 
 		this.nombreTipo = nuevoNombre;
 	}
 
+	public String errorValidacion() {
+		cargarTiposGastosDisponibles();
+		return "edicion";
+	}
+
 	public void prepare() throws Exception {
+	}
+
+	@Override
+	protected void onSetSession() {
+		//XXX: la transaccion debe iniciarse para que los cambios persistan.
+		getSession().beginTransaction();
+		// XXX: todos los DAOs deben usar la misma sesion.
+		dao.setSession(getSession());
+		dao.setTransaction(getTransaction());
+		daoTPTG.setSession(getSession());
+		daoTPTG.setTransaction(getTransaction());
+	}
+
+	public void validate() {
+		// XXX: no hay anotaciones para validar una coleccion
+		for (TipoPropiedadTipoGastoDTO tptg : tiposGastos.values()) {
+			try {
+				TipoGastoDTO tg = tptg.getTipoGasto();
+				String fieldName = "tiposGastos['"+tg.getCodigo()+"'].coeficienteDistribucion";
+				Map<String,Object> conversionErrors = ActionContext.getContext().getConversionErrors();
+				if (conversionErrors.containsKey(fieldName)) {
+					addFieldError(fieldName, "El campo debe estar vacio o ser un numero.");
+				} 
+			} catch(NullPointerException e) {
+				// no deberia pasar xD
+				LOG.warn("El tipo de propiedad ha sido asociado a un tipo de gasto nulo.", e);
+			}
+		}
 	}
 
 	private void cargarListaEdificios() {
@@ -98,10 +130,12 @@ public class TiposPropiedadesAction extends ActionSupport implements Preparable 
 		} catch (HibernateException e) {
 			session.getTransaction().rollback();
 			session.close();
+			throw e;
 		}
 		
 	}
 
+	@SkipValidation
 	public String listar() {
 		cargarListaEdificios();
 		if (nombreEdificio != null) {
@@ -134,7 +168,6 @@ public class TiposPropiedadesAction extends ActionSupport implements Preparable 
 	}
 
 	public String crear() {
-		entidad = new TipoPropiedadDTO();
 		cargarTiposGastosAsociados();
 		cargarTiposGastosDisponibles();
 		return "edicion";
@@ -150,6 +183,7 @@ public class TiposPropiedadesAction extends ActionSupport implements Preparable 
 		}
 	}
 
+	@InputConfig(methodName="errorValidacion")
 	@Validations(
 		requiredStrings = {
 			@RequiredStringValidator(fieldName = "nombreEdificio", message = "El nombre del edificio es obligatorio."),
@@ -160,15 +194,18 @@ public class TiposPropiedadesAction extends ActionSupport implements Preparable 
 			@ConversionErrorFieldValidator(fieldName = "entidad.divisor", message = "El campo debe ser numerico.")
 		})
 	public String grabar() {
-		edificioActual.agregarTipo(entidad);
-		mergeTiposGastos();
-		// XXX: entidad ya se cargo desde this.session
-		dao.setSession(session);
-		dao.setTransaction(session.getTransaction());
-		dao.grabar(entidad);
-		return SUCCESS;
+		try {
+			edificioActual.agregarTipo(entidad);
+			dao.grabar(entidad);
+			mergeTiposGastos();
+			return SUCCESS;
+		} catch(Exception e) {
+			LOG.error("Error al grabar tipo de propiedad.", e);
+			return SUCCESS;
+		}
 	}
 
+	@SkipValidation
 	public String cancelar() {
 		return SUCCESS;
 	}
@@ -204,9 +241,6 @@ public class TiposPropiedadesAction extends ActionSupport implements Preparable 
 
 	public String borrar() {
 		try {
-			// XXX: entidad ya se cargo desde this.session
-			dao.setSession(session);
-			dao.setTransaction(session.getTransaction());
 			dao.eliminar(entidad);
 		} catch (HibernateException e) {
 			addActionError("No se puede eliminar el tipo de propiedad mientras este asociado a propiedades o tipos de gastos.");
@@ -288,6 +322,7 @@ public class TiposPropiedadesAction extends ActionSupport implements Preparable 
 		this.tiposGastos = tiposGastos;
 	}
 
+	@SkipValidation
 	public String editar() {
 		if (!tieneClave())
 			return SUCCESS;
@@ -307,6 +342,7 @@ public class TiposPropiedadesAction extends ActionSupport implements Preparable 
 		return "edicion";
 	}
 
+	@SkipValidation
 	public String agregarTipos() {
 
 		for (String c : codigosTipoGastoAAgregar) {
@@ -320,6 +356,7 @@ public class TiposPropiedadesAction extends ActionSupport implements Preparable 
 		return "edicion";
 	}
 
+	@SkipValidation
 	public String borrarTipos() {
 
 		for (String c : codigosTipoGastoABorrar) {

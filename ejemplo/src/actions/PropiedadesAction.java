@@ -6,10 +6,10 @@ import java.util.Collection;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
-import propiedades.PropiedadDAO;
+import propiedades.PropiedadAppl;
 import propiedades.PropiedadDTO;
 import propiedades.Responsable;
-import propiedades.ResponsableDAO;
+import propiedades.ResponsableAppl;
 import propiedades.TipoPropiedadDTO;
 import com.googlecode.s2hibernate.struts2.plugin.annotations.SessionTarget;
 import com.opensymphony.xwork2.ActionSupport;
@@ -43,8 +43,8 @@ public class PropiedadesAction extends ActionSupport implements Preparable {
 	/* Atributos soporte */
 	@SessionTarget
 	private Session session;
-	private PropiedadDAO dao = new PropiedadDAO();
-	private ResponsableDAO daoResp = new ResponsableDAO();
+	private PropiedadAppl dao = new PropiedadAppl();
+	private ResponsableAppl daoResp = new ResponsableAppl();
 	private EdificioAppl edificioAppl = new EdificioAppl();
 
 	/* Lista de edificios disponibles. */
