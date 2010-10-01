@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import propiedades.Responsable;
-import propiedades.ResponsableDAO;
+import propiedades.ResponsableAppl;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.Preparable;
@@ -17,7 +17,7 @@ public class ResponsablesAction extends ActionSupport implements Preparable {
 
 	private Responsable entidad = new Responsable();
 	private List<Responsable> lista = new ArrayList<Responsable>();
-	private ResponsableDAO dao = new ResponsableDAO();
+	private ResponsableAppl dao = new ResponsableAppl();
 
 	public Integer getDni() { return entidad.getDni(); }
 	@ConversionErrorFieldValidator(message="El campo debe ser numerico.", shortCircuit=true)
