@@ -167,6 +167,7 @@ public class TiposPropiedadesAction extends SessionAwareAction implements Prepar
 		return true;
 	}
 
+	@SkipValidation
 	public String crear() {
 		cargarTiposGastosAsociados();
 		cargarTiposGastosDisponibles();
