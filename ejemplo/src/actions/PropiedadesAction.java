@@ -267,12 +267,18 @@ public class PropiedadesAction extends ActionSupport implements Preparable {
 
 	@SkipValidation
 	public String borrar() {
-		cargarEdificio(nombreEdificio);
-		cargarTipoPropiedad(entidad.getTipoPropiedad().getNombreTipo());
-		cargarPropiedad(entidad.getNivel(), entidad.getOrden());
-		session.beginTransaction();
-		dao.eliminar(entidad);
-		return SUCCESS;
+		try {
+			cargarEdificio(nombreEdificio);
+			cargarTipoPropiedad(nombreTipo);
+			cargarPropiedad(nivel, orden);
+			session.beginTransaction();
+			dao.eliminar(entidad);
+			session.getTransaction().commit();
+			return SUCCESS;
+		} catch (HibernateException e) {
+			addActionError(e.getMessage() + "\n" + e.toString());
+			return "error";
+		}
 	}
 	
 	public void setPropietario(String dni) {
@@ -297,6 +303,8 @@ public class PropiedadesAction extends ActionSupport implements Preparable {
 		this.session = session;
 		dao.setSession(session);
 		dao.setTransaction(session.getTransaction());
+		daoResp.setSession(session);
+		daoResp.setTransaction(session.getTransaction());
 	}
 
 }
