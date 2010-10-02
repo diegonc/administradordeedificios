@@ -51,13 +51,16 @@ form.elegante input { padding: .2em;}
 table.listado{border-color: teal; border-width: 2;}
 .clear-both { clear: both; }
 
+.contenido {
+	background-color: black;
+}
+
 .contenido div {
-	padding: 1px; /* sin padding no se pinta correctamente el fondo. */ 
+	padding: 1px; /* sin padding no se pinta correctamente el fondo. */
 }
 
 .titulo {
 	color:white;
-	background-color:black;
 }
 
 .titulo h3 {
@@ -67,6 +70,8 @@ table.listado{border-color: teal; border-width: 2;}
 
 .cuerpo {
 	background-color: grey;
+	margin-left: 2.8333px; /* Equivalente en firefox a: **/
+	margin-right: 2.8333px;/* <td width="5" ...         **/
 }
 .error {
 	color:red;

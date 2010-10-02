@@ -249,11 +249,6 @@ public class PropiedadesAction extends ActionSupport implements Preparable {
 
 	}
 	
-	public void validateGrabar() {
-		if (entidad.getPropietario() == null)
-			addFieldError("propietario", "El responsable no existe.");
-	}
-
 	@InputConfig(methodName="validationErrors")
 	public String grabar() {
 		try {
@@ -280,12 +275,16 @@ public class PropiedadesAction extends ActionSupport implements Preparable {
 		return SUCCESS;
 	}
 	
-	@RequiredStringValidator(message="El campo es obligatorio.")
 	public void setPropietario(String dni) {
 		if (dni.trim().length() > 0) {
 			Responsable resp = daoResp.buscar(Integer.decode(dni));
-			entidad.setPropietario(resp);
+			if (resp != null)
+				entidad.setPropietario(resp);
+			else
+				addFieldError("propietario", "El responsable no existe.");
 		}
+		else 
+			addFieldError("propietario", "El campo es obligatorio.");
 	}
 	
 	public String getPropietario() {

@@ -1,6 +1,8 @@
 <jsp:include page="/WEB-INF/jspf/header.jspf" />
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <div class="contenido">
+	<div class="titulo"><h3>Propiedades</h3></div>
+	<div class="cuerpo">
 	<s:actionerror />
 	<s:actionmessage />
 	<s:form action="propiedadesFormulario!grabar" method="post" cssClass="elegante">
@@ -25,5 +27,6 @@
 	    <s:submit value="Aceptar" />
 	    <s:submit value="Cancelar" name="redirectAction:propiedadesListado" />
 	</s:form>
+	</div>
 </div>
 <jsp:include page="/WEB-INF/jspf/footer.jspf" />
