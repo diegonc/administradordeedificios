@@ -20,6 +20,9 @@
  * under the License.
  */
 -->
+<#if parameters.required?default(false) && parameters.requiredposition?default("right") == 'right'>
+ <span class="required">*</span><#t/>
+</#if>
 ${parameters.after?if_exists}<#t/>
     </td><#lt/>
 </tr>
