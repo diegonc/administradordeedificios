@@ -13,7 +13,11 @@ import com.opensymphony.xwork2.validator.annotations.ConversionErrorFieldValidat
 import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
 import com.opensymphony.xwork2.validator.annotations.EmailValidator;
 
-public class ResponsablesAction extends ActionSupport implements Preparable {
+import org.apache.struts2.interceptor.validation.SkipValidation;
+
+import utilidades.SessionAwareAction;
+
+public class ResponsablesAction extends SessionAwareAction implements Preparable {
 
 	private Responsable entidad = new Responsable();
 	private List<Responsable> lista = new ArrayList<Responsable>();
@@ -69,15 +73,18 @@ public class ResponsablesAction extends ActionSupport implements Preparable {
 		}
 	}
 
+	@SkipValidation
 	public String listar() {
 		lista = dao.listar();
 		return SUCCESS;
 	}
 	
+	@SkipValidation
 	public String editar() {
 		return "edicion";
 	}
 	
+	@SkipValidation
 	public String crear() {
 		return "edicion";
 	}
@@ -85,6 +92,7 @@ public class ResponsablesAction extends ActionSupport implements Preparable {
 	@InputConfig(methodName="errorValidacion")
 	public String grabar() {
 		try {
+			getSession().beginTransaction();
 			dao.grabar(entidad);
 			return SUCCESS;
 		} catch (Exception e) {
@@ -92,9 +100,11 @@ public class ResponsablesAction extends ActionSupport implements Preparable {
 			return "edicion";
 		}
 	}
-	
+
+	@InputConfig(methodName="listar")
 	public String borrar() {
 		try {
+			getSession().beginTransaction();
 			dao.eliminar(entidad);
 		} catch (Exception e) {
 			addActionError(e.getMessage());
@@ -104,6 +114,12 @@ public class ResponsablesAction extends ActionSupport implements Preparable {
 
 	public String errorValidacion() {
 		return "edicion";
+	}
+
+	@Override
+	protected void onSetSession() {
+		dao.setSession(getSession());
+		dao.setTransaction(getTransaction());
 	}
 
 }

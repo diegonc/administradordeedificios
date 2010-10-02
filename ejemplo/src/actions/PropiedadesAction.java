@@ -3,6 +3,7 @@ package actions;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
@@ -138,11 +139,13 @@ public class PropiedadesAction extends ActionSupport implements Preparable {
 			}
 		} catch (HibernateException e) {
 			session.getTransaction().rollback();
+			session.close();
+			throw e;
 		}
-	
 
 	}
 
+	@SkipValidation
 	public String listar() {
 		cargarListaEdificios();
 		if (nombreEdificio != null) {
@@ -157,6 +160,7 @@ public class PropiedadesAction extends ActionSupport implements Preparable {
 		return SUCCESS;
 	}
 
+	@SkipValidation
 	public String editar() {
 		if (!tieneClave())
 			return SUCCESS;
@@ -227,6 +231,7 @@ public class PropiedadesAction extends ActionSupport implements Preparable {
 		return claveCompleta;
 	}
 
+	@SkipValidation
 	public String crear() {
 		cargarEdificio(nombreEdificio);
 		cargarListaTiposPropiedades();
@@ -252,6 +257,7 @@ public class PropiedadesAction extends ActionSupport implements Preparable {
 	@InputConfig(methodName="validationErrors")
 	public String grabar() {
 		try {
+			session.beginTransaction();
 			dao.grabar(entidad);
 		} catch (Exception e) {
 			return validationErrors();
@@ -264,10 +270,12 @@ public class PropiedadesAction extends ActionSupport implements Preparable {
 		return "edicion";
 	}
 
+	@SkipValidation
 	public String borrar() {
 		cargarEdificio(nombreEdificio);
 		cargarTipoPropiedad(entidad.getTipoPropiedad().getNombreTipo());
 		cargarPropiedad(entidad.getNivel(), entidad.getOrden());
+		session.beginTransaction();
 		dao.eliminar(entidad);
 		return SUCCESS;
 	}
@@ -284,6 +292,12 @@ public class PropiedadesAction extends ActionSupport implements Preparable {
 		if (entidad != null && entidad.getPropietario() != null)
 			return entidad.getPropietario().getDni().toString();
 		return null;
+	}
+
+	public void setSession(Session session) {
+		this.session = session;
+		dao.setSession(session);
+		dao.setTransaction(session.getTransaction());
 	}
 
 }
