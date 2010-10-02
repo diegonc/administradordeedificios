@@ -7,6 +7,7 @@ import java.util.Map;
 import org.apache.struts2.interceptor.SessionAware;
 import usuarios.appl.UsuarioAppl;
 import usuarios.dto.UsuarioDTO;
+import usuarios.exception.UsuarioInexistenteException;
 import beans.UsuariosBean;
 
 import com.opensymphony.xwork2.ActionContext;
@@ -65,7 +66,12 @@ public class GetListadoUsuariosAction extends ActionSupport implements SessionAw
 	}
 	public String eliminar(){
 		if (this.id!=null)
-			userAppl.removeUsuario(this.id.intValue());		
+			try {
+				userAppl.removeUsuario(this.id.intValue());
+			} catch (UsuarioInexistenteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}		
 		return "eliminar";
 	}
 	
@@ -73,7 +79,12 @@ public class GetListadoUsuariosAction extends ActionSupport implements SessionAw
 	public String editar(){
 
 		if(this.id!=null)
-		this.user = userAppl.getUsuario(id.intValue());
+			try {
+				this.user = userAppl.getUsuario(id.intValue());
+			} catch (UsuarioInexistenteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		Map session = ActionContext.getContext().getSession();
 		UsuariosBean userEditar = new UsuariosBean();
 		userEditar.setUsuarioUnico(this.user);

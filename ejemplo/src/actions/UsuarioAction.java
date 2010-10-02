@@ -5,6 +5,9 @@ import java.util.Map;
 import org.apache.struts2.interceptor.SessionAware;
 import usuarios.appl.UsuarioAppl;
 import usuarios.dto.UsuarioDTO;
+import usuarios.exception.UsuarioExistenteException;
+import usuarios.exception.UsuarioInexistenteException;
+
 import com.opensymphony.xwork2.ActionSupport;
 
 
@@ -56,7 +59,12 @@ public class UsuarioAction extends ActionSupport implements SessionAware {
 	public String grabar(){
 		boolean error=false;
 	
-		this.usuarioAppl.addUsuario(user);
+		try {
+			this.usuarioAppl.addUsuario(user);
+		} catch (UsuarioExistenteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		if (error){
 		addActionError("El usuario que quiere ingresar ya es existente.");
@@ -70,7 +78,12 @@ public class UsuarioAction extends ActionSupport implements SessionAware {
 	public String execute() {
 		
         if(this.id!=null){
-        	user=usuarioAppl.getUsuario(this.id.intValue());
+        	try {
+				user=usuarioAppl.getUsuario(this.id.intValue());
+			} catch (UsuarioInexistenteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
         	  session.put("user",user);
         }
         this.setSession(session);

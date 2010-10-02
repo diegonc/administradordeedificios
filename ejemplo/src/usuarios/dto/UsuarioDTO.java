@@ -33,9 +33,9 @@ public class UsuarioDTO  implements Serializable{
 	
 	private List<PerfilDTO> perfiles;
 	
-	
+			
 	@ManyToMany
-	@JoinTable(name = "USUARIO_PERFIL_EDIFICIO",
+	@JoinTable(name = "USUARIO_PERFIL",
 	    joinColumns = {@JoinColumn(name="ID_USUARIO")},
 	    inverseJoinColumns = {@JoinColumn(name="ID_PERFIL")})
 	public List<PerfilDTO> getPerfiles() {

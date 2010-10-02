@@ -18,8 +18,7 @@ import edificio.EdificioDTO;
 public class UsuarioPerfilEdificioDTO implements Serializable{
 	
 	private int id;
-	private UsuarioDTO usuario;
-	private PerfilDTO perfil;
+	private UsuarioPerfilDTO usuarioPerfil;
 	private EdificioDTO edificio;
 	
 	@Id
@@ -32,22 +31,14 @@ public class UsuarioPerfilEdificioDTO implements Serializable{
 		this.id = id;
 	}
 	
+		
 	@ManyToOne
-	@JoinColumn(name="ID_USUARIO",nullable=false)
-	public UsuarioDTO getUsuario() {
-		return usuario;
+	@JoinColumn(name="ID_USUARIO_PERFIL",nullable=false)
+	public UsuarioPerfilDTO getUsuarioPerfil() {
+		return usuarioPerfil;
 	}
-	public void setUsuario(UsuarioDTO usuario) {
-		this.usuario = usuario;
-	}
-	
-	@ManyToOne
-	@JoinColumn(name="ID_PERFIL",nullable=false)
-	public PerfilDTO getPerfil() {
-		return perfil;
-	}
-	public void setPerfil(PerfilDTO perfil) {
-		this.perfil = perfil;
+	public void setUsuarioPerfil(UsuarioPerfilDTO usuarioPerfil) {
+		this.usuarioPerfil = usuarioPerfil;
 	}
 	
 	@ManyToOne

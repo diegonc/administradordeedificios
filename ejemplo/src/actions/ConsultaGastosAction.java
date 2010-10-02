@@ -10,6 +10,7 @@ import java.util.Map;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.Preparable;
 
+@SuppressWarnings("serial")
 public class ConsultaGastosAction extends ActionSupport implements Preparable {
 
 	/* Parametros de la accion */
