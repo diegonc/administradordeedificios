@@ -199,6 +199,7 @@ public class TiposPropiedadesAction extends SessionAwareAction implements Prepar
 			edificioActual.agregarTipo(entidad);
 			dao.grabar(entidad);
 			mergeTiposGastos();
+			getTransaction().commit();
 			return SUCCESS;
 		} catch(Exception e) {
 			LOG.error("Error al grabar tipo de propiedad.", e);
@@ -243,6 +244,7 @@ public class TiposPropiedadesAction extends SessionAwareAction implements Prepar
 	public String borrar() {
 		try {
 			dao.eliminar(entidad);
+			getTransaction().commit();
 		} catch (HibernateException e) {
 			addActionError("No se puede eliminar el tipo de propiedad mientras este asociado a propiedades o tipos de gastos.");
 			LOG.error("Error al borrar entidad.", e);
