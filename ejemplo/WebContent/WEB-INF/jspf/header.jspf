@@ -16,6 +16,7 @@
 	<li class="top"><a href="#" class="top_link"><span>Administraci&oacute;n</span></a>
 		<ul class="sub">
 			 <li><a href="GetListadoUsuariosAction" >Usuarios</a></li>
+			 <li><a href="VinculacionUsuario" >Vinculacion</a></li>
 		</ul>
 	</li>
 	<li class="top"><a href="#" class="top_link"><span>Edificios</span></a>
