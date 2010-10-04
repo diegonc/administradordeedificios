@@ -19,21 +19,20 @@
 				<table width="600" border="1" class="listado" cellpadding="0" cellspacing="0" >
 					<tr>
 						<td class="listado_par">Usuario</td>
-						<td class="listado_par">Password</td>
 						<td class="listado_par">Nombre</td>
 						<td class="listado_par">Apellido</td>
 						<td class="listado_par">Dni</td>
 						<td class="listado_par"></td>
-						<td class="listado_par"></td>
+						
 					</tr>	
 				<%	int i=0;
 					for (UsuarioDTO usuarioDTO : usuarios) {						
 				%>		
 					<tr>
 						<td><%= usuarioDTO.getUsuario()%></td>
-						<td><%= usuarioDTO.getPassword()%></td>
 						<td><%= usuarioDTO.getNombre()%></td>
-						<td><%= usuarioDTO.getApellido()%></td>						
+						<td><%= usuarioDTO.getApellido()%></td>
+						<td><%= usuarioDTO.getDni()%></td>								
 						<td><a href="VinculacionUsuarioPerfilEdificio!vincular?&id=<%=usuarioDTO.getId()%>" >Vincular</a></td>		
 					</tr>	
 				<%} %>			
