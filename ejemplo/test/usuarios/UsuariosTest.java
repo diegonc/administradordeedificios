@@ -3,32 +3,28 @@ package usuarios;
 import java.util.ArrayList;
 import java.util.List;
 
+import edificio.EdificioAppl;
+import edificio.EdificioDTO;
+
 import junit.framework.TestCase;
 import usuarios.appl.UsuarioAppl;
 import usuarios.dto.PerfilDTO;
 import usuarios.dto.UsuarioDTO;
 import usuarios.dto.UsuarioPerfilDTO;
-import usuarios.dto.UsuarioPerfilEdificioDTO;
 import usuarios.exception.UsuarioExistenteException;
 import usuarios.exception.UsuarioInexistenteException;
-import edificio.EdificioAppl;
-import edificio.EdificioDTO;
+import utilidades.HibernateUtil;
 
 public class UsuariosTest extends TestCase{
 
 	private UsuarioDTO usuario;
-	private UsuarioPerfilDTO usuarioPerfil;
-	private UsuarioPerfilEdificioDTO usuarioPerfilEdificio;
-	private EdificioDTO edificio;
 	private UsuarioAppl usuarioAppl;
-	private EdificioAppl edificioAppl;	
+		
 	
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
 		this.usuarioAppl = new UsuarioAppl();
-		this.edificioAppl = new EdificioAppl();
-		
 	}
 	
 	public void testRemoveUsuarioInexistente()
@@ -103,6 +99,50 @@ public class UsuariosTest extends TestCase{
 				
 	}
 
+	public void testActualizarUsuarioPerfilEdificio(){
+		try {
+			this.usuario = usuarioAppl.getUsuarioByUsername("adminuser");
+		}catch (UsuarioInexistenteException e) {
+			fail(e.getMessage());
+		}
 		
+		PerfilDTO perfil1 = usuarioAppl.getPerfilByDescripcion(PerfilDTO.ADMINISTRADOR);
+		PerfilDTO perfil2 = usuarioAppl.getPerfilByDescripcion(PerfilDTO.RESPONSABLE_COBROS);
+		PerfilDTO perfil3 = usuarioAppl.getPerfilByDescripcion(PerfilDTO.RESPONSABLE_GASTOS);
+		
+		List<PerfilDTO> perfiles = new ArrayList<PerfilDTO>();
+		
+		perfiles.add(perfil1);
+		perfiles.add(perfil2);
+		perfiles.add(perfil3);
+		
+		try {
+			usuarioAppl.actualizarPerfiles(perfiles, this.usuario.getId());
+		} catch (UsuarioInexistenteException e) {
+			fail(e.getMessage());
+		}
+		
+		
+		List<EdificioDTO> edificios = new ArrayList<EdificioDTO>();
+		EdificioAppl edificioAppl = new EdificioAppl();
+		
+		EdificioDTO edificio1 = edificioAppl.getEdificio(HibernateUtil.getSessionFactory(), 1);
+		EdificioDTO edificio2 = edificioAppl.getEdificio(HibernateUtil.getSessionFactory(), 2);
+		
+		edificios.add(edificio1);
+		edificios.add(edificio2);
+		
+		
+		usuarioAppl.actualizarEdificiosParaUsuarioPerfil(edificios, this.usuario.getId(), PerfilDTO.ADMINISTRADOR);
+		
+		
+		List<EdificioDTO> edificios2 = new ArrayList<EdificioDTO>();
+	
+		edificios2.add(edificio1);
+				
+		usuarioAppl.actualizarEdificiosParaUsuarioPerfil(edificios2, this.usuario.getId(), PerfilDTO.RESPONSABLE_COBROS);
+				 
+		
+	}
 
 }

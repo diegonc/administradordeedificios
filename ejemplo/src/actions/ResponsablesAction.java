@@ -3,20 +3,19 @@ package actions;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.struts2.interceptor.validation.SkipValidation;
+
 import propiedades.Responsable;
 import propiedades.ResponsableAppl;
+import utilidades.SessionAwareAction;
 
-import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.Preparable;
 import com.opensymphony.xwork2.interceptor.annotations.InputConfig;
 import com.opensymphony.xwork2.validator.annotations.ConversionErrorFieldValidator;
-import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
 import com.opensymphony.xwork2.validator.annotations.EmailValidator;
+import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
 
-import org.apache.struts2.interceptor.validation.SkipValidation;
-
-import utilidades.SessionAwareAction;
-
+@SuppressWarnings("serial")
 public class ResponsablesAction extends SessionAwareAction implements Preparable {
 
 	private Responsable entidad = new Responsable();

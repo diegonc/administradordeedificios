@@ -1,4 +1,5 @@
 <jsp:include page="/WEB-INF/jspf/header.jspf"></jsp:include>
+<%@ taglib uri="/struts-tags" prefix="s" %>
 <%@ page language="java" contentType="text/html" import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html" import="edificio.*"%>
 <jsp:useBean id="edificios" scope="session" class="beans.EdificiosBean"/>
@@ -111,7 +112,7 @@ function habilitarInputsPlazo(){
 				 		</tr>
 				 		<tr>
 				 			<td align="right"><label for="descripcion">Descripci&oacute;n:</label> </td>
-				 			<td colspan="4">&nbsp;&nbsp;<input type="text" id="descripcion" name="descripcion" /><font color="red">*&nbsp;&nbsp;</font></td>
+				 			<td colspan="4">&nbsp;&nbsp;<input type="text" id="descripcion" name="descripcion"/><font color="red">*&nbsp;&nbsp;</font></td>
 			 			</tr>
 			 			<tr><td colspan="5" height="10"></td></tr>
 				  		
@@ -162,6 +163,7 @@ function habilitarInputsPlazo(){
 				  		</tr>			  		
 			  	  		
 			  		</table>
+			  		<s:actionerror cssClass="error"/>
 			  		<input type="hidden" id="tgExtraordinario.codigo" name="tgExtraordinario.codigo" value="" >
 			  		<input type="hidden" id="tgEventual.codigo" name="tgEventual.codigo" value="" >
 			  		<input type="hidden" id="tgMontoFijo.codigo" name="tgMontoFijo.codigo" value="" >

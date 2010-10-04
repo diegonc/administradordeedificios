@@ -1,5 +1,6 @@
 package utilidades;
 
+@SuppressWarnings("serial")
 public class SilentConversionErrorInterceptor extends ConversionErrorInterceptor {
 
 	@Override

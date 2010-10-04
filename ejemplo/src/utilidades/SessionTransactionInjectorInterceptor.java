@@ -83,6 +83,7 @@ public class SessionTransactionInjectorInterceptor extends GenericInterceptor im
 
 	private HttpServletRequest request; 
 	
+	@SuppressWarnings("unchecked")
 	private static Set<Class> actionsWithoutInjection = new HashSet<Class>();
 	
 	static {
@@ -99,11 +100,13 @@ public class SessionTransactionInjectorInterceptor extends GenericInterceptor im
 		excludedPackages.add("javassist.");
 	}
 	
+	@SuppressWarnings("unchecked")
 	private static void markMappgingNoInjection(Class actionClass) {
 		actionsWithoutInjection.add(actionClass);
 		log.debug("Action "+actionClass.getName()+" makerd as permanent for no Session/Transaction Injection into Injection Cache");
 	}
 	
+	@SuppressWarnings("unchecked")
 	private static boolean isNotMappedAction(Class actionClass) {
 		boolean notmapped = actionsWithoutInjection.contains(actionClass);
 		if (notmapped) {
@@ -112,6 +115,7 @@ public class SessionTransactionInjectorInterceptor extends GenericInterceptor im
 		return notmapped;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public String intercept(ActionInvocation invocation) throws Exception {
 		
@@ -397,6 +401,7 @@ public class SessionTransactionInjectorInterceptor extends GenericInterceptor im
 	 * @param testClass
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	private boolean isCandidadeClass(Class testClass) {
 		if (!searchInsideJars) {
 			if ( (testClass.getResource("")==null) || (testClass.getResource("").getProtocol().equals("jar")) ) {
@@ -424,6 +429,7 @@ public class SessionTransactionInjectorInterceptor extends GenericInterceptor im
 	 * @param sessions Set of Hibernate Sessions to be used
 	 * @throws Exception 
 	 */
+	@SuppressWarnings("unchecked")
 	private void injectHibernateCoreSessionByAnnotation(Object targetObject,
 			Set<Session> sessions) throws Exception {
 		Class testClass = targetObject.getClass();
@@ -475,6 +481,7 @@ public class SessionTransactionInjectorInterceptor extends GenericInterceptor im
 	/**
 	 * For future cache implementation
 	 */
+	@SuppressWarnings({ "unchecked", "unused" })
 	private static HashMap<Class, Set<String>> cacheInjectionMap = new HashMap<Class, Set<String>>();
 
 	/**
@@ -482,6 +489,7 @@ public class SessionTransactionInjectorInterceptor extends GenericInterceptor im
 	 * @param actionClass
 	 * @param name
 	 */
+	@SuppressWarnings("unchecked")
 	private void isCandidateToInjectionCache(Class actionClass, String name) {
 		/*ValueStack valueStack = ActionContext.getContext().getValueStack();
 		
@@ -500,6 +508,7 @@ public class SessionTransactionInjectorInterceptor extends GenericInterceptor im
 		cacheInjectionMap.put(actionClass, candidates);*/
 	}
 
+	@SuppressWarnings("unchecked")
 	private void debugInfoSessionInjectedByAnnotation(Field campo, Class testClass) {
 		log.debug("Hibernate Session injected (by annotation) into Action. Field \""+campo.getName()+"\". Class \""+testClass.getName()+"\"");
 	}
@@ -519,6 +528,7 @@ public class SessionTransactionInjectorInterceptor extends GenericInterceptor im
 	 * @throws ClassNotFoundException
 		 * @throws NoSuchFieldException 
 	 */
+	@SuppressWarnings("unchecked")
 	private boolean injectHibernateTransactionByAnnotation(Object targetObject,
 			Session defaultSession, boolean foundTarget) throws SecurityException, NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException, ClassNotFoundException, NoSuchFieldException {
 		Class testClass = targetObject.getClass();
@@ -591,11 +601,13 @@ public class SessionTransactionInjectorInterceptor extends GenericInterceptor im
 	}
 	
 
+	@SuppressWarnings("unchecked")
 	private void debugInfoTransactionInjectedByAnnotation(Field campo, Class testClass) {
 		log.debug("Hibernate Transaction injected (by annotation) into Action. Field \""+campo.getName()+"\". Class \""+testClass.getName()+"\"");
 	}
 	
 
+	@SuppressWarnings("unchecked")
 	private synchronized void detectAndCloseHibernateCoreSessionCreatedLater(Object targetObject) throws SecurityException, NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException, ClassNotFoundException {
 		
 		if (readedObjectsByRequest.get(ServletActionContext.getRequest()).contains(targetObject))
@@ -645,6 +657,7 @@ public class SessionTransactionInjectorInterceptor extends GenericInterceptor im
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
 	private synchronized void detectAndCommitHibernateTransactionCreatedLater(Object targetObject) throws Exception {
 		try {
 			if (readedObjectsByRequest.get(ServletActionContext.getRequest()).contains(targetObject))
@@ -701,8 +714,10 @@ public class SessionTransactionInjectorInterceptor extends GenericInterceptor im
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
 	private static Map<HttpServletRequest, Set> readedObjectsByRequest = new HashMap<HttpServletRequest, Set>();
 	
+	@SuppressWarnings("unchecked")
 	private synchronized void detectAndRollbackHibernateTransactionCreatedLater(Object targetObject) throws Exception {
 		try {
 			if (readedObjectsByRequest.get(ServletActionContext.getRequest()).contains(targetObject))
@@ -779,6 +794,7 @@ public class SessionTransactionInjectorInterceptor extends GenericInterceptor im
 		return setterName;
 	}
 
+	@SuppressWarnings("unchecked")
 	public static List<Field> getFieldsFromAction(Object action) {
 		List<Field> fields = new ArrayList<Field>();
 		Class clazz = action.getClass();

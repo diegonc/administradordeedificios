@@ -33,6 +33,7 @@ public class UsuarioDTO  implements Serializable{
 	
 	private List<PerfilDTO> perfiles;
 	
+	
 			
 	@ManyToMany
 	@JoinTable(name = "USUARIO_PERFIL",

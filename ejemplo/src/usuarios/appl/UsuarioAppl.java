@@ -6,6 +6,8 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.exception.ConstraintViolationException;
 
+import edificio.EdificioDTO;
+
 import usuarios.dto.PerfilDTO;
 import usuarios.dto.UsuarioDTO;
 import usuarios.dto.UsuarioPerfilDTO;
@@ -100,7 +102,6 @@ public class UsuarioAppl {
 	
 	public PerfilDTO getPerfilByDescripcion(String descripcion)
 	{
-		System.out.println();
 		Query q = session.createQuery("select p from PerfilDTO p where p.descripcion =:descrip ");
 		q.setString("descrip", descripcion);
 		return (PerfilDTO) q.uniqueResult();
@@ -114,12 +115,21 @@ public class UsuarioAppl {
 		return q.list();
 	}
 	
-	@SuppressWarnings("unchecked")
-	public List<UsuarioDTO> getUsuarioByName(String username)
+	public UsuarioDTO getUsuarioByUsername(String username) throws UsuarioInexistenteException
 	{
+		UsuarioDTO usuario = null;
 		Query q = session.createQuery("select u from UsuarioDTO u  where u.usuario= :username");
 		q.setString("username",username);
-		return q.list();
+		
+		try{
+			usuario =(UsuarioDTO)q.uniqueResult();
+		 	if (usuario==null) throw new ObjectNotFoundException(usuario, username);
+		}
+		catch(ObjectNotFoundException e)
+		{
+			throw new UsuarioInexistenteException("El usuario buscado no existe");
+		}
+		return usuario;
 	}
 	
 		
@@ -142,8 +152,59 @@ public class UsuarioAppl {
 		UsuarioPerfilDTO usuarioPerfil = (UsuarioPerfilDTO) session.load(UsuarioPerfilDTO.class, idUsuarioPerfil);
 		return usuarioPerfil;
 	}
+
+	public UsuarioPerfilDTO getUsuarioPerfil(int idUsuario, String descripcionPerfil) {
+		
+		PerfilDTO perfil = getPerfilByDescripcion(descripcionPerfil);
+		Query q = session.createQuery("select up from UsuarioPerfilDTO up where up.usuario =:usuario and up.perfil =:perfil");
+		q.setInteger("usuario", idUsuario);
+		q.setInteger("perfil", perfil.getId());
+		
+		UsuarioPerfilDTO usuarioPerfil = null;
+		usuarioPerfil = (UsuarioPerfilDTO) q.uniqueResult();
+		
+		return  usuarioPerfil;
+		
+	}
 	
+	public void actualizarPerfiles(List<PerfilDTO> perfiles,int idUsuario) throws UsuarioInexistenteException
+	{
+		session.beginTransaction();
+		UsuarioDTO usuario = null;
+						
+		try {
+			usuario = getUsuario(idUsuario);
+		} catch (UsuarioInexistenteException e) {
+			throw new UsuarioInexistenteException("El usuario al que se le actualizaran los perfiles no existe");
+		}
+		
+		limpiarEdificiosPorUsuario(usuario);
+		session.beginTransaction();
+		usuario.setPerfiles(perfiles);
+		session.update(usuario);
+		session.getTransaction().commit();
+	}
 	
+	private void limpiarEdificiosPorUsuario(UsuarioDTO usuario)
+	{
+		UsuarioPerfilDTO usuarioPerfil = null;
+		for(PerfilDTO p: usuario.getPerfiles())
+		{
+			usuarioPerfil = getUsuarioPerfil(usuario.getId(), p.getDescripcion());
+			usuarioPerfil.setEdificios(null);
+			session.update(usuarioPerfil);
+		}
+		session.getTransaction().commit();
+	}
+	
+	public void actualizarEdificiosParaUsuarioPerfil(List<EdificioDTO> edificios,int idUsuario,String descripcionPerfil){
+		
+		session.beginTransaction();
+		UsuarioPerfilDTO usuarioPerfil = getUsuarioPerfil(idUsuario, descripcionPerfil);
+		usuarioPerfil.setEdificios(edificios);
+		session.update(usuarioPerfil);
+		session.getTransaction().commit();
+	}
 	
 	
 	

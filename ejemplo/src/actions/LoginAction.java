@@ -1,9 +1,9 @@
 package actions;
 
-import java.util.List;
-
 import usuarios.appl.UsuarioAppl;
 import usuarios.dto.UsuarioDTO;
+import usuarios.exception.UsuarioInexistenteException;
+
 import com.opensymphony.xwork2.ActionSupport;
 
 
@@ -49,24 +49,21 @@ public class LoginAction extends ActionSupport {
     	
     	if (!this.username.isEmpty()&&!this.password.isEmpty()){
     		
-    		List<UsuarioDTO> unicoUser = userAppl.getUsuarioByName(username);
-    	
-    		 
-    		
-    		if (unicoUser.isEmpty()){
-    			addActionError("Datos invalidos"); 
+    		UsuarioDTO unicoUser;
+			try {
+				unicoUser = userAppl.getUsuarioByUsername(username);
+			}
+			catch (UsuarioInexistenteException e){
+				addActionError("Datos invalidos"); 
     			return "error";
-    		}
-    		if (((UsuarioDTO)unicoUser.get(0)).getPassword().equals(this.password) ){
+			}
     	
+			if (unicoUser.getPassword().equals(this.password))    	
     			return "success";
-    		}else{
+    		else{
     			addActionError("Datos invalidos"); 
     			return "error";
-    		
     		}
-    		
-    		
     	}
     	return "error";
     }

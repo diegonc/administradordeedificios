@@ -15,9 +15,11 @@ import gastos.dto.GastoRealDTO;
 
 @SuppressWarnings("serial")
 public class GastosListarModifElimAction extends ActionSupport {
+	@SuppressWarnings("unused")
 	private Map<String,Object> session;
 	private int id;
 	
+	@SuppressWarnings("unchecked")
 	public String execute() {
 		GastosBean listaGastos = new GastosBean();
 		GastosAppl gasAppl = new GastosAppl();

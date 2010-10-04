@@ -26,8 +26,10 @@ import edificio.EdificioAppl;
 import edificio.EdificioDTO;
 import gastos.appl.TiposGastosAppl;
 import gastos.dto.TipoGastoDTO;
+import gastos.exception.TipoGastoInexistenteException;
 import utilidades.SessionAwareAction;
 
+@SuppressWarnings("serial")
 public class TiposPropiedadesAction extends SessionAwareAction implements Preparable {
 
 	private static final Logger LOG = LoggerFactory.getLogger(TiposPropiedadesAction.class);
@@ -350,7 +352,12 @@ public class TiposPropiedadesAction extends SessionAwareAction implements Prepar
 
 		for (String c : codigosTipoGastoAAgregar) {
 			TipoPropiedadTipoGastoDTO tptg = new TipoPropiedadTipoGastoDTO();
-			tptg.setTipoGasto(new TiposGastosAppl().getTipoGastoPorCodigo(c));
+			try {
+				tptg.setTipoGasto(new TiposGastosAppl().getTipoGastoPorCodigo(c));
+			} catch (TipoGastoInexistenteException e) {
+				// TODO mensaje error
+				e.printStackTrace();
+			}
 			tiposGastos.put(c, tptg);
 		}
 
