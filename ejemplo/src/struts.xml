@@ -12,6 +12,15 @@
             <result name="actualizacion" type="redirectAction">GetListadoUsuariosAction</result>
             <result name="error">/usuario.jsp</result>
          </action>
+         <action name="VinculacionUsuario" class="actions.GetListadoVinculacionAction">  
+            <result name="listar">/vinculacionUsuarioListado.jsp</result>                       
+         </action>
+         <action name="VinculacionUsuarioPerfilEdificio" class="actions.VincularUsuarioPerfilEdificios">
+         	<result name="vincular" >/usuariosVinculacion.jsp</result>              
+            <result name="success" type="redirectAction">VinculacionUsuario</result>            
+                        
+         </action>
+         
         <action name="GetListadoUsuariosAction" class="actions.GetListadoUsuariosAction">
                <result name="success">/usuario_listado.jsp</result>   
                <result name="eliminar" type="redirectAction">GetListadoUsuariosAction</result>
