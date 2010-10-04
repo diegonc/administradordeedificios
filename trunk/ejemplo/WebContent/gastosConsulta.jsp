@@ -2,10 +2,11 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <div class="contenido">
 	<div class="titulo">
-		<h3>[Edificio: <s:property value="nombreEdificio"/>] » Consulta de Gastos</h3>
+		<h3>[Edificio: <s:property value="idEdificio"/>] » Consulta de Gastos</h3>
 	</div>
 	<div class="cuerpo">
 		<s:form action="consultaGastos" method="GET">
+			<s:hidden name="idEdificio" />
 			<s:radio label="Categoria" name="categoriaElegida" list="categoriasGasto" value="%{categoriaElegida}" />
 			<s:textfield label="Año" name="anioPrevision" value="%{anioPrevision}" />
 			<s:textfield label="Mes" name="mesPrevision" value="%{mesPrevision}" />	
@@ -19,12 +20,12 @@
 					<th>Tipo Gasto</th>
 					<th>Monto</th>
 					<s:if test="categoriaElegida.equals('PREVISION')">
-					<th>AÃ±o</th>
+					<th>Año</th>
 					<th>Mes</th>
 					</s:if>
 					<s:else>
 					<th>Razon Social</th>
-					<th>NÂº Factura</th>
+					<th>Nº Factura</th>
 					<th>Fecha</th>
 					</s:else>
 				</tr>

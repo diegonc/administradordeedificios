@@ -17,7 +17,7 @@
     <property name="hibernate.dialect">org.hibernate.dialect.MySQLInnoDBDialect</property>
     <property name="transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</property>
     <property name="hibernate.hbm2ddl.auto">update</property>
-    
+    <property name="hibernate.show_sql">false</property>
     
     <!-- package edificio -->
     <mapping class="edificio.EdificioDTO"/>

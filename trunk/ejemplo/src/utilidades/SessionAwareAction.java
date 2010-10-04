@@ -25,5 +25,5 @@ public abstract class SessionAwareAction extends ActionSupport {
 		onSetSession();
 	}
 
-	protected abstract void onSetSession();
+	protected void onSetSession() { }
 }
