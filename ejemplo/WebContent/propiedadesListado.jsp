@@ -2,7 +2,7 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <div class="contenido">
 	<div class="titulo">
-		<h3>[Edificio] » Propiedades</h3>
+		<h3>Propiedades</h3>
 	</div>
 	<div class="cuerpo">
 		<s:form action="propiedadesListado" method="GET">
