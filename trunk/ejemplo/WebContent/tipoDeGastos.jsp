@@ -163,14 +163,14 @@ function habilitarInputsPlazo(){
 				  		</tr>			  		
 			  	  		
 			  		</table>
-			  		<s:actionerror cssClass="error"/>
 			  		<input type="hidden" id="tgExtraordinario.codigo" name="tgExtraordinario.codigo" value="" >
 			  		<input type="hidden" id="tgEventual.codigo" name="tgEventual.codigo" value="" >
 			  		<input type="hidden" id="tgMontoFijo.codigo" name="tgMontoFijo.codigo" value="" >
 			  		<input type="hidden" id="tgMontoVariable.codigo" name="tgMontoVariable.codigo" value="" >
 			</fieldset>
-				<input type="button" value="Aceptar"  onclick="validar()" >
-				<input type="submit" value="Cancelar" name="redirectAction:GetListadoTipoDeGastoAction">
+			<s:actionerror cssClass="error"/>
+			<input type="button" value="Aceptar"  onclick="validar()" >
+			<input type="submit" value="Cancelar" name="redirectAction:GetListadoTipoDeGastoAction">
 		</form>
 	</td>
 	<td width="15"  class="fondo"></td>

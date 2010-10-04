@@ -3,17 +3,15 @@ package usuarios;
 import java.util.ArrayList;
 import java.util.List;
 
-import edificio.EdificioAppl;
-import edificio.EdificioDTO;
-
 import junit.framework.TestCase;
 import usuarios.appl.UsuarioAppl;
 import usuarios.dto.PerfilDTO;
 import usuarios.dto.UsuarioDTO;
-import usuarios.dto.UsuarioPerfilDTO;
 import usuarios.exception.UsuarioExistenteException;
 import usuarios.exception.UsuarioInexistenteException;
 import utilidades.HibernateUtil;
+import edificio.EdificioAppl;
+import edificio.EdificioDTO;
 
 public class UsuariosTest extends TestCase{
 

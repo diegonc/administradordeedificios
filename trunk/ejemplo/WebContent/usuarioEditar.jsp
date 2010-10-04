@@ -60,7 +60,7 @@ function validar(){
 						</tr>
 				  		<tr>
 			  	  			<td><label for="user.dni">DNI:</label></td> 
-			  	  			<td> <input type="text" id="user.dni" name="user.dni" size="10" maxlength="9" value="<%=usuario.getDni()%>" readOnly /><font color="red">*&nbsp;&nbsp;</font></td>
+			  	  			<td> <input type="text" id="user.dni" name="user.dni" size="10" maxlength="9" value="<%=usuario.getDni()%>" disabled="disabled" /><font color="red">*&nbsp;&nbsp;</font></td>
 			 	  			<td><label for="user.password">Contrase&ntilde;a:</label></td>
 			 	  			<td> <input type="text" id="user.password" name="user.password"  value="<%=usuario.getPassword()%>" /><font color="red">*&nbsp;&nbsp;</font></td>
 			 	  		</tr>
@@ -71,7 +71,7 @@ function validar(){
 			  	  			<td></td> 
 			  	  			<td> </td>
 			 	  			<td><label for="user.usuario">Usuario:</label></td>
-			 	  			<td> <input type="text" id="user.usuario" name="user.usuario"   value="<%=usuario.getUsuario()%>"/><font color="red">*&nbsp;&nbsp;</font></td>
+			 	  			<td> <input type="text" id="user.usuario" name="user.usuario" disabled="disabled" value="<%=usuario.getUsuario()%>"/><font color="red">*&nbsp;&nbsp;</font></td>
 			 	  		</tr>
 						<tr>
 							<td height="14" colspan="4"></td>
