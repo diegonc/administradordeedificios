@@ -82,6 +82,7 @@ import java.util.Map;
  *
  * @author Jason Carreira
  */
+@SuppressWarnings("serial")
 public class ConversionErrorInterceptor extends AbstractInterceptor {
 
     public static final String ORIGINAL_PROPERTY_OVERRIDE = "original.property.override";
@@ -132,7 +133,8 @@ public class ConversionErrorInterceptor extends AbstractInterceptor {
             // if there were some errors, put the original (fake) values in place right before the result
             stack.getContext().put(ORIGINAL_PROPERTY_OVERRIDE, fakie);
             invocation.addPreResultListener(new PreResultListener() {
-                public void beforeResult(ActionInvocation invocation, String resultCode) {
+                @SuppressWarnings("unchecked")
+				public void beforeResult(ActionInvocation invocation, String resultCode) {
                     Map<Object, Object> fakie = (Map<Object, Object>) invocation.getInvocationContext().get(ORIGINAL_PROPERTY_OVERRIDE);
 
                     if (fakie != null) {

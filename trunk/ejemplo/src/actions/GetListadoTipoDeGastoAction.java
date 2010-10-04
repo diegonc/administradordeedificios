@@ -20,6 +20,7 @@ import gastos.appl.TiposGastosAppl;
 import gastos.dto.TipoGastoDTO;
 import gastos.dto.TipoGastoMontoFijoDTO;
 import gastos.dto.TipoGastoMontoVariableDTO;
+import gastos.exception.TipoGastoInexistenteException;
 
 
 
@@ -29,6 +30,7 @@ public class GetListadoTipoDeGastoAction extends ActionSupport implements Sessio
 		
 		private TiposGastosAppl tipoGastoAppl = new TiposGastosAppl();
 		
+		@SuppressWarnings("unused")
 		private Map<String, Object> session;
 		
 		private int id;
@@ -93,10 +95,16 @@ public class GetListadoTipoDeGastoAction extends ActionSupport implements Sessio
 
 
 		public String eliminar(){
-			tipoGastoAppl.removeTipoGasto(this.id);		
+			try {
+				tipoGastoAppl.removeTipoGasto(this.id);
+			} catch (TipoGastoInexistenteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}		
 			return "eliminar";
 		}
 				
+		@SuppressWarnings("unchecked")
 		public String editar(){
 			 //recupero los edificios
 			EdificiosBean listaEdificios = new EdificiosBean();
@@ -105,18 +113,33 @@ public class GetListadoTipoDeGastoAction extends ActionSupport implements Sessio
 			ArrayList<EdificioDTO> listaE = (ArrayList<EdificioDTO>) edifAppl.getAllEdificios(factory);
 			listaEdificios.setEdificios(listaE);
 			   			
-			this.tipoGasto = tipoGastoAppl.getTipoGasto(this.id);
+			try {
+				this.tipoGasto = tipoGastoAppl.getTipoGasto(this.id);
+			} catch (TipoGastoInexistenteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
 			TiposGastosBean tipoGastoEditar = new TiposGastosBean();
 			
 			if(tipoGasto.getTipo().equals(TipoGastoDTO.tipoPeriodicoMontoFijo))
 			{
-				this.tipoGastoMontoFijo = tipoGastoAppl.getTipoGastoMontoFijo(this.id);
+				try {
+					this.tipoGastoMontoFijo = tipoGastoAppl.getTipoGastoMontoFijo(this.id);
+				} catch (TipoGastoInexistenteException e) {
+					// TODO mostrar error
+					e.printStackTrace();
+				}
 				tipoGastoEditar.setTipoGastoUnico(this.tipoGastoMontoFijo);
 			}
 			else if(tipoGasto.getTipo().equals(TipoGastoDTO.tipoPeriodicoMontoVariable))
 			{
-				this.tipoGastoMontoVariable = tipoGastoAppl.getTipoGastoMontoVariable(this.id);
+				try {
+					this.tipoGastoMontoVariable = tipoGastoAppl.getTipoGastoMontoVariable(this.id);
+				} catch (TipoGastoInexistenteException e) {
+					// TODO mostrar error
+					e.printStackTrace();
+				}
 				tipoGastoEditar.setTipoGastoUnico(this.tipoGastoMontoVariable);
 			}
 			else tipoGastoEditar.setTipoGastoUnico(this.tipoGasto);

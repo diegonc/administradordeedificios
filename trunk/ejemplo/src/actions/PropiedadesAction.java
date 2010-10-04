@@ -21,6 +21,7 @@ import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 import edificio.EdificioAppl;
 import edificio.EdificioDTO;
 
+@SuppressWarnings("serial")
 public class PropiedadesAction extends ActionSupport implements Preparable {
 
 	/* Parametros de la accion */

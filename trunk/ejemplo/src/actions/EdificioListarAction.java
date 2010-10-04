@@ -14,8 +14,10 @@ import edificio.EdificioDTO;
 @SuppressWarnings("serial")
 public class EdificioListarAction extends ActionSupport{
 	
+	@SuppressWarnings("unused")
 	private Map<String,Object> session;
 	
+	@SuppressWarnings("unchecked")
 	public String execute() {
 		ArrayList<EdificioDTO> lista = new ArrayList<EdificioDTO>();
 		EdificiosBean listaEdificios = new EdificiosBean();

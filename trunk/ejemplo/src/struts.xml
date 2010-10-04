@@ -27,6 +27,7 @@
             <result name="success" type="redirectAction">GetListadoTipoDeGastoAction</result>              
             <result name="cargaEdificios">/tipoDeGastos.jsp</result>
             <result name="actualizacion" type="redirectAction">GetListadoTipoDeGastoAction</result>
+            <result name="error">/tipoDeGastos.jsp</result>
         </action>
         <action name="GastosAction" class="actions.GastosAction">  
             <result name="success" type="redirectAction">EdificioGastosListarAction</result>

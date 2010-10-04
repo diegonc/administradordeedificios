@@ -6,6 +6,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+@SuppressWarnings("serial")
 public abstract class SessionAwareAction extends ActionSupport {
 
 	@SessionTarget

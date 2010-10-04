@@ -8,6 +8,11 @@ import javax.persistence.*;
 @Entity
 @Table(name="PERFIL")
 public class PerfilDTO implements Serializable{
+
+	public static String ADMINISTRADOR="Administrador";
+	public static String RESPONSABLE_GASTOS="Responsable de Gastos";
+	public static String RESPONSABLE_COBROS="Responsable de Cobros";
+	public static String RESPONSABLE_EDIFICIO="Responsable de Edificio";
 	
 	private int id;
 	private String descripcion;

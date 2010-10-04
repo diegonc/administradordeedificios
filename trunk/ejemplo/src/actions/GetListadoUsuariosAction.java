@@ -20,6 +20,7 @@ public class GetListadoUsuariosAction extends ActionSupport implements SessionAw
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	@SuppressWarnings("unused")
 	private Map<String, Object> session;
 	
 	private Integer id;
@@ -76,6 +77,7 @@ public class GetListadoUsuariosAction extends ActionSupport implements SessionAw
 	}
 	
 	
+	@SuppressWarnings("unchecked")
 	public String editar(){
 
 		if(this.id!=null)

@@ -113,7 +113,7 @@ function habilitarInputsPlazo(){
 			 			<tr><td colspan="5" height="10"></td></tr>
 			 			<tr>
 				 			<td width="120" align="right"><label for="codigo">Codigo:</label> </td>
-				 			<td colspan="4" >&nbsp;&nbsp;<input type="text" id="codigo" name="codigo" readonly="readonly" value="<%=tipoGasto.getCodigo()%>" /><font color="red">*&nbsp;&nbsp;</font></td>
+				 			<td colspan="4" >&nbsp;&nbsp;<input type="text" id="codigo" name="codigo" disabled="disabled" value="<%=tipoGasto.getCodigo()%>" /><font color="red">*&nbsp;&nbsp;</font></td>
 				 		</tr>
 				 		<tr>
 				 			<td align="right"><label for="descripcion">Descripci&oacute;n:</label> </td>

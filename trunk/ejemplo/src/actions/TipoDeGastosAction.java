@@ -13,6 +13,8 @@ import gastos.dto.TipoGastoEventualDTO;
 import gastos.dto.TipoGastoExtraordinarioDTO;
 import gastos.dto.TipoGastoMontoFijoDTO;
 import gastos.dto.TipoGastoMontoVariableDTO;
+import gastos.exception.TipoGastoExistenteException;
+import gastos.exception.TipoGastoInexistenteException;
 
 import beans.EdificiosBean;
 
@@ -167,7 +169,12 @@ public class TipoDeGastosAction extends ActionSupport {
 			tipoGasto=this.tgMontoVariable;
 		}
 	
-		this.tipoGastoAppl.updateTipoGasto(tipoGasto, id);
+		try {
+			this.tipoGastoAppl.updateTipoGasto(tipoGasto, id);
+		} catch (TipoGastoInexistenteException e) {
+			// TODO mostrar mensaje error
+			e.printStackTrace();
+		}
 		return "actualizacion";
 	}
 	
@@ -203,7 +210,13 @@ public class TipoDeGastosAction extends ActionSupport {
 			tipoGasto=this.tgMontoVariable;
 		}
 	
-		this.tipoGastoAppl.addTipoGasto(tipoGasto);
+		try {
+			this.tipoGastoAppl.addTipoGasto(tipoGasto);
+		} catch (TipoGastoExistenteException e) {
+		
+			addActionError(e.getMessage()); 
+			return "error";
+		}
 		return "success";
 	}
 	
