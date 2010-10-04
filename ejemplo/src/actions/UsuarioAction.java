@@ -56,21 +56,15 @@ public class UsuarioAction extends ActionSupport implements SessionAware {
 		
 		return "actualizacion";
 	}
-	public String grabar(){
-		boolean error=false;
 	
+	public String grabar(){
+			
 		try {
 			this.usuarioAppl.addUsuario(user);
 		} catch (UsuarioExistenteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			addActionError("El usuario que quiere ingresar ya es existente.");
+			return "error";
 		}
-		
-		if (error){
-		addActionError("El usuario que quiere ingresar ya es existente.");
-		return "error";
-		}
-	
 		return "add";
 	}
 	

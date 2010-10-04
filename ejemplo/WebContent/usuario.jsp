@@ -72,7 +72,7 @@ function validar(){
 												
 			  		</table>
 			  	</fieldset>
-			  	<s:actionerror />
+			  	<s:actionerror cssClass="error"/>
 			<input type="button" value="Aceptar"  onclick="validar()" >
 			<input type="submit" value="Cancelar" name="redirectAction:GetListadoUsuariosAction">
 		</form>

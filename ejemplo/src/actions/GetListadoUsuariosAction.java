@@ -104,7 +104,7 @@ public class GetListadoUsuariosAction extends ActionSupport implements SessionAw
         session.put("listado",listado);
         setSession(session);
               
-    	 return "success";
+    	return "success";
     }
 
 	public void setSession(Map<String, Object> arg0) {

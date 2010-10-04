@@ -44,7 +44,6 @@ public class UsuarioAppl {
         usuario.setApellido(nuevoUsuario.getApellido());
         usuario.setNombre(nuevoUsuario.getNombre());
         usuario.setPassword(nuevoUsuario.getPassword());
-        usuario.setUsuario(nuevoUsuario.getUsuario());
         usuario.setPerfiles(nuevoUsuario.getPerfiles());
         session.update(usuario);
         session.getTransaction().commit();
