@@ -1,5 +1,6 @@
 package gastos.appl;
 
+import exception.DependenciasExistentesException;
 import gastos.dto.TipoGastoDTO;
 import gastos.dto.TipoGastoEventualDTO;
 import gastos.dto.TipoGastoExtraordinarioDTO;
@@ -33,7 +34,7 @@ public class TiposGastosAppl {
 		}
 		catch(ConstraintViolationException e)
 		{
-			throw new TipoGastoExistenteException("Ya existe un tipo de Gasto con ese codigo.");
+			throw new TipoGastoExistenteException("Ya existe un Tipo de Gasto con ese codigo.");
 		}
 		
         
@@ -77,25 +78,31 @@ public class TiposGastosAppl {
 	    }
 	    catch(TipoGastoInexistenteException e)
 	    {
-	    	throw new TipoGastoInexistenteException("El tipo de gasto a modificar no existe");
+	    	throw new TipoGastoInexistenteException("El Tipo de Gasto a modificar no existe");
 	    }
         session.getTransaction().commit();
     }
 	
-	public void removeTipoGasto(int idTipoGasto) throws TipoGastoInexistenteException
+	private boolean validarIntegracionReferencial(int idTipoGasto) 
 	{
-	    session.beginTransaction();
-        TipoGastoDTO tipoGasto = null;
-        try{
-        	tipoGasto = (TipoGastoDTO) session.load(TipoGastoDTO.class, idTipoGasto);
-        	session.delete(tipoGasto);
+		Query q = session.createQuery("select g from GastoDTO g where g.tipoGasto =:idTipoGasto");
+		q.setInteger("idTipoGasto", idTipoGasto);
+		if(q.list().isEmpty()) return true;
+		return false;
+	}
+	
+	public void removeTipoGasto(int idTipoGasto) throws TipoGastoInexistenteException, DependenciasExistentesException
+	{
+		if(!validarIntegracionReferencial(idTipoGasto)) throw new DependenciasExistentesException("El Tipo de Gasto no puede eliminarse, existen dependencias asociadas.");
+		try{
+           	Query q = session.createQuery("delete TipoGastoDTO tg where tg.id =:idTipoGasto");
+        	q.setInteger("idTipoGasto", idTipoGasto);
+        	q.executeUpdate();
         }
         catch(ObjectNotFoundException e)
         {
-        	throw new TipoGastoInexistenteException("El tipo de Gasto a eliminar no existe.");
-        }
-        
-        session.getTransaction().commit();
+        	throw new TipoGastoInexistenteException("El Tipo de Gasto a eliminar no existe.");
+        }        
     }
 	
 	public TipoGastoDTO getTipoGasto(int idTipoGasto) throws TipoGastoInexistenteException

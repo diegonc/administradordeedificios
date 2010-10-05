@@ -38,7 +38,6 @@ public class EdificioListarAction extends ActionSupport{
 	}
 	
 	public void setSession(Map<String, Object> arg0) {
-		// TODO Auto-generated method stub
 		this.session=arg0;
 	}
 }

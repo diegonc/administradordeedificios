@@ -1,11 +1,18 @@
 package test.gastos;
 
+import edificio.EdificioAppl;
+import edificio.EdificioDTO;
+import exception.DependenciasExistentesException;
+import gastos.appl.GastosAppl;
 import gastos.appl.TiposGastosAppl;
+import gastos.dto.GastoPrevisionDTO;
 import gastos.dto.TipoGastoDTO;
 import gastos.dto.TipoGastoExtraordinarioDTO;
+import gastos.exception.GastoExistenteException;
 import gastos.exception.TipoGastoExistenteException;
 import gastos.exception.TipoGastoInexistenteException;
 import junit.framework.TestCase;
+import utilidades.HibernateUtil;
 
 public class GastosTest extends TestCase {
 
@@ -23,6 +30,7 @@ public class GastosTest extends TestCase {
 			tiposGastosAppl.removeTipoGasto(tipoGasto.getId());
 		} 
 		catch (TipoGastoInexistenteException e){}
+		catch (DependenciasExistentesException e){}
 	}
 	
 	public void testCrearTipoGasto(){
@@ -64,7 +72,7 @@ public class GastosTest extends TestCase {
 	public void testmodificarTipoGastoExtraordinario(){
 		
 		try {
-			tipoGasto = tiposGastosAppl.getTipoGastoPorCodigo("PINTURA");
+			tipoGasto = tiposGastosAppl.getTipoGastoPorCodigo("PINT");
 		} catch (TipoGastoInexistenteException e1) {
 			fail(e1.getMessage());
 		}
@@ -83,6 +91,31 @@ public class GastosTest extends TestCase {
 	}
 	
 		
-	
+	public void testCrearGastoExistente(){
+		
+		try {
+			tipoGasto = tiposGastosAppl.getTipoGastoPorCodigo("PINTURA");
+		} catch (TipoGastoInexistenteException e1) {
+			fail(e1.getMessage());
+		}
+		EdificioAppl edificioAppl = new EdificioAppl();
+		EdificioDTO edificio = edificioAppl.getEdificio(HibernateUtil.getSessionFactory(), 1);
+		
+		GastosAppl gastosAppl = new GastosAppl();
+		GastoPrevisionDTO gasto = new GastoPrevisionDTO();
+		gasto.setTipoGasto(tipoGasto);
+		gasto.setAnio(2010);
+		gasto.setDetalle("Pincel 22cm");
+		gasto.setEdificio(edificio);
+		gasto.setMes(11);
+		gasto.setMonto(22.34);
+		gasto.setNumeroFolio(2);
+		
+		try {
+			gastosAppl.addGasto(gasto);
+			fail("Debe lanzar una GastoExistenteException");
+		} catch (GastoExistenteException e) 
+		{}
+	}
 	
 }

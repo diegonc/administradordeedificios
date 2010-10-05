@@ -1,32 +1,26 @@
 package actions;
 
 import gastos.appl.TiposGastosAppl;
-import gastos.dto.TipoGastoDTO;
 import gastos.dto.GastoDTO;
-import gastos.dto.GastoRealDTO;
 import gastos.dto.GastoPrevisionDTO;
-
-import utilidades.SessionAwareAction;
+import gastos.dto.GastoRealDTO;
+import gastos.dto.TipoGastoDTO;
 
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.opensymphony.xwork2.ActionSupport;
-import com.opensymphony.xwork2.Preparable;
-import com.opensymphony.xwork2.util.logging.Logger;
-import com.opensymphony.xwork2.util.logging.LoggerFactory;
-
-
-import org.hibernate.Session;
 import org.hibernate.Criteria;
+import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
+
+import utilidades.SessionAwareAction;
+
+import com.opensymphony.xwork2.Preparable;
 
 @SuppressWarnings("serial")
 public class ConsultaGastosAction extends SessionAwareAction implements Preparable {
-
-	private static final Logger LOG = LoggerFactory.getLogger(ConsultaGastosAction.class);
 
 	/* Parametros de la accion */
 	/*
@@ -81,6 +75,7 @@ public class ConsultaGastosAction extends SessionAwareAction implements Preparab
 		return SUCCESS;
 	}
 
+	@SuppressWarnings("unchecked")
 	private Criteria getCriteria() {
 		Session session = getSession();
 		Class categoriaGasto = null;
@@ -90,13 +85,14 @@ public class ConsultaGastosAction extends SessionAwareAction implements Preparab
 		else if (categoriaElegida.equals("REAL"))
 			categoriaGasto = GastoRealDTO.class;
 		else
-			throw new IllegalArgumentException("Categoría inválidad: " + categoriaElegida);
+			throw new IllegalArgumentException("Categoria invalidad: " + categoriaElegida);
 
 		return session.createCriteria(categoriaGasto)
 			.createCriteria("edificio")
 			.add(Restrictions.idEq(idEdificio));
 	}
 
+	@SuppressWarnings("unchecked")
 	public String listar() {
 		resultados = getCriteria().list();
 		return SUCCESS;

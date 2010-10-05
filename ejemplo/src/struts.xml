@@ -30,6 +30,7 @@
                <result name="success">/tipoGasto_listado.jsp</result>   
                <result name="eliminar" type="redirectAction">GetListadoTipoDeGastoAction</result>
                <result name="edicion">/tipoGastoEditar.jsp</result>
+               <result name="error">/eliminarTipoGasto.jsp</result>
          </action> 
                   
   		<action name="TipoDeGastosAction" class="actions.TipoDeGastosAction">  
@@ -41,6 +42,7 @@
         <action name="GastosAction" class="actions.GastosAction">  
             <result name="success" type="redirectAction">EdificioGastosListarAction</result>
             <result name="cargaTiposDeGastos">/gastosAlta.jsp</result>              
+            <result name="error">/gastosAlta.jsp</result>
         </action>
         <action name="GastosListarModifElimAction" class="actions.GastosListarModifElimAction">  
             <result name="success">/gastosModifElim.jsp</result>  

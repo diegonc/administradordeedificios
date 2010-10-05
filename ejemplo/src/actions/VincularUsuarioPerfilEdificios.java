@@ -1,24 +1,17 @@
 package actions;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 import org.hibernate.SessionFactory;
 
 import usuarios.appl.UsuarioAppl;
-import usuarios.dto.PerfilDTO;
 import usuarios.dto.UsuarioDTO;
 import usuarios.dto.UsuarioPerfilEdificioDTO;
 import usuarios.exception.UsuarioInexistenteException;
 import utilidades.HibernateUtil;
-import beans.EdificiosBean;
-import beans.PerfilesBean;
 import beans.UsuariosBean;
-
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
@@ -166,6 +159,7 @@ public class VincularUsuarioPerfilEdificios extends ActionSupport {
 		this.id = id;
 	}	
 
+	@SuppressWarnings("unchecked")
 	public String vincular(){
 		
 		if(this.id!=null)
@@ -173,7 +167,7 @@ public class VincularUsuarioPerfilEdificios extends ActionSupport {
 				this.user = userAppl.getUsuario(id.intValue());
 		
 			} catch (UsuarioInexistenteException e) {
-				// TODO Auto-generated catch block
+				// TODO mostrar erros
 				e.printStackTrace();
 			}
 		Map session = ActionContext.getContext().getSession();
@@ -260,7 +254,6 @@ public class VincularUsuarioPerfilEdificios extends ActionSupport {
 	}
 
 	public void setSession(Map<String, Object> arg0) {
-		// TODO Auto-generated method stub
 		this.session = arg0;
 	}
 

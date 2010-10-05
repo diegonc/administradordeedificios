@@ -62,7 +62,7 @@ public class UsuarioAction extends ActionSupport implements SessionAware {
 		try {
 			this.usuarioAppl.addUsuario(user);
 		} catch (UsuarioExistenteException e) {
-			addActionError("El usuario que quiere ingresar ya es existente.");
+			addActionError(e.getMessage());
 			return "error";
 		}
 		return "add";
@@ -75,7 +75,7 @@ public class UsuarioAction extends ActionSupport implements SessionAware {
         	try {
 				user=usuarioAppl.getUsuario(this.id.intValue());
 			} catch (UsuarioInexistenteException e) {
-				// TODO Auto-generated catch block
+				// TODO mostrar error
 				e.printStackTrace();
 			}
         	  session.put("user",user);
@@ -85,7 +85,6 @@ public class UsuarioAction extends ActionSupport implements SessionAware {
     	 
     }
 	public void setSession(Map<String, Object> arg0) {
-		// TODO Auto-generated method stub
 		this.session=arg0;
 		
 	}

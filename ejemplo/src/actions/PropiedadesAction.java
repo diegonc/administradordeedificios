@@ -12,11 +12,11 @@ import propiedades.PropiedadDTO;
 import propiedades.Responsable;
 import propiedades.ResponsableAppl;
 import propiedades.TipoPropiedadDTO;
+
 import com.googlecode.s2hibernate.struts2.plugin.annotations.SessionTarget;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.Preparable;
 import com.opensymphony.xwork2.interceptor.annotations.InputConfig;
-import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 
 import edificio.EdificioAppl;
 import edificio.EdificioDTO;

@@ -1,4 +1,5 @@
 <jsp:include page="/WEB-INF/jspf/header.jspf"></jsp:include>
+<%@ taglib prefix="s" uri="/struts-tags" %>
 <script type="text/javascript">
 
 function validar(){
@@ -26,11 +27,12 @@ function validar(){
 			 			<tr><td colspan="8" height="10"></td></tr>
 			 			<tr>
 			 				<td align="right"><label for="nombre">Quiere eliminar el Tipo de Gasto:</label> </td>
-				 			<td>&nbsp;&nbsp;<input type="text" id="codigo" name="codigo" value="<%= request.getParameter("codigo") %>"  disabled="disabled" size="15"/></td>
+				 			<td>&nbsp;&nbsp;<input type="text" id="codigo" name="codigo" value="<%= request.getParameter("codigo") %>"  readonly="readonly" size="15"/></td>
 				 			<td>&nbsp;&nbsp;<input type="hidden" id="id" name="id" value="<%= request.getParameter("id") %>" /></td>
 				 		</tr>
 				  		</table>			  	
 			</fieldset>
+			<s:actionerror cssClass="error"/>
 			<input type="button" value="Aceptar"  onclick="validar()" >
 			<input type="submit" value="Cancelar" name="redirectAction:GetListadoTipoDeGastoAction">
 		</form>
