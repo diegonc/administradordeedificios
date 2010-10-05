@@ -7,6 +7,7 @@ import java.util.Map;
 import org.hibernate.SessionFactory;
 
 import usuarios.appl.UsuarioAppl;
+import usuarios.dto.PerfilDTO;
 import usuarios.dto.UsuarioDTO;
 import usuarios.dto.UsuarioPerfilDTO;
 import usuarios.dto.UsuarioPerfilEdificioDTO;
