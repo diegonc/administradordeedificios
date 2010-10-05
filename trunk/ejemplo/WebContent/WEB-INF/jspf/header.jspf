@@ -8,17 +8,21 @@
 </head>
 <body>
 <%@ page language="java" contentType="text/html" import="usuarios.dto.*"%>
-
+<%@ page language="java" contentType="text/html" import="permisos.*"%>
+<%AdministradorDePermisos administradorDePermisos = AdministradorDePermisos.getInstancia(); %>
 <div id="contenedor">
 <div>
 <ul class="menu">
 	<li class="top"><a href="home.jsp" class="top_link"><span>Home</span></a></li>
+	<%if (administradorDePermisos.isAdministrador()){ %>
 	<li class="top"><a href="#" class="top_link"><span>Administraci&oacute;n</span></a>
 		<ul class="sub">
 			 <li><a href="GetListadoUsuariosAction" >Usuarios</a></li>
 			 <li><a href="VinculacionUsuario" >Vinculacion</a></li>
 		</ul>
 	</li>
+	<%} %>
+	<%if (administradorDePermisos.isAdministrador()||administradorDePermisos.isResponsableEdificios()){ %>
 	<li class="top"><a href="#" class="top_link"><span>Edificios</span></a>
 		<ul class="sub">
 			<li><a href="<s:url action='tiposPropiedadesListado'/>">Tipos de Propiedades</a></li>
@@ -27,12 +31,23 @@
 			<li><a href="<s:url action='responsablesListado'/>">Responsables</a></li>            
 		</ul>
 	</li>
+	<%} %>
+	<%if (administradorDePermisos.isAdministrador()||administradorDePermisos.isResponsableGastos()){ %>
 	<li class="top"><a href="#" class="top_link"><span>Gastos</span></a>
 		<ul class="sub">
 			<li><a href="GetListadoTipoDeGastoAction">Tipo de Gastos</a></li>
 			<li><a href="EdificioGastosListarAction">Gastos </a></li>                    
 		</ul>
 	</li>
+	<%} %>
+	<%if (administradorDePermisos.isAdministrador()||administradorDePermisos.isResponsableCobros()){ %>
+	<li class="top"><a href="#" class="top_link"><span>Cobros</span></a>
+		<ul class="sub">
+			<li><a href="#">Expensas</a></li>
+			<li><a href="#">Planes</a></li>                    
+		</ul>
+	</li>
+	<%} %>
 	<li class="top"><a href="salir.jsp" class="top_link"><span>Salir</span></a></li>	
 </ul>
 </div>
