@@ -8,6 +8,7 @@ import org.hibernate.SessionFactory;
 
 import usuarios.appl.UsuarioAppl;
 import usuarios.dto.UsuarioDTO;
+import usuarios.dto.UsuarioPerfilDTO;
 import usuarios.dto.UsuarioPerfilEdificioDTO;
 import usuarios.exception.UsuarioInexistenteException;
 import utilidades.HibernateUtil;
@@ -31,17 +32,10 @@ public class VincularUsuarioPerfilEdificios extends ActionSupport {
 	
 	private UsuarioDTO user;
 	
-	private List<UsuarioPerfilEdificioDTO> perfiles;
-	
-	
-	
-	private boolean administrador;
-	
-	private boolean responsableGastos;
-	
-	private boolean responsableCobros;
-	
-	private boolean responsableEdificios;
+	private String administrador;
+	private String responsableGastos;
+	private String responsableCobros;
+	private String responsableEdificios;
 	
 	private List<String> listaEdificiosDefault;
 	private List<String> listaEdificiosDefault1;
@@ -50,6 +44,7 @@ public class VincularUsuarioPerfilEdificios extends ActionSupport {
 	private List<String> edificiosResponsableGastosResult;
 	private List<String> edificiosResponsableCobrosResult;
 	private List<String> edificiosResponsableEdificioResult;
+	
 	private Map<String, Object> session;
 
 	
@@ -106,42 +101,38 @@ public class VincularUsuarioPerfilEdificios extends ActionSupport {
 		this.edificiosResponsableCobrosResult = edificiosResponsableCobrosResult;
 	}
 
-	public boolean isAdministrador() {
+	public String getAdministrador() {
 		return administrador;
 	}
 
-	public void setAdministrador(boolean administrador) {
+	public void setAdministrador(String administrador) {
 		this.administrador = administrador;
 	}
 
-	public boolean isResponsableGastos() {
+	public String getResponsableGastos() {
 		return responsableGastos;
 	}
 
-	public void setResponsableGastos(boolean responsableGastos) {
+	public void setResponsableGastos(String responsableGastos) {
 		this.responsableGastos = responsableGastos;
 	}
 
-	public boolean isResponsableCobros() {
+	public String getResponsableCobros() {
 		return responsableCobros;
 	}
 
-	public void setResponsableCobros(boolean responsableCobros) {
+	public void setResponsableCobros(String responsableCobros) {
 		this.responsableCobros = responsableCobros;
 	}
 
-	public boolean isResponsableEdificios() {
+	public String getResponsableEdificios() {
 		return responsableEdificios;
 	}
 
-	public void setResponsableEdificios(boolean responsableEdificios) {
+	public void setResponsableEdificios(String responsableEdificios) {
 		this.responsableEdificios = responsableEdificios;
 	}
-		
 
-
-	
-	
 	public UsuarioDTO getUser() {
 		return user;
 	}
@@ -172,21 +163,16 @@ public class VincularUsuarioPerfilEdificios extends ActionSupport {
 			}
 		Map session = ActionContext.getContext().getSession();
 		UsuariosBean userEditar = new UsuariosBean();
-		
-		this.responsableEdificios =true;
 		userEditar.setUsuarioUnico(this.user);
-		
-		
 		obtenerTodosEdificios();
         session.put("usuarioBean",userEditar);
-        
         setSession(session);
 		return "vincular";
 	}
 	
 	
-	private ArrayList<EdificioDTO> restarListas(ArrayList<EdificioDTO> listaTotal,ArrayList<EdificioDTO> listaSacar){
-		ArrayList<EdificioDTO> listaRestante = new ArrayList<EdificioDTO>();
+	private List<String> restarListas(List<EdificioDTO> listaTotal,List<EdificioDTO> listaSacar){
+		ArrayList<String> listaRestante = new ArrayList<String>();
 		for (EdificioDTO edificioDTO : listaTotal) {
 			boolean seRepite=false;
 			for (EdificioDTO edificio2 : listaSacar) {
@@ -196,58 +182,151 @@ public class VincularUsuarioPerfilEdificios extends ActionSupport {
 				
 			}
 			if(!seRepite){
-				listaRestante.add(edificioDTO);
+				listaRestante.add(edificioDTO.getNombre());
 			}
 		}
 		return listaRestante;
 		
 		
 	}
+	
+	private ArrayList<String> getListaDeNombres(List<EdificioDTO> edificios){
+		ArrayList<String> nombres= new ArrayList<String>();
+		for (EdificioDTO edif : edificios) {
+			nombres.add(edif.getNombre());
+			
+		}
+		return nombres;
+	}
 	private void obtenerTodosEdificios(){
-		
+		System.out.println(this.id);
 		EdificioAppl edifAppl = new EdificioAppl();
 		SessionFactory factory = HibernateUtil.getSessionFactory();
-		this.listaEdificiosDefault = new ArrayList<String>();
-		this.listaEdificiosDefault1 = new ArrayList<String>();
-		this.listaEdificiosDefault2 = new ArrayList<String>();
-			
+		UsuarioDTO usuario = null;
+		try {
+			usuario = this.userAppl.getUsuario(this.id);
+		} catch (UsuarioInexistenteException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		//listado de izquierad
+		List<PerfilDTO> perfilesDelUsuario =usuario.getPerfiles();		
+		for (PerfilDTO perfilDTO : perfilesDelUsuario) {
+			if(perfilDTO.getDescripcion().equals(PerfilDTO.RESPONSABLE_EDIFICIO))this.edificiosResponsableEdificioResult = this.getListaDeNombres(this.userAppl.getUsuarioPerfil(this.id,PerfilDTO.RESPONSABLE_EDIFICIO ).getEdificios());
+			if(perfilDTO.getDescripcion().equals(PerfilDTO.RESPONSABLE_GASTOS))this.edificiosResponsableGastosResult = this.getListaDeNombres(this.userAppl.getUsuarioPerfil(this.id,PerfilDTO.RESPONSABLE_GASTOS ).getEdificios());
+			if(perfilDTO.getDescripcion().equals(PerfilDTO.RESPONSABLE_COBROS))this.edificiosResponsableCobrosResult = this.getListaDeNombres(this.userAppl.getUsuarioPerfil(this.id,PerfilDTO.RESPONSABLE_COBROS ).getEdificios());
+		}
+		if (this.edificiosResponsableEdificioResult==null)this.edificiosResponsableEdificioResult= new ArrayList<String>();
+		if (this.edificiosResponsableGastosResult==null)this.edificiosResponsableGastosResult= new ArrayList<String>();
+		if (this.edificiosResponsableCobrosResult==null)this.edificiosResponsableCobrosResult= new ArrayList<String>();
+		
 		try {
 			//TODO: permisos
-			ArrayList<EdificioDTO> lista = (ArrayList<EdificioDTO>) edifAppl.getAllEdificios(factory);
-			
-			for (EdificioDTO edificioDTO : lista) {
-		
-				this.listaEdificiosDefault.add(edificioDTO.getNombre());
-				this.listaEdificiosDefault1.add(edificioDTO.getNombre());
-				this.listaEdificiosDefault2.add(edificioDTO.getNombre());
+			ArrayList<EdificioDTO> lista = (ArrayList<EdificioDTO>) edifAppl.getAllEdificios(factory);			
+			this.listaEdificiosDefault= getListaDeNombres(lista);
+			this.listaEdificiosDefault1= getListaDeNombres(lista);
+			this.listaEdificiosDefault2= getListaDeNombres(lista);
+			for (PerfilDTO perfilDTO : perfilesDelUsuario) {
+				if(perfilDTO.getDescripcion().equals(PerfilDTO.RESPONSABLE_EDIFICIO))this.listaEdificiosDefault=restarListas(lista,this.userAppl.getUsuarioPerfil(this.id,PerfilDTO.RESPONSABLE_EDIFICIO ).getEdificios());
+				if(perfilDTO.getDescripcion().equals(PerfilDTO.RESPONSABLE_GASTOS))this.listaEdificiosDefault1=restarListas(lista,this.userAppl.getUsuarioPerfil(this.id,PerfilDTO.RESPONSABLE_GASTOS ).getEdificios());
+				if(perfilDTO.getDescripcion().equals(PerfilDTO.RESPONSABLE_COBROS))this.listaEdificiosDefault2=restarListas(lista,this.userAppl.getUsuarioPerfil(this.id,PerfilDTO.RESPONSABLE_COBROS ).getEdificios());		
+				
+				
 			}
 		}catch (Exception e) {
 			// TODO: handle exception
 		}
 		
 	}
-	public String execute(){
-		System.out.println(this.administrador);
-		System.out.println(this.responsableCobros);
+	
+	private List<EdificioDTO> getEdificiosByName(List<String> listaNombreEdificios){
+		EdificioAppl edifAppl = new EdificioAppl();
+		SessionFactory factory = HibernateUtil.getSessionFactory();
+		ArrayList<EdificioDTO> todosLosEdificios = (ArrayList<EdificioDTO>) edifAppl.getAllEdificios(factory);
+		List<EdificioDTO> listaResultado = new ArrayList<EdificioDTO>();
 		
-		System.out.println("Responsable de Edificios ------Edificios seleccionados");
-		if((this.edificiosResponsableEdificioResult!=null)){
-			for (String ed2 : this.edificiosResponsableEdificioResult) {
-				System.out.println(ed2);			
+		for (EdificioDTO edificio: todosLosEdificios){
+			for (String edificioNombre : listaNombreEdificios) {
+				if (edificio.getNombre().equals(edificioNombre)){
+					listaResultado.add(edificio);
+				}
+			
 			}
 		}
-		System.out.println("Responsable Cobros ------Edificios seleccionados");
-		if((this.edificiosResponsableCobrosResult!=null)){
-			for (String ed3 : this.edificiosResponsableCobrosResult) {
-				System.out.println(ed3);			
-			}
+		return listaResultado;
+	}
+	public String execute(){
+		UsuarioDTO usuario= null;
+		System.out.println(this.id);
+		List<PerfilDTO> perfiles= new ArrayList<PerfilDTO>();
+		try {
+			 usuario= userAppl.getUsuario(this.id);
+		} catch (UsuarioInexistenteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		System.out.println("Responsable Gastos ------Edificios seleccionados");
-		if((this.edificiosResponsableGastosResult!=null)){
-			for (String ed4 : this.edificiosResponsableGastosResult) {
-				System.out.println(ed4);			
-			}
+	
+		if (this.administrador!=null){
+			perfiles.add( userAppl.getPerfilByDescripcion(PerfilDTO.ADMINISTRADOR));
 		}
+		if (this.responsableEdificios!=null){
+			perfiles.add( userAppl.getPerfilByDescripcion(PerfilDTO.RESPONSABLE_EDIFICIO));
+		}
+		if (this.responsableGastos!=null){
+			perfiles.add( userAppl.getPerfilByDescripcion(PerfilDTO.RESPONSABLE_GASTOS));
+		}
+		if (this.responsableCobros!=null){
+			perfiles.add( userAppl.getPerfilByDescripcion(PerfilDTO.RESPONSABLE_COBROS));
+		}
+		
+		
+		try {
+			userAppl.actualizarPerfiles(perfiles, this.id);
+		} catch (UsuarioInexistenteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		if (this.administrador!=null){
+			EdificioAppl edifAppl = new EdificioAppl();
+			SessionFactory factory = HibernateUtil.getSessionFactory();
+			ArrayList<EdificioDTO> todosLosEdificios = (ArrayList<EdificioDTO>) edifAppl.getAllEdificios(factory);
+			userAppl.actualizarEdificiosParaUsuarioPerfil(todosLosEdificios, this.id,PerfilDTO.ADMINISTRADOR );
+	
+		}
+		if ((this.edificiosResponsableEdificioResult!=null) && (this.responsableEdificios!=null)){
+			List<EdificioDTO> todosLosEdificios = this.getEdificiosByName(this.edificiosResponsableEdificioResult);
+			userAppl.actualizarEdificiosParaUsuarioPerfil(todosLosEdificios, this.id, PerfilDTO.RESPONSABLE_EDIFICIO);
+		}
+		
+		if ((this.edificiosResponsableCobrosResult!=null) && (this.responsableCobros!=null)){
+			List<EdificioDTO> todosLosEdificios = this.getEdificiosByName(this.edificiosResponsableCobrosResult);
+			userAppl.actualizarEdificiosParaUsuarioPerfil(todosLosEdificios, this.id, PerfilDTO.RESPONSABLE_COBROS);
+		}
+		
+		if ((this.edificiosResponsableGastosResult!=null) && (this.responsableGastos!=null)){
+			List<EdificioDTO> todosLosEdificios = this.getEdificiosByName(this.edificiosResponsableGastosResult);
+			userAppl.actualizarEdificiosParaUsuarioPerfil(todosLosEdificios, this.id, PerfilDTO.RESPONSABLE_GASTOS);
+		}
+//		
+//			
+//		if((this.edificiosResponsableEdificioResult!=null)){
+//			for (String ed2 : this.edificiosResponsableEdificioResult) {
+//				System.out.println(ed2);			
+//			}
+//		}
+//		System.out.println("Responsable Cobros ------Edificios seleccionados");
+//		if((this.edificiosResponsableCobrosResult!=null)){
+//			for (String ed3 : this.edificiosResponsableCobrosResult) {
+//				System.out.println(ed3);			
+//			}
+//		}
+//		System.out.println("Responsable Gastos ------Edificios seleccionados");
+//		if((this.edificiosResponsableGastosResult!=null)){
+//			for (String ed4 : this.edificiosResponsableGastosResult) {
+//				System.out.println(ed4);			
+//			}
+//		}
 
 		return "success";
 		
