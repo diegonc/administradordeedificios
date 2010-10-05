@@ -1,6 +1,8 @@
 package actions;
 
 
+import java.sql.Date;
+
 import org.hibernate.SessionFactory;
 
 import utilidades.HibernateUtil;
@@ -21,11 +23,16 @@ public class GastoRealModifAction extends ActionSupport {
 	
 	private int edificio_id;
 	
+	private String formaPago;
+	private Integer nroFac;
+	private Date fechaPago;
+	
 	private int id;
 	private int folio;
 	private double monto;
 	private String detalle;
 	private String razon_social;
+	private String estado;
 	
 	public int getId() {
 		return id;
@@ -104,14 +111,15 @@ public class GastoRealModifAction extends ActionSupport {
 		
 		
 		gastoReal.setEdificio(edificio);
-		gastoReal.setFechaPago(null);
-		gastoReal.setFormaPago(null);
+		gastoReal.setFechaPago(fechaPago);
+		gastoReal.setFormaPago(formaPago);
 		gastoReal.setId(id);
 		gastoReal.setMonto(monto);
-		gastoReal.setNumeroFacturaPago(null);
+		gastoReal.setNumeroFacturaPago(nroFac);
 		gastoReal.setNumeroFolio(folio);
 		gastoReal.setRazonSocial(razon_social);
 		gastoReal.setTipoGasto(tipoGasto);
+		gastoReal.setEstado(estado);
 		return gastoReal;
 	}
 	
@@ -134,6 +142,38 @@ public class GastoRealModifAction extends ActionSupport {
 
 	public int getEdificio_id() {
 		return edificio_id;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setFormaPago(String formaPago) {
+		this.formaPago = formaPago;
+	}
+
+	public String getFormaPago() {
+		return formaPago;
+	}
+
+	public void setNroFac(Integer nroFac) {
+		this.nroFac = nroFac;
+	}
+
+	public Integer getNroFac() {
+		return nroFac;
+	}
+
+	public void setFechaPago(Date fechaPago) {
+		this.fechaPago = fechaPago;
+	}
+
+	public Date getFechaPago() {
+		return fechaPago;
 	}
 	
 }

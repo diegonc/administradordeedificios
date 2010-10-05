@@ -95,7 +95,14 @@
 				 			<td>&nbsp;&nbsp;<input type="text" id="dia_primer_vto" name="dia_primer_vto" value="<%=edificio.getDia_primer_vto() %>" readonly size="9"/></td>
 				 			<td align="right" ><label for="dia_segundo_vto"> Seg Vta:</label> </td>
 				 			<td>&nbsp;&nbsp;<input type="text" id="dia_segundo_vto" name="dia_segundo_vto" value="<%=edificio.getDia_segundo_vto() %>" readonly size="9"/></td>
-				 			
+			 			</tr>
+			 			<tr><td colspan="8" height="10"></td></tr>  	
+			 			<tr><td class="borderline" colspan="8" height="10"></td></tr>
+			 			<tr>
+			 				<td align="right"><label for="fondoOrd">Fondo Oridinario:</label> </td>
+				 			<td>&nbsp;&nbsp;<input type="text" id="fondoOrd" name="fondoOrd" value="<%=edificio.getFondo_ordinario() %>" readonly size="9"/></td>
+				 			<td align="right" ><label for="fondoExt">Fondo Extraordinario:</label> </td>
+				 			<td>&nbsp;&nbsp;<input type="text" id="fondoExt" name="fondoExt" value="<%=edificio.getFondo_extraordinario() %>" readonly size="9"/></td>
 			 			</tr>
 				  		<tr>		  	
 			  			<td> <a href="edificio.jsp">Volver</a> </td>
