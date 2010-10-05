@@ -1,11 +1,25 @@
 <jsp:include page="/WEB-INF/jspf/header.jspf"></jsp:include>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page language="java" contentType="text/html" import="usuarios.dto.UsuarioDTO"%>
+<%@ page language="java" contentType="text/html" import="usuarios.dto.PerfilDTO"%>
+<%@ page language="java" contentType="text/html" import="java.util.*"%>
 <jsp:useBean id="usuarioBean" scope="session" class="beans.UsuariosBean"/>
 
 
 <%
 	UsuarioDTO usuario = usuarioBean.getUsuarioUnico();
+	List<PerfilDTO> perfiles=usuario.getPerfiles();
+	String administrador="";
+	String responsableEdificio="";
+	String responsableGastos="";
+	String responsableCobros="";
+	
+	for(PerfilDTO perfil:perfiles){
+		if (perfil.getDescripcion().equals(PerfilDTO.ADMINISTRADOR)) administrador="checked='checked'";
+		if (perfil.getDescripcion().equals(PerfilDTO.RESPONSABLE_EDIFICIO)) responsableEdificio="checked='checked'";
+		if (perfil.getDescripcion().equals(PerfilDTO.RESPONSABLE_GASTOS)) responsableGastos="checked='checked'";
+		if (perfil.getDescripcion().equals(PerfilDTO.RESPONSABLE_COBROS)) responsableCobros="checked='checked'";
+	}
 %>
 
 <script type="text/javascript">
@@ -33,10 +47,14 @@ function validar(){
 }
 function cerrar(id){
 	document.getElementById(id).style.display=document.getElementById(id).style.display=="none"?"block":"none";
-	document.getElementById(id).innerHtml=document.getElementById(id).style.display=="none"?"src='images/cerrar.jpg'":"src='images/abrir.jpg'";
 }
 
-
+function deshabilitarAdministrador(){
+	var cobro = document.getElementById("responsableCobros").checked;
+	var gasto = document.getElementById("responsableGastos").checked;
+	var edif = document.getElementById("responsableGastos").checked;
+	document.getElementById("administrador").disabled = (cobro||gasto||edif)?"":"disabled";
+}
 </script>
 <table  cellpadding="0" cellspacing="0" >
 <tr>
@@ -61,7 +79,7 @@ function cerrar(id){
 			  	  			<td></td> 
 			  	  			<td> </td>
 			 	  			<td><label for="user.usuario">Usuario:</label></td>
-			 	  			<td> <input type="hidden" id="user.usuario" name="user.usuario"   value="<%=usuario.getUsuario()%>"/>&nbsp;&nbsp;<%=usuario.getUsuario()%></td>
+			 	  			<td> <input type="hidden" id="user.usuario" name="user.usuario"   value="<%=usuario.getUsuario()%>" />&nbsp;&nbsp;<%=usuario.getUsuario()%></td>
 			 	  		</tr>
 			 	  		<tr>
 							<td height="14" colspan="4"></td>
@@ -70,17 +88,16 @@ function cerrar(id){
 					
 					<table border="0" cellpadding="0" cellspacing="0" width="100%">		
 						<tr>
-							<td align="right"><s:checkbox name="administrador" id="administrador" onclick="deshabilitarPerfiles()"  /> </td>
-				  			<td><label for="administrador">Administrador</label></td>			  	  	
+							<td align="right"><input type="checkbox" name="administrador" id="administrador" onclick="deshabilitarPerfiles()"  value="<%=PerfilDTO.ADMINISTRADOR%>"  <%=administrador%>/> </td>
+				  			<td><label for="administrador"><%=PerfilDTO.ADMINISTRADOR%></label></td>			  	  	
 				  		</tr>
 					</table>
 												
-					<table border="0" cellpadding="0" cellspacing="0" width="100%">	
-							
+					<table border="0" cellpadding="0" cellspacing="0" width="100%">								
 							<tr>
-								<td bgcolor="#F0F0F0"><s:checkbox name="responsableEdificios" id="responsableEdificios" /> </td>
-			  	  				<td bgcolor="#F0F0F0"><label for="responsableEdificios">Responsables de Edificios</label></td>
-			  	  				<td bgcolor="#F0F0F0" align="right"><img src="images/cerrar.jpg" alt="Agregar Edificios" onclick="cerrar('grupo2')"></img></td> 
+								<td bgcolor="#F0F0F0"><input type="checkbox" name="responsableEdificios" id="responsableEdificios" value="<%=PerfilDTO.RESPONSABLE_EDIFICIO%>" <%=responsableEdificio%> onclick="deshabilitarAdministrador()" /> </td>
+			  	  				<td bgcolor="#F0F0F0"><label for="responsableEdificios"><%=PerfilDTO.RESPONSABLE_EDIFICIO%></label></td>
+			  	  				<td bgcolor="#F0F0F0" align="right"><img id="imagGrupo2" src="images/cerrar.jpg" alt="Agregar Edificios" onclick="cerrar('grupo2')"></img></td> 
 			  	  			</tr>
 			 	  	</table>
 			 	  	
@@ -110,8 +127,8 @@ function cerrar(id){
 					
 					<table border="0" cellpadding="0" cellspacing="0" width="100%">	
 							<tr>			  	  			 
-			  	  				<td bgcolor="#F0F0F0"><s:checkbox name="responsableGastos" id="responsableGastos"/> </td>
-			  	  				<td bgcolor="#F0F0F0"><label for="responsableGastos">Responsables de Gastos</label></td>
+			  	  				<td bgcolor="#F0F0F0"><input type="checkbox" name="responsableGastos" id="responsableGastos" value="<%=PerfilDTO.RESPONSABLE_GASTOS %>"   <%=responsableGastos%> onclick="deshabilitarAdministrador()"/> </td>
+			  	  				<td bgcolor="#F0F0F0"><label for="responsableGastos"><%=PerfilDTO.RESPONSABLE_GASTOS %></label></td>
 			  	  				<td bgcolor="#F0F0F0" align="right"><img src="images/cerrar.jpg" alt="Agregar Edificios" onclick="cerrar('grupo3')"></img></td> 				
 			  	  			</tr>
 			 	  	</table>
@@ -142,8 +159,8 @@ function cerrar(id){
 														
 					<table border="0" cellpadding="0" cellspacing="0" width="100%">							
 							<tr>
-								<td bgcolor="#F0F0F0"><s:checkbox name="responsableCobros" id="responsableCobros"/></td>			  	  			 
-			  	  				<td bgcolor="#F0F0F0"><label for="responsableCobros">Responsables de Cobros</label></td>
+								<td bgcolor="#F0F0F0"><input type="checkbox" name="responsableCobros" id="responsableCobros" value="<%=PerfilDTO.RESPONSABLE_COBROS%>" <%=responsableCobros%> onclick="deshabilitarAdministrador()"/></td>			  	  			 
+			  	  				<td bgcolor="#F0F0F0"><label for="responsableCobros"><%=PerfilDTO.RESPONSABLE_COBROS%></label></td>
 			  	  				<td bgcolor="#F0F0F0" align="right"><img src="images/cerrar.jpg" alt="Agregar Edificios" onclick="cerrar('grupo4')"></img></td>
 			  	  				
 			 	  			</tr>
@@ -175,7 +192,7 @@ function cerrar(id){
 																										
 			  <s:actionerror />
 			  <input type="hidden" value="<%=usuario.getId()%>" id="id" name="id">	
-			<input type="submit" value="Aceptar"  onclick="validar()" >
+			<input type="button" value="Aceptar"  onclick="validar()" >
 			<input type="submit" value="Cancelar" name="redirectAction:VinculacionUsuario">
 			</fieldset>
 		</form>
