@@ -60,9 +60,15 @@
             <result name="success" type="redirectAction">EdificioGastosListarAction</result>  
              <result name="error">/gastoError.jsp</result>               
         </action>  
+         <action name="GastoRealConsolidarAction" class="actions.GastoRealConsolidarAction">  
+            <result name="success" type="redirectAction">EdificioGastosListarAction</result>  
+            <result name="error">/gastoError.jsp</result>
+            <result name="errorinsuf">/gastoErrorInsuf.jsp</result>                
+        </action>  
+        
          <action name="GastoPrevisionModifAction" class="actions.GastoPrevisionModifAction">  
             <result name="success" type="redirectAction">EdificioGastosListarAction</result>  
-             <result name="error">/gastoError.jsp</result>               
+             <result name="error" >/gastoError.jsp</result>               
         </action>  
         
         <action name="EdificioGastosListarAction" class="actions.EdificioGastosListarAction">  

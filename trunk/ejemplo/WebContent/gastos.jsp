@@ -33,7 +33,7 @@
 				<td><%= edificioDTO.getNombre()%></td>
 				<td><a href="consultaGastos?idEdificio=<%= edificioDTO.getId()%>">Consultar</a></td>
 				<td><a href="GastosAction!cargaTiposDeGastos?idEdificio=<%= edificioDTO.getId()%>">Agregar</a></td>	
-				<td><a href="GastosListarModifElimAction?id=<%= edificioDTO.getId()%>">Eliminar/Modificar</a></td>		
+				<td><a href="GastosListarModifElimAction?id=<%= edificioDTO.getId()%>">Eliminar/Modificar/Consolidar</a></td>		
 			</tr>	
 		<%} %>				
 		

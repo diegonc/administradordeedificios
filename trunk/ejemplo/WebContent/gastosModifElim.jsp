@@ -42,6 +42,7 @@
 				<td><%= gastoRealDTO.getMonto()%></td>	
 				<td><a href="gastosDeleteReales.jsp?id=<%= gastoRealDTO.getId()%>">Eliminar</a></td>		
 				<td><a href="gastosModificarReales.jsp?id=<%= gastoRealDTO.getId()%>">Modificar</a></td>
+				<td><a href="gastosConsolidarReales.jsp?id=<%= gastoRealDTO.getId()%>">Consolidar</a></td>
 			</tr>	
 		<%} %>				
 		</table> 

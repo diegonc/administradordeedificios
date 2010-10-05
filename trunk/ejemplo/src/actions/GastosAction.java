@@ -151,6 +151,7 @@ public class GastosAction extends ActionSupport {
 			this.gastoReal.setDetalle(this.detalle);
 			this.gastoReal.setEdificio(edificio);
 			this.gastoReal.setTipoGasto(this.tipoGasto);
+			this.gastoReal.setEstado("P");
 			gasto=this.gastoReal;
 		}
 		

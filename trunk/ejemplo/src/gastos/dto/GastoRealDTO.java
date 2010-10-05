@@ -18,6 +18,7 @@ public class GastoRealDTO extends GastoDTO{
 	private Date fechaPago;
 	private Integer numeroFacturaPago;
 	private String formaPago;
+	private String estado;
 	
 	@Column(name="RAZON_SOCIAL",nullable=false)
 	public String getRazonSocial() {
@@ -49,5 +50,11 @@ public class GastoRealDTO extends GastoDTO{
 	}
 	public void setFormaPago(String formaPago) {
 		this.formaPago = formaPago;
+	}
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+	public String getEstado() {
+		return estado;
 	}
 }

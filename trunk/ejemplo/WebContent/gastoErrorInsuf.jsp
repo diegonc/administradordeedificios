@@ -1,4 +1,4 @@
 <script type="text/javascript"> 
-	alert("No se ha podido realizar la operación pedida");
+	alert("No hay fondo para afrontar el gasto");
 	location.href="EdificioGastosListarAction";
 </script>
