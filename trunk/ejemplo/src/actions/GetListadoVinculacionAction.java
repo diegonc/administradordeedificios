@@ -10,6 +10,7 @@ import beans.UsuariosBean;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
+@SuppressWarnings("serial")
 public class GetListadoVinculacionAction extends ActionSupport {
 	
 	private UsuarioAppl userAppl = new UsuarioAppl();
@@ -23,6 +24,7 @@ public class GetListadoVinculacionAction extends ActionSupport {
 		this.id = id;
 	}
 
+	@SuppressWarnings("unused")
 	private Map<String, Object> session;
 	
 	
@@ -40,7 +42,6 @@ public class GetListadoVinculacionAction extends ActionSupport {
 	    }
 	
 	public void setSession(Map<String, Object> arg0) {
-		// TODO Auto-generated method stub
 		this.session = arg0;
 	}
 

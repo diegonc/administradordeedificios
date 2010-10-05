@@ -8,6 +8,7 @@ import gastos.dto.GastoDTO;
 import gastos.dto.GastoPrevisionDTO;
 import gastos.dto.GastoRealDTO;
 import gastos.dto.TipoGastoDTO;
+import gastos.exception.GastoExistenteException;
 
 import java.util.List;
 import java.util.Map;
@@ -153,7 +154,13 @@ public class GastosAction extends ActionSupport {
 			gasto=this.gastoReal;
 		}
 		
-		this.gastoAppl.addGasto(gasto);
+		try{
+			this.gastoAppl.addGasto(gasto);
+		}catch(GastoExistenteException e)
+		{
+			addActionError(e.getMessage());
+			return "error";
+		}	
 		return "success";
 	}
 }

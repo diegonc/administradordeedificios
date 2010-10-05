@@ -16,6 +16,7 @@ import com.opensymphony.xwork2.ActionSupport;
 
 import edificio.EdificioAppl;
 import edificio.EdificioDTO;
+import exception.DependenciasExistentesException;
 import gastos.appl.TiposGastosAppl;
 import gastos.dto.TipoGastoDTO;
 import gastos.dto.TipoGastoMontoFijoDTO;
@@ -98,8 +99,11 @@ public class GetListadoTipoDeGastoAction extends ActionSupport implements Sessio
 			try {
 				tipoGastoAppl.removeTipoGasto(this.id);
 			} catch (TipoGastoInexistenteException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				addActionError(e.getMessage()); 
+				return "error";
+			} catch (DependenciasExistentesException e) {
+				addActionError(e.getMessage()); 
+				return "error";
 			}		
 			return "eliminar";
 		}
@@ -116,7 +120,7 @@ public class GetListadoTipoDeGastoAction extends ActionSupport implements Sessio
 			try {
 				this.tipoGasto = tipoGastoAppl.getTipoGasto(this.id);
 			} catch (TipoGastoInexistenteException e) {
-				// TODO Auto-generated catch block
+				// TODO mostrar error
 				e.printStackTrace();
 			}
 			
@@ -169,7 +173,6 @@ public class GetListadoTipoDeGastoAction extends ActionSupport implements Sessio
 	    }
 
 		public void setSession(Map<String, Object> arg0) {
-			// TODO Auto-generated method stub
 			this.session = arg0;
 		}
 

@@ -28,7 +28,7 @@
 						<td><%= tipoGastoActual.getCodigo()%></td>
 						<td><%= tipoGastoActual.getDescripcion()%></td>
 						<td><a href="GetListadoTipoDeGastoAction!editar?id=<%=tipoGastoActual.getId()%>">Modificar</a></td>
-						<td><a href="eliminarTipoGasto.jsp?&id=<%=tipoGastoActual.getId()%>&codigo=<%=tipoGastoActual.getCodigo()%>" >Eliminar</a></td>	
+						<td><a href="eliminarTipoGasto.jsp?&id=<%=tipoGastoActual.getId()%>&codigo=<%=tipoGastoActual.getCodigo()%>">Eliminar</a></td>	
 						
 					</tr>	
 				<%} %>			

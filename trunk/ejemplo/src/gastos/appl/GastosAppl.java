@@ -3,6 +3,7 @@ package gastos.appl;
 import gastos.dto.GastoDTO;
 import gastos.dto.GastoPrevisionDTO;
 import gastos.dto.GastoRealDTO;
+import gastos.exception.GastoExistenteException;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -13,16 +14,21 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.exception.ConstraintViolationException;
 
 import utilidades.HibernateUtil;
 
 public class GastosAppl {
 	
-	public void addGasto(GastoDTO gasto)
+	public void addGasto(GastoDTO gasto) throws GastoExistenteException 
 	{
 		Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
-        session.save(gasto);
+        try{
+        	session.save(gasto);
+        }catch(ConstraintViolationException e){
+        	throw new GastoExistenteException("Ya existe un Gasto con ese folio asignado al edificio.");
+        }
         session.getTransaction().commit();
         HibernateUtil.getSessionFactory().close();
 	}

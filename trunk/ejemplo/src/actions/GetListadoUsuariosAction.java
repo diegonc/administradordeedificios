@@ -70,7 +70,7 @@ public class GetListadoUsuariosAction extends ActionSupport implements SessionAw
 			try {
 				userAppl.removeUsuario(this.id.intValue());
 			} catch (UsuarioInexistenteException e) {
-				// TODO Auto-generated catch block
+				// TODO mostrar error
 				e.printStackTrace();
 			}		
 		return "eliminar";
@@ -84,7 +84,7 @@ public class GetListadoUsuariosAction extends ActionSupport implements SessionAw
 			try {
 				this.user = userAppl.getUsuario(id.intValue());
 			} catch (UsuarioInexistenteException e) {
-				// TODO Auto-generated catch block
+				// TODO mostrar error
 				e.printStackTrace();
 			}
 		Map session = ActionContext.getContext().getSession();
@@ -108,7 +108,6 @@ public class GetListadoUsuariosAction extends ActionSupport implements SessionAw
     }
 
 	public void setSession(Map<String, Object> arg0) {
-		// TODO Auto-generated method stub
 		this.session = arg0;
 	}
 

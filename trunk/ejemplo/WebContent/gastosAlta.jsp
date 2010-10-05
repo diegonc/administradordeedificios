@@ -1,4 +1,4 @@
-
+<%@ taglib prefix="s" uri="/struts-tags" %>
 <%@page import="gastos.dto.TipoGastoDTO"%>
 <%@page import="edificio.EdificioDTO"%><jsp:include page="/WEB-INF/jspf/header.jspf"></jsp:include>
 <%@ page language="java" contentType="text/html" import="java.util.List"%>
@@ -144,6 +144,7 @@
 			  		<input type="hidden" id="idEdificio" name="idEdificio" value="<%=edificio%>" >
 			  	
 			</fieldset>
+				<s:actionerror cssClass="error"/>
 				<input type="button" value="Aceptar"  onclick="validar()" >
 				<input type="submit" value="Cancelar" name="redirectAction:EdificioGastosListarAction">
 		</form>
