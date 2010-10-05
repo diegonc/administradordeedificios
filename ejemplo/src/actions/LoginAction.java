@@ -1,5 +1,6 @@
 package actions;
 
+import permisos.AdministradorDePermisos;
 import usuarios.appl.UsuarioAppl;
 import usuarios.dto.UsuarioDTO;
 import usuarios.exception.UsuarioInexistenteException;
@@ -58,8 +59,10 @@ public class LoginAction extends ActionSupport {
     			return "error";
 			}
     	
-			if (unicoUser.getPassword().equals(this.password))    	
-    			return "success";
+			if (unicoUser.getPassword().equals(this.password)){    	
+    			AdministradorDePermisos.getInstancia().setUsuario(unicoUser);
+				return "success";    			
+			}
     		else{
     			addActionError("Datos invalidos"); 
     			return "error";
