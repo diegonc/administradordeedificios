@@ -87,9 +87,15 @@ public class ConsultaGastosAction extends SessionAwareAction implements Preparab
 		else
 			throw new IllegalArgumentException("Categoria invalidad: " + categoriaElegida);
 
-		return session.createCriteria(categoriaGasto)
-			.createCriteria("edificio")
-			.add(Restrictions.idEq(idEdificio));
+		Criteria criteria = session.createCriteria(categoriaGasto)
+			.createAlias("edificio", "edificio")
+			.createAlias("tipoGasto", "tipoGasto")
+			.add(Restrictions.eq("edificio.id", idEdificio));
+
+		if (tipoGastoSeleccionados.length > 0)
+			criteria.add(Restrictions.in("tipoGasto.codigo", tipoGastoSeleccionados));
+
+		return criteria;
 	}
 
 	@SuppressWarnings("unchecked")
