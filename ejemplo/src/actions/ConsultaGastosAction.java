@@ -17,6 +17,7 @@ import org.hibernate.criterion.Restrictions;
 
 import utilidades.SessionAwareAction;
 
+import com.opensymphony.xwork2.validator.annotations.ConversionErrorFieldValidator;
 import com.opensymphony.xwork2.Preparable;
 
 @SuppressWarnings("serial")
@@ -30,11 +31,11 @@ public class ConsultaGastosAction extends SessionAwareAction implements Preparab
 	/*
 	 * Año utilizado al filtrar gastos de prevision.
 	 */
-	private String anioPrevision;
+	private Integer anioPrevision;
 	/*
 	 * Mes utilizado al filtrar gastos de prevision.
 	 */
-	private String mesPrevision;
+	private Integer mesPrevision;
 	/*
 	 * Tipos de gastos permitidos.
 	 */
@@ -95,6 +96,16 @@ public class ConsultaGastosAction extends SessionAwareAction implements Preparab
 		if (tipoGastoSeleccionados.length > 0)
 			criteria.add(Restrictions.in("tipoGasto.codigo", tipoGastoSeleccionados));
 
+		if (categoriaElegida.equals("PREVISION")) {
+			if (mesPrevision != null) {
+				criteria.add(Restrictions.eq("mes", mesPrevision));
+			}
+			if (anioPrevision != null) {
+				criteria.add(Restrictions.eq("anio", anioPrevision));
+			}
+
+		}
+
 		return criteria;
 	}
 
@@ -112,19 +123,21 @@ public class ConsultaGastosAction extends SessionAwareAction implements Preparab
 		this.categoriaElegida = categoriaElegida;
 	}
 
-	public String getAnioPrevision() {
+	public Integer getAnioPrevision() {
 		return anioPrevision;
 	}
 
-	public void setAnioPrevision(String anioPrevision) {
+	@ConversionErrorFieldValidator(message="El valor debe ser numerico.")
+	public void setAnioPrevision(Integer anioPrevision) {
 		this.anioPrevision = anioPrevision;
 	}
 
-	public String getMesPrevision() {
+	public Integer getMesPrevision() {
 		return mesPrevision;
 	}
 
-	public void setMesPrevision(String mesPrevision) {
+	@ConversionErrorFieldValidator(message="El valor debe ser numerico.")
+	public void setMesPrevision(Integer mesPrevision) {
 		this.mesPrevision = mesPrevision;
 	}
 
