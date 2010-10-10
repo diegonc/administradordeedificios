@@ -78,15 +78,28 @@ public class AdministradorDePermisos {
 		return false;
 	}
 	public List<EdificioDTO> getEdificiosResponsableCobros(){
-		return this.usuarioAppl.getUsuarioPerfil(usuario.getId(),PerfilDTO.RESPONSABLE_COBROS).getEdificios();	
+		ArrayList<EdificioDTO> lista = new ArrayList<EdificioDTO>();
+		for (EdificioDTO edificio:  this.usuarioAppl.getUsuarioPerfil(usuario.getId(),PerfilDTO.RESPONSABLE_GASTOS).getEdificios()){
+			lista.add(edificio);
+		}
+		return lista;	
 	}
 	
 	public List<EdificioDTO> getEdificiosResponsableEdificios(){
-		return this.usuarioAppl.getUsuarioPerfil(usuario.getId(),PerfilDTO.RESPONSABLE_EDIFICIO).getEdificios();	
+		ArrayList<EdificioDTO> lista = new ArrayList<EdificioDTO>();
+		for (EdificioDTO edificio:  this.usuarioAppl.getUsuarioPerfil(usuario.getId(),PerfilDTO.RESPONSABLE_EDIFICIO).getEdificios()){
+			lista.add(edificio);
+		}
+		return lista;	
 	}
 	
 	public List<EdificioDTO> getEdificiosResponsableGastos(){
-		return this.usuarioAppl.getUsuarioPerfil(usuario.getId(),PerfilDTO.RESPONSABLE_GASTOS).getEdificios();	
+		ArrayList<EdificioDTO> lista = new ArrayList<EdificioDTO>();
+		for (EdificioDTO edificio:  this.usuarioAppl.getUsuarioPerfil(usuario.getId(),PerfilDTO.RESPONSABLE_GASTOS).getEdificios()){
+			lista.add(edificio);
+		}
+		return lista;
+		
 	}
 	public List<EdificioDTO> getEdificiosAdministrador(){
 		EdificioAppl edificioAppl = new EdificioAppl();
