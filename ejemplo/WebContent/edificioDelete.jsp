@@ -38,7 +38,7 @@
 				 		</tr>
 				  		<tr>
 				  		<td colspan="8"><input class="btn" type="button" value="Delete" onclick="submit()" /></td>
-			  			<td> <a href="EdificioListarAction">Volver</a> </td>
+			  			<td> <a href="EdificioListarAction?redi=edificio">Volver</a> </td>
 			  			</tr>
 			  		</table>			  	
 			</fieldset>

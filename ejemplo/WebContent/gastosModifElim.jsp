@@ -73,7 +73,7 @@
 		<%} %>				
 		</table>
 		</fieldset>	
-		<a href="EdificioGastosListarAction">Volver</a>	
+		<a href="EdificioListarAction?redi=gasto">Volver</a>	
 		</td>
 		<td width="15" class="fondo"></td>
 		<td width="5" class="borde"></td>

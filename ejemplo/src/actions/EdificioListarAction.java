@@ -16,6 +16,7 @@ public class EdificioListarAction extends ActionSupport{
 	
 	@SuppressWarnings("unused")
 	private Map<String,Object> session;
+	private String redi;
 	
 	@SuppressWarnings("unchecked")
 	public String execute() {
@@ -31,6 +32,13 @@ public class EdificioListarAction extends ActionSupport{
 			Map session = ActionContext.getContext().getSession();
 	        session.put("lista",listaEdificios);
 	        this.setSession(session);
+	        if (redi.equals("edificio")) {
+	        	return "edificios";
+	        } else if (redi.equals("gasto")) {
+	        	return "gastos";
+	        } else if (redi.equals("expensa")) {
+	        	return "expensas";
+	        }
 	        return SUCCESS;
 		} catch (Exception e) {
 			return ERROR;
@@ -39,5 +47,13 @@ public class EdificioListarAction extends ActionSupport{
 	
 	public void setSession(Map<String, Object> arg0) {
 		this.session=arg0;
+	}
+
+	public void setRedi(String redi) {
+		this.redi = redi;
+	}
+
+	public String getRedi() {
+		return redi;
 	}
 }
