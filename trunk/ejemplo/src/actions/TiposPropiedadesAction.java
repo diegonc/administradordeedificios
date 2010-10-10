@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.hibernate.HibernateException;
 
+import permisos.AdministradorDePermisos;
 import propiedades.TipoPropiedadAppl;
 import propiedades.TipoPropiedadDTO;
 import propiedades.TipoPropiedadTipoGastoDTO;
@@ -122,14 +124,22 @@ public class TiposPropiedadesAction extends SessionAwareAction implements Prepar
 
 	private void cargarListaEdificios() {
 		edificios = new ArrayList<String>();
-
-	//TODO: permisos
-		
+	//agrego la parte de los permisos
 		try {
-			for (Object o : session.createQuery("from EdificioDTO").list()) {
-				EdificioDTO edificio = (EdificioDTO) o;
-				edificios.add(edificio.getNombre());
+			if (AdministradorDePermisos.getInstancia().isAdministrador()){
+				for (Object o : session.createQuery("from EdificioDTO").list()) {
+					EdificioDTO edificio = (EdificioDTO) o;
+					edificios.add(edificio.getNombre());
+				}
+			}else{
+				if (AdministradorDePermisos.getInstancia().isResponsableEdificios()){
+					List<EdificioDTO> listaAux =  AdministradorDePermisos.getInstancia().getEdificiosResponsableEdificios();
+					for (EdificioDTO edificioDTO : listaAux) {
+						edificios.add(edificioDTO.getNombre());
+					}
+				}
 			}
+			
 		} catch (HibernateException e) {
 			session.getTransaction().rollback();
 			session.close();
