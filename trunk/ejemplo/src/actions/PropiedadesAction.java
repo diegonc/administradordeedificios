@@ -2,11 +2,13 @@ package actions;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
+import permisos.AdministradorDePermisos;
 import propiedades.PropiedadAppl;
 import propiedades.PropiedadDTO;
 import propiedades.Responsable;
@@ -132,11 +134,20 @@ public class PropiedadesAction extends ActionSupport implements Preparable {
 
 	private void cargarListaEdificios() {
 		listaEdificios = new ArrayList<String>();
-		//TODO: permisos		
+				
 		try {
-			for (Object o : session.createQuery("from EdificioDTO").list()) {
-				EdificioDTO edificio = (EdificioDTO) o;
-				listaEdificios.add(edificio.getNombre());
+			if (AdministradorDePermisos.getInstancia().isAdministrador()){
+				for (Object o : session.createQuery("from EdificioDTO").list()) {
+					EdificioDTO edificio = (EdificioDTO) o;
+					listaEdificios.add(edificio.getNombre());
+				}
+			}else{
+				if (AdministradorDePermisos.getInstancia().isResponsableEdificios()){
+					List<EdificioDTO> listaAux =  AdministradorDePermisos.getInstancia().getEdificiosResponsableEdificios();
+					for (EdificioDTO edificioDTO : listaAux) {
+						listaEdificios.add(edificioDTO.getNombre());
+					}
+				}
 			}
 		} catch (HibernateException e) {
 			session.getTransaction().rollback();
@@ -150,8 +161,7 @@ public class PropiedadesAction extends ActionSupport implements Preparable {
 	public String listar() {
 		cargarListaEdificios();
 		if (nombreEdificio != null) {
-			edificioActual = edificioAppl.buscarEdificioPorNombre(session,
-					nombreEdificio);
+			edificioActual = edificioAppl.buscarEdificioPorNombre(session,	nombreEdificio);
 			listaPropiedades = new ArrayList<PropiedadDTO>();
 			for (TipoPropiedadDTO tipo : edificioActual.getTipoPropiedades()) {
 				for (PropiedadDTO propiedad : tipo.getPropiedades())
