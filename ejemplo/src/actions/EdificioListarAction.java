@@ -3,6 +3,8 @@ package actions;
 import java.util.ArrayList;
 import java.util.Map;
 import org.hibernate.SessionFactory;
+
+import permisos.AdministradorDePermisos;
 import utilidades.HibernateUtil;
 import beans.EdificiosBean;
 import com.opensymphony.xwork2.ActionContext;
@@ -26,9 +28,22 @@ public class EdificioListarAction extends ActionSupport{
 		SessionFactory factory = HibernateUtil.getSessionFactory();
 			
 		try {
-			//TODO: permisos
-			lista = (ArrayList<EdificioDTO>) edifAppl.getAllEdificios(factory);
+			//TODO: ver que es redi edificiios
+			if (AdministradorDePermisos.getInstancia().isAdministrador()){
+				lista = (ArrayList<EdificioDTO>) edifAppl.getAllEdificios(factory);
+			}else{
+				if (AdministradorDePermisos.getInstancia().isResponsableEdificios()&& redi.equals("edificio")) {
+					lista = (ArrayList<EdificioDTO>) AdministradorDePermisos.getInstancia().getEdificiosResponsableEdificios();	
+				}
+				if (AdministradorDePermisos.getInstancia().isResponsableGastos()&& redi.equals("gasto")) {
+					lista = (ArrayList<EdificioDTO>) AdministradorDePermisos.getInstancia().getEdificiosResponsableGastos();	
+				}
+				if (AdministradorDePermisos.getInstancia().isResponsableCobros()&& redi.equals("expensa")){
+					lista = (ArrayList<EdificioDTO>) AdministradorDePermisos.getInstancia().getEdificiosResponsableCobros();
+				}
+			}
 			listaEdificios.setEdificios(lista);
+			
 			Map session = ActionContext.getContext().getSession();
 	        session.put("lista",listaEdificios);
 	        this.setSession(session);
