@@ -79,7 +79,7 @@ public class AdministradorDePermisos {
 	}
 	public List<EdificioDTO> getEdificiosResponsableCobros(){
 		ArrayList<EdificioDTO> lista = new ArrayList<EdificioDTO>();
-		for (EdificioDTO edificio:  this.usuarioAppl.getUsuarioPerfil(usuario.getId(),PerfilDTO.RESPONSABLE_GASTOS).getEdificios()){
+		for (EdificioDTO edificio:  this.usuarioAppl.getUsuarioPerfil(usuario.getId(),PerfilDTO.RESPONSABLE_COBROS).getEdificios()){
 			lista.add(edificio);
 		}
 		return lista;	
