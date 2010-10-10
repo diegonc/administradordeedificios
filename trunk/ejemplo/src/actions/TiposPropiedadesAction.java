@@ -19,6 +19,7 @@ import com.opensymphony.xwork2.interceptor.annotations.InputConfig;
 import com.opensymphony.xwork2.util.logging.Logger;
 import com.opensymphony.xwork2.util.logging.LoggerFactory;
 import com.opensymphony.xwork2.validator.annotations.ConversionErrorFieldValidator;
+import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 import com.opensymphony.xwork2.validator.annotations.Validations;
 
@@ -275,6 +276,7 @@ public class TiposPropiedadesAction extends SessionAwareAction implements Prepar
 		return nombreEdificio;
 	}
 
+	@RequiredFieldValidator(message="El nombre de edificio es obligatorio.")
 	public void setNombreEdificio(String nombreEdificio) {
 		this.nombreEdificio = nombreEdificio;
 	}

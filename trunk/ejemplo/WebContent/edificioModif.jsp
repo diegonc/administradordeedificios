@@ -181,7 +181,7 @@ function validar(thisform) {
 			 			</tr>
 				  		<tr>
 			  			<td colspan="8"><input class="btn" type="button" value="Modificar" onclick="validar()" /></td>
-			  			<td> <a href="edificio.jsp">Volver</a> </td>
+			  			<td> <a href="EdificioListarAction?redi=edificio">Volver</a> </td>
 			  			</tr>
 			  		</table>			  	
 			</fieldset>

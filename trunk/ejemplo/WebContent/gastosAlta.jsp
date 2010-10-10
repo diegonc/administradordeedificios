@@ -146,7 +146,7 @@
 			</fieldset>
 				<s:actionerror cssClass="error"/>
 				<input type="button" value="Aceptar"  onclick="validar()" >
-				<input type="submit" value="Cancelar" name="redirectAction:EdificioGastosListarAction">
+				<a href="EdificioListarAction?redi=gasto">Volver</a>
 		</form>
 	</td>
 	<td width="15"  class="fondo"></td>

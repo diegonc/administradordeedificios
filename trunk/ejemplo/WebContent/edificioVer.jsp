@@ -105,7 +105,7 @@
 				 			<td>&nbsp;&nbsp;<input type="text" id="fondoExt" name="fondoExt" value="<%=edificio.getFondo_extraordinario() %>" readonly size="9"/></td>
 			 			</tr>
 				  		<tr>		  	
-			  			<td> <a href="edificio.jsp">Volver</a> </td>
+			  			<td> <a href="EdificioListarAction?redi=edificio">Volver</a> </td>
 			  			</tr>
 			  		</table>			  	
 			</fieldset>

@@ -1,124 +1,158 @@
-<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" "http://struts.apache.org/dtds/struts-2.0.dtd">  
-  
-<struts>  
-    <package name="actions" extends="struts-default">  
-        <action name="LoginAction" class="actions.LoginAction">  
-            <result name="success">/home.jsp</result>
-            <result name="error">/index.jsp</result>  
-        </action>
-        <action name="UsuarioAction" class="actions.UsuarioAction">  
-            <result name="success">/usuario.jsp</result>              
-            <result name="add" type="redirectAction">GetListadoUsuariosAction</result>
-            <result name="actualizacion" type="redirectAction">GetListadoUsuariosAction</result>
-            <result name="error">/usuario.jsp</result>
-         </action>
-         <action name="VinculacionUsuario" class="actions.GetListadoVinculacionAction">  
-            <result name="listar">/vinculacionUsuarioListado.jsp</result>                       
-         </action>
-         <action name="VinculacionUsuarioPerfilEdificio" class="actions.VincularUsuarioPerfilEdificios">
-         	<result name="vincular" >/usuariosVinculacion.jsp</result>              
-            <result name="success" type="redirectAction">VinculacionUsuario</result>            
-                        
-         </action>
-         
-        <action name="GetListadoUsuariosAction" class="actions.GetListadoUsuariosAction">
-               <result name="success">/usuario_listado.jsp</result>   
-               <result name="eliminar" type="redirectAction">GetListadoUsuariosAction</result>
-               <result name="edicion">/usuarioEditar.jsp</result>
-         </action> 
-         <action name="GetListadoTipoDeGastoAction" class="actions.GetListadoTipoDeGastoAction">
-               <result name="success">/tipoGasto_listado.jsp</result>   
-               <result name="eliminar" type="redirectAction">GetListadoTipoDeGastoAction</result>
-               <result name="edicion">/tipoGastoEditar.jsp</result>
-               <result name="error">/eliminarTipoGasto.jsp</result>
-         </action> 
-                  
-  		<action name="TipoDeGastosAction" class="actions.TipoDeGastosAction">  
-            <result name="success" type="redirectAction">GetListadoTipoDeGastoAction</result>              
-            <result name="cargaEdificios">/tipoDeGastos.jsp</result>
-            <result name="actualizacion" type="redirectAction">GetListadoTipoDeGastoAction</result>
-            <result name="error">/tipoDeGastos.jsp</result>
-        </action>
-        <action name="GastosAction" class="actions.GastosAction">  
-            <result name="success" type="redirectAction">EdificioGastosListarAction</result>
-            <result name="cargaTiposDeGastos">/gastosAlta.jsp</result>              
-            <result name="error">/gastosAlta.jsp</result>
-        </action>
-        <action name="GastosListarModifElimAction" class="actions.GastosListarModifElimAction">  
-            <result name="success">/gastosModifElim.jsp</result>  
-             <result name="error">/gastoError.jsp</result>               
-        </action>
-        <action name="GastoRealDeleteAction" class="actions.GastoRealDeleteAction">  
-            <result name="success" type="redirectAction">EdificioGastosListarAction</result>  
-             <result name="error">/gastoError.jsp</result>               
-        </action>
-         <action name="GastoPrevisionDeleteAction" class="actions.GastoPrevisionDeleteAction">  
-            <result name="success" type="redirectAction">EdificioGastosListarAction</result>  
-             <result name="error">/gastoError.jsp</result>               
-        </action>  
-        <action name="GastoRealModifAction" class="actions.GastoRealModifAction">  
-            <result name="success" type="redirectAction">EdificioGastosListarAction</result>  
-             <result name="error">/gastoError.jsp</result>               
-        </action>  
-         <action name="GastoRealConsolidarAction" class="actions.GastoRealConsolidarAction">  
-            <result name="success" type="redirectAction">EdificioGastosListarAction</result>  
-            <result name="error">/gastoError.jsp</result>
-            <result name="errorinsuf">/gastoErrorInsuf.jsp</result>                
-        </action>  
-        
-         <action name="GastoPrevisionModifAction" class="actions.GastoPrevisionModifAction">  
-            <result name="success" type="redirectAction">EdificioGastosListarAction</result>  
-             <result name="error" >/gastoError.jsp</result>               
-        </action>  
-        
-        <action name="EdificioGastosListarAction" class="actions.EdificioGastosListarAction">  
-            <result name="success">/gastos.jsp</result>             
-        </action>
-        <action name="EdificioAction" class="actions.EdificioAction">  
-            <result name="success" type="redirectAction">EdificioListarAction</result>
-             <result name="error">/edificioError.jsp</result>               
-        </action>
-        <action name="EdificioListarAction" class="actions.EdificioListarAction">  
-            <result name="success">/edificio.jsp</result> 
-             <result name="error">/edificioError.jsp</result>              
-        </action>
-        <action name="EdificioModifAction" class="actions.EdificioModifAction">  
-            <result name="success" type="redirectAction">EdificioListarAction</result> 
-             <result name="error">/edificioError.jsp</result>               
-        </action>
-        <action name="EdificioDeleteAction" class="actions.EdificioDeleteAction">  
-            <result name="success" type="redirectAction">EdificioListarAction</result> 
-             <result name="error">/edificioError.jsp</result>               
-        </action>
-    </package>  
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<package name="actions" extends="struts-default">
+		<action name="LoginAction" class="actions.LoginAction">
+			<result name="success">/home.jsp</result>
+			<result name="error">/index.jsp</result>
+		</action>
+		<action name="UsuarioAction" class="actions.UsuarioAction">
+			<result name="success">/usuario.jsp</result>
+			<result name="add" type="redirectAction">GetListadoUsuariosAction</result>
+			<result name="actualizacion" type="redirectAction">GetListadoUsuariosAction
+			</result>
+			<result name="error">/usuario.jsp</result>
+		</action>
+		<action name="VinculacionUsuario" class="actions.GetListadoVinculacionAction">
+			<result name="listar">/vinculacionUsuarioListado.jsp</result>
+		</action>
+		<action name="VinculacionUsuarioPerfilEdificio" class="actions.VincularUsuarioPerfilEdificios">
+			<result name="vincular">/usuariosVinculacion.jsp</result>
+			<result name="success" type="redirectAction">VinculacionUsuario</result>
+
+		</action>
+
+		<action name="GetListadoUsuariosAction" class="actions.GetListadoUsuariosAction">
+			<result name="success">/usuario_listado.jsp</result>
+			<result name="eliminar" type="redirectAction">GetListadoUsuariosAction</result>
+			<result name="edicion">/usuarioEditar.jsp</result>
+		</action>
+		<action name="GetListadoTipoDeGastoAction" class="actions.GetListadoTipoDeGastoAction">
+			<result name="success">/tipoGasto_listado.jsp</result>
+			<result name="eliminar" type="redirectAction">GetListadoTipoDeGastoAction
+			</result>
+			<result name="edicion">/tipoGastoEditar.jsp</result>
+			<result name="error">/eliminarTipoGasto.jsp</result>
+		</action>
+
+		<action name="TipoDeGastosAction" class="actions.TipoDeGastosAction">
+			<result name="success" type="redirectAction">GetListadoTipoDeGastoAction
+			</result>
+			<result name="cargaEdificios">/tipoDeGastos.jsp</result>
+			<result name="actualizacion" type="redirectAction">GetListadoTipoDeGastoAction
+			</result>
+			<result name="error">/tipoDeGastos.jsp</result>
+		</action>
+		<action name="GastosAction" class="actions.GastosAction">
+			<result name="success" type="redirectAction">
+				<param name="actionName">EdificioListarAction</param>
+				<param name="redi">gasto</param>
+			</result>
+			<result name="cargaTiposDeGastos">/gastosAlta.jsp</result>
+			<result name="error">/gastosAlta.jsp</result>
+		</action>
+		<action name="GastosListarModifElimAction" class="actions.GastosListarModifElimAction">
+			<result name="success">/gastosModifElim.jsp</result>
+			<result name="error">/gastoError.jsp</result>
+		</action>
+		<action name="GastoRealDeleteAction" class="actions.GastoRealDeleteAction">
+			<result name="success" type="redirectAction">
+				<param name="actionName">EdificioListarAction</param>
+				<param name="redi">gasto</param>
+			</result>
+			<result name="error">/gastoError.jsp</result>
+		</action>
+		<action name="GastoPrevisionDeleteAction" class="actions.GastoPrevisionDeleteAction">
+			<result name="success" type="redirectAction">
+				<param name="actionName">EdificioListarAction</param>
+				<param name="redi">gasto</param>
+			</result>
+			<result name="error">/gastoError.jsp</result>
+		</action>
+		<action name="GastoRealModifAction" class="actions.GastoRealModifAction">
+			<result name="success" type="redirectAction">
+				<param name="actionName">EdificioListarAction</param>
+				<param name="redi">gasto</param>
+			</result>
+			<result name="error">/gastoError.jsp</result>
+		</action>
+		<action name="GastoRealConsolidarAction" class="actions.GastoRealConsolidarAction">
+			<result name="success" type="redirectAction">
+				<param name="actionName">EdificioListarAction</param>
+				<param name="redi">gasto</param>
+			</result>
+			<result name="error">/gastoError.jsp</result>
+			<result name="errorinsuf">/gastoErrorInsuf.jsp</result>
+		</action>
+
+		<action name="GastoPrevisionModifAction" class="actions.GastoPrevisionModifAction">
+			<result name="success" type="redirectAction">
+				<param name="actionName">EdificioListarAction</param>
+				<param name="redi">gasto</param>
+			</result>
+			<result name="error">/gastoError.jsp</result>
+		</action>
+
+		<action name="EdificioAction" class="actions.EdificioAction">
+			<result name="success" type="redirectAction">
+				<param name="actionName">EdificioListarAction</param>
+				<param name="redi">edificio</param>
+			</result>
+			<result name="error">/edificioError.jsp</result>
+		</action>
+		<action name="EdificioListarAction" class="actions.EdificioListarAction">
+			<result name="edificios">/edificio.jsp</result>
+			<result name="gastos">/gastos.jsp</result>
+			<result name="success">/gastos.jsp</result>
+			<result name="expensas">/expensas.jsp</result>
+			<result name="error">/edificioError.jsp</result>
+			
+		</action>
+		<action name="EdificioModifAction" class="actions.EdificioModifAction">
+			<result name="success" type="redirectAction">
+				<param name="actionName">EdificioListarAction</param>
+				<param name="redi">edificio</param>
+			</result>
+			<result name="error">/edificioError.jsp</result>
+		</action>
+		<action name="EdificioDeleteAction" class="actions.EdificioDeleteAction">
+			<result name="success" type="redirectAction">
+				<param name="actionName">EdificioListarAction</param>
+				<param name="redi">edificio</param>
+			</result>
+			<result name="error">/edificioError.jsp</result>
+		</action>
+	</package>
 
 	<package name="experimental" extends="hibernate-default">
 		<interceptors>
-			<interceptor name="conversionError" class="utilidades.SilentConversionErrorInterceptor"/>
-			<interceptor name="hibernateSessionInterceptor" class="utilidades.SessionTransactionInjectorInterceptor"/>
+			<interceptor name="conversionError"
+				class="utilidades.SilentConversionErrorInterceptor" />
+			<interceptor name="hibernateSessionInterceptor"
+				class="utilidades.SessionTransactionInjectorInterceptor" />
 
 			<interceptor-stack name="headStack">
-				<interceptor-ref name="exception"/>
-				<interceptor-ref name="alias"/>
-				<interceptor-ref name="servletConfig"/>
-				<interceptor-ref name="i18n"/>
-				<interceptor-ref name="chain"/>
-				<interceptor-ref name="debugging"/>
-				<interceptor-ref name="scopedModelDriven"/>
-				<interceptor-ref name="modelDriven"/>
-				<interceptor-ref name="fileUpload"/>
-				<interceptor-ref name="checkbox"/>
-				<interceptor-ref name="multiselect"/>
+				<interceptor-ref name="exception" />
+				<interceptor-ref name="alias" />
+				<interceptor-ref name="servletConfig" />
+				<interceptor-ref name="i18n" />
+				<interceptor-ref name="chain" />
+				<interceptor-ref name="debugging" />
+				<interceptor-ref name="scopedModelDriven" />
+				<interceptor-ref name="modelDriven" />
+				<interceptor-ref name="fileUpload" />
+				<interceptor-ref name="checkbox" />
+				<interceptor-ref name="multiselect" />
 			</interceptor-stack>
 
 			<interceptor-stack name="tailStack">
-				<interceptor-ref name="prepare"/>
-				<interceptor-ref name="staticParams"/>
-				<interceptor-ref name="actionMappingParams"/>
+				<interceptor-ref name="prepare" />
+				<interceptor-ref name="staticParams" />
+				<interceptor-ref name="actionMappingParams" />
 				<interceptor-ref name="params">
 					<param name="excludeParams">dojo\..*,^struts\..*</param>
 				</interceptor-ref>
-				<interceptor-ref name="conversionError"/>
+				<interceptor-ref name="conversionError" />
 				<interceptor-ref name="validation">
 					<param name="excludeMethods">input,back,cancel,browse</param>
 				</interceptor-ref>
@@ -141,20 +175,20 @@
 			</interceptor-stack>
 
 			<interceptor-stack name="pppStackHibernate">
-				<interceptor-ref name="hibernateSessionInterceptor"/>
-				<interceptor-ref name="paramsPrepareParamsStack"/>
+				<interceptor-ref name="hibernateSessionInterceptor" />
+				<interceptor-ref name="paramsPrepareParamsStack" />
 			</interceptor-stack>
 
 			<interceptor-stack name="defaultHibernate">
-				<interceptor-ref name="hibernateSessionInterceptor"/>
-				<interceptor-ref name="defaultStack"/>
+				<interceptor-ref name="hibernateSessionInterceptor" />
+				<interceptor-ref name="defaultStack" />
 			</interceptor-stack>
 		</interceptors>
 
-		<default-interceptor-ref name="defaultHibernate"/>
+		<default-interceptor-ref name="defaultHibernate" />
 
 		<action name="responsablesListado" method="listar"
-				class="actions.ResponsablesAction">
+			class="actions.ResponsablesAction">
 			<result name="success">/responsablesListado.jsp</result>
 		</action>
 
@@ -164,14 +198,13 @@
 			<result name="error">/error.jsp</result>
 			<interceptor-ref name="pppStackHibernate" />
 		</action>
-		
+
 		<action name="tiposPropiedadesListado" method="listar"
 			class="actions.TiposPropiedadesAction">
 			<result name="success">/tiposPropiedadesListado.jsp</result>
 		</action>
 
-		<action name="tiposPropiedadesFormulario"
-				class="actions.TiposPropiedadesAction">
+		<action name="tiposPropiedadesFormulario" class="actions.TiposPropiedadesAction">
 			<result name="success" type="redirectAction">
 				<param name="actionName">tiposPropiedadesListado</param>
 				<param name="nombreEdificio">${nombreEdificio}</param>
@@ -180,14 +213,13 @@
 			<result name="error">/errorTiposPropiedades.jsp</result>
 			<interceptor-ref name="pppStackHibernate" />
 		</action>
-		
+
 		<action name="propiedadesListado" method="listar"
 			class="actions.PropiedadesAction">
 			<result name="success">/propiedadesListado.jsp</result>
 		</action>
 
-		<action name="propiedadesFormulario"
-				class="actions.PropiedadesAction">
+		<action name="propiedadesFormulario" class="actions.PropiedadesAction">
 			<result name="success" type="redirectAction">
 				<param name="actionName">propiedadesListado</param>
 				<param name="nombreEdificio">${nombreEdificio}</param>
@@ -204,11 +236,14 @@
 		</action>
 	</package>
 
-	<constant name="hibernatePlugin.customSessionFactoryClass" value="utilidades.HibernateUtil" />
+	<constant name="hibernatePlugin.customSessionFactoryClass"
+		value="utilidades.HibernateUtil" />
 	<constant name="hibernatePlugin.getSessionMethod" value="getSession" />
-	<constant name="hibernatePlugin.rebuildSessionFactoryMethod" value="rebuildSessionFactory" />
+	<constant name="hibernatePlugin.rebuildSessionFactoryMethod"
+		value="rebuildSessionFactory" />
 	<constant name="hibernatePlugin.staticGetSessionMethod" value="true" />
 	<constant name="hibernatePlugin.closeSessionMethod" value="closeSession" />
-	<constant name="hibernatePlugin.useSessionObjectInCloseSessionMethod" value="true" />
+	<constant name="hibernatePlugin.useSessionObjectInCloseSessionMethod"
+		value="true" />
 	<constant name="struts.devMode" value="true" />
 </struts>  

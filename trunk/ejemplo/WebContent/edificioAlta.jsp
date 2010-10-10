@@ -166,7 +166,7 @@ function validar(thisform) {
 			 			</tr>
 				  		<tr>
 			  			<td colspan="6"><input class="btn" type="button" value="Add" onclick="validar()" /></td>
-			  			<td> <a href="EdificioListarAction">Volver</a> </td>
+			  			<td> <a href="EdificioListarAction?redi=edificio">Volver</a> </td>
 			  			</tr>
 			  		</table>			  	
 			</fieldset>
