@@ -17,7 +17,7 @@
 			<s:submit method="listar" value="Actualizar" />
 		</s:form>
 		<s:if test="(listaPropiedades != null) && (listaPropiedades.size() > 0)">
-			<table>
+			<table  class="listado">
 			<s:iterator value="listaPropiedades" >
 				<tr>
 					<td><s:property value="nivel" /></td>
