@@ -14,7 +14,7 @@
 			<s:submit method="listar" value="Buscar" />
 		</s:form>
 
-		<table>
+		<table class="listado">
 			<thead>
 				<tr>
 					<th>Tipo Gasto</th>
