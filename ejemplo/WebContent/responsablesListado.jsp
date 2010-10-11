@@ -6,7 +6,7 @@
 	</div>
 	<div class="cuerpo">
 	<s:if test="lista.size() > 0">
-		<table>
+		<table class="listado">
 		<s:iterator value="lista" var="responsable">
 			<tr>
 				<td><s:property value="dni" /></td>
