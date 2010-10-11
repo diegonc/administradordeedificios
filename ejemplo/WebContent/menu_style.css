@@ -48,7 +48,29 @@ td.borderline {background: activeborder;}
 td.fondo {background:grey;}
 table.principal{heigth:400; wid}
 form.elegante input { padding: .2em;}
-table.listado{border-color: teal; border-width: 2;}
+
+table.listado {
+	border-color: teal;
+	border-width: 2px;
+	border-style: outset;
+	border-spacing: 2px;
+	border-collapse: separate;
+}
+
+table.listado th {
+	border-width: 1px;
+	padding: 1px;
+	border-style: inset;
+	border-color: gray;
+}
+
+table.listado td {
+	border-width: 1px;
+	padding: 1px;
+	border-style: inset;
+	border-color: gray;
+}
+
 .clear-both { clear: both; }
 
 .contenido {
@@ -59,20 +81,22 @@ table.listado{border-color: teal; border-width: 2;}
 	padding: 1px; /* sin padding no se pinta correctamente el fondo. */
 }
 
-.titulo {
+.contenido .titulo {
 	color:white;
 	background-color: black;
 }
 
-.titulo h3 {
+.contenido .titulo h3 {
 	text-align: center;
 	margin: 0;
 }
 
-.cuerpo {
-	background-color: grey;
+.contenido .cuerpo {
+	background-color: #F5F5F5;
 	margin-left: 2.8333px; /* Equivalente en firefox a: **/
 	margin-right: 2.8333px;/* <td width="5" ...         **/
+	padding: 0.6em;
+	height: 300px;
 }
 .error {
 	color:red;
