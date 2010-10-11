@@ -150,13 +150,22 @@ public class TiposPropiedadesAction extends SessionAwareAction implements Prepar
 
 	@SkipValidation
 	public String listar() {
-		cargarListaEdificios();
-		if (nombreEdificio != null) {
-			edificioActual = edificioAppl.buscarEdificioPorNombre(session,
+		try {
+			cargarListaEdificios();
+			if (nombreEdificio != null) {
+				edificioActual = edificioAppl.buscarEdificioPorNombre(session,
 					nombreEdificio);
-			lista = edificioActual.getTipoPropiedades();
+				if (edificioActual != null)
+					lista = edificioActual.getTipoPropiedades();
+				else
+					addActionError("No existe el edificio '" + nombreEdificio + "'");
+			}
+			return SUCCESS;
+		} catch (Exception e) {
+			LOG.error("Error en el metodo listar.", e);
+			addActionError(e.getMessage());
+			return "error";
 		}
-		return SUCCESS;
 	}
 
 	private void cargarTipoPropiedad(String nombreTipo) {
@@ -170,11 +179,21 @@ public class TiposPropiedadesAction extends SessionAwareAction implements Prepar
 	}
 
 	private boolean tieneClave() {
-		if (nombreEdificio == null || nombreTipo == null) {
-			if (nombreEdificio == null)
-				addActionError("No se ha seleccionado edificio.");
-			if (nombreTipo == null)
-				addActionError("No se ha seleccionado tipo de propiedad.");
+		return tieneEdificio() && tieneTipoPropiedad();
+
+	}
+
+	private boolean tieneTipoPropiedad() {
+		if (nombreTipo == null) {
+			addActionError("No se ha seleccionado tipo de propiedad.");
+			return false;
+		}
+		return true;
+	}
+
+	private boolean tieneEdificio() {
+		if (nombreEdificio == null) {
+			addActionError("No se ha seleccionado edificio.");
 			return false;
 		}
 		return true;
@@ -182,9 +201,12 @@ public class TiposPropiedadesAction extends SessionAwareAction implements Prepar
 
 	@SkipValidation
 	public String crear() {
-		cargarTiposGastosAsociados();
-		cargarTiposGastosDisponibles();
-		return "edicion";
+		if (tieneEdificio()) {
+			cargarTiposGastosAsociados();
+			cargarTiposGastosDisponibles();
+			return "edicion";
+		} else
+			return "error";
 	}
 
 	public void prepareGrabar() throws Exception {

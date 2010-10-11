@@ -5,9 +5,10 @@
 		<h3>Tipos de Propiedad</h3>
 	</div>
 	<div class="cuerpo">
+	<s:actionerror />
 	<s:form action="tiposPropiedadesListado" method="GET">
 	<s:select label="Edificio" 
-		headerKey="-1" headerValue="-- Seleccione un edificio --"
+		headerKey="" headerValue="-- Seleccione un edificio --"
 		list="edificios" 
 		key="nombreEdificio" />
 	<s:submit method="listar" value="Actualizar" />

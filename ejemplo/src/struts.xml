@@ -202,6 +202,7 @@
 		<action name="tiposPropiedadesListado" method="listar"
 			class="actions.TiposPropiedadesAction">
 			<result name="success">/tiposPropiedadesListado.jsp</result>
+			<result name="error">/errorTiposPropiedades.jsp</result>
 		</action>
 
 		<action name="tiposPropiedadesFormulario" class="actions.TiposPropiedadesAction">
@@ -225,7 +226,7 @@
 				<param name="nombreEdificio">${nombreEdificio}</param>
 			</result>
 			<result name="edicion">/propiedadesFormulario.jsp</result>
-			<result name="error">/error.jsp</result>
+			<result name="error">/errorPropiedades.jsp</result>
 			<interceptor-ref name="pppStackHibernate" />
 		</action>
 
