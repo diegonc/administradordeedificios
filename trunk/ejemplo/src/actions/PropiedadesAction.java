@@ -162,10 +162,14 @@ public class PropiedadesAction extends ActionSupport implements Preparable {
 		cargarListaEdificios();
 		if (nombreEdificio != null) {
 			edificioActual = edificioAppl.buscarEdificioPorNombre(session,	nombreEdificio);
-			listaPropiedades = new ArrayList<PropiedadDTO>();
-			for (TipoPropiedadDTO tipo : edificioActual.getTipoPropiedades()) {
-				for (PropiedadDTO propiedad : tipo.getPropiedades())
-					listaPropiedades.add(propiedad);
+			if (edificioActual != null) {
+				listaPropiedades = new ArrayList<PropiedadDTO>();
+				for (TipoPropiedadDTO tipo : edificioActual.getTipoPropiedades()) {
+					for (PropiedadDTO propiedad : tipo.getPropiedades())
+						listaPropiedades.add(propiedad);
+				}
+			} else {
+				addActionError("No existe el edificio '" + nombreEdificio + "'");
 			}
 		}
 		return SUCCESS;
@@ -225,28 +229,46 @@ public class PropiedadesAction extends ActionSupport implements Preparable {
 	}
 
 	private boolean tieneClave() {
-		boolean claveCompleta = true;
+		return tieneEdificio()
+			&& tieneTipoPropiedad()
+			&& tienePropiedad();
+	}
 
+	private boolean tieneEdificio() {
 		if (nombreEdificio == null) {
 			addActionError("No se ha seleccionado edificio.");
-			claveCompleta = false;
+			return false;
 		}
+		return true;
+	}
+
+	private boolean tieneTipoPropiedad() {
 		if (nombreTipo == null) {
 			addActionError("No se ha seleccionado tipo de propiedad.");
-			claveCompleta = false;
+			return false;
 		}
+		return true;
+	}
+
+	private boolean tienePropiedad() {
 		if (nivel == null || orden == null) {
 			addActionError("No se ha seleccionado una propiedad.");
-			claveCompleta = false;
+			return false;
 		}
-		return claveCompleta;
+		return true;
 	}
 
 	@SkipValidation
 	public String crear() {
-		cargarEdificio(nombreEdificio);
-		cargarListaTiposPropiedades();
-		return "edicion";
+		if (tieneEdificio()) {
+			cargarEdificio(nombreEdificio);
+			if (edificioActual != null) {
+				cargarListaTiposPropiedades();
+				return "edicion";
+			} else
+				addActionError("El edificio '" + nombreEdificio + "' no existe.");
+		}
+		return "error";
 	}
 
 	public void prepareGrabar() throws Exception {
