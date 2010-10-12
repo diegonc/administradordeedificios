@@ -31,7 +31,7 @@
 		<% for (EdificioDTO edificioDTO : edificios) {  %>		
 			<tr>
 				<td><%= edificioDTO.getNombre()%></td>
-				<td><a href="#">Ver Propiedades</a></td>	
+				<td><a href="expensasPropiedadesListado.jsp?id=<%=edificioDTO.getId()%>">Ver Propiedades</a></td>	
 			</tr>	
 		<%} %>				
 		
