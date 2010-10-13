@@ -45,6 +45,9 @@
 				<td><s:property value="numeroFacturaPago" /></td>
 				<td><s:property value="fechaPago" /></td>
 				</s:else>
+				<td class="accion">
+					Consolidar
+				</td>
 			</tr>
 			</s:iterator>
 			</s:if>
