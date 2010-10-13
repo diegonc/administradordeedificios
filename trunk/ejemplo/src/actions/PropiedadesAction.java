@@ -19,6 +19,10 @@ import com.googlecode.s2hibernate.struts2.plugin.annotations.SessionTarget;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.Preparable;
 import com.opensymphony.xwork2.interceptor.annotations.InputConfig;
+import com.opensymphony.xwork2.validator.annotations.ConversionErrorFieldValidator;
+import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
+import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
+import com.opensymphony.xwork2.validator.annotations.Validations;
 
 import edificio.EdificioAppl;
 import edificio.EdificioDTO;
@@ -281,13 +285,82 @@ public class PropiedadesAction extends ActionSupport implements Preparable {
 		}
 
 	}
+
+	private boolean asociarResponsables() {
+		Integer dni;
+		Responsable resp;
+		boolean errores = false;
+
+		if ((resp = daoResp.buscar(entidad.getPropietario().getDni())) != null)
+			entidad.setPropietario(resp);
+		else {
+			addFieldError("entidad.propietario.dni", "No existe el responsable.");
+			errores = true;
+		}
+
+		if ( (dni = entidad.getInquilino().getDni()) != null
+		   &&(resp = daoResp.buscar(dni)) != null)
+			entidad.setInquilino(resp);
+		else if (dni == null)
+			entidad.setInquilino(null);
+		else {
+			addFieldError("entidad.inquilino.dni", "No existe el responsable.");
+			errores = true;
+		}
+
+		if ( (dni = entidad.getPoderPropietario().getDni()) != null
+		   &&(resp = daoResp.buscar(dni)) != null)
+			entidad.setPoderPropietario(resp);
+		else if (dni == null)
+			entidad.setPoderPropietario(null);
+		else {
+			addFieldError("entidad.poderInquilino.dni", "No existe el responsable.");
+			errores = true;
+		}
+
+		if ( (dni = entidad.getPoderInquilino().getDni()) != null
+		   &&(resp = daoResp.buscar(dni)) != null)
+			entidad.setPoderInquilino(resp);
+		else if (dni == null)
+			entidad.setPoderInquilino(null);
+		else {
+			addFieldError("entidad.poderInquilino.dni", "No existe el responsable.");
+			errores = true;
+		}
+		return !errores;
+	}
 	
 	@InputConfig(methodName="validationErrors")
+	@Validations(
+		requiredStrings = {
+			@RequiredStringValidator(fieldName = "nombreEdificio", message = "El nombre del edificio es obligatorio."),
+			@RequiredStringValidator(fieldName = "entidad.tipoPropiedad.nombreTipo", message = "El tipo de propiedad es obligatorio.")
+		},
+		requiredFields = {
+			@RequiredFieldValidator(fieldName = "entidad.nivel", message = "El nivel es obligatorio."),
+			@RequiredFieldValidator(fieldName = "entidad.orden", message = "El orden es obligatorio."),
+			@RequiredFieldValidator(fieldName = "entidad.propietario.dni", message = "El propietario es obligatorio.")
+		},
+		conversionErrorFields = {
+			@ConversionErrorFieldValidator(fieldName = "entidad.nivel", message = "El campo debe ser numerico."),
+			@ConversionErrorFieldValidator(fieldName = "entidad.orden", message = "El campo debe ser numerico."),
+			@ConversionErrorFieldValidator(fieldName = "entidad.propietario.dni", message = "El campo debe ser numerico."),
+			@ConversionErrorFieldValidator(fieldName = "entidad.inquilino.dni", message = "El campo debe ser numerico."),
+			@ConversionErrorFieldValidator(fieldName = "entidad.poderPropietario.dni", message = "El campo debe ser numerico."),
+			@ConversionErrorFieldValidator(fieldName = "entidad.poderInquilino.dni", message = "El campo debe ser numerico."),
+			@ConversionErrorFieldValidator(fieldName = "entidad.ctaExtSaldoExp", message = "El campo debe ser numerico."),
+			@ConversionErrorFieldValidator(fieldName = "entidad.ctaExtSaldoInt", message = "El campo debe ser numerico."),
+			@ConversionErrorFieldValidator(fieldName = "entidad.ctaOrdSaldoExp", message = "El campo debe ser numerico."),
+			@ConversionErrorFieldValidator(fieldName = "entidad.ctaOrdSaldoInt", message = "El campo debe ser numerico."),
+		})
 	public String grabar() {
 		try {
-			session.beginTransaction();
-			dao.grabar(entidad);
+			if ( asociarResponsables() ) {
+				session.beginTransaction();
+				dao.grabar(entidad);
+			} else return validationErrors();
 		} catch (Exception e) {
+			addActionError(e.getMessage());
 			return validationErrors();
 		}
 		return SUCCESS;
@@ -312,24 +385,6 @@ public class PropiedadesAction extends ActionSupport implements Preparable {
 			addActionError(e.getMessage() + "\n" + e.toString());
 			return "error";
 		}
-	}
-	
-	public void setPropietario(String dni) {
-		if (dni.trim().length() > 0) {
-			Responsable resp = daoResp.buscar(Integer.decode(dni));
-			if (resp != null)
-				entidad.setPropietario(resp);
-			else
-				addFieldError("propietario", "El responsable no existe.");
-		}
-		else 
-			addFieldError("propietario", "El campo es obligatorio.");
-	}
-	
-	public String getPropietario() {
-		if (entidad != null && entidad.getPropietario() != null)
-			return entidad.getPropietario().getDni().toString();
-		return null;
 	}
 
 	public void setSession(Session session) {
