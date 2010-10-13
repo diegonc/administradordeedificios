@@ -71,6 +71,10 @@ table.listado td {
 	border-color: gray;
 }
 
+table.listado td.accion {
+	border-style: none;
+}
+
 .clear-both { clear: both; }
 
 .contenido {
@@ -96,7 +100,7 @@ table.listado td {
 	margin-left: 2.8333px; /* Equivalente en firefox a: **/
 	margin-right: 2.8333px;/* <td width="5" ...         **/
 	padding: 0.6em;
-	height: 300px;
+	/*height: 300px;*/
 }
 .error {
 	color:red;
