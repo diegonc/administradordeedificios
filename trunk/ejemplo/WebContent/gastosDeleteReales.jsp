@@ -7,9 +7,10 @@
 <%@ page language="java" contentType="text/html" import="org.hibernate.*"%>
 <%
 	GastosAppl gastoAppl = new GastosAppl();
-	SessionFactory factory = HibernateUtil.getSessionFactory();	
+	SessionFactory factory = HibernateUtil.getSessionFactory();
 	int id = Integer.parseInt(request.getParameter("id"));
-	GastoRealDTO gasto = gastoAppl.getGastosRealesPendientesPorid(factory,id);
+	GastoRealDTO gasto = gastoAppl.getGastosRealesPendientesPorid(
+			factory, id);
 %>
 
 <script type="text/javascript">
@@ -35,12 +36,13 @@
 			 			<tr><td colspan="8" height="10"></td></tr>
 			 			<tr>
 			 				<td align="right"><label for="nombre">Quiere eliminar el Gasto:</label> </td>
-				 			<td>&nbsp;&nbsp;<input type="text" id="nombre" name="nombre" value="<%=gasto.getDetalle() %>" readonly size="15"/></td>
-				 			<td>&nbsp;&nbsp;<input type="text" style="display: none;" id="id" name="id" value="<%=gasto.getId() %>" readonly size="15"/></td>	
+				 			<td>&nbsp;&nbsp;<input type="text" id="nombre" name="nombre" value="<%=gasto.getDetalle()%>" readonly size="15"/></td>
+				 			<td>&nbsp;&nbsp;<input type="text" style="display: none;" id="id" name="id" value="<%=gasto.getId()%>" readonly size="15"/></td>	
 				 		</tr>
 				  		<tr>
 				  		<td colspan="8"><input class="btn" type="button" value="Delete" onclick="submit()" /></td>
-			  			<td> <a href="GastosListarModifElimAction?id=<%=id%>">Volver</a> </td>
+			  			<td> <a
+					href="GastosListarModifElimAction?id=<%=gasto.getEdificio().getId()%>">Volver</a> </td>
 			  			</tr>
 			  		</table>			  	
 			</fieldset>

@@ -40,7 +40,7 @@
 				 		</tr>
 				  		<tr>
 				  		<td colspan="8"><input class="btn" type="button" value="Delete" onclick="submit()" /></td>
-			  			<td> <a href="GastosListarModifElimAction?id=<%=id%>">Volver</a> </td>
+			  			<td> <a href="GastosListarModifElimAction?id=<%=gasto.getEdificio().getId()%>">Volver</a> </td>
 			  			</tr>
 			  		</table>			  	
 			</fieldset>

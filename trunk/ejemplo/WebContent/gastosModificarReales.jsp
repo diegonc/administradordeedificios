@@ -6,9 +6,10 @@
 <%@ page language="java" contentType="text/html" import="org.hibernate.*"%>
 <%
 	GastosAppl edifAppl = new GastosAppl();
-	SessionFactory factory = HibernateUtil.getSessionFactory();	
+	SessionFactory factory = HibernateUtil.getSessionFactory();
 	int id = Integer.parseInt(request.getParameter("id"));
-	GastoRealDTO gasto = edifAppl.getGastosRealesPendientesPorid(factory,id);
+	GastoRealDTO gasto = edifAppl.getGastosRealesPendientesPorid(
+			factory, id);
 %>
 
 <script type="text/javascript">
@@ -61,35 +62,36 @@ function validar(thisform) {
 			 			<tr><td colspan="8" height="10"></td></tr>
 			 			<tr>
 			 				<td align="right"><label for="folio">Folio:</label> </td>
-				 			<td>&nbsp;&nbsp;<input type="text" id="folio" name="folio" value="<%=gasto.getNumeroFolio() %>" size="15"/></td>
+				 			<td>&nbsp;&nbsp;<input type="text" id="folio" name="folio" value="<%=gasto.getNumeroFolio()%>" size="15"/></td>
 			 				<td align="right"><label for="detalle">Detalle:</label> </td>
-				 			<td>&nbsp;&nbsp;<input type="text" id="detalle" name="detalle" value="<%=gasto.getDetalle() %>" size="30"/></td>	
+				 			<td>&nbsp;&nbsp;<input type="text" id="detalle" name="detalle" value="<%=gasto.getDetalle()%>" size="30"/></td>	
 				 		</tr>
 				 		<tr>
 				 			<td align="right"><label for="monto">Monto:</label> </td>
-				 			<td>&nbsp;&nbsp;<input type="text" id="monto" name="monto" value="<%=gasto.getMonto() %>" size="15"/></td>					 			
+				 			<td>&nbsp;&nbsp;<input type="text" id="monto" name="monto" value="<%=gasto.getMonto()%>" size="15"/></td>					 			
 				 			<td align="right"><label for="razon_social">Razon Social:</label> </td>
-				 			<td>&nbsp;&nbsp;<input type="text" id="razon_social" name="razon_social" value="<%=gasto.getRazonSocial() %>" size="30"/></td>		
+				 			<td>&nbsp;&nbsp;<input type="text" id="razon_social" name="razon_social" value="<%=gasto.getRazonSocial()%>" size="30"/></td>		
 				 		</tr>
 				 		<tr>
 				 			<td align="right"><label for="formaPago">Forma de Pago:</label> </td>
-				 			<td>&nbsp;&nbsp;<input type="text" id="formaPago" name="formaPago" value="<%=gasto.getFormaPago() %>"  size="15"/></td>
+				 			<td>&nbsp;&nbsp;<input type="text" id="formaPago" name="formaPago" value="<%=gasto.getFormaPago()%>"  size="15"/></td>
 				 			<td align="right"><label for="nroFac">Nro. Factura:</label> </td>
-				 			<td>&nbsp;&nbsp;<input type="text" id="nroFac" name="nroFac" value="<%=gasto.getNumeroFacturaPago() %>"  size="15"/></td>
+				 			<td>&nbsp;&nbsp;<input type="text" id="nroFac" name="nroFac" value="<%=gasto.getNumeroFacturaPago()%>"  size="15"/></td>
 				 			<td align="right"><label for="fechaPago">Fecha Pago:</label> </td>
-				 			<td>&nbsp;&nbsp;<input type="text" id="fechaPago" name="fechaPago" value="<%=gasto.getFechaPago() %>"  size="15"/></td>
+				 			<td>&nbsp;&nbsp;<input type="text" id="fechaPago" name="fechaPago" value="<%=gasto.getFechaPago()%>"  size="15"/></td>
 				 		</tr>
 				 		<tr>
-				 			<td>&nbsp;&nbsp;<input type="text" style="display: none;" id="id" name="id" value="<%=gasto.getId() %>" readonly size="15"/></td>	
-				 			<td>&nbsp;&nbsp;<input type="text" style="display: none;" id="estado" name="estado" value="<%=gasto.getEstado() %>" readonly size="15"/></td>
-				 			<td>&nbsp;&nbsp;<input type="text" style="display: none;" id="id_tipo_gasto" name="id_tipo_gasto" value="<%=gasto.getTipoGasto().getId() %>" readonly size="15"/></td>
-				 			<td>&nbsp;&nbsp;<input type="text" style="display: none;" id="codigo_tipo_gasto" name="codigo_tipo_gasto" value="<%=gasto.getTipoGasto().getCodigo() %>" readonly size="15"/></td>
-				 			<td>&nbsp;&nbsp;<input type="text" style="display: none;" id="descripcion_tipo_gasto" name="descripcion_tipo_gasto" value="<%=gasto.getTipoGasto().getDescripcion() %>" readonly size="15"/></td>
-				 			<td>&nbsp;&nbsp;<input type="text" style="display: none;" id="edificio_id" name="edificio_id" value="<%=gasto.getEdificio().getId() %>" readonly size="15"/></td>
+				 			<td>&nbsp;&nbsp;<input type="text" style="display: none;" id="id" name="id" value="<%=gasto.getId()%>" readonly size="15"/></td>	
+				 			<td>&nbsp;&nbsp;<input type="text" style="display: none;" id="estado" name="estado" value="<%=gasto.getEstado()%>" readonly size="15"/></td>
+				 			<td>&nbsp;&nbsp;<input type="text" style="display: none;" id="id_tipo_gasto" name="id_tipo_gasto" value="<%=gasto.getTipoGasto().getId()%>" readonly size="15"/></td>
+				 			<td>&nbsp;&nbsp;<input type="text" style="display: none;" id="codigo_tipo_gasto" name="codigo_tipo_gasto" value="<%=gasto.getTipoGasto().getCodigo()%>" readonly size="15"/></td>
+				 			<td>&nbsp;&nbsp;<input type="text" style="display: none;" id="descripcion_tipo_gasto" name="descripcion_tipo_gasto" value="<%=gasto.getTipoGasto().getDescripcion()%>" readonly size="15"/></td>
+				 			<td>&nbsp;&nbsp;<input type="text" style="display: none;" id="edificio_id" name="edificio_id" value="<%=gasto.getEdificio().getId()%>" readonly size="15"/></td>
 				 		</tr>
 				  		<tr>
 			  			<td colspan="8"><input class="btn" type="button" value="Modificar" onclick="validar()" /></td>
-			  			<td> <a href="GastosListarModifElimAction?id=<%=id%>">Volver</a> </td>
+			  			<td> <a
+					href="GastosListarModifElimAction?id=<%=gasto.getEdificio().getId()%>">Volver</a> </td>
 			  			</tr>
 			  		</table>			  	
 			</fieldset>
