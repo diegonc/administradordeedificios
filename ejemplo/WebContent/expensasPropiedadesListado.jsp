@@ -1,15 +1,16 @@
 <jsp:include page="/WEB-INF/jspf/header.jspf"></jsp:include>
 <%@page import="propiedades.PropiedadDTO"%>
-<%@page import="propiedades.TipoPropiedadDTO"%><jsp:include page="/WEB-INF/jspf/header.jspf"></jsp:include>
+<%@page import="propiedades.TipoPropiedadDTO"%>
 <%@ page language="java" contentType="text/html" import="java.util.*"%>
 <%@ page language="java" contentType="text/html" import="edificio.*"%>
 <%@ page language="java" contentType="text/html" import="utilidades.*"%>
 <%@ page language="java" contentType="text/html" import="org.hibernate.*"%>
 <% 
-	EdificioAppl edifAppl = new EdificioAppl();
-	SessionFactory factory = HibernateUtil.getSessionFactory();
+	//EdificioAppl edifAppl = new EdificioAppl();
+	//SessionFactory factory = HibernateUtil.getSessionFactory();
 	int id = Integer.parseInt(request.getParameter("id"));
-	EdificioDTO edificio = edifAppl.getEdificio(factory, id);
+	Session hSession = HibernateUtil.getSession();
+	EdificioDTO edificio = (EdificioDTO) hSession.load(EdificioDTO.class, id);
 	Set<TipoPropiedadDTO> tipos = edificio.getTipoPropiedades();
 	Iterator <TipoPropiedadDTO> iteradorTipos = tipos.iterator();
 %>
@@ -47,4 +48,7 @@
 		%>
 	</table>
 </tr>
+
+<% hSession.close(); %>
+
 <jsp:include page="/WEB-INF/jspf/footer.jspf" />
