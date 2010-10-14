@@ -26,12 +26,12 @@
 				<td>Nombre</td>
 				<td></td>
 				<td></td>
-				<td></td>
 			</tr>	
 		<% for (EdificioDTO edificioDTO : edificios) {  %>		
 			<tr>
 				<td><%= edificioDTO.getNombre()%></td>
 				<td><a href="expensasPropiedadesListado.jsp?id=<%=edificioDTO.getId()%>">Ver Propiedades</a></td>	
+				<td><a href="#">Liquidar</a></td>
 			</tr>	
 		<%} %>				
 		
