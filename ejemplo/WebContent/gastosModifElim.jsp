@@ -1,6 +1,7 @@
 <%@page import="gastos.dto.GastoDTO"%>
 <%@page import="gastos.dto.GastoRealDTO"%>
-<%@page import="gastos.dto.GastoPrevisionDTO"%><jsp:include page="/WEB-INF/jspf/header.jspf"></jsp:include>
+<%@page import="gastos.dto.GastoPrevisionDTO"%>
+<%@page import="permisos.AdministradorDePermisos"%><jsp:include page="/WEB-INF/jspf/header.jspf"></jsp:include>
 <%@ page language="java" contentType="text/html" import="java.util.*"%>
 <%@ page language="java" contentType="text/html" import="gastos.*"%>
 <jsp:useBean id="lista" scope="session" class="beans.GastosBean"/>
@@ -32,7 +33,9 @@
 				<td>Detalle</td>
 				<td>Monto</td>
 				<td></td>
+				<%if (AdministradorDePermisos.getInstancia().isAdministrador()){ %>
 				<td></td>
+				<%} %>
 			</tr>	
 		<%for (GastoRealDTO gastoRealDTO : gastosReales) {  %>		
 			<tr>
@@ -42,7 +45,9 @@
 				<td><%= gastoRealDTO.getMonto()%></td>	
 				<td><a href="gastosDeleteReales.jsp?id=<%= gastoRealDTO.getId()%>">Eliminar</a></td>		
 				<td><a href="gastosModificarReales.jsp?id=<%= gastoRealDTO.getId()%>">Modificar</a></td>
+				<%if (AdministradorDePermisos.getInstancia().isAdministrador()){ %>
 				<td><a href="gastosConsolidarReales.jsp?id=<%= gastoRealDTO.getId()%>">Consolidar</a></td>
+				<%} %>
 			</tr>	
 		<%} %>				
 		</table> 
