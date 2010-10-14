@@ -221,6 +221,21 @@ CREATE INDEX TIPO_PROPIEDAD_TIPO_GASTO_FK2 ON TIPO_PROPIEDAD_TIPO_GASTO (ID_TIPO
 	unique (NIVEL, ORDEN)
     ) type=InnoDB;
 
+-- -----------------------------------------------------
+-- Table RESPONSABLE
+-- -----------------------------------------------------
+    create table Responsable (
+        dni integer not null,
+        autoridad bit,
+        calle varchar(255),
+        email varchar(255),
+        localidad varchar(255),
+        telefono varchar(255),
+        ubicacion varchar(255),
+        version integer,
+        primary key (dni)
+    ) type=InnoDB;
+
     alter table PROPIEDAD 
         add index FK7B38234821FB2DA0 (poderPropietario_dni), 
         add constraint FK7B38234821FB2DA0 
@@ -250,21 +265,6 @@ CREATE INDEX TIPO_PROPIEDAD_TIPO_GASTO_FK2 ON TIPO_PROPIEDAD_TIPO_GASTO (ID_TIPO
         add constraint FK7B3823488F574992 
         foreign key (propietario_dni) 
         references Responsable (dni);
-
--- -----------------------------------------------------
--- Table RESPONSABLE
--- -----------------------------------------------------
-    create table Responsable (
-        dni integer not null,
-        autoridad bit,
-        calle varchar(255),
-        email varchar(255),
-        localidad varchar(255),
-        telefono varchar(255),
-        ubicacion varchar(255),
-        version integer,
-        primary key (dni)
-    ) type=InnoDB;
 
 -- -----------------------------------------------------
 -- Table EXPENSA
