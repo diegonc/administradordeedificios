@@ -203,36 +203,68 @@ CREATE INDEX TIPO_PROPIEDAD_TIPO_GASTO_FK2 ON TIPO_PROPIEDAD_TIPO_GASTO (ID_TIPO
 -- -----------------------------------------------------
 -- Table PROPIEDAD
 -- -----------------------------------------------------
-CREATE  TABLE  PROPIEDAD
-(
-  ID INTEGER NOT NULL AUTO_INCREMENT,
-  NIVEL INTEGER NOT NULL ,
-  ORDEN INTEGER NOT NULL ,
-  ID_TIPO_PROPIEDAD INTEGER NOT NULL ,
-  CTA_ORD_SALDO_INT DOUBLE NOT NULL ,
-  CTA_ORD_SALDO_EXP DOUBLE NOT NULL ,
-  CTA_EXT_SALDO_INT DOUBLE NOT NULL ,
-  CTA_EXT_SALDO_EXP DOUBLE NOT NULL ,
-  PRIMARY KEY (ID) ,
-  CONSTRAINT PROPIEDAD_TIPO_PROPIEDAD_FK1  FOREIGN KEY (ID_TIPO_PROPIEDAD)  REFERENCES TIPO_PROPIEDAD (ID)
-) ENGINE=InnoDB;
-CREATE UNIQUE INDEX PROPIEDAD_UQ1 ON PROPIEDAD (NIVEL ASC, ORDEN ASC, ID_TIPO_PROPIEDAD ASC);
-CREATE INDEX PROPIEDAD_TIPO_PROPIEDAD_FK1 ON PROPIEDAD (ID_TIPO_PROPIEDAD ASC);
+    create table PROPIEDAD (
+        ID integer not null auto_increment unique,
+        CTA_EXT_SALDO_EXP double precision not null,
+        CTA_EXT_SALDO_INT double precision not null,
+        CTA_ORD_SALDO_EXP double precision not null,
+        CTA_ORD_SALDO_INT double precision not null,
+        NIVEL integer not null,
+        ORDEN integer not null,
+        version integer not null,
+        inquilino_dni integer,
+        poderInquilino_dni integer,
+        poderPropietario_dni integer,
+        propietario_dni integer not null,
+        tipoPropiedad_ID integer not null,
+        primary key (ID),
+	unique (NIVEL, ORDEN)
+    ) type=InnoDB;
+
+    alter table PROPIEDAD 
+        add index FK7B38234821FB2DA0 (poderPropietario_dni), 
+        add constraint FK7B38234821FB2DA0 
+        foreign key (poderPropietario_dni) 
+        references Responsable (dni);
+
+    alter table PROPIEDAD 
+        add index FK7B38234852D21872 (poderInquilino_dni), 
+        add constraint FK7B38234852D21872 
+        foreign key (poderInquilino_dni) 
+        references Responsable (dni);
+
+    alter table PROPIEDAD 
+        add index PROPIEDAD_TIPO_PROPIEDAD_FK1 (tipoPropiedad_ID), 
+        add constraint FK7B38234894A43229 
+        foreign key (tipoPropiedad_ID) 
+        references TIPO_PROPIEDAD (ID);
+
+    alter table PROPIEDAD 
+        add index FK7B382348340888E4 (inquilino_dni), 
+        add constraint FK7B382348340888E4 
+        foreign key (inquilino_dni) 
+        references Responsable (dni);
+
+    alter table PROPIEDAD 
+        add index FK7B3823488F574992 (propietario_dni), 
+        add constraint FK7B3823488F574992 
+        foreign key (propietario_dni) 
+        references Responsable (dni);
 
 -- -----------------------------------------------------
 -- Table RESPONSABLE
 -- -----------------------------------------------------
-CREATE  TABLE  RESPONSABLE
-(
-  DNI INTEGER NOT NULL ,
-  CALLE VARCHAR(45) NOT NULL ,
-  UBICACION VARCHAR(45) NOT NULL ,
-  LOCALIDAD VARCHAR(45) NOT NULL ,
-  TELEFONO VARCHAR(45) NOT NULL ,
-  EMAIL VARCHAR(45) NOT NULL ,
-  AUTORIDAD BIT NOT NULL ,
-  PRIMARY KEY (DNI)
-) ENGINE=InnoDB;
+    create table Responsable (
+        dni integer not null,
+        autoridad bit,
+        calle varchar(255),
+        email varchar(255),
+        localidad varchar(255),
+        telefono varchar(255),
+        ubicacion varchar(255),
+        version integer,
+        primary key (dni)
+    ) type=InnoDB;
 
 -- -----------------------------------------------------
 -- Table EXPENSA
@@ -327,4 +359,4 @@ CREATE TABLE USUARIO_PERFIL_EDIFICIO (
   CONSTRAINT USUARIO_PERFIL_EDIFICIO_FK1 FOREIGN KEY (ID_USUARIO_PERFIL) REFERENCES USUARIO_PERFIL (ID),
   CONSTRAINT USUARIO_PERFIL_EDIFICIO_FK2 FOREIGN KEY (ID_EDIFICIO) REFERENCES EDIFICIO(ID)
 ) ENGINE = InnoDB;
-CREATE UNIQUE INDEX USUARIO_PERFIL_EDIFICIO_UQ1 ON USUARIO_PERFIL_EDIFICIO (ID_USUARIO_PERFIL ASC, ID_EDIFICIO ASC);
+CREATE UNIQUE INDEX USUARIO_PERFIL_EDIFICIO_UQ1 ON USUARIO_PERFIL_EDIFICIO (ID_USUARIO ASC, ID_PERFIL ASC, ID_EDIFICIO ASC);
