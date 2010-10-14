@@ -23,12 +23,16 @@ import com.opensymphony.xwork2.validator.annotations.ConversionErrorFieldValidat
 import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 import com.opensymphony.xwork2.validator.annotations.Validations;
+import com.opensymphony.xwork2.util.logging.Logger;
+import com.opensymphony.xwork2.util.logging.LoggerFactory;
 
 import edificio.EdificioAppl;
 import edificio.EdificioDTO;
 
 @SuppressWarnings("serial")
 public class PropiedadesAction extends ActionSupport implements Preparable {
+
+	private static final Logger LOG = LoggerFactory.getLogger(PropiedadesAction.class);
 
 	/* Parametros de la accion */
 	/*
@@ -360,6 +364,7 @@ public class PropiedadesAction extends ActionSupport implements Preparable {
 				dao.grabar(entidad);
 			} else return validationErrors();
 		} catch (Exception e) {
+			LOG.error("No se pudo guardar la propiedad.", e);
 			addActionError(e.getMessage());
 			return validationErrors();
 		}
