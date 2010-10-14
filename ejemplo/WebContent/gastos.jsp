@@ -1,6 +1,7 @@
 <jsp:include page="/WEB-INF/jspf/header.jspf"></jsp:include>
 <%@ page language="java" contentType="text/html" import="java.util.*"%>
 <%@ page language="java" contentType="text/html" import="edificio.*"%>
+<%@ page language="java" contentType="text/html" import="permisos.*"%>
 <%@ page language="java" contentType="text/html" import="usuarios.dto.*"%>
 <jsp:useBean id="lista" scope="session" class="beans.EdificiosBean"/>
 
@@ -33,7 +34,7 @@
 				<td><%= edificioDTO.getNombre()%></td>
 				<td><a href="consultaGastos?idEdificio=<%= edificioDTO.getId()%>">Consultar</a></td>
 				<td><a href="GastosAction!cargaTiposDeGastos?idEdificio=<%= edificioDTO.getId()%>">Agregar</a></td>	
-				<td><a href="GastosListarModifElimAction?id=<%= edificioDTO.getId()%>">Eliminar/Modificar/Consolidar</a></td>		
+				<td><a href="GastosListarModifElimAction?id=<%= edificioDTO.getId()%>">Eliminar/Modificar <%if (AdministradorDePermisos.getInstancia().isAdministrador()){ %>/Consolidar<%} %></a></td>		
 			</tr>	
 		<%} %>				
 		
@@ -44,4 +45,5 @@
 		<td width="5" class="borde"></td>
 	</tr>
 </table>
+
 <jsp:include page="/WEB-INF/jspf/footer.jspf"></jsp:include>
