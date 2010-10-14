@@ -19,7 +19,7 @@
 	<tr>
 		<td width="5" class="borde"></td>
 		<td width="800" class="borde" align="center">
-		<h3 id="header">Expensas - Listado de Propiedades del edifcio <%= edificio.getNombre()%></h3>
+		<h3 id="header">Expensas - Listado Propiedades edifcio " <%= edificio.getNombre()%> "</h3>
 		</td>
 		<td width="5" class="borde"></td>
 	</tr>
@@ -28,25 +28,37 @@
 	<td width="5" class="borde"></td>
 	<td width="15" class="fondo"></td>
 	<td width="770" class="fondo" align="left">
+	<fieldset><legend>Listado de Propiedades</legend>
 	<table width="500" border="1" class="listado">
 		<tr>
 			<td>Tipo Propieadad</td>
-			<td></td>
+			<td>Nivel</td>
+			<td>Orden</td>
 			<td></td>
 		</tr>
 		<%
 			while (iteradorTipos.hasNext()) {
 				TipoPropiedadDTO tipoProp = iteradorTipos.next();
+				List<PropiedadDTO> propiedades = tipoProp.getPropiedades();
+				for (PropiedadDTO propiedadDTO : propiedades ) { 
 		%>
 		<tr>
-			<td><%=tipoProp.getNombreTipo()%></td>
-			<td><a href="#">Eliminar</a></td>
-			<td><a href="#">Modificar</a></td>
+			<td><%=propiedadDTO.getTipoPropiedad().getNombreTipo()%></td>
+			<td><%=propiedadDTO.getNivel()%></td>
+			<td><%=propiedadDTO.getOrden()%></td>
+			<td><input type="radio" id="propElegida" name="propElegida" value="<%=propiedadDTO.getId() %>>"/></td>
 		</tr>
 		<%
+				}
 			}
 		%>
 	</table>
+	<input type="button" value="Re-Liquidar" onclick="" >
+	<input type="button" value="Registrar Cobro" onclick="" >
+	<input type="button" value="Consultar/Eliminar Cobros" onclick="" >
+	<input type="button" value="Consultar Liquidaciones" onclick="" >
+	<a href="EdificioListarAction?redi=expensa">Volver</a>
+	</fieldset>	
 </tr>
 
 <% hSession.close(); %>
