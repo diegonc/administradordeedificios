@@ -27,6 +27,7 @@
 					<th>Razon Social</th>
 					<th>Nº Factura</th>
 					<th>Fecha</th>
+					<th>Estado</th>
 					</s:else>
 				</tr>
 			</thead>
@@ -44,10 +45,8 @@
 				<td><s:property value="razonSocial" /></td>
 				<td><s:property value="numeroFacturaPago" /></td>
 				<td><s:property value="fechaPago" /></td>
+				<td><s:property value="estado" /></td>
 				</s:else>
-				<td class="accion">
-					Consolidar
-				</td>
 			</tr>
 			</s:iterator>
 			</s:if>
