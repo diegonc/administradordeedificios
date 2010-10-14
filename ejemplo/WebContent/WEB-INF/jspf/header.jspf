@@ -27,16 +27,22 @@
 		<ul class="sub">
 			<li><a href="<s:url action='tiposPropiedadesListado'/>">Tipos de Propiedades</a></li>
 			<li><a href="<s:url action='propiedadesListado'/>">Propiedades</a></li>
-            <li><a href="EdificioListarAction?redi=edificio">Edificios</a></li>
-			<li><a href="<s:url action='responsablesListado'/>">Responsables</a></li>            
+			<%if (administradorDePermisos.isAdministrador()) {%>
+			<li><a href="EdificioListarAction?redi=edificio">Edificios</a></li>
+			<%} %>
+            <li><a href="<s:url action='responsablesListado'/>">Responsables</a></li>            
 		</ul>
 	</li>
 	<%} %>
-	<%if (administradorDePermisos.isAdministrador()||administradorDePermisos.isResponsableGastos()){ %>
+	<%if (administradorDePermisos.isAdministrador()||administradorDePermisos.isResponsableGastos()|| administradorDePermisos.isResponsableEdificios() ){ %>
 	<li class="top"><a href="#" class="top_link"><span>Gastos</span></a>
 		<ul class="sub">
+		<%if (administradorDePermisos.isAdministrador()||administradorDePermisos.isResponsableEdificios()) {%>
 			<li><a href="GetListadoTipoDeGastoAction">Tipo de Gastos</a></li>
+		<%} %>
+		<%if (administradorDePermisos.isAdministrador()||administradorDePermisos.isResponsableGastos() ){%>	
 			<li><a href="EdificioListarAction?redi=gasto">Gastos </a></li>                    
+		<%} %>	
 		</ul>
 	</li>
 	<%} %>
