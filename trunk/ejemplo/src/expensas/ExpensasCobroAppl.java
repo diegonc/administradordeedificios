@@ -1,12 +1,25 @@
 package expensas;
 
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.exception.ConstraintViolationException;
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Restrictions;
 
 import utilidades.HibernateUtil;
 import gastos.exception.GastoExistenteException;
 
 public class ExpensasCobroAppl {
+
+	private Session session;
+
+	public ExpensasCobroAppl(Session session) {
+		this.session = session;
+	}
+
+	public ExpensasCobroAppl() {
+	}
 
 	public void addCobroExpensas(ExpensaCobroDTO cobro) throws GastoExistenteException 
 	{
@@ -21,5 +34,14 @@ public class ExpensasCobroAppl {
         HibernateUtil.getSessionFactory().close();
 	}
 	
-	
+	public List<ExpensaCobroDTO> listarCobrosDePropiedad(Integer idPropiedad) {
+		Criteria criteria = session.createCriteria(ExpensaCobroDTO.class)
+			.createAlias("propiedad", "propiedad")
+			.add(Restrictions.eq("propiedad.id", idPropiedad));
+		return criteria.list();
+	}
+
+	public void setSession(Session session) {
+		this.session = session;
+	}
 }
