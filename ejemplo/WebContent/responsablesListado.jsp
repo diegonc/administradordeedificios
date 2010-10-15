@@ -16,7 +16,7 @@
 				<th>Autoridad</th>
 			</thead>
 			<tbody>
-				<s:iterator value="lista" var="responsable">
+				<s:iterator value="lista">
 					<tr>
 						<td><s:property value="dni" /></td>
 						<td><s:property value="telefono" /></td>

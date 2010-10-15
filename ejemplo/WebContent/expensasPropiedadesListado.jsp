@@ -40,7 +40,7 @@ function redirecRegisCobros() {
 	<td width="5" class="borde"></td>
 	<td width="15" class="fondo"></td>
 	<td width="770" class="fondo" align="left">
-	<form class="elegante" id="expensasProp" name="expensasProp">
+	<form class="elegante" id="expensasProp" name="expensasProp" action="expensasPropiedadesListado">
 	<fieldset><legend>Listado de Propiedades</legend>
 	<table width="500" border="1" class="listado">
 		<tr>
@@ -66,10 +66,12 @@ function redirecRegisCobros() {
 			}
 		%>
 	</table>
+	<input type="hidden" value="<%=id%>" name="idEdificio">
 	<input type="button" value="Re-Liquidar" onclick=""> <input
 		type="button" value="Registrar Cobro" 
 		onClick="redirecRegisCobros()" >
-	<input type="button" value="Consultar/Eliminar Cobros" onclick="">
+
+	<input type="submit" value="Consultar/Eliminar Cobros" name="method:consultarCobros">
 	<input type="button" value="Consultar Liquidaciones" onclick="">
 	<a href="EdificioListarAction?redi=expensa">Volver</a></fieldset>
 	</form>

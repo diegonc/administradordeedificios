@@ -122,6 +122,15 @@
 			</result>
 			<result name="error">/edificioError.jsp</result>
 		</action>
+
+		<action name="expensasPropiedadesListado"
+			    class="actions.ExpensasPropiedadesListadoAction">
+			<result name="consultar-cobros" type="redirectAction">
+				<param name="actionName">consultaCobros</param>
+				<param name="idEdificio">${idEdificio}</param>
+				<param name="idPropiedad">${propElegida}</param>
+			</result>
+		</action>
 	</package>
 
 	<package name="experimental" extends="hibernate-default">
@@ -234,6 +243,19 @@
 			class="actions.ConsultaGastosAction">
 			<result name="success">/gastosConsulta.jsp</result>
 			<result name="input">/gastosConsulta.jsp</result>
+		</action>
+
+		<action name="consultaCobros" method="listar"
+			class="actions.ConsultaCobrosAction">
+			<result name="success">/expensasCobrosListado.jsp</result>
+			<result name="no-hay-edificio" type="redirectAction">
+				<param name="actionName">EdificioListarAction</param>
+				<param name="redi">expensa</param>
+			</result>
+			<result name="no-hay-propiedad" type="redirect">
+				<param name="location">/expensasPropiedadesListado.jsp</param>
+				<param name="id">${idEdificio}</param>
+			</result>
 		</action>
 	</package>
 
