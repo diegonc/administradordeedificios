@@ -200,72 +200,56 @@ CREATE UNIQUE INDEX TIPO_PROPIEDAD_TIPO_GASTO_UQ1 ON TIPO_PROPIEDAD_TIPO_GASTO (
 CREATE INDEX TIPO_PROPIEDAD_TIPO_GASTO_FK1 ON TIPO_PROPIEDAD_TIPO_GASTO (ID_TIPO_PROPIEDAD ASC);
 CREATE INDEX TIPO_PROPIEDAD_TIPO_GASTO_FK2 ON TIPO_PROPIEDAD_TIPO_GASTO (ID_TIPO_GASTO ASC);
 
--- -----------------------------------------------------
--- Table PROPIEDAD
--- -----------------------------------------------------
-    create table PROPIEDAD (
-        ID integer not null auto_increment unique,
-        CTA_EXT_SALDO_EXP double precision not null,
-        CTA_EXT_SALDO_INT double precision not null,
-        CTA_ORD_SALDO_EXP double precision not null,
-        CTA_ORD_SALDO_INT double precision not null,
-        NIVEL integer not null,
-        ORDEN integer not null,
-        version integer not null,
-        inquilino_dni integer,
-        poderInquilino_dni integer,
-        poderPropietario_dni integer,
-        propietario_dni integer not null,
-        tipoPropiedad_ID integer not null,
-        primary key (ID),
-	unique (NIVEL, ORDEN)
-    ) type=InnoDB;
 
+    
 -- -----------------------------------------------------
 -- Table RESPONSABLE
 -- -----------------------------------------------------
-    create table Responsable (
-        dni integer not null,
-        autoridad bit,
-        calle varchar(255),
-        email varchar(255),
-        localidad varchar(255),
-        telefono varchar(255),
-        ubicacion varchar(255),
-        version integer,
-        primary key (dni)
-    ) type=InnoDB;
+    CREATE TABLE RESPONSABLE (
+        DNI INTEGER NOT NULL,
+        AUTORIDAD BIT,
+        CALLE VARCHAR(255),
+        EMAIL VARCHAR(255),
+        LOCALIDAD VARCHAR(255),
+        TELEFONO VARCHAR(255),
+        UBICACION VARCHAR(255),
+        VERSION INTEGER,
+        PRIMARY KEY (DNI),
+		
+    ) ENGINE=InnoDB;
 
-    alter table PROPIEDAD 
-        add index FK7B38234821FB2DA0 (poderPropietario_dni), 
-        add constraint FK7B38234821FB2DA0 
-        foreign key (poderPropietario_dni) 
-        references Responsable (dni);
+-- -----------------------------------------------------
+-- Table PROPIEDAD
+-- -----------------------------------------------------
+    CREATE TABLE PROPIEDAD (
+        ID INTEGER NOT NULL auto_increment UNIQUE,
+        CTA_EXT_SALDO_EXP DOUBLE PRECISION NOT NULL ,
+        CTA_EXT_SALDO_INT DOUBLE PRECISION NOT NULL ,
+        CTA_ORD_SALDO_EXP DOUBLE PRECISION NOT NULL ,
+        CTA_ORD_SALDO_INT DOUBLE PRECISION NOT NULL ,
+        NIVEL INTEGER NOT NULL,
+        ORDEN INTEGER NOT NULL,
+        VERSION INTEGER NOT NULL,
+        INQUILINO_DNI INTEGER,
+        PODERINQUILINO_DNI INTEGER,
+        PODERPROPIETARIO_DNI INTEGER,
+        PROPIETARIO_DNI INTEGER NOT NULL,
+        TIPOPROPIEDAD_ID INTEGER NOT NULL,
+        PRIMARY KEY (ID),
+		UNIQUE (NIVEL, ORDEN),
+		CONSTRAINT FK7B38234821FB2DA0 FOREIGN KEY (PODERPROPIETARIO_DNI) REFERENCES RESPONSABLE (DNI),
+		CONSTRAINT FK7B38234852D21872 FOREIGN KEY (PODERINQUILINO_DNI) REFERENCES RESPONSABLE (DNI),
+		CONSTRAINT FK7B38234894A43229 FOREIGN KEY (TIPOPROPIEDAD_ID) REFERENCES TIPO_PROPIEDAD (ID),
+		CONSTRAINT FK7B382348340888E4 FOREIGN KEY (INQUILINO_DNI)     REFERENCES RESPONSABLE (DNI),
+		CONSTRAINT FK7B3823488F574992 FOREIGN KEY (PROPIETARIO_DNI) REFERENCES RESPONSABLE (DNI)
+    ) ENGINE=InnoDB;
 
-    alter table PROPIEDAD 
-        add index FK7B38234852D21872 (poderInquilino_dni), 
-        add constraint FK7B38234852D21872 
-        foreign key (poderInquilino_dni) 
-        references Responsable (dni);
-
-    alter table PROPIEDAD 
-        add index PROPIEDAD_TIPO_PROPIEDAD_FK1 (tipoPropiedad_ID), 
-        add constraint FK7B38234894A43229 
-        foreign key (tipoPropiedad_ID) 
-        references TIPO_PROPIEDAD (ID);
-
-    alter table PROPIEDAD 
-        add index FK7B382348340888E4 (inquilino_dni), 
-        add constraint FK7B382348340888E4 
-        foreign key (inquilino_dni) 
-        references Responsable (dni);
-
-    alter table PROPIEDAD 
-        add index FK7B3823488F574992 (propietario_dni), 
-        add constraint FK7B3823488F574992 
-        foreign key (propietario_dni) 
-        references Responsable (dni);
-
+	CREATE INDEX FK7B38234821FB2DA0 ON PROPIEDAD(PODERPROPIETARIO_DNI); 
+	CREATE INDEX FK7B38234852D21872 ON PROPIEDAD(PODERINQUILINO_DNI); 
+	CREATE INDEX PROPIEDAD_TIPO_PROPIEDAD_FK1 ON PROPIEDAD(TIPOPROPIEDAD_ID); 
+	CREATE INDEX FK7B382348340888E4 ON PROPIEDAD(INQUILINO_DNI);
+	CREATE INDEX FK7B3823488F574992 ON PROPIEDAD(PROPIETARIO_DNI);
+	
 -- -----------------------------------------------------
 -- Table EXPENSA
 -- -----------------------------------------------------
