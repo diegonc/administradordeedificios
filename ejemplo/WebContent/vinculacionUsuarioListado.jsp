@@ -7,7 +7,7 @@
 <table  cellpadding="0" cellspacing="0" >
 <tr>
 	<td width="5"  class="borde"></td>
-	<td width="800" class="borde" align="center"> <span id="header"><h>Vinculacion </span></h></td>
+	<td width="800" class="borde" align="center"> <span id="header"><h>Asignaci&oacute;n de Perfiles </span></h></td>
 	<td width="5" class="borde"></td>
 </tr>
 </table>
@@ -33,7 +33,7 @@
 						<td><%= usuarioDTO.getNombre()%></td>
 						<td><%= usuarioDTO.getApellido()%></td>
 						<td><%= usuarioDTO.getDni()%></td>								
-						<td><%if (usuarioDTO.getDni()!=1){%> <a href="VinculacionUsuarioPerfilEdificio!vincular?&id=<%=usuarioDTO.getId()%>" >Vincular</a><%} %></td>		
+						<td><%if (usuarioDTO.getDni()!=1){%> <a href="VinculacionUsuarioPerfilEdificio!vincular?&id=<%=usuarioDTO.getId()%>" >Asignar</a><%} %></td>		
 					</tr>	
 				<%} %>			
 					
