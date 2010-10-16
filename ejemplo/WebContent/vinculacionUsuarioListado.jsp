@@ -33,7 +33,7 @@
 						<td><%= usuarioDTO.getNombre()%></td>
 						<td><%= usuarioDTO.getApellido()%></td>
 						<td><%= usuarioDTO.getDni()%></td>								
-						<td><a href="VinculacionUsuarioPerfilEdificio!vincular?&id=<%=usuarioDTO.getId()%>" >Vincular</a></td>		
+						<td><%if (usuarioDTO.getDni()!=1){%> <a href="VinculacionUsuarioPerfilEdificio!vincular?&id=<%=usuarioDTO.getId()%>" >Vincular</a><%} %></td>		
 					</tr>	
 				<%} %>			
 					
