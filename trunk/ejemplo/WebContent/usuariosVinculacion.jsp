@@ -70,7 +70,7 @@ function deshabilitarAdministrador(){
 	<td width="770" class="fondo" align="left">
 		<form class="elegante" id="vincularUsuario" name="vincularUsuario" action="VinculacionUsuarioPerfilEdificio">
 			<fieldset>
-		  		<legend>Vinculacion-Usuario</legend>
+		  		<legend>Asignaci&oacute;n de Perfiles</legend>
 			 		<table border="0" cellpadding="0" cellspacing="0">
 			 			<tr>
 							<td height="14" colspan="4"></td>
