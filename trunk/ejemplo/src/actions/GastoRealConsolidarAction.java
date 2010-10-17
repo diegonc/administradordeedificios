@@ -9,8 +9,6 @@ import edificio.EdificioAppl;
 import edificio.EdificioDTO;
 import gastos.appl.GastosAppl;
 import gastos.dto.GastoRealDTO;
-import gastos.dto.TipoGastoDTO;
-
 import com.opensymphony.xwork2.ActionSupport;
 
 @SuppressWarnings("serial")
