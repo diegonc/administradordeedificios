@@ -1,10 +1,13 @@
 package propiedades;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.persistence.Version;
 
 @Entity
+@Table(name="RESPONSABLE")
 public class Responsable {
 
 	private Integer dni;
@@ -34,13 +37,15 @@ public class Responsable {
 		this.email = email;
 	}
 
-	@Id
+	@Id @Column(name="DNI", nullable=false)
 	public Integer getDni() { return dni; }
 	public void setDni(Integer dni) { this.dni = dni; }
 
+	@Column(name="TELEFONO")
 	public String getTelefono() { return telefono; }
 	public void setTelefono(String telefono) { this.telefono = telefono; }
 
+	@Column(name="EMAIL")
 	public String getEmail() { return email; }
 	public void setEmail(String email) { this.email = email; }
 	
@@ -50,6 +55,7 @@ public class Responsable {
 	@SuppressWarnings("unused")
 	private void setVersion(Integer version) { this.version = version; }
 
+	@Column(name="LOCALIDAD")
 	public String getLocalidad() {
 		return localidad;
 	}
@@ -58,6 +64,7 @@ public class Responsable {
 		this.localidad = localidad;
 	}
 
+	@Column(name="CALLE")
 	public String getCalle() {
 		return calle;
 	}
@@ -66,6 +73,7 @@ public class Responsable {
 		this.calle = calle;
 	}
 
+	@Column(name="UBICACION")
 	public String getUbicacion() {
 		return ubicacion;
 	}
@@ -74,6 +82,7 @@ public class Responsable {
 		this.ubicacion = ubicacion;
 	}
 
+	@Column(name="AUTORIDAD")
 	public Boolean getAutoridad() {
 		return autoridad;
 	}
