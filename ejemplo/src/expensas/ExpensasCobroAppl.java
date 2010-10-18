@@ -37,6 +37,7 @@ public class ExpensasCobroAppl {
 	public List<ExpensaCobroDTO> listarCobrosDePropiedad(Integer idPropiedad) {
 		Criteria criteria = session.createCriteria(ExpensaCobroDTO.class)
 			.createAlias("propiedad", "propiedad")
+			.add(Restrictions.eq("consolidado", false))
 			.add(Restrictions.eq("propiedad.id", idPropiedad));
 		return criteria.list();
 	}
