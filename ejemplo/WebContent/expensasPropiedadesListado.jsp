@@ -18,12 +18,24 @@
 <script type="text/javascript">
 function redirecRegisCobros() {
 	elem=document.getElementsByName('propElegida');
-	for(i=0;i<elem.length;i++)
-	if (elem[i].checked) {
-		idProp = elem[i].value;
-		location.href = "cobroRegistrar.jsp?idEdificio="+<%=edificio.getId()%>+"&idProp="+idProp;
+	for(i=0;i<elem.length;i++) {
+		if (elem[i].checked) {
+			idProp = elem[i].value;
+			location.href = "cobroRegistrar.jsp?idEdificio="+<%=edificio.getId()%>+"&idProp="+idProp;
+		}
 	}
 }
+
+function redirecConsultaLiq() {
+	elem=document.getElementsByName('propElegida');
+	for(i=0;i<elem.length;i++) {
+		if (elem[i].checked) {
+			idProp = elem[i].value;
+			location.href = "liquidaConsultaMonto.jsp?idEdificio="+<%=edificio.getId()%>+"&idProp="+idProp;
+		}
+	}
+}
+
 </script>
 
 <table cellpadding="0" cellspacing="0">
@@ -72,7 +84,7 @@ function redirecRegisCobros() {
 		onClick="redirecRegisCobros()" >
 
 	<input type="submit" value="Consultar/Eliminar Cobros" name="method:consultarCobros">
-	<input type="button" value="Consultar Liquidaciones" onclick="">
+	<input type="button" value="Consultar Liquidaciones" onclick="redirecConsultaLiq()">
 	<a href="EdificioListarAction?redi=expensa">Volver</a></fieldset>
 	</form>
 </tr>
