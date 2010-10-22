@@ -1,6 +1,33 @@
 ﻿CREATE DATABASE IF NOT EXISTS administracionedificios;
 USE administracionedificios;
 
+-- -----------------------------------------------------
+-- Table PERFIL
+-- -----------------------------------------------------
+CREATE TABLE PERFIL (
+   DESCRIPCION VARCHAR(45) NOT NULL,
+   ID INTEGER NOT NULL AUTO_INCREMENT,
+   PRIMARY KEY (ID)
+) ENGINE=InnoDB;
+
+-- -----------------------------------------------------
+-- Table USUARIO
+-- -----------------------------------------------------
+CREATE TABLE USUARIO (
+   NOMBRE VARCHAR(45) NOT NULL,
+   APELLIDO VARCHAR(45) NOT NULL,
+   PASSWORD VARCHAR(45) NOT NULL,
+   DNI INTEGER NOT NULL,
+   USUARIO VARCHAR(45) NOT NULL,
+   ID INTEGER NOT NULL AUTO_INCREMENT,
+   PRIMARY KEY (ID)
+) ENGINE=InnoDB;
+CREATE UNIQUE INDEX USUARIO_UQ1 ON USUARIO (DNI ASC);
+CREATE UNIQUE INDEX USUARIO_UQ2 ON USUARIO (USUARIO ASC);
+
+-- -----------------------------------------------------
+-- Table EDIFICIO
+-- -----------------------------------------------------
 CREATE TABLE EDIFICIO
 (
   ID INTEGER NOT NULL AUTO_INCREMENT,
@@ -298,30 +325,6 @@ CREATE  TABLE  EXPENSA_COBRO
 ) ENGINE=InnoDB;
 CREATE INDEX EXPENSA_COBRO_FK1 ON EXPENSA_COBRO (EXPENSA_ID ASC);
 CREATE INDEX FK3CE6D24869813A0E ON EXPENSA_COBRO (RESPONSABLECOBRO_ID);
-
--- -----------------------------------------------------
--- Table PERFIL
--- -----------------------------------------------------
-CREATE TABLE PERFIL (
-   DESCRIPCION VARCHAR(45) NOT NULL,
-   ID INTEGER NOT NULL AUTO_INCREMENT,
-   PRIMARY KEY (ID)
-) ENGINE=InnoDB;
-
--- -----------------------------------------------------
--- Table USUARIO
--- -----------------------------------------------------
-CREATE TABLE USUARIO (
-   NOMBRE VARCHAR(45) NOT NULL,
-   APELLIDO VARCHAR(45) NOT NULL,
-   PASSWORD VARCHAR(45) NOT NULL,
-   DNI INTEGER NOT NULL,
-   USUARIO VARCHAR(45) NOT NULL,
-   ID INTEGER NOT NULL AUTO_INCREMENT,
-   PRIMARY KEY (ID)
-) ENGINE=InnoDB;
-CREATE UNIQUE INDEX USUARIO_UQ1 ON USUARIO (DNI ASC);
-CREATE UNIQUE INDEX USUARIO_UQ2 ON USUARIO (USUARIO ASC);
 
 -- -----------------------------------------------------
 -- Table USUARIO_PERFIL
