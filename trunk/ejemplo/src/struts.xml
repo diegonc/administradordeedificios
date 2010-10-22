@@ -125,12 +125,18 @@
 
 		<action name="expensasPropiedadesListado"
 			    class="actions.ExpensasPropiedadesListadoAction">
-			<result name="consultar-cobros" type="redirectAction">
+				<result name="consultar-cobros" type="redirectAction">
 				<param name="actionName">consultaCobros</param>
 				<param name="idEdificio">${idEdificio}</param>
 				<param name="idPropiedad">${propElegida}</param>
 			</result>
 		</action>
+		
+		<action name="cobroRegistrarAction" class="actions.CobroRegistrarAction">
+			    <result name="success">/expensas.jsp </result>
+			    <result name="error">/expensas.jsp </result>
+	    </action> 
+		
 	</package>
 
 	<package name="experimental" extends="hibernate-default">
