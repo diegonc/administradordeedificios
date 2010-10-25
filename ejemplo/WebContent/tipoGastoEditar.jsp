@@ -3,7 +3,8 @@
 <%@page import="gastos.dto.TipoGastoExtraordinarioDTO"%>
 <%@page import="gastos.appl.TiposGastosAppl"%>
 <%@page import="gastos.dto.TipoGastoMontoFijoDTO"%>
-<%@page import="gastos.dto.TipoGastoMontoVariableDTO"%><jsp:include page="/WEB-INF/jspf/header.jspf"></jsp:include>
+<%@page import="gastos.dto.TipoGastoMontoVariableDTO"%>
+<%@page import="gastos.dto.TipoGastoPeriodicoDTO"%><jsp:include page="/WEB-INF/jspf/header.jspf"></jsp:include>
 <%@ page language="java" contentType="text/html" import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html" import="edificio.*"%>
 <jsp:useBean id="edificios" scope="session" class="beans.EdificiosBean"/>
@@ -124,7 +125,20 @@ function habilitarInputsPlazo(){
 				  						  		
 				 			<tr>	
 					  			<td>&nbsp;&nbsp;<label for="tgMontoFijo.periodo">Per&iacute;odo:</label> </td>
-					  			<td><input type="text" id="tgMontoFijo.periodo"  name="tgMontoFijo.periodo" value="<%=((TipoGastoMontoFijoDTO)tipoGasto).getPeriodo()%>" /></td>
+					  			<td><select id="tgMontoFijo.periodo"  name="tgMontoFijo.periodo">
+							  			<% 
+							  				String seleccionado=((TipoGastoMontoFijoDTO)tipoGasto).getPeriodo();
+							  		
+							  				for (int i=1;i<=12;i++){				  					
+							  				 if(seleccionado.equals(String.valueOf(i))){			  				
+							  			%>				  			
+							  				<option value="<%=i%>" selected="selected"><%=i%></option>
+							  			<%}else {%>
+							  				<option value="<%=i%>" ><%=i%></option>
+							  			<% }%>
+							  			<%} %>
+						  			</select>
+						  		</td>
 					  			<td><label for="tgMontoFijo.edificio.id">Edificio:</label></td>
 								<td colspan="2"><select name ="tgMontoFijo.edificio.id" id="tgMontoFijo.edificio.id"  >
 					  				<%	int idEdificio =((TipoGastoMontoFijoDTO)tipoGasto).getEdificio().getId();
@@ -160,7 +174,20 @@ function habilitarInputsPlazo(){
 				  						  		
 				 			 <tr>	
 					  			<td>&nbsp;&nbsp;<label for="tgMontoVariable.periodo">Per&iacute;odo:</label> </td>
-					  			<td><input type="text" id="tgMontoVariable.periodo"  name="tgMontoVariable.periodo" value="<%=((TipoGastoMontoVariableDTO)tipoGasto).getPeriodo()%>" /></td>
+					  			<td><select id="tgMontoVariable.periodo"  name="tgMontoVariable.periodo">
+							  			<% 
+							  				String seleccionado=((TipoGastoMontoVariableDTO)tipoGasto).getPeriodo();
+							  			
+							  				for (int i=1;i<=12;i++){				  					
+							  				 if(seleccionado.equals(String.valueOf(i))){			  				
+							  			%>				  			
+							  				<option value="<%=i%>" selected="selected"><%=i%></option>
+							  			<%}else {%>
+							  				<option value="<%=i%>" ><%=i%></option>
+							  			<% }%>
+							  			<%} %>
+						  			</select>
+						  		</td>
 					  			<td><label for="tgMontoVariable.edificio.id">Edificio:</label></td>
 								<td colspan="2"><select name ="tgMontoVariable.edificio.id" id="tgMontoVariable.edificio.id"  >
 					  				<%	int idEdificio =((TipoGastoMontoVariableDTO)tipoGasto).getEdificio().getId();

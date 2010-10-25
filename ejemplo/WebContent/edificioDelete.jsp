@@ -36,12 +36,10 @@
 				 			<td>&nbsp;&nbsp;<input type="text" id="nombre" name="nombre" value="<%=edificio.getNombre() %>" readonly size="15"/></td>
 				 			<td>&nbsp;&nbsp;<input type="text" style="display: none;" id="id" name="id" value="<%=edificio.getId() %>" readonly size="15"/></td>	
 				 		</tr>
-				  		<tr>
-				  		<td colspan="8"><input class="btn" type="button" value="Delete" onclick="submit()" /></td>
-			  			<td> <a href="EdificioListarAction?redi=edificio">Volver</a> </td>
-			  			</tr>
-			  		</table>			  	
+				  	</table>			  	
 			</fieldset>
+			<input class="btn" type="button" value="Aceptar" onclick="submit()" />
+			<a href="EdificioListarAction?redi=edificio">Volver</a>
 		</form>
 	</td>
 	<td width="15"  class="fondo"></td>

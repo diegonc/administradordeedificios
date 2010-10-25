@@ -107,7 +107,7 @@ function habilitarInputsPlazo(){
 			 		<table border="0" cellpadding="0" cellspacing="0">
 			 			<tr><td colspan="5" height="10"></td></tr>
 			 			<tr>
-				 			<td width="120" align="right"><label for="codigo">Codigo:</label> </td>
+				 			<td width="120" align="right"><label for="codigo">C&oacute;digo:</label> </td>
 				 			<td colspan="4" >&nbsp;&nbsp;<input type="text" id="codigo" name="codigo" /><font color="red">*&nbsp;&nbsp;</font></td>
 				 		</tr>
 				 		<tr>
@@ -131,8 +131,13 @@ function habilitarInputsPlazo(){
 				  		</tr>
 				  	 	<tr>	
 				  			<td><label for="periodico"></label> <input type="radio" id="periodico" name="gastoPlazo" value="periodico" disabled="disabled" onclick="habilitarInputsPlazo()"/> Peri&oacute;dico</td>
-				  			<td>&nbsp;&nbsp;<label for="tgMontoFijo.periodo">Per&iacute;odo:</label> </td>
-				  			<td><input type="text" id="tgMontoFijo.periodo"  name="tgMontoFijo.periodo" disabled="disabled" /></td>
+				  			<td>&nbsp;&nbsp;<label for="tgMontoFijo.periodo" >Per&iacute;odo:</label> </td>
+				  			<td><select id="tgMontoFijo.periodo"  name="tgMontoFijo.periodo" disabled="disabled" >
+				  			<%for (int i=1;i<=12;i++){ %>
+				  			<option value="<%=i%>"><%=i%></option>
+				  			<%} %>
+				  			</select>
+				  			</td>
 				  			<td align="right"><label for="tgMontoFijo.edificio.id">Edificio:</label></td>
 							<td>&nbsp;&nbsp;<select name ="tgMontoFijo.edificio.id" id="tgMontoFijo.edificio.id" disabled="disabled">
 					  			<%for (EdificioDTO edif: edificiosList){ %> 
@@ -148,7 +153,7 @@ function habilitarInputsPlazo(){
 				  		</tr>
 				  		<tr>
 				  			<td><label for="montoFijo"></label> <input type="radio" id="montoFijo" name="tipoMonto" value="fijo" disabled="disabled" onclick="habilitarInputsMontos()" checked="checked"/> Fijo</td>
-				  			<td><label for="tgMontoFijo.montoActual">Monto Actual:</label> </td>
+				  			<td><label for="tgMontoFijo.montoActual">Importe:</label> </td>
 				  			<td><input type="text" id="tgMontoFijo.montoActual" name="tgMontoFijo.montoActual" disabled="disabled"/></td>
 				  			<td><label for="tgMontoFijo.diaLimite">&nbsp;D&iacute;a L&iacute;mite:&nbsp;</label></td> 
 				  			<td><input type="text" id="tgMontoFijo.diaLimite" name="tgMontoFijo.diaLimite" disabled="disabled"/></td>
@@ -156,10 +161,10 @@ function habilitarInputsPlazo(){
 				  		<tr><td colspan="5" height="10"></td></tr>
 				  		<tr>
 				  			<td><label for="montoVariable"></label> <input type="radio" id="montoVariable" name="tipoMonto" value="variable" disabled="disabled" onclick="habilitarInputsMontos()"/> Variable</td>
-				  			<td><label for="tgMontoVariable.montoPrevision">Monto Previsi&oacute;n:&nbsp;</label></td> 
+				  			<td><label for="tgMontoVariable.montoPrevision">Importe:&nbsp;</label></td> 
 				  			<td><input type="text" id="tgMontoVariable.montoPrevision" name="tgMontoVariable.montoPrevision" disabled="disabled"/></td>
 				  			<td><label for="tgMontoVariable.proximoVencimiento">&nbsp;Prox. Vto:&nbsp;</label></td>
-				  			<td> <input type="text" id="tgMontoVariable.proximoVencimiento" name="tgMontoVariable.proximoVencimiento" disabled="disabled"/></td>
+				  			<td><input type="text" id="tgMontoVariable.proximoVencimiento" name="tgMontoVariable.proximoVencimiento" disabled="disabled"/></td>
 				  		</tr>			  		
 			  	  		
 			  		</table>

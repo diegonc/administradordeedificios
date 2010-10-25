@@ -159,12 +159,12 @@ function validar(thisform) {
 				  		<tr>	
 				  			<td align="right" ><label for="tasa_anual" ></label>  Tasa Anual:&nbsp;</td>
 				  			<td>&nbsp;&nbsp;<input type="text" id="tasa_anual" name="tasa_anual" value="<%=edificio.getTasa_anual() %>" size="2"/></input><font color="red">*&nbsp;&nbsp;</font></td>
-				  			<td align="right" ><label for="amortizacion" ></label>  Amortizacion:&nbsp;</td>
-				  			<td colspan="7">&nbsp;&nbsp;<select  id="amortizacion" name="amortizacion"> <option>ALEMAN</option><option>FRANCÉS</option></select></td>
+				  			<td align="right" ><label for="amortizacion" ></label>  Amortizaci&oacute;n:&nbsp;</td>
+				  			<td colspan="7">&nbsp;&nbsp;<select  id="amortizacion" name="amortizacion"> <option value="ALEMAN">ALEM&Aacute;N</option><option value="FRANCES">FRANC&Eacute;S</option></select></td>
 				  			<td colspan="2"></td>
 				  			
 				  		</tr>
-				  		<tr><td colspan="8">Calculo de Interes</td></tr>
+				  		<tr><td colspan="8">C&aacute;lculo de Inter&eacute;s</td></tr>
 				  		<tr>	
 				 			<td>&nbsp;&nbsp;<label for="punitorio"></label><input type="radio" id="punitorio" name="mora" value="punitorio"  checked="checked" onclick="habilita()"/>Punitorio</td>
 				 			<td>&nbsp;&nbsp;<label for="afecha"></label><input type="radio" id="afecha" name="mora" value="afecha" onclick="habilita()" />A fecha de pago &nbsp;</td>
@@ -175,16 +175,13 @@ function validar(thisform) {
 				  		<tr>	
 				 			<td align="right"><label for="dia_primer_vto">Primer Vto:</label> </td>
 				 			<td>&nbsp;&nbsp;<input type="text" id="dia_primer_vto" name="dia_primer_vto" value="<%=edificio.getDia_primer_vto() %>" size="9"/><font color="red">*&nbsp;&nbsp;</font></td>
-				 			<td align="right" ><label for="dia_segundo_vto"> Seg Vta:</label> </td>
+				 			<td align="right" ><label for="dia_segundo_vto"> Segundo Vto:</label> </td>
 				 			<td>&nbsp;&nbsp;<input type="text" id="dia_segundo_vto" name="dia_segundo_vto" value="<%=edificio.getDia_segundo_vto() %>" size="9"/></td>
-				 			
-			 			</tr>
-				  		<tr>
-			  			<td colspan="8"><input class="btn" type="button" value="Modificar" onclick="validar()" /></td>
-			  			<td> <a href="EdificioListarAction?redi=edificio">Volver</a> </td>
-			  			</tr>
-			  		</table>			  	
+				 		</tr>
+				  		</table>			  	
 			</fieldset>
+			<input class="btn" type="button" value="Modificar" onclick="validar()" />
+			<a href="EdificioListarAction?redi=edificio">Volver</a>
 		</form>
 	</td>
 	<td width="15"  class="fondo"></td>

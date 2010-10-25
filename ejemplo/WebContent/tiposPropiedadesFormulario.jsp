@@ -9,7 +9,7 @@
 			<s:hidden name="nombreEdificio" value="%{nombreEdificio}" />
 			<s:textfield required="true" name="entidad.nombreTipo" value="%{entidad.nombreTipo}" label="Nombre" />
 			<s:textfield name="entidad.montoExp" value="%{entidad.montoExp}" label="Monto Expensa" />
-			<s:textfield name="entidad.divisor" value="%{entidad.divisor}" label="Proporción" />
+			<s:textfield name="entidad.divisor" value="%{entidad.divisor}" label="Divisor" />
 
 			<s:div>
 				<h4>Tipo de gastos asociados</h4>

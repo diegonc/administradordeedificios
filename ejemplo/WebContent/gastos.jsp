@@ -20,7 +20,7 @@
 	<tr>
 		<td width="5" class="borde"></td>
 		<td width="15" class="fondo"></td>
-		<td width="770" class="fondo" align="left">
+		<td width="770" class="fondo" align="center">
 		<fieldset><legend>Listado de Edificios - Gastos</legend>
 		<table width="500" border="1" class="listado" >
 			<tr>

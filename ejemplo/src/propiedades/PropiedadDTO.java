@@ -22,6 +22,7 @@ public class PropiedadDTO implements Serializable{
 	private double ctaOrdSaldoExp;
 	private double ctaExtSaldoInt;
 	private double ctaExtSaldoExp;
+	private double dividendo;
 	private int version;
 	private int id;
 	private TipoPropiedadDTO tipoPropiedad;
@@ -139,5 +140,13 @@ public class PropiedadDTO implements Serializable{
 	}
 	public void setTipoPropiedad(TipoPropiedadDTO tipoPropiedad) {
 		this.tipoPropiedad = tipoPropiedad;
+	}
+	
+	@Column(name="DIVIDENDO",nullable=true)
+	public double getDividendo() {
+		return dividendo;
+	}
+	public void setDividendo(double dividendo) {
+		this.dividendo = dividendo;
 	}
 }
