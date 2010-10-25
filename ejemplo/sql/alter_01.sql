@@ -1,0 +1,1 @@
+ALTER TABLE administracionedificios.propiedad  ADD DIVIDENDO DOUBLE AFTER TIPOPROPIEDAD_ID;
