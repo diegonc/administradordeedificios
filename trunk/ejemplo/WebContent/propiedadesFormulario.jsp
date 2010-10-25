@@ -23,6 +23,7 @@
    	    <s:textfield name="entidad.ctaExtSaldoInt" value="%{entidad.ctaExtSaldoInt}" label="ctaExtSaldoInt" />
    	    <s:textfield name="entidad.ctaOrdSaldoExp" value="%{entidad.ctaOrdSaldoExp}" label="ctaOrdSaldoExp" />
    	    <s:textfield name="entidad.ctaOrdSaldoInt" value="%{entidad.ctaOrdSaldoInt}" label="ctaOrdSaldoInt" />
+   	    <s:textfield name="entidad.dividendo" value="%{entidad.dividendo}" label="Dividendo" />
 	    
 	    <s:submit value="Aceptar" />
 	    <s:submit value="Cancelar" name="redirectAction:propiedadesListado" />

@@ -356,6 +356,7 @@ public class PropiedadesAction extends ActionSupport implements Preparable {
 			@ConversionErrorFieldValidator(fieldName = "entidad.ctaExtSaldoInt", message = "El campo debe ser numerico."),
 			@ConversionErrorFieldValidator(fieldName = "entidad.ctaOrdSaldoExp", message = "El campo debe ser numerico."),
 			@ConversionErrorFieldValidator(fieldName = "entidad.ctaOrdSaldoInt", message = "El campo debe ser numerico."),
+			@ConversionErrorFieldValidator(fieldName = "entidad.dividendo", message = "El campo debe ser numerico."),
 		})
 	public String grabar() {
 		try {
