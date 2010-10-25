@@ -147,28 +147,57 @@ function validar(thisform) {
 			 			<tr><td colspan="8" height="10"></td></tr>	  		
 			 			<tr>
 				 			<td><label for="apto_profesional">Apto Profesional</label></td>
-				 			 <td colspan="7">&nbsp;&nbsp;<input type="checkbox" value="true" id="apto_profesional" name="apto_profesional" /></td>
+				 			<%String checkProfesional =edificio.getApto_profesional()?"checked":""; %>
+				 			 <td colspan="7">&nbsp;&nbsp;<input type="checkbox" value="true" id="apto_profesional" name="apto_profesional" <%=checkProfesional%> /></td>
 				 		</tr>				 		
 				  		<tr><td colspan="8" height="10"></td></tr>  		
 				  		<tr><td class="borderline" colspan="8" height="10"></td></tr>
 				  		<tr>	
 				  			<td align="right" ><label for="formaliq_exp">Forma Liq.:&nbsp;</label>  </td>
-				  			<td colspan="7">&nbsp;&nbsp;<select  id="formaliq_exp" name="formaliq_exp"> <option>FIJO</option><option>PRORRATEO</option></select></td>
+				  			<td colspan="7">&nbsp;&nbsp;
+				  				<select  id="formaliq_exp" name="formaliq_exp">
+				  				<%if (edificio.getForma_liq_exp().equalsIgnoreCase("FIJO")){ %> 
+				  					<option selected="selected">FIJO</option>
+				  					<option>PRORRATEO</option>
+				  				<%}else{ %>
+				  					<option >FIJO</option>
+				  					<option selected="selected">PRORRATEO</option>
+				  				<%} %>	
+				  				</select>
+				  			</td>
 				  		</tr>
 				  		<tr><td colspan="8" height="10"></td></tr>
 				  		<tr>	
 				  			<td align="right" ><label for="tasa_anual" ></label>  Tasa Anual:&nbsp;</td>
 				  			<td>&nbsp;&nbsp;<input type="text" id="tasa_anual" name="tasa_anual" value="<%=edificio.getTasa_anual() %>" size="2"/></input><font color="red">*&nbsp;&nbsp;</font></td>
 				  			<td align="right" ><label for="amortizacion" ></label>  Amortizaci&oacute;n:&nbsp;</td>
-				  			<td colspan="7">&nbsp;&nbsp;<select  id="amortizacion" name="amortizacion"> <option value="ALEMAN">ALEM&Aacute;N</option><option value="FRANCES">FRANC&Eacute;S</option></select></td>
+				  			<td colspan="7">&nbsp;&nbsp;
+				  			<select  id="amortizacion" name="amortizacion">
+				  			<%if (edificio.getAmortizacion().equalsIgnoreCase("FRANCES")){ %> 
+				  				<option value="ALEMAN">ALEM&Aacute;N</option>
+				  				<option value="FRANCES" selected="selected">FRANC&Eacute;S</option>
+				  			<%}else{ %>
+				  				<option value="ALEMAN" selected="selected">ALEM&Aacute;N</option>
+				  				<option value="FRANCES">FRANC&Eacute;S</option>
+				  			<%} %>
+				  				</select>
+				  			</td>
 				  			<td colspan="2"></td>
 				  			
 				  		</tr>
 				  		<tr><td colspan="8">C&aacute;lculo de Inter&eacute;s</td></tr>
 				  		<tr>	
-				 			<td>&nbsp;&nbsp;<label for="punitorio"></label><input type="radio" id="punitorio" name="mora" value="punitorio"  checked="checked" onclick="habilita()"/>Punitorio</td>
-				 			<td>&nbsp;&nbsp;<label for="afecha"></label><input type="radio" id="afecha" name="mora" value="afecha" onclick="habilita()" />A fecha de pago &nbsp;</td>
-			 				<td>&nbsp;&nbsp;<label for="diferido"></label><input type="radio" id="diferido" name="mora" value="diferido" onclick="habilita()" />Diferido &nbsp;</td>
+				  		<%
+				  			String punitorio = edificio.getMora().equalsIgnoreCase("punitorio")?"checked":"";
+				  			String afecha = edificio.getMora().equalsIgnoreCase("afecha")?"checked":"";
+				  			String diferido = edificio.getMora().equalsIgnoreCase("diferido")?"checked":"";
+				  			String habilitadoSegundoVto = punitorio.equals("checked")?"":"disabled";
+				  			
+				  		%>
+				 			<td>&nbsp;&nbsp;<label for="punitorio"></label><input type="radio" id="punitorio" name="mora" value="punitorio"  <%=punitorio%> onclick="habilita()"/>Punitorio</td>
+				 			<td>&nbsp;&nbsp;<label for="afecha"></label><input type="radio" id="afecha" name="mora" value="afecha" <%=afecha%> onclick="habilita()" />A fecha de pago &nbsp;</td>
+			 				<td>&nbsp;&nbsp;<label for="diferido"></label><input type="radio" id="diferido" name="mora" value="diferido" <%=diferido%> onclick="habilita()" />Diferido &nbsp;</td>
+			 				
 			 			</tr>
 				  		<tr><td colspan="8" height="10"></td></tr>
 				 		<tr><td colspan="8">Fondo</td></tr>
@@ -176,11 +205,11 @@ function validar(thisform) {
 				 			<td align="right"><label for="dia_primer_vto">Primer Vto:</label> </td>
 				 			<td>&nbsp;&nbsp;<input type="text" id="dia_primer_vto" name="dia_primer_vto" value="<%=edificio.getDia_primer_vto() %>" size="9"/><font color="red">*&nbsp;&nbsp;</font></td>
 				 			<td align="right" ><label for="dia_segundo_vto"> Segundo Vto:</label> </td>
-				 			<td>&nbsp;&nbsp;<input type="text" id="dia_segundo_vto" name="dia_segundo_vto" value="<%=edificio.getDia_segundo_vto() %>" size="9"/></td>
+				 			<td>&nbsp;&nbsp;<input type="text" id="dia_segundo_vto" name="dia_segundo_vto" value="<%=edificio.getDia_segundo_vto() %>" size="9" <%=habilitadoSegundoVto%> /></td>
 				 		</tr>
 				  		</table>			  	
 			</fieldset>
-			<input class="btn" type="button" value="Modificar" onclick="validar()" />
+			<input class="btn" type="button" value="Aceptar" onclick="validar()" />
 			<a href="EdificioListarAction?redi=edificio">Volver</a>
 		</form>
 	</td>
