@@ -1,20 +1,19 @@
 package actions;
 
-import com.mysql.jdbc.EscapeTokenizer;
-import com.opensymphony.xwork2.ActionSupport;
 import java.util.Date;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
 
 import permisos.AdministradorDePermisos;
-import propiedades.PropiedadAppl;
-import propiedades.PropiedadDTO;
 import utilidades.HibernateUtil;
-import expensas.ExpensaAppl;
-import expensas.ExpensaCobroDTO;
-import expensas.ExpensaDTO;
-import expensas.ExpensasCobroAppl;
+
+import com.opensymphony.xwork2.ActionSupport;
+
+import expensas.appl.ExpensaAppl;
+import expensas.appl.ExpensasCobroAppl;
+import expensas.dto.ExpensaCobroDTO;
+import expensas.dto.ExpensaDTO;
 import gastos.exception.GastoExistenteException;
 
 @SuppressWarnings("serial")
