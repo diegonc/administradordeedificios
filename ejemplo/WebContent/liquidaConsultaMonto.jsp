@@ -11,7 +11,7 @@
 	int idProp = Integer.parseInt(request.getParameter("idProp"));	 
 	ExpensaAppl expAppl = new ExpensaAppl();
 	SessionFactory factory = HibernateUtil.getSessionFactory();	
-	List<ExpensaDTO> expensas = expAppl.getAllExpensaPorIdProp(factory,idEdificio);
+	List<ExpensaDTO> expensas = expAppl.getExpensaActivaPorIdProp(factory,idEdificio);
 	//TODO ver si solo queda un solo registro
 	ExpensaDTO exp = expensas.get(0);
 %>
