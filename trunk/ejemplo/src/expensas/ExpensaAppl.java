@@ -16,11 +16,11 @@ public class ExpensaAppl {
 		return configuration.buildSessionFactory();
 	}
 	
-	public List<ExpensaDTO> getAllExpensaPorIdProp(SessionFactory factory, int propId) {
+	public List<ExpensaDTO> getExpensaActivaPorIdProp(SessionFactory factory, int propId) {
 		Session session = factory.openSession();
 		try {
 			Query query = session
-			.createQuery("select u from ExpensaDTO u where u.id=:idprop");
+			.createQuery("select u from ExpensaDTO u where u.id=:idprop order by u.id");
 			query.setInteger("idprop", propId);
 			List<ExpensaDTO> results = query.list();
 			return results; 
