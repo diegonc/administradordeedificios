@@ -7,7 +7,7 @@
 <table  cellpadding="0" cellspacing="0" >
 <tr>
 	<td width="5"  class="borde"></td>
-	<td width="800" class="borde" align="center"> <span id="header"><h>Tipo de Gasto</span></h></td>
+	<td width="800" class="borde" align="center"> <h3 id="header">Tipo de Gasto</h3></td>
 	<td width="5" class="borde"></td>
 </tr>
 </table>

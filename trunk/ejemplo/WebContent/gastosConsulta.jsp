@@ -1,8 +1,9 @@
 <jsp:include page="/WEB-INF/jspf/header.jspf" />
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <div class="contenido">
 	<div class="titulo">
-		<h3>[Edificio: <s:property value="idEdificio"/>] » Consulta de Gastos</h3>
+		<h3>[Edificio: <s:property value="idEdificio"/>] >> Consulta de Gastos</h3>
 	</div>
 	<div class="cuerpo">
 		<s:form action="consultaGastos" method="GET">
@@ -25,7 +26,7 @@
 					</s:if>
 					<s:else>
 					<th>Razon Social</th>
-					<th>Nº Factura</th>
+					<th>Nro. Factura</th>
 					<th>Fecha</th>
 					<th>Estado</th>
 					</s:else>
