@@ -7,8 +7,15 @@
 <%
 	ArrayList<EdificioDTO> edificiosList = edificios.getEdificios();
 %>
+<script src="calendario.js" type="text/javascript"></script>
 <script type="text/javascript">
 
+function armarFecha(elemento){
+	var anio = document.getElementById("anio").value;
+	var mes = document.getElementById("mes").value;
+	var dia = document.getElementById("dia").value;
+	elemento.value=dia+"/"+mes+"/"+anio;
+}
 function validar(){
 	validado=true;
 	var codigo = document.getElementById("codigo");
@@ -23,7 +30,8 @@ function validar(){
 	var proximoVencimiento=document.getElementById("tgMontoVariable.proximoVencimiento");
 	var extraordinario= document.getElementById("tipoExtraOrdinario");
 	var extraordinario= document.getElementById("tipoExtraOrdinario");
-	
+	armarFecha(proximoVencimiento);
+
 	if(codigo.value==""){ alert("Debe completar el codigo"); validado=false;}
 	if(validado==true)if(descripcion.value==""){ alert("Debe completar la descripcion"); validado=false;}
 	if(validado==true)if (extraordinario.checked==false){
@@ -164,7 +172,13 @@ function habilitarInputsPlazo(){
 				  			<td><label for="tgMontoVariable.montoPrevision">Importe:&nbsp;</label></td> 
 				  			<td><input type="text" id="tgMontoVariable.montoPrevision" name="tgMontoVariable.montoPrevision" disabled="disabled"/></td>
 				  			<td><label for="tgMontoVariable.proximoVencimiento">&nbsp;Prox. Vto:&nbsp;</label></td>
-				  			<td><input type="text" id="tgMontoVariable.proximoVencimiento" name="tgMontoVariable.proximoVencimiento" disabled="disabled"/></td>
+				  			<td><input type="hidden" id="tgMontoVariable.proximoVencimiento" name="tgMontoVariable.proximoVencimiento" disabled="disabled"/>
+				  				&nbsp;&nbsp;<input type="text" name="dia" maxlength="2" size="2" style="width:22px;" >
+								&nbsp;<input type="text" name="mes" maxlength="2" size="2"  style="width:22px;" >
+								&nbsp;<input type="text" name="anio" maxlength="4" size="4" style="width:32px;" >
+								&nbsp;&nbsp;<a href="JavaScript:doNothing()" onclick="allowPrevious=true;setDateField(tipoDeGastoAlta.dia,document.tipoDeGastoAlta.mes,document.tipoDeGastoAlta.anio);top.newWin = window.open('calendario.jsp','cal','WIDTH=200,HEIGHT=160,TOP=200,LEFT=300')" onMouseOver="javascript: window.status = 'Abrir calendario'; return true;" onMouseOut="window.status=' '; return true;" >Fecha</a>
+				  			
+				  			</td>
 				  		</tr>			  		
 			  	  		
 			  		</table>
