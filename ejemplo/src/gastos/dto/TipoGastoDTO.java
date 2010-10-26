@@ -1,8 +1,12 @@
 package gastos.dto;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.*;
+
+import propiedades.TipoPropiedadDTO;
+import propiedades.TipoPropiedadTipoGastoDTO;
 
 @SuppressWarnings("serial")
 @Entity
@@ -18,6 +22,8 @@ public class TipoGastoDTO implements Serializable {
 	private String codigo;
 	private String descripcion;
 	private String tipo;
+	private List<TipoPropiedadDTO> tiposDePropiedades;
+	private List<TipoPropiedadTipoGastoDTO> tiposPropiedadesGastos;
 	
 	@Column(name="TIPO",nullable=false)
 	public String getTipo() {
@@ -54,7 +60,29 @@ public class TipoGastoDTO implements Serializable {
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
-	
+		
+	@ManyToMany
+	@JoinTable(name = "TIPO_PROPIEDAD_TIPO_GASTO",
+	    joinColumns = {@JoinColumn(name="ID_TIPO_GASTO")},
+	    inverseJoinColumns = {@JoinColumn(name="ID_TIPO_PROPIEDAD")})
+	public List<TipoPropiedadDTO> getTiposDePropiedades() {
+		return tiposDePropiedades;
+	}
+
+	public void setTiposDePropiedades(List<TipoPropiedadDTO> tiposDePropiedades) {
+		this.tiposDePropiedades = tiposDePropiedades;
+	}
+
+	@OneToMany(mappedBy = "tipoGasto")
+	public List<TipoPropiedadTipoGastoDTO> getTiposPropiedadesGastos() {
+		return tiposPropiedadesGastos;
+	}
+
+	public void setTiposPropiedadesGastos(
+			List<TipoPropiedadTipoGastoDTO> tiposPropiedadesGastos) {
+		this.tiposPropiedadesGastos = tiposPropiedadesGastos;
+	}
+
 	@Override
 	public String toString() {
 		return "Codigo: " + getCodigo() + " Descripcion: " + getDescripcion();

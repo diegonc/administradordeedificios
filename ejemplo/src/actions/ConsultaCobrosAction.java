@@ -1,7 +1,7 @@
 package actions;
 
-import expensas.ExpensaCobroDTO;
-import expensas.ExpensasCobroAppl;
+import expensas.appl.ExpensasCobroAppl;
+import expensas.dto.ExpensaCobroDTO;
 
 import java.util.List;
 

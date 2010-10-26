@@ -9,8 +9,6 @@ import org.hibernate.SessionFactory;
 import usuarios.appl.UsuarioAppl;
 import usuarios.dto.PerfilDTO;
 import usuarios.dto.UsuarioDTO;
-import usuarios.dto.UsuarioPerfilDTO;
-import usuarios.dto.UsuarioPerfilEdificioDTO;
 import usuarios.exception.UsuarioInexistenteException;
 import utilidades.HibernateUtil;
 import beans.UsuariosBean;
@@ -46,6 +44,7 @@ public class VincularUsuarioPerfilEdificios extends ActionSupport {
 	private List<String> edificiosResponsableCobrosResult;
 	private List<String> edificiosResponsableEdificioResult;
 	
+	@SuppressWarnings("unused")
 	private Map<String, Object> session;
 
 	
@@ -256,9 +255,10 @@ public class VincularUsuarioPerfilEdificios extends ActionSupport {
 		}
 		return listaResultado;
 	}
+	
 	public String execute(){
+		@SuppressWarnings("unused")
 		UsuarioDTO usuario= null;
-		System.out.println(this.id);
 		List<PerfilDTO> perfiles= new ArrayList<PerfilDTO>();
 		try {
 			 usuario= userAppl.getUsuario(this.id);
