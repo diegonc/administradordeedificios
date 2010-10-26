@@ -2,7 +2,8 @@
 
 <%@page import="propiedades.PropiedadDTO"%><jsp:include page="/WEB-INF/jspf/header.jspf"></jsp:include>
 <%@ page language="java" contentType="text/html" import="java.util.*"%>
-<%@ page language="java" contentType="text/html" import="expensas.*"%>
+<%@ page language="java" contentType="text/html" import="expensas.appl.*"%>
+<%@ page language="java" contentType="text/html" import="expensas.dto.*"%>
 <%@ page language="java" contentType="text/html" import="utilidades.*"%>
 <%@ page language="java" contentType="text/html" import="org.hibernate.*"%>
 <%
