@@ -100,7 +100,7 @@ function habilitarInputsPlazo(){
 <table  cellpadding="0" cellspacing="0" >
 <tr>
 	<td width="5"  class="borde"></td>
-	<td width="800" class="borde" align="center"> <span id="header"><h>Alta de Tipo de Gastos</h></td>
+	<td width="800" class="borde" align="center"> <h3 id="header">Alta de Tipo de Gastos</h3></td>
 	<td width="5" class="borde"></td>
 </tr>
 </table>
