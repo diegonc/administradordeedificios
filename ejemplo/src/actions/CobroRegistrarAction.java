@@ -82,11 +82,11 @@ public class CobroRegistrarAction extends ActionSupport  {
 		
 		ExpensaAppl expAppl = new ExpensaAppl();
 		SessionFactory factory = HibernateUtil.getSessionFactory();	
-		List<ExpensaDTO> expensas = expAppl.getAllExpensaPorIdProp(factory, this.idPropiedad );
+		List<ExpensaDTO> expensas = expAppl.getExpensaActivaPorIdProp(factory, this.idPropiedad );
 		
 		//TODO ver si esto va a quedar solo un registro de expensas...
 		ExpensaDTO exp = expensas.get(0);
-		
+
 		cobro.setIntereses(exp.getIntereses());
 		cobro.setMonto(exp.getMonto());
 		cobro.setTipo(exp.getTipo());
