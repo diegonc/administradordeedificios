@@ -23,9 +23,9 @@
     <mapping class="edificio.EdificioDTO"/>
     
     <!-- package expensas -->
-    <mapping class="expensas.ExpensaCobroDTO"/>
-    <mapping class="expensas.ExpensaDTO"/>
-    <mapping class="expensas.ExpensaLiquidacionDTO"/>
+    <mapping class="expensas.dto.ExpensaCobroDTO"/>
+    <mapping class="expensas.dto.ExpensaDTO"/>
+    <mapping class="expensas.dto.ExpensaLiquidacionDTO"/>
     
     <!-- package gastos -->
     <mapping class="gastos.dto.GastoDTO"/>
