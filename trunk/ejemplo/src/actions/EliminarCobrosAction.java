@@ -1,9 +1,9 @@
 package actions;
 
-import expensas.appl.ExpensasCobroAppl;
-import expensas.dto.ExpensaCobroDTO;
+import org.apache.struts2.interceptor.validation.SkipValidation;
+import org.hibernate.Session;
 
-import java.util.List;
+import propiedades.PropiedadDTO;
 
 import utilidades.SessionAwareAction;
 
@@ -13,8 +13,7 @@ import com.opensymphony.xwork2.util.logging.LoggerFactory;
 import com.opensymphony.xwork2.validator.annotations.ConversionErrorFieldValidator;
 import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
 
-import org.apache.struts2.interceptor.validation.SkipValidation;
-import org.hibernate.Session;
+import expensas.dto.ExpensaCobroDTO;
 
 @SuppressWarnings("serial")
 public class EliminarCobrosAction extends SessionAwareAction {
@@ -26,10 +25,18 @@ public class EliminarCobrosAction extends SessionAwareAction {
 	private Integer idPropiedad;
 
 	/* Atributos soporte */
+	private Integer idEdificio;
 	
 	@SkipValidation
 	public String back() {
-		return SUCCESS /*"volver-a-listado"*/;
+		if (idPropiedad != null) {
+			PropiedadDTO propiedad = (PropiedadDTO) getSession().get(PropiedadDTO.class, idPropiedad);
+			setIdEdificio(propiedad.getTipoPropiedad()
+				.getEdificio()
+				.getId());
+			return "volver-a-listado";
+		}
+		return "no-hay-edificio";
 	}
 
 	@InputConfig(methodName="errorValidacion")
@@ -40,7 +47,7 @@ public class EliminarCobrosAction extends SessionAwareAction {
 			session.beginTransaction();
 			session.delete(cobro);
 			session.getTransaction().commit();
-			return SUCCESS;
+			return back();
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);
 			return errorValidacion();
@@ -69,6 +76,14 @@ public class EliminarCobrosAction extends SessionAwareAction {
 	@RequiredFieldValidator(message="No hay cobro.")
 	public void setIdCobro(Integer idCobro) {
 		this.idCobro = idCobro;
+	}
+
+	public void setIdEdificio(Integer idEdificio) {
+		this.idEdificio = idEdificio;
+	}
+
+	public Integer getIdEdificio() {
+		return idEdificio;
 	}
 
 }

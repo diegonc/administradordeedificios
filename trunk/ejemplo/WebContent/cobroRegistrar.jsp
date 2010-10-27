@@ -1,23 +1,40 @@
-<%@page import="expensas.*"%>
-<jsp:include page="/WEB-INF/jspf/header.jspf"></jsp:include>
+<%@page import="expensas.appl.*"%>
+<%@page import="expensas.dto.*"%>
+
+<%@page import="com.opensymphony.xwork2.ActionContext"%><jsp:include page="/WEB-INF/jspf/header.jspf"></jsp:include>
 <%@ page language="java" contentType="text/html" import="java.util.*"%>
 <%@ page language="java" contentType="text/html" import="expensas.*"%>
 <%@ page language="java" contentType="text/html" import="utilidades.*"%>
 <%@ page language="java" contentType="text/html" import="org.hibernate.*"%>
 <%
-	int idEdificio = Integer.parseInt(request.getParameter("idEdificio"));	 
-	int idProp = Integer.parseInt(request.getParameter("idProp"));	 
+	int idEdificio = (Integer) ActionContext.getContext().getValueStack().findValue("idEdificio");
+	int idProp = (Integer) ActionContext.getContext().getValueStack().findValue("idPropiedad");
+	
 %>
 
 <script type="text/javascript">
 function validar(thisform) {
 	var fechaPago=document.getElementById("fecha");
+	var montoPago=document.getElementById("montoPago");
+	var comprobante=document.getElementById("comprobante");
 	valido=true;
 	if(valido==true) {
 		if(/^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/.test(fechaPago.value)==false ){ 
 			alert("El formato de fecha de pago deber ser dd/mm/aaaa");
 			valido=false;
 		} 
+	}
+	if (valido==true) {
+		if (isNaN(montoPago.value)) {
+			alert("El monto pago debe ser un numero");
+			valido=false;
+		}
+	}
+	if (valido==true) {
+		if (comprobante.value=="") {
+			alert("Debe colocar un comprabante");
+			valido=false;
+		}
 	}
 	if (valido==true) {
 		document.regisCobro.submit();
@@ -46,7 +63,12 @@ function validar(thisform) {
 				 			<td>&nbsp;&nbsp;<input type="text" id="comprobante" name="comprobante" size="15"/></td>
 				 			<td align="right"><label for="fecha">Fecha Pago:</label> </td>
 				 			<td>&nbsp;&nbsp;<input type="text" id="fecha" name="fecha" size="15"/></td>
+				 		</tr>
+				 		<tr>
+				 			<td align="right"><label for="fecha">Monto Pago:</label> </td>
+				 			<td>&nbsp;&nbsp;<input type="text" id="montoPago" name="montoPago" size="15"/></td>
 				 			<td>&nbsp;&nbsp;<input type="text" style="display: none;" id="idPropiedad" name="idPropiedad" value=<%=idProp %> size="15"/></td>
+				 			<td>&nbsp;&nbsp;<input type="text" style="display: none;" id="idEdificio" name="idEdificio" value=<%=idEdificio %> size="15"/></td>
 				 		</tr>
 				  		<tr>
 			  			<td colspan="8"><input class="btn" type="button" value="Registrar" onclick="validar()" /></td>

@@ -16,7 +16,7 @@
     <property name="hibernate.connection.pool_size">1</property>
     <property name="hibernate.dialect">org.hibernate.dialect.MySQLInnoDBDialect</property>
     <property name="transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</property>
-    <property name="hibernate.hbm2ddl.auto">update</property>
+    <!--  property name="hibernate.hbm2ddl.auto">update</property>-->
     <property name="hibernate.show_sql">false</property>
     
     <!-- package edificio -->
@@ -25,7 +25,6 @@
     <!-- package expensas -->
     <mapping class="expensas.dto.ExpensaCobroDTO"/>
     <mapping class="expensas.dto.ExpensaDTO"/>
-    <mapping class="expensas.dto.ExpensaLiquidacionDTO"/>
     
     <!-- package gastos -->
     <mapping class="gastos.dto.GastoDTO"/>

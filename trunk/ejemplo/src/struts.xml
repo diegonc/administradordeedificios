@@ -125,16 +125,26 @@
 
 		<action name="expensasPropiedadesListado"
 			    class="actions.ExpensasPropiedadesListadoAction">
-				<result name="consultar-cobros" type="redirectAction">
+			<result name="consultar-cobros" type="redirectAction">
 				<param name="actionName">consultaCobros</param>
+				<param name="idEdificio">${idEdificio}</param>
+				<param name="idPropiedad">${propElegida}</param>
+			</result>
+			<result name="registrar-cobro" type="redirectAction">
+				<param name="actionName">cobroRegistrarAction!mostrarFormulario</param>
 				<param name="idEdificio">${idEdificio}</param>
 				<param name="idPropiedad">${propElegida}</param>
 			</result>
 		</action>
 		
 		<action name="cobroRegistrarAction" class="actions.CobroRegistrarAction">
-			    <result name="success">/expensas.jsp </result>
-			    <result name="error">/expensas.jsp </result>
+			<result name="existe" type="redirect">
+			    <param name="location">/expensasPropiedadesListado.jsp</param>
+				<param name="id">${idEdificio}</param>
+			</result>
+			<result name="mostrar">/cobroRegistrar.jsp </result>
+			<result name="success">/expensas.jsp </result>
+			<result name="error">/expensas.jsp </result>
 	    </action> 
 		
 	</package>
@@ -264,16 +274,16 @@
 			</result>
 		</action>
 		
-		<action name="eliminarCobros" class="actions.EliminarCobrosAction">
-			<result name="success" type="redirectAction">
+		<action name="eliminarCobro" class="actions.EliminarCobrosAction">
+			<result name="volver-a-listado" type="redirectAction">
 				<param name="actionName">consultaCobros</param>
 				<param name="idPropiedad">${idPropiedad}</param>
 				<param name="idEdificio">${idEdificio}</param>
 			</result>
-			<!--
-			<result name="volever-a-listado"> </result>
-			<result name="error"> </result>
-			-->
+			<result name="no-hay-edificio" type="redirectAction">
+				<param name="actionName">EdificioListarAction</param>
+				<param name="redi">expensa</param>
+			</result>
 		</action>
 	</package>
 

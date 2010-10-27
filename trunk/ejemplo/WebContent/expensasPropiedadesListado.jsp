@@ -16,16 +16,6 @@
 %>
 
 <script type="text/javascript">
-function redirecRegisCobros() {
-	elem=document.getElementsByName('propElegida');
-	for(i=0;i<elem.length;i++) {
-		if (elem[i].checked) {
-			idProp = elem[i].value;
-			location.href = "cobroRegistrar.jsp?idEdificio="+<%=edificio.getId()%>+"&idProp="+idProp;
-		}
-	}
-}
-
 function redirecConsultaLiq() {
 	elem=document.getElementsByName('propElegida');
 	for(i=0;i<elem.length;i++) {
@@ -71,7 +61,7 @@ function redirecConsultaLiq() {
 			<td><%=propiedadDTO.getTipoPropiedad().getNombreTipo()%></td>
 			<td><%=propiedadDTO.getNivel()%></td>
 			<td><%=propiedadDTO.getOrden()%></td>
-			<td><input type="radio" id="propElegida" name="propElegida" value="<%=propiedadDTO.getId()%>" /></td>
+			<td><input type="radio" id="propElegida" name="propElegida" checked="checked" value="<%=propiedadDTO.getId()%>" /></td>
 		</tr>
 		<%
 			}
@@ -79,10 +69,8 @@ function redirecConsultaLiq() {
 		%>
 	</table>
 	<input type="hidden" value="<%=id%>" name="idEdificio">
-	<input type="button" value="Re-Liquidar" onclick=""> <input
-		type="button" value="Registrar Cobro" 
-		onClick="redirecRegisCobros()" >
-
+	<input type="button" value="Re-Liquidar" onclick=""> 
+	<input type="submit" value="Registrar Cobro" name="method:mostrarFormulario" >
 	<input type="submit" value="Consultar/Eliminar Cobros" name="method:consultarCobros">
 	<input type="button" value="Consultar Liquidaciones" onclick="redirecConsultaLiq()">
 	<a href="EdificioListarAction?redi=expensa">Volver</a></fieldset>

@@ -1,7 +1,17 @@
 package actions;
 
 
+import java.util.List;
+
+import org.hibernate.SessionFactory;
+
+import utilidades.HibernateUtil;
+
 import com.opensymphony.xwork2.ActionSupport;
+
+import expensas.appl.ExpensasCobroAppl;
+import expensas.dto.ExpensaCobroDTO;
+import expensas.dto.ExpensaDTO;
 
 @SuppressWarnings("serial")
 public class ExpensasPropiedadesListadoAction extends ActionSupport {
@@ -28,5 +38,11 @@ public class ExpensasPropiedadesListadoAction extends ActionSupport {
 	public Integer getPropElegida() {
 		return this.propElegida;
 	}
-
+	
+	public String mostrarFormulario() {
+		return "registrar-cobro";
+	}
+	
+	
+	
 }
