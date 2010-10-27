@@ -98,4 +98,16 @@ public class TipoPropiedadDTO implements Serializable {
 		}
 		return null;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		return this.nombreTipo.equals(((TipoPropiedadDTO)obj).getNombreTipo()) 
+			&& this.edificio.equals(((TipoPropiedadDTO)obj).getEdificio());
+	}
+	
+	@Override
+	public int hashCode() {
+		int valor = this.nombreTipo.hashCode()+this.edificio.getId();
+		return valor;
+	}
 }
