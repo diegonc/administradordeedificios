@@ -263,6 +263,18 @@
 				<param name="id">${idEdificio}</param>
 			</result>
 		</action>
+		
+		<action name="eliminarCobros" class="actions.EliminarCobrosAction">
+			<result name="success" type="redirectAction">
+				<param name="actionName">consultaCobros</param>
+				<param name="idPropiedad">${idPropiedad}</param>
+				<param name="idEdificio">${idEdificio}</param>
+			</result>
+			<!--
+			<result name="volever-a-listado"> </result>
+			<result name="error"> </result>
+			-->
+		</action>
 	</package>
 
 	<constant name="hibernatePlugin.customSessionFactoryClass"
