@@ -88,4 +88,18 @@ public class TipoGastoDTO implements Serializable {
 		return "Codigo: " + getCodigo() + " Descripcion: " + getDescripcion();
 	}
 			
+	@Override
+	public boolean equals(Object obj) {
+		if(obj instanceof TipoGastoDTO)
+			return this.codigo.equals(((TipoGastoDTO)obj).getCodigo());
+		return super.equals(obj);
+	}
+	
+	@Override
+	public int hashCode() {
+		if(this.codigo==null)
+				return super.hashCode();
+		return this.codigo.hashCode();
+	}
+	
 }

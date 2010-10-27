@@ -121,7 +121,6 @@ public class TestExpensas extends TestCase {
 		HashMap<TipoPropiedadDTO, Double> tipoPropiedadMontoExpensa = obtenerProrrateoExpensasOrdinarias(edificio);
 										
 		for (TipoPropiedadDTO tipoProp: edificio.getTipoPropiedades()) {
-			if(tipoPropiedadMontoExpensa.get(tipoProp)==null) System.out.println("Diferentes");;
 			montoTotal = (tipoPropiedadMontoExpensa.get(tipoProp)==null)?0:tipoPropiedadMontoExpensa.get(tipoProp);
 			System.out.println(tipoProp.getNombreTipo()+" - "+montoTotal);
 			for(PropiedadDTO propiedad: tipoProp.getPropiedades()){
@@ -257,6 +256,38 @@ public class TestExpensas extends TestCase {
 		return query.list(); 
 	}
 	
+	
+	public void testObtenerGastosPorEdificioAgrupadoPorTipo(){
+		obtenerGastosPorEdificioAgrupadoPorTipo(1);
+	}
+	
+	public HashMap<TipoGastoDTO, List<GastoDTO>> obtenerGastosPorEdificioAgrupadoPorTipo(int idEdificio){
+		List<GastoDTO> gastos = obtenerGastosOrdinariosPorEdificioYPeriodo(idEdificio, new Periodo(new Date()));
+		HashMap<TipoGastoDTO, List<GastoDTO>> tipoGastoGasto = new HashMap<TipoGastoDTO, List<GastoDTO>>();
+		
+		for(GastoDTO gastoActual: gastos){
+			List<GastoDTO> listadoGastos = tipoGastoGasto.get(gastoActual.getTipoGasto());
+			if(listadoGastos==null)
+				listadoGastos = new ArrayList<GastoDTO>();
+			listadoGastos.add(gastoActual);
+			tipoGastoGasto.put(gastoActual.getTipoGasto(), listadoGastos);
+		}
+		
+		Iterator<TipoGastoDTO> it = tipoGastoGasto.keySet().iterator();
+	    while (it.hasNext()) {
+	        TipoGastoDTO tipoGasto = (TipoGastoDTO) it.next();
+	        List<GastoDTO> gastosEnTipo = (List<GastoDTO>) tipoGastoGasto.get(tipoGasto);
+	        System.out.println(tipoGasto.getCodigo());
+	        for (GastoDTO gastoActual : gastosEnTipo) {
+	        	System.out.println(gastoActual.getDetalle()+" : "+gastoActual.getMonto());
+				
+			}
+	    }
+		
+		return tipoGastoGasto;
+		
+		
+	}
 	
 	@SuppressWarnings("unchecked")
 	private List<GastoDTO> obtenerTipoPropiedadTipoGastoPorTipoGasto(TipoGastoDTO tipoGasto){
