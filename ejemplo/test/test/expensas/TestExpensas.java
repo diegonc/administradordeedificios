@@ -1,18 +1,26 @@
 package test.expensas;
 
+import edificio.EdificioAppl;
+import edificio.EdificioDTO;
 import gastos.dto.GastoDTO;
+import gastos.dto.GastoRealDTO;
 import gastos.dto.TipoGastoDTO;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import junit.framework.TestCase;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
 
+import propiedades.PropiedadDTO;
 import propiedades.TipoPropiedadDTO;
 import propiedades.TipoPropiedadTipoGastoDTO;
 import utilidades.HibernateUtil;
@@ -73,25 +81,94 @@ public class TestExpensas extends TestCase {
 		}
 	}
 	
-	public void testObtenerGastosPorEdificio(){
+	public HashMap<TipoPropiedadDTO, Double> obtenerProrrateoExpensasOrdinarias(EdificioDTO edificio){
 		Periodo periodo = new Periodo(new Date());
-		List<GastoDTO> gastos = obtenerGastosPorEdificioYPeriodo(1, periodo);
+		List<GastoDTO> gastos = obtenerGastosOrdinariosPorEdificioYPeriodo(edificio.getId(), periodo);
+		HashMap<TipoPropiedadDTO, Double> tipoPropiedadMontoExpensa = new HashMap<TipoPropiedadDTO, Double>();
 		
-		GastoDTO gastoEncargado = gastos.get(0);
-		TipoGastoDTO tg =  gastoEncargado.getTipoGasto();
-		
-		for(GastoDTO g: gastos){
-			System.out.println("Codigo: " + tg.getCodigo());
-			System.out.println("Descripcion: " + tg.getDescripcion());
-			System.out.println("Detalle: " + g.getDetalle());
-			System.out.println("Monto: " + g.getMonto());
+		for(GastoDTO gastoActual: gastos){
+			System.out.println("Codigo: " + gastoActual.getTipoGasto().getCodigo());
+			System.out.println("Descripcion: " + gastoActual.getTipoGasto().getDescripcion());
+			System.out.println("Detalle: " + gastoActual.getDetalle());
+			System.out.println("Monto: " + gastoActual.getMonto());
+			List<ResultadoProrrateo> resultadoProrrateo = generarResultadoDeProrrateo(gastoActual);
+			 			
+			for (ResultadoProrrateo resultadoActual : resultadoProrrateo) {
+				Double montoActual = (tipoPropiedadMontoExpensa.get(resultadoActual.getTipoPropiedad())==null)?0:tipoPropiedadMontoExpensa.get(resultadoActual.getTipoPropiedad());
+				tipoPropiedadMontoExpensa.put(resultadoActual.getTipoPropiedad(), redondeoDouble(resultadoActual.getMonto()+ montoActual));
+				System.out.println(resultadoActual.getTipoPropiedad().getNombreTipo()+" : "+resultadoActual.getMonto());
+			}
+			System.out.println("-----------------------------------------------------------");
 		}
-				
+		Iterator<TipoPropiedadDTO> it = tipoPropiedadMontoExpensa.keySet().iterator();
+	    while (it.hasNext()) {
+	        TipoPropiedadDTO tipoPropiedad = (TipoPropiedadDTO) it.next();
+	        Double monto = (Double) tipoPropiedadMontoExpensa.get(tipoPropiedad);
+	        System.out.println(tipoPropiedad.getNombreTipo() + " : " + monto.doubleValue());
+	    }
+	    
+	    return tipoPropiedadMontoExpensa; 
+	}
+	
+	public void testExpensasPorEdificio(){
+		Session session = HibernateUtil.getSession();
+		session.beginTransaction();
+		
+		EdificioAppl edificioAppl = new EdificioAppl();
+		EdificioDTO edificio = edificioAppl.getEdificio(HibernateUtil.getSessionFactory(), 1);
+		double montoExpensa = 0;
+		double montoTotal=0;
+		HashMap<TipoPropiedadDTO, Double> tipoPropiedadMontoExpensa = obtenerProrrateoExpensasOrdinarias(edificio);
+										
+		for (TipoPropiedadDTO tipoProp: edificio.getTipoPropiedades()) {
+			if(tipoPropiedadMontoExpensa.get(tipoProp)==null) System.out.println("Diferentes");;
+			montoTotal = (tipoPropiedadMontoExpensa.get(tipoProp)==null)?0:tipoPropiedadMontoExpensa.get(tipoProp);
+			System.out.println(tipoProp.getNombreTipo()+" - "+montoTotal);
+			for(PropiedadDTO propiedad: tipoProp.getPropiedades()){
+				montoExpensa = redondeoDouble(montoTotal*(propiedad.getDividendo()/tipoProp.getDivisor()));
+				propiedad.setCtaOrdSaldoExp(montoExpensa);
+				session.saveOrUpdate(propiedad);
+				System.out.println(propiedad.getNivel()+" - " + propiedad.getOrden()+" : "+propiedad.getCtaOrdSaldoExp());
+			}
+		}
+		session.getTransaction().commit();
+	}
+	
+			
+	public HashMap<TipoPropiedadDTO, Double> obtenerProrrateoExpensasExtraordinarias(){
+		Periodo periodo = new Periodo(new Date());
+		List<GastoDTO> gastos = obtenerGastosExtraordinariosPorEdificioYPeriodo(1, periodo);
+		HashMap<TipoPropiedadDTO, Double> tipoPropiedadMontoExpensa = new HashMap<TipoPropiedadDTO, Double>();
+		
+		for(GastoDTO gastoActual: gastos){
+			System.out.println("Codigo: " + gastoActual.getTipoGasto().getCodigo());
+			System.out.println("Descripcion: " + gastoActual.getTipoGasto().getDescripcion());
+			System.out.println("Detalle: " + gastoActual.getDetalle());
+			System.out.println("Monto: " + gastoActual.getMonto());
+			List<ResultadoProrrateo> resultadoProrrateo = generarResultadoDeProrrateo(gastoActual);
+			 			
+			for (ResultadoProrrateo resultadoActual : resultadoProrrateo) {
+				Double montoActual = (tipoPropiedadMontoExpensa.get(resultadoActual.getTipoPropiedad())==null)?0:tipoPropiedadMontoExpensa.get(resultadoActual.getTipoPropiedad());
+				tipoPropiedadMontoExpensa.put(resultadoActual.getTipoPropiedad(), redondeoDouble(resultadoActual.getMonto()+ montoActual));
+				System.out.println(resultadoActual.getTipoPropiedad().getNombreTipo()+" : "+resultadoActual.getMonto());
+			}
+			System.out.println("-----------------------------------------------------------");
+		}
+		Iterator<TipoPropiedadDTO> it = tipoPropiedadMontoExpensa.keySet().iterator();
+	    while (it.hasNext()) {
+	        TipoPropiedadDTO tipoPropiedad = (TipoPropiedadDTO) it.next();
+	        Double monto = (Double) tipoPropiedadMontoExpensa.get(tipoPropiedad);
+	        System.out.println(tipoPropiedad.getNombreTipo() + " : " + monto.doubleValue());
+	    }
+	    return tipoPropiedadMontoExpensa;
+	}
+	
+	private List<ResultadoProrrateo> generarResultadoDeProrrateo(GastoDTO gasto){
 		int posicionElemento = 0;
 		Double coeficienteActual;
 		List<ElementoProrrateo> elementosProrrateo = new ArrayList<ElementoProrrateo>();
-		
-		for (TipoPropiedadTipoGastoDTO tipoPropiedadGasto : tg.getTiposPropiedadesGastos()) {
+						
+		for (TipoPropiedadTipoGastoDTO tipoPropiedadGasto : gasto.getTipoGasto().getTiposPropiedadesGastos()) {
 	
 			ElementoProrrateo elementoActual = new ElementoProrrateo();
 			coeficienteActual = tipoPropiedadGasto.getCoeficienteDistribucion();
@@ -111,13 +188,9 @@ public class TestExpensas extends TestCase {
 				elementosProrrateo.add(elementoActual);
 			}
 		}
-		
-		List<ResultadoProrrateo> resultadoProrrateo = prorratear(elementosProrrateo,gastoEncargado.getMonto());
-		
-		for (ResultadoProrrateo resultadoActual : resultadoProrrateo) {
-			System.out.println(resultadoActual.getTipoPropiedad().getNombreTipo()+" : "+resultadoActual.getMonto());
-		}
+		return prorratear(elementosProrrateo,gasto.getMonto());
 	}
+	
 	
 	private List<ResultadoProrrateo> prorratear(List<ElementoProrrateo> elementosProrrateo,double monto){
 		double sumaCoeficientesNoNulos = 0;
@@ -149,25 +222,41 @@ public class TestExpensas extends TestCase {
 					resultadoProrrateo.monto = montoActual +((1-sumaCoeficientesNoNulos)*(tp.getDivisor()/elementoProrrateo.getSuperficieTotal()));
 				}
 				resultadoProrrateo.monto*=monto;
-				resultadoProrrateo.monto=(Math.round(resultadoProrrateo.monto*Math.pow(10,2))/Math.pow(10,2));
+				resultadoProrrateo.monto=redondeoDouble(resultadoProrrateo.monto);
 				resultadosProrrateo.add(resultadoProrrateo);
 			}
 		}
 		return resultadosProrrateo;
 	}
+	
+	private double redondeoDouble(double valor){
+		return Math.round(valor*Math.pow(10,2))/Math.pow(10,2);
+	}
 			
 	@SuppressWarnings("unchecked")
-	public List<GastoDTO> obtenerGastosPorEdificioYPeriodo(int idEdificio,Periodo periodo){
+	public List<GastoDTO> obtenerGastosOrdinariosPorEdificioYPeriodo(int idEdificio,Periodo periodo){
 		Session session = HibernateUtil.getSession();
 		Query query = session
 		.createQuery("select gr from GastoRealDTO gr where gr.fechaPago " +
-				"between :fechaInicio and :fechaFin and gr.edificio =:idEdificio");
+				"between :fechaInicio and :fechaFin and gr.edificio =:idEdificio and gr.tipoGasto.tipo <> 'EXT' ");
 		query.setString("fechaInicio", periodo.obtenerFechaInicio());
 		query.setString("fechaFin", periodo.obtenerFechaFin());
 		query.setInteger("idEdificio", idEdificio);
 		return query.list(); 
-		
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<GastoDTO> obtenerGastosExtraordinariosPorEdificioYPeriodo(int idEdificio,Periodo periodo){
+		Session session = HibernateUtil.getSession();
+		Query query = session
+		.createQuery("select gr from GastoRealDTO gr where gr.fechaPago " +
+				"between :fechaInicio and :fechaFin and gr.edificio =:idEdificio and gr.tipoGasto.tipo = 'EXT' ");
+		query.setString("fechaInicio", periodo.obtenerFechaInicio());
+		query.setString("fechaFin", periodo.obtenerFechaFin());
+		query.setInteger("idEdificio", idEdificio);
+		return query.list(); 
+	}
+	
 	
 	@SuppressWarnings("unchecked")
 	private List<GastoDTO> obtenerTipoPropiedadTipoGastoPorTipoGasto(TipoGastoDTO tipoGasto){
