@@ -113,156 +113,149 @@ function habilitarInputsPlazo(){
 }
 </script>
 
-
-<table  cellpadding="0" cellspacing="0" >
-<tr>
-	<td width="5"  class="borde"></td>
-	<td width="800" class="borde" align="center"> <span id="header"><h>Modificacion de Tipo de Gastos</h></td>
-	<td width="5" class="borde"></td>
-</tr>
-</table>
-<table id="tablaTiposDeGastos" height ="300" cellpadding="0" cellspacing="0" >
-<tr>
-	<td width="5"  class="borde"></td>
-	<td width="15"  class="fondo"></td>
-	<td width="770" class="fondo" align="left">
-		<form class="elegante" id="tipoDeGastoAlta" name="tipoDeGastoAlta" action="TipoDeGastosAction!actualizar">
-			<fieldset>
-		  		<legend>Modificacion</legend>
-			 					 					 		
-			 		<table border="0" cellpadding="0" cellspacing="0">
-			 			<tr><td colspan="5" height="10"></td></tr>
-			 			<tr>
-				 			<td width="120" align="right"><label for="codigo">Codigo:</label> </td>
-				 			<td colspan="4" >&nbsp;&nbsp;<input type="text" id="codigo" name="codigo" disabled="disabled" value="<%=tipoGasto.getCodigo()%>" /><font color="red">*&nbsp;&nbsp;</font></td>
-				 		</tr>
-				 		<tr>
-				 			<td align="right"><label for="descripcion">Descripci&oacute;n:</label> </td>
-				 			<td colspan="4">&nbsp;&nbsp;<input type="text" id="descripcion" name="descripcion" value="<%=tipoGasto.getDescripcion()%>" /><font color="red">*&nbsp;&nbsp;</font></td>
-			 			</tr>
-			 			<tr><td colspan="5" height="10"></td></tr>
-				  		<%if (tipoGasto.getTipo().equals(TipoGastoDTO.tipoPeriodicoMontoFijo)){ %>
-				  						  		
-				 			<tr>	
-					  			<td>&nbsp;&nbsp;<label for="tgMontoFijo.periodo">Per&iacute;odo:</label> </td>
-					  			<td><select id="tgMontoFijo.periodo"  name="tgMontoFijo.periodo">
-							  			<% 
-							  				String seleccionado=((TipoGastoMontoFijoDTO)tipoGasto).getPeriodo();
-							  		
-							  				for (int i=1;i<=12;i++){				  					
-							  				 if(seleccionado.equals(String.valueOf(i))){			  				
-							  			%>				  			
-							  				<option value="<%=i%>" selected="selected"><%=i%></option>
-							  			<%}else {%>
-							  				<option value="<%=i%>" ><%=i%></option>
-							  			<% }%>
-							  			<%} %>
-						  			</select>
-						  		</td>
-					  			<td><label for="tgMontoFijo.edificio.id">Edificio:</label></td>
-								<td colspan="2"><select name ="tgMontoFijo.edificio.id" id="tgMontoFijo.edificio.id"  >
-					  				<%	int idEdificio =((TipoGastoMontoFijoDTO)tipoGasto).getEdificio().getId();
-					  					for (EdificioDTO edif: edificiosList){					  					
-					  						if (((TipoGastoMontoFijoDTO)tipoGasto).getEdificio()!=null){ 
-							  					if (edif.getId()==idEdificio ){ %> 
-													<option value="<%=edif.getId()%>" selected="selected"><%=edif.getNombre()%></option>
-									  			<%}else{ %>
-									  				<option value="<%=edif.getId()%>"><%=edif.getNombre()%></option>
-									  			<%} 
-						  					}
-						  				}
-							  		%>
-									</select>
-								</td>						
-					  		</tr>
-					  		<tr><td colspan="5" height="10"></td></tr>
-					  		<tr>
-					  			<td colspan="4"><span>Monto</span></td>
-					  			<td></td>
-					  		</tr>
-					  		<tr>
-					  			<td><label for="tgMontoFijo.montoActual">Monto Actual:</label> </td>
-					  			<td><input type="text" id="tgMontoFijo.montoActual" name="tgMontoFijo.montoActual" value="<%=((TipoGastoMontoFijoDTO)tipoGasto).getMontoActual()%>"/></td>
-					  			<td><label for="tgMontoFijo.diaLimite">&nbsp;D&iacute;a L&iacute;mite:&nbsp;</label></td> 
-					  			<td colspan="2"><input type="text" id="tgMontoFijo.diaLimite" name="tgMontoFijo.diaLimite" value="<%=((TipoGastoMontoFijoDTO)tipoGasto).getDiaLimite()%>"/></td>
-					  		</tr>
-					  		<tr><td colspan="5" height="10"></td></tr>
-				  		
-				  		<%}%>
-				  		
-				  		<%if (tipoGasto.getTipo().equals(TipoGastoDTO.tipoPeriodicoMontoVariable)){ %>
-				  						  		
-				 			 <tr>	
-					  			<td>&nbsp;&nbsp;<label for="tgMontoVariable.periodo">Per&iacute;odo:</label> </td>
-					  			<td><select id="tgMontoVariable.periodo"  name="tgMontoVariable.periodo">
-							  			<% 
-							  				String seleccionado=((TipoGastoMontoVariableDTO)tipoGasto).getPeriodo();
-							  			
-							  				for (int i=1;i<=12;i++){				  					
-							  				 if(seleccionado.equals(String.valueOf(i))){			  				
-							  			%>				  			
-							  				<option value="<%=i%>" selected="selected"><%=i%></option>
-							  			<%}else {%>
-							  				<option value="<%=i%>" ><%=i%></option>
-							  			<% }%>
-							  			<%} %>
-						  			</select>
-						  		</td>
-					  			<td><label for="tgMontoVariable.edificio.id">Edificio:</label></td>
-								<td colspan="2"><select name ="tgMontoVariable.edificio.id" id="tgMontoVariable.edificio.id"  >
-					  				<%	int idEdificio =((TipoGastoMontoVariableDTO)tipoGasto).getEdificio().getId();
-					  					for (EdificioDTO edif: edificiosList){					  					
-					  						if (((TipoGastoMontoVariableDTO)tipoGasto).getEdificio()!=null){ 
-							  					if (edif.getId()==idEdificio ){ %> 
-													<option value="<%=edif.getId()%>" selected="selected"><%=edif.getNombre()%></option>
-									  			<%}else{ %>
-									  				<option value="<%=edif.getId()%>"><%=edif.getNombre()%></option>
-									  			<%} 
-						  					}
-						  				}
-							  		%>
-									</select>
-								</td>
-					  		</tr>
-					  		<tr><td colspan="5" height="10"></td></tr>
-					  		<tr>
-					  			<td colspan="4"><span>Monto</span></td>
-					  			<td></td>
-					  		</tr>
-					  		<tr>
-					  			<td><label for="tgMontoVariable.montoPrevision">Monto Previsi&oacute;n:&nbsp;</label></td> 
-					  			<td><input type="text" id="tgMontoVariable.montoPrevision" name="tgMontoVariable.montoPrevision" value="<%=((TipoGastoMontoVariableDTO)tipoGasto).getMontoPrevision()%>"/></td>
-					  			<td><label for="tgMontoVariable.proximoVencimiento">&nbsp;Prox. Vto:&nbsp;</label></td>
-					  			<td colspan="2"> <input type="hidden" id="tgMontoVariable.proximoVencimiento" name="tgMontoVariable.proximoVencimiento"/>
-					  				&nbsp;&nbsp;<input type="text" name="dia" maxlength="2" size="2" style="width:22px;" value="<%=((TipoGastoMontoVariableDTO)tipoGasto).getProximoVencimiento().getDate()%>" >
-									&nbsp;<input type="text" name="mes" maxlength="2" size="2"  style="width:22px;"  value="<%=((TipoGastoMontoVariableDTO)tipoGasto).getProximoVencimiento().getMonth()+1%>">
-									&nbsp;<input type="text" name="anio" maxlength="4" size="4" style="width:32px;" value="<%=((TipoGastoMontoVariableDTO)tipoGasto).getProximoVencimiento().getYear() +1900%>" >
-									&nbsp;&nbsp;<a href="JavaScript:doNothing()" onclick="allowPrevious=true;setDateField(tipoDeGastoAlta.dia,document.tipoDeGastoAlta.mes,document.tipoDeGastoAlta.anio);top.newWin = window.open('calendario.jsp','cal','WIDTH=200,HEIGHT=160,TOP=200,LEFT=300')" onMouseOver="javascript: window.status = 'Abrir calendario'; return true;" onMouseOut="window.status=' '; return true;" >Fecha</a>
-				  			 			
-					  			</td>
-					  		</tr>
-					  		<tr><td colspan="5" height="10"></td></tr>
-				  		
-				  		<%}%>
-				  		 					  	  		
-			  		</table>
-			  		<input type="hidden" id="tgExtraordinario.codigo" name="tgExtraordinario.codigo" value="" >
-			  		<input type="hidden" id="tgEventual.codigo" name="tgEventual.codigo" value="" >
-			  		<input type="hidden" id="tgMontoFijo.codigo" name="tgMontoFijo.codigo" value="" >
-			  		<input type="hidden" id="tgMontoVariable.codigo" name="tgMontoVariable.codigo" value="" >
-			  		<input type="hidden" id="id" name="id" value="<%=tipoGasto.getId()%>" >
-			  		<input type="hidden" id="tipoGasto" name="tipoGasto" value="<%=tipoGasto.getTipo()%>" >
-			</fieldset>
-				<input type="button" value="Aceptar"  onclick="validar()" >
-				<input type="submit" value="Cancelar" name="redirectAction:GetListadoTipoDeGastoAction">
-				
-		</form>
-	</td>
-	<td width="15"  class="fondo"></td>
-	<td width="5" class="borde"></td>
-</tr>
-
-
-</table>
+<div class="contenido">
+	<div class="titulo"><h3>Modificaci&oacute;n de Tipo de Gastos</h3></div>
+	<div class="cuerpo" align="center">
+	<table id="tablaTiposDeGastos" height ="300" cellpadding="0" cellspacing="0" >
+	<tr>
+		<td width="15"  class="fondo"></td>
+		<td width="770" class="fondo" align="left">
+			<form class="elegante" id="tipoDeGastoAlta" name="tipoDeGastoAlta" action="TipoDeGastosAction!actualizar">
+				<fieldset>
+			  		<legend>Modificaci&oacute;n</legend>
+				 					 					 		
+				 		<table border="0" cellpadding="0" cellspacing="0">
+				 			<tr><td colspan="5" height="10"></td></tr>
+				 			<tr>
+					 			<td width="120" align="right"><label for="codigo">Codigo:</label> </td>
+					 			<td colspan="4" >&nbsp;&nbsp;<input type="text" id="codigo" name="codigo" disabled="disabled" value="<%=tipoGasto.getCodigo()%>" /><font color="red">*&nbsp;&nbsp;</font></td>
+					 		</tr>
+					 		<tr>
+					 			<td align="right"><label for="descripcion">Descripci&oacute;n:</label> </td>
+					 			<td colspan="4">&nbsp;&nbsp;<input type="text" id="descripcion" name="descripcion" value="<%=tipoGasto.getDescripcion()%>" /><font color="red">*&nbsp;&nbsp;</font></td>
+				 			</tr>
+				 			<tr><td colspan="5" height="10"></td></tr>
+					  		<%if (tipoGasto.getTipo().equals(TipoGastoDTO.tipoPeriodicoMontoFijo)){ %>
+					  						  		
+					 			<tr>	
+						  			<td>&nbsp;&nbsp;<label for="tgMontoFijo.periodo">Per&iacute;odo:</label> </td>
+						  			<td><select id="tgMontoFijo.periodo"  name="tgMontoFijo.periodo">
+								  			<% 
+								  				String seleccionado=((TipoGastoMontoFijoDTO)tipoGasto).getPeriodo();
+								  		
+								  				for (int i=1;i<=12;i++){				  					
+								  				 if(seleccionado.equals(String.valueOf(i))){			  				
+								  			%>				  			
+								  				<option value="<%=i%>" selected="selected"><%=i%></option>
+								  			<%}else {%>
+								  				<option value="<%=i%>" ><%=i%></option>
+								  			<% }%>
+								  			<%} %>
+							  			</select>
+							  		</td>
+						  			<td><label for="tgMontoFijo.edificio.id">Edificio:</label></td>
+									<td colspan="2"><select name ="tgMontoFijo.edificio.id" id="tgMontoFijo.edificio.id"  >
+						  				<%	int idEdificio =((TipoGastoMontoFijoDTO)tipoGasto).getEdificio().getId();
+						  					for (EdificioDTO edif: edificiosList){					  					
+						  						if (((TipoGastoMontoFijoDTO)tipoGasto).getEdificio()!=null){ 
+								  					if (edif.getId()==idEdificio ){ %> 
+														<option value="<%=edif.getId()%>" selected="selected"><%=edif.getNombre()%></option>
+										  			<%}else{ %>
+										  				<option value="<%=edif.getId()%>"><%=edif.getNombre()%></option>
+										  			<%} 
+							  					}
+							  				}
+								  		%>
+										</select>
+									</td>						
+						  		</tr>
+						  		<tr><td colspan="5" height="10"></td></tr>
+						  		<tr>
+						  			<td colspan="4"><span>Monto</span></td>
+						  			<td></td>
+						  		</tr>
+						  		<tr>
+						  			<td><label for="tgMontoFijo.montoActual">Monto Actual:</label> </td>
+						  			<td><input type="text" id="tgMontoFijo.montoActual" name="tgMontoFijo.montoActual" value="<%=((TipoGastoMontoFijoDTO)tipoGasto).getMontoActual()%>"/></td>
+						  			<td><label for="tgMontoFijo.diaLimite">&nbsp;D&iacute;a L&iacute;mite:&nbsp;</label></td> 
+						  			<td colspan="2"><input type="text" id="tgMontoFijo.diaLimite" name="tgMontoFijo.diaLimite" value="<%=((TipoGastoMontoFijoDTO)tipoGasto).getDiaLimite()%>"/></td>
+						  		</tr>
+						  		<tr><td colspan="5" height="10"></td></tr>
+					  		
+					  		<%}%>
+					  		
+					  		<%if (tipoGasto.getTipo().equals(TipoGastoDTO.tipoPeriodicoMontoVariable)){ %>
+					  						  		
+					 			 <tr>	
+						  			<td>&nbsp;&nbsp;<label for="tgMontoVariable.periodo">Per&iacute;odo:</label> </td>
+						  			<td><select id="tgMontoVariable.periodo"  name="tgMontoVariable.periodo">
+								  			<% 
+								  				String seleccionado=((TipoGastoMontoVariableDTO)tipoGasto).getPeriodo();
+								  			
+								  				for (int i=1;i<=12;i++){				  					
+								  				 if(seleccionado.equals(String.valueOf(i))){			  				
+								  			%>				  			
+								  				<option value="<%=i%>" selected="selected"><%=i%></option>
+								  			<%}else {%>
+								  				<option value="<%=i%>" ><%=i%></option>
+								  			<% }%>
+								  			<%} %>
+							  			</select>
+							  		</td>
+						  			<td><label for="tgMontoVariable.edificio.id">Edificio:</label></td>
+									<td colspan="2"><select name ="tgMontoVariable.edificio.id" id="tgMontoVariable.edificio.id"  >
+						  				<%	int idEdificio =((TipoGastoMontoVariableDTO)tipoGasto).getEdificio().getId();
+						  					for (EdificioDTO edif: edificiosList){					  					
+						  						if (((TipoGastoMontoVariableDTO)tipoGasto).getEdificio()!=null){ 
+								  					if (edif.getId()==idEdificio ){ %> 
+														<option value="<%=edif.getId()%>" selected="selected"><%=edif.getNombre()%></option>
+										  			<%}else{ %>
+										  				<option value="<%=edif.getId()%>"><%=edif.getNombre()%></option>
+										  			<%} 
+							  					}
+							  				}
+								  		%>
+										</select>
+									</td>
+						  		</tr>
+						  		<tr><td colspan="5" height="10"></td></tr>
+						  		<tr>
+						  			<td colspan="4"><span>Monto</span></td>
+						  			<td></td>
+						  		</tr>
+						  		<tr>
+						  			<td><label for="tgMontoVariable.montoPrevision">Monto Previsi&oacute;n:&nbsp;</label></td> 
+						  			<td><input type="text" id="tgMontoVariable.montoPrevision" name="tgMontoVariable.montoPrevision" value="<%=((TipoGastoMontoVariableDTO)tipoGasto).getMontoPrevision()%>"/></td>
+						  			<td><label for="tgMontoVariable.proximoVencimiento">&nbsp;Prox. Vto:&nbsp;</label></td>
+						  			<td colspan="2"> <input type="hidden" id="tgMontoVariable.proximoVencimiento" name="tgMontoVariable.proximoVencimiento"/>
+						  				&nbsp;&nbsp;<input type="text" name="dia" maxlength="2" size="2" style="width:22px;" value="<%=((TipoGastoMontoVariableDTO)tipoGasto).getProximoVencimiento().getDate()%>" >
+										&nbsp;<input type="text" name="mes" maxlength="2" size="2"  style="width:22px;"  value="<%=((TipoGastoMontoVariableDTO)tipoGasto).getProximoVencimiento().getMonth()+1%>">
+										&nbsp;<input type="text" name="anio" maxlength="4" size="4" style="width:32px;" value="<%=((TipoGastoMontoVariableDTO)tipoGasto).getProximoVencimiento().getYear() +1900%>" >
+										&nbsp;&nbsp;<a href="JavaScript:doNothing()" onclick="allowPrevious=true;setDateField(tipoDeGastoAlta.dia,document.tipoDeGastoAlta.mes,document.tipoDeGastoAlta.anio);top.newWin = window.open('calendario.jsp','cal','WIDTH=200,HEIGHT=160,TOP=200,LEFT=300')" onMouseOver="javascript: window.status = 'Abrir calendario'; return true;" onMouseOut="window.status=' '; return true;" >Fecha</a>
+					  			 			
+						  			</td>
+						  		</tr>
+						  		<tr><td colspan="5" height="10"></td></tr>
+					  		
+					  		<%}%>
+					  		 					  	  		
+				  		</table>
+				  		<input type="hidden" id="tgExtraordinario.codigo" name="tgExtraordinario.codigo" value="" >
+				  		<input type="hidden" id="tgEventual.codigo" name="tgEventual.codigo" value="" >
+				  		<input type="hidden" id="tgMontoFijo.codigo" name="tgMontoFijo.codigo" value="" >
+				  		<input type="hidden" id="tgMontoVariable.codigo" name="tgMontoVariable.codigo" value="" >
+				  		<input type="hidden" id="id" name="id" value="<%=tipoGasto.getId()%>" >
+				  		<input type="hidden" id="tipoGasto" name="tipoGasto" value="<%=tipoGasto.getTipo()%>" >
+				</fieldset>
+					<input type="button" value="Aceptar"  onclick="validar()" >
+					<input type="submit" value="Cancelar" name="redirectAction:GetListadoTipoDeGastoAction">
+					
+			</form>
+		</td>
+		<td width="15"  class="fondo"></td>
+	</tr>
+	</table>
+	</div>
+</div>
 
 <jsp:include page="/WEB-INF/jspf/footer.jspf"></jsp:include>
