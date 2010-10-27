@@ -1,9 +1,10 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@page import="gastos.dto.GastoDTO"%>
 <%@page import="gastos.dto.GastoRealDTO"%>
 <%@page import="gastos.dto.GastoPrevisionDTO"%>
 <%@page import="permisos.AdministradorDePermisos"%><jsp:include page="/WEB-INF/jspf/header.jspf"></jsp:include>
-<%@ page language="java" contentType="text/html" import="java.util.*"%>
-<%@ page language="java" contentType="text/html" import="gastos.*"%>
+<%@ page language="java" import="java.util.*"%>
+<%@ page language="java" import="gastos.*"%>
 <jsp:useBean id="lista" scope="session" class="beans.GastosBean"/>
 
 <%
@@ -21,13 +22,14 @@
 			<fieldset><legend>Listado de Gastos Reales Pendientes</legend>
 			<table width="500" border="1" class="listado" >
 				<tr>
-					<td>Gasto</td>
-					<td>Razon Social</td>
-					<td>Detalle</td>
-					<td>Monto</td>
-					<td></td>
+					<td class="listado_par">Gasto</td>
+					<td class="listado_par">Razon Social</td>
+					<td class="listado_par">Detalle</td>
+					<td class="listado_par">Monto</td>
+					<td class="listado_par">&nbsp;</td>
+					<td class="listado_par">&nbsp;</td>
 					<%if (AdministradorDePermisos.getInstancia().isAdministrador()){ %>
-					<td></td>
+					<td class="listado_par" >&nbsp;</td>
 					<%} %>
 				</tr>	
 			<%for (GastoRealDTO gastoRealDTO : gastosReales) {  %>		
@@ -50,13 +52,13 @@
 			<legend>Listado de Gastos Previstos Futuros</legend>
 			<table width="500" border="1" class="listado" >
 				<tr>
-					<td>Gasto</td>
-					<td>Detalle</td>
-					<td>Anio</td>
-					<td>Mes</td>
-					<td>Monto</td>
-					<td></td>
-					<td></td>
+					<td class="listado_par">Gasto</td>
+					<td class="listado_par">Detalle</td>
+					<td class="listado_par">Año</td>
+					<td class="listado_par">Mes</td>
+					<td class="listado_par">Monto</td>
+					<td class="listado_par">&nbsp;</td>
+					<td class="listado_par">&nbsp;</td>
 				</tr>	
 			<%for (GastoPrevisionDTO gastoPrevistosDTO : gastosPrevistos) {  %>		
 				<tr>

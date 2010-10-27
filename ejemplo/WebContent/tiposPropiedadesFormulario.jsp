@@ -21,7 +21,7 @@
 				<thead>
 					<tr>
 						<th>Codigo</th>
-						<th>Coeficiente de distribucion</th>
+						<th>Coeficiente de distribuci&oacute;n</th>
 						<th><s:submit theme="simple" value="Borrar" method="borrarTipos"/></th>
 					</tr>
 				</thead>
@@ -34,18 +34,20 @@
 									value="%{tipoGasto.codigo}"/>
 								<s:hidden
 									name="%{'tiposGastos[\\''+tipoGasto.codigo+'\\'].tipoGasto.descripcion'}"
-									value="%{tipoGasto.descripcion}" /></td>
+									value="%{tipoGasto.descripcion}" />
+							</td>
 							<td>
 								<s:textfield
 									name="%{'tiposGastos[\\''+tipoGasto.codigo+'\\'].coeficienteDistribucion'}"
 									value="%{coeficienteDistribucion}"
-									label="%{tipoGasto.descripcion}" /></td>
+									label="%{tipoGasto.descripcion}"
+									size="10"/>
+							</td>
 							<td><s:checkbox fieldValue="%{tipoGasto.codigo}" name="codigosTipoGastoABorrar" value=""/></td>
 						</tr>
 					</s:iterator>
 				</tbody>
 			</table>
-
 			<s:submit value="Aceptar" method="grabar" />
 			<s:submit value="Cancelar" method="cancelar" />
 		</s:form>

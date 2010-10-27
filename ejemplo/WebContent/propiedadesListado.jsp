@@ -4,7 +4,7 @@
 	<div class="titulo">
 		<h3>Propiedades</h3>
 	</div>
-	<div class="cuerpo">
+	<div class="cuerpo" >
 		<s:actionerror />
 		<s:form action="propiedadesListado" method="GET">
 			<s:select label="Edificio" 
@@ -16,15 +16,17 @@
 			</s:if>
 			<s:submit method="listar" value="Actualizar" />
 		</s:form>
-		<table  class="listado">
+		<table  class="listado" align="center">
 			<thead>
-				<th>Nivel</th>
-				<th>Orden</th>
-				<th>Nombre</th>
-				<th>Propietario</th>
-				<th>Inquilino</th>
-				<th>Poder Propietario</th>
-				<th>Poder Inquilino</th>
+				<tr>
+					<td class="listado_par">Nivel</td>
+					<td class="listado_par" >Orden</td>
+					<td class="listado_par">Nombre</td>
+					<td class="listado_par">Propietario</td>
+					<td class="listado_par">Inquilino</td>
+					<td class="listado_par">Poder Propietario</td>
+					<td class="listado_par">Poder Inquilino</td>
+				</tr>
 			</thead>
 			<tbody>
 				<s:iterator value="listaPropiedades" >
@@ -47,7 +49,7 @@
 								<s:param name="nivel" value="nivel" />
 								<s:param name="orden" value="orden" />
 							</s:url>
-							<a href="<s:property value='#url' />">Editar</a>
+							<a href="<s:property value='#url' />">Modificar</a>
 						</td>
 						<td class="accion">
 							<s:url id="url" action="propiedadesFormulario!borrar" escapeAmp="false">
@@ -56,16 +58,18 @@
 								<s:param name="nivel" value="nivel" />
 								<s:param name="orden" value="orden" />
 							</s:url>
-							<a href="<s:property value='#url' />">Borrar</a>
+							<a href="<s:property value='#url' />">Eliminar</a>
 						</td>
 					</tr>
 				</s:iterator>
 			</tbody>
 		</table>
-		<s:url id="url" action="propiedadesFormulario!crear">
-			<s:param name="nombreEdificio" value="nombreEdificio" />
-		</s:url>
-		<a href="<s:property value='#url' />">Agregar</a>
+		<div align="center">
+			<s:url id="url" action="propiedadesFormulario!crear">
+				<s:param name="nombreEdificio" value="nombreEdificio" />
+			</s:url>
+			<a href="<s:property value='#url' />">Agregar</a>
+		</div>
 	</div>
 </div>
 <jsp:include page="/WEB-INF/jspf/footer.jspf" />
