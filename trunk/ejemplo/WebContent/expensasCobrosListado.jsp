@@ -8,7 +8,7 @@
 	<div class="cuerpo">
 		<table class="listado">
 			<thead>
-				<th>NÂº Op</th>
+				<th>Nº Op</th>
 				<th>Tipo</th>
 				<th>Monto</th>
 				<th>Intereses</th>
@@ -24,6 +24,13 @@
 						<td><s:property value="intereses"/></td>
 						<td><s:property value="fecha"/></td>
 						<td><s:property value="comprobante"/></td>
+						<td>
+							<s:url id="url" action="eliminarCobro">
+								<s:param name="idCobro" value="id"/>
+								<s:param name="idPropiedad" value="idPropiedad"/>
+							</s:url>
+							<a href="<s:property value='#url'/>">Eliminar</a>
+						</td>
 					</tr>
 				</s:iterator>
 			</tbody>
