@@ -47,6 +47,11 @@ function validar(){
 }
 function cerrar(id){
 	document.getElementById(id).style.display=document.getElementById(id).style.display=="none"?"block":"none";
+	if (document.getElementById(id).style.display=="none"){
+		document.getElementById("ima"+id).src="images/cerrar.jpg";
+	}else{
+		document.getElementById("ima"+id).src="images/abrir.jpg";
+	}
 }
 
 function deshabilitarAdministrador(){
@@ -93,7 +98,7 @@ function deshabilitarAdministrador(){
 								<tr>
 									<td bgcolor="#F0F0F0"><input type="checkbox" name="responsableEdificios" id="responsableEdificios" value="<%=PerfilDTO.RESPONSABLE_EDIFICIO%>" <%=responsableEdificio%> onclick="deshabilitarAdministrador()" /> </td>
 				  	  				<td bgcolor="#F0F0F0"><label for="responsableEdificios"><%=PerfilDTO.RESPONSABLE_EDIFICIO%></label></td>
-				  	  				<td bgcolor="#F0F0F0" align="right"><img id="imagGrupo2" src="images/cerrar.jpg" alt="Agregar Edificios" onclick="cerrar('grupo2')"></img></td> 
+				  	  				<td bgcolor="#F0F0F0" align="right"><img id="imagrupo2" src="images/cerrar.jpg" alt="Agregar Edificios" onclick="cerrar('grupo2')"></img></td> 
 				  	  			</tr>
 				 	  	</table>
 				 	  	
@@ -125,7 +130,7 @@ function deshabilitarAdministrador(){
 								<tr>			  	  			 
 				  	  				<td bgcolor="#F0F0F0"><input type="checkbox" name="responsableGastos" id="responsableGastos" value="<%=PerfilDTO.RESPONSABLE_GASTOS %>"   <%=responsableGastos%> onclick="deshabilitarAdministrador()"/> </td>
 				  	  				<td bgcolor="#F0F0F0"><label for="responsableGastos"><%=PerfilDTO.RESPONSABLE_GASTOS %></label></td>
-				  	  				<td bgcolor="#F0F0F0" align="right"><img src="images/cerrar.jpg" alt="Agregar Edificios" onclick="cerrar('grupo3')"></img></td> 				
+				  	  				<td bgcolor="#F0F0F0" align="right"><img src="images/cerrar.jpg" alt="Agregar Edificios"  id="imagrupo3" onclick="cerrar('grupo3')"></img></td> 				
 				  	  			</tr>
 				 	  	</table>
 				 	  	<div id="grupo3" style="display:none;">
@@ -157,7 +162,7 @@ function deshabilitarAdministrador(){
 								<tr>
 									<td bgcolor="#F0F0F0"><input type="checkbox" name="responsableCobros" id="responsableCobros" value="<%=PerfilDTO.RESPONSABLE_COBROS%>" <%=responsableCobros%> onclick="deshabilitarAdministrador()"/></td>			  	  			 
 				  	  				<td bgcolor="#F0F0F0"><label for="responsableCobros"><%=PerfilDTO.RESPONSABLE_COBROS%></label></td>
-				  	  				<td bgcolor="#F0F0F0" align="right"><img src="images/cerrar.jpg" alt="Agregar Edificios" onclick="cerrar('grupo4')"></img></td>
+				  	  				<td bgcolor="#F0F0F0" align="right"><img src="images/cerrar.jpg" alt="Agregar Edificios" id="imagrupo4" onclick="cerrar('grupo4')"></img></td>
 				  	  				
 				 	  			</tr>
 				 	  	</table>								
