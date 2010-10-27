@@ -7,17 +7,19 @@
 	<div class="cuerpo">
 	<s:actionerror />
 	<s:form action="tiposPropiedadesListado" method="GET">
-	<s:select label="Edificio" 
-		headerKey="" headerValue="-- Seleccione un edificio --"
-		list="edificios" 
-		key="nombreEdificio" />
-	<s:submit method="listar" value="Actualizar" />
+		<s:select label="Edificio" 
+			headerKey="" headerValue="-- Seleccione un edificio --"
+			list="edificios" 
+			key="nombreEdificio" />				
+		<s:submit method="listar" value="Actualizar" />	
 	</s:form>
 	<table class="listado">
 		<thead>
-			<th>Nombre</th>
-			<th>Monto<br/>Expensa</th>
-			<th>Proporcion</th>
+		<tr>
+			<td class="listado_par">Nombre</td>
+			<td class="listado_par">Monto Expensa</td>
+			<td class="listado_par">Dividor</td>
+		</tr>	
 		</thead>
 		<tbody>
 			<s:iterator value="lista">
@@ -30,14 +32,14 @@
 							<s:param name="nombreEdificio" value="[1].nombreEdificio" />
 							<s:param name="nombreTipo" value="nombreTipo" />
 						</s:url>
-						<a href="<s:property value='#url' />">Editar</a>
+						<a href="<s:property value='#url' />">Modificar</a>
 					</td>
 					<td class="accion">
 						<s:url id="url" action="tiposPropiedadesFormulario!borrar" escapeAmp="false">
 							<s:param name="nombreEdificio" value="[1].nombreEdificio" />
 							<s:param name="nombreTipo" value="nombreTipo" />
 						</s:url>
-						<a href="<s:property value='#url' />">borrar</a>
+						<a href="<s:property value='#url' />">Eliminar</a>
 					</td>
 				</tr>
 			</s:iterator>
