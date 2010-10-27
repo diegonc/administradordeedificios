@@ -38,14 +38,10 @@
 			 				<td align="right"><label for="nombre">Quiere eliminar el Gasto:</label> </td>
 				 			<td>&nbsp;&nbsp;<input type="text" id="nombre" name="nombre" value="<%=gasto.getDetalle()%>" readonly size="15"/></td>
 				 			<td>&nbsp;&nbsp;<input type="text" style="display: none;" id="id" name="id" value="<%=gasto.getId()%>" readonly size="15"/></td>	
-				 		</tr>
-				  		<tr>
-				  		<td colspan="8"><input class="btn" type="button" value="Delete" onclick="submit()" /></td>
-			  			<td> <a
-					href="GastosListarModifElimAction?id=<%=gasto.getEdificio().getId()%>">Volver</a> </td>
-			  			</tr>
+				 		</tr>				  		
 			  		</table>			  	
 			</fieldset>
+			<input class="btn" type="button" value="Aceptar" onclick="submit()" />&nbsp;<a href="GastosListarModifElimAction?id=<%=gasto.getEdificio().getId()%>">Volver</a>
 		</form>
 	</td>
 	<td width="15"  class="fondo"></td>
