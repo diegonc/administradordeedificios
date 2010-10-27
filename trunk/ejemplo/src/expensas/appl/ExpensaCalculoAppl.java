@@ -29,6 +29,30 @@ public class ExpensaCalculoAppl {
 		session = HibernateUtil.getSessionFactory().openSession();
 	}
 		
+	public HashMap<TipoGastoDTO, List<GastoDTO>> obtenerGastosPorEdificioAgrupadoPorTipo(int idEdificio){
+		List<GastoDTO> gastos = obtenerGastosOrdinariosPorEdificioYPeriodo(idEdificio, new Periodo(new Date()));
+		HashMap<TipoGastoDTO, List<GastoDTO>> tipoGastoGasto = new HashMap<TipoGastoDTO, List<GastoDTO>>();
+		
+		for(GastoDTO gastoActual: gastos){
+			List<GastoDTO> listadoGastos = tipoGastoGasto.get(gastoActual.getTipoGasto());
+			if(listadoGastos==null)
+				listadoGastos = new ArrayList<GastoDTO>();
+			listadoGastos.add(gastoActual);
+			tipoGastoGasto.put(gastoActual.getTipoGasto(), listadoGastos);
+		}
+		
+		Iterator<TipoGastoDTO> it = tipoGastoGasto.keySet().iterator();
+	    while (it.hasNext()) {
+	        TipoGastoDTO tipoGasto = (TipoGastoDTO) it.next();
+	        List<GastoDTO> gastosEnTipo = (List<GastoDTO>) tipoGastoGasto.get(tipoGasto);
+	        System.out.println(tipoGasto.getCodigo());
+	        for (GastoDTO gastoActual : gastosEnTipo) {
+	        	System.out.println(gastoActual.getDetalle()+" : "+gastoActual.getMonto());
+	        }
+	    }
+		return tipoGastoGasto;
+	}
+		
 	public HashMap<TipoPropiedadDTO, Double> obtenerProrrateoExpensasOrdinarias(EdificioDTO edificio){
 		Periodo periodo = new Periodo(new Date());
 		List<GastoDTO> gastos = obtenerGastosOrdinariosPorEdificioYPeriodo(edificio.getId(), periodo);
@@ -201,32 +225,7 @@ public class ExpensaCalculoAppl {
 		return query.list(); 
 	}
 	
-	
-	public HashMap<TipoGastoDTO, List<GastoDTO>> obtenerGastosPorEdificioAgrupadoPorTipo(int idEdificio){
-		List<GastoDTO> gastos = obtenerGastosOrdinariosPorEdificioYPeriodo(idEdificio, new Periodo(new Date()));
-		HashMap<TipoGastoDTO, List<GastoDTO>> tipoGastoGasto = new HashMap<TipoGastoDTO, List<GastoDTO>>();
-		
-		for(GastoDTO gastoActual: gastos){
-			List<GastoDTO> listadoGastos = tipoGastoGasto.get(gastoActual.getTipoGasto());
-			if(listadoGastos==null)
-				listadoGastos = new ArrayList<GastoDTO>();
-			listadoGastos.add(gastoActual);
-			tipoGastoGasto.put(gastoActual.getTipoGasto(), listadoGastos);
-		}
-		
-		Iterator<TipoGastoDTO> it = tipoGastoGasto.keySet().iterator();
-	    while (it.hasNext()) {
-	        TipoGastoDTO tipoGasto = (TipoGastoDTO) it.next();
-	        List<GastoDTO> gastosEnTipo = (List<GastoDTO>) tipoGastoGasto.get(tipoGasto);
-	        System.out.println(tipoGasto.getCodigo());
-	        for (GastoDTO gastoActual : gastosEnTipo) {
-	        	System.out.println(gastoActual.getDetalle()+" : "+gastoActual.getMonto());
-	        }
-	    }
-		
-		return tipoGastoGasto;
-	}
-	
+			
 	@SuppressWarnings("unchecked")
 	private List<GastoDTO> obtenerTipoPropiedadTipoGastoPorTipoGasto(TipoGastoDTO tipoGasto){
 		Query query = session.createQuery("select tpg from TipoPropiedadTipoGastoDTO tpg " +
