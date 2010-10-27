@@ -220,7 +220,9 @@ public class EdificioDTO implements Serializable{
 	
 	@Override
 	public boolean equals(Object obj) {
-		return this.id==((EdificioDTO)obj).getId();
+		if(obj instanceof EdificioDTO)
+			return this.id==((EdificioDTO)obj).getId();
+		return super.equals(obj);
 	}
 
 }
