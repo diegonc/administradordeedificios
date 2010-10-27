@@ -217,5 +217,10 @@ public class EdificioDTO implements Serializable{
 	public String getMora() {
 		return mora;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		return this.id==((EdificioDTO)obj).getId();
+	}
 
 }
