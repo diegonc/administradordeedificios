@@ -9,32 +9,34 @@
 		<table class="listado" align="center">
 			<thead>
 			<tr>
-				<th>DNI</th>
-				<th>Tel&eacute;fono</th>
-				<th>Email</th>
-				<th>Localidad</th>
-				<th>Calle</th>
-				<th>Ubicaci&oacute;n</th>
-				<th>Aut.</th>
+				<td class="listado_par">DNI</td>
+				<td class="listado_par">Tel&eacute;fono</td>
+				<td class="listado_par">Email</td>
+				<td class="listado_par">Localidad</td>
+				<td class="listado_par">Calle</td>
+				<td class="listado_par">Ubicaci&oacute;n</td>
+				<td class="listado_par">Aut.</td>
+				<td class="listado_par">&nbsp;</td>
+				<td class="listado_par">&nbsp;</td>
 			</tr>
 			</thead>
 			<tbody>
 				<s:iterator value="lista">
 					<tr>
-						<td><s:property value="dni" /></td>
-						<td><s:property value="telefono" /></td>
-						<td><s:property value="email" /></td>
-						<td><s:property value="localidad" /></td>
-						<td><s:property value="calle" /></td>
-						<td><s:property value="ubicacion" /></td>
-						<td><s:property value="autoridad" /></td>
-						<td>
+						<td>&nbsp; <s:property value="dni" /></td>
+						<td>&nbsp; <s:property value="telefono" /></td>
+						<td>&nbsp; <s:property value="email" /></td>
+						<td>&nbsp; <s:property value="localidad" /></td>
+						<td>&nbsp; <s:property value="calle" /></td>
+						<td>&nbsp; <s:property value="ubicacion" /></td>
+						<td>&nbsp; <s:property value="autoridad" /></td>
+						<td>&nbsp;
 							<s:url id="url" action="responsablesFormulario!editar">
 								<s:param name="dni" value="dni" />
 							</s:url>
 							<a href="<s:property value='#url' />">Modificar</a>
 						</td>
-						<td>
+						<td>&nbsp;
 							<s:url id="url" action="responsablesFormulario!borrar">
 								<s:param name="dni" value="dni" />
 							</s:url>

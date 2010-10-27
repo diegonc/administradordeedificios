@@ -18,17 +18,17 @@
 		<table class="listado">
 			<thead>
 				<tr>
-					<th>Tipo Gasto</th>
-					<th>Monto</th>
+					<td class="listado_par" >Tipo Gasto</td>
+					<td class="listado_par">Monto</td>
 					<s:if test="categoriaElegida.equals('PREVISION')">
-					<th>Año</th>
-					<th>Mes</th>
+					<td class="listado_par">Año</td>
+					<td class="listado_par">Mes</td>
 					</s:if>
 					<s:else>
-					<th>Razon Social</th>
-					<th>Nro. Factura</th>
-					<th>Fecha</th>
-					<th>Estado</th>
+					<td class="listado_par">Razon Social</td>
+					<td class="listado_par">Nro. Factura</td>
+					<td class="listado_par">Fecha</td>
+					<td class="listado_par">Estado</td>
 					</s:else>
 				</tr>
 			</thead>

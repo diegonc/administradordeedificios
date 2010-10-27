@@ -24,9 +24,9 @@
 		<fieldset><legend>Listado de Edificios</legend>
 		<table width="500" border="1" class="listado" >
 			<tr>
-				<td>Nombre</td>
-				<td></td>
-				<td></td>
+				<td class="listado_par">Nombre</td>
+				<td class="listado_par"></td>
+				<td class="listado_par"></td>
 			</tr>	
 		<%for (EdificioDTO edificioDTO : edificios) {  %>		
 			<tr>

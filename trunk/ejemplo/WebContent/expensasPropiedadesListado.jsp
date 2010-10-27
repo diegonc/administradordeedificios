@@ -56,10 +56,10 @@ function redirecConsultaLiq() {
 	<fieldset><legend>Listado de Propiedades</legend>
 	<table width="500" border="1" class="listado">
 		<tr>
-			<td>Tipo Propieadad</td>
-			<td>Nivel</td>
-			<td>Orden</td>
-			<td></td>
+			<td class="listado_par">Tipo Propieadad</td>
+			<td class="listado_par">Nivel</td>
+			<td class="listado_par">Orden</td>
+			<td class="listado_par">&nbsp;</td>
 		</tr>
 		<%
 			while (iteradorTipos.hasNext()) {

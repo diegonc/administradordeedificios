@@ -13,12 +13,13 @@
 			key="nombreEdificio" />				
 		<s:submit method="listar" value="Actualizar" />	
 	</s:form>
-	<table class="listado">
+	<table class="listado" align="center">
 		<thead>
 		<tr>
 			<td class="listado_par">Nombre</td>
 			<td class="listado_par">Monto Expensa</td>
-			<td class="listado_par">Dividor</td>
+			<td class="listado_par">Divisor</td>
+			<td class="listado_par" colspan="2">&nbsp;</td>
 		</tr>	
 		</thead>
 		<tbody>
@@ -45,10 +46,12 @@
 			</s:iterator>
 		</tbody>
 	</table>
-	<s:url id="url" action="tiposPropiedadesFormulario!crear">
-		<s:param name="nombreEdificio" value="nombreEdificio" />
-	</s:url>
-	<a href="<s:property value='#url' />">Agregar</a>
-	</div>
+		<div align="center">
+			<s:url id="url" action="tiposPropiedadesFormulario!crear">
+				<s:param name="nombreEdificio" value="nombreEdificio" />
+			</s:url>
+			<a href="<s:property value='#url' />">Agregar</a>
+		</div>	
+	</div>	
 </div>
 <jsp:include page="/WEB-INF/jspf/footer.jspf" />

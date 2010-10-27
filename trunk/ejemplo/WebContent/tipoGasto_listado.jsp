@@ -14,10 +14,10 @@
 					<fieldset><legend>Listado de Tipos de Gastos</legend>
 						<table width="500" border="1" class="listado" >
 							<tr>
-								<td>Codigo</td>
-								<td>Descripcion</td>
-								<td></td>
-								<td></td>
+								<td class="listado_par">Codigo</td>
+								<td class="listado_par">Descripcion</td>
+								<td class="listado_par">&nbsp;</td>
+								<td class="listado_par">&nbsp;</td>
 							</tr>	
 						<%for (TipoGastoDTO tipoGastoActual : tiposGastos) {  %>		
 							<tr>
