@@ -22,7 +22,7 @@ public class ExpensaAppl {
 		Session session = factory.openSession();
 		try {
 			Query query = session
-			.createQuery("select u from ExpensaDTO u where u.id=:idprop order by u.id");
+			.createQuery("from ExpensaDTO u where u.propiedad.id=:idprop order by u.id");
 			query.setInteger("idprop", propId);
 			List<ExpensaDTO> results = query.list();
 			return results; 

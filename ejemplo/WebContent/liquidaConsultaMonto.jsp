@@ -1,5 +1,4 @@
 <%@page import="expensas.*"%>
-
 <%@page import="propiedades.PropiedadDTO"%><jsp:include page="/WEB-INF/jspf/header.jspf"></jsp:include>
 <%@ page language="java" contentType="text/html" import="java.util.*"%>
 <%@ page language="java" contentType="text/html" import="expensas.appl.*"%>
@@ -9,11 +8,29 @@
 <%
 	int idEdificio = Integer.parseInt(request.getParameter("idEdificio"));
 	int idProp = Integer.parseInt(request.getParameter("idProp"));	 
+	boolean mostrarDeuda = false;
+	
 	ExpensaAppl expAppl = new ExpensaAppl();
 	SessionFactory factory = HibernateUtil.getSessionFactory();	
-	List<ExpensaDTO> expensas = expAppl.getExpensaActivaPorIdProp(factory,idEdificio);
-	//TODO ver si solo queda un solo registro
-	ExpensaDTO exp = expensas.get(0);
+	List<ExpensaDTO> expensas = expAppl.getExpensaActivaPorIdProp(factory,idProp);
+	ExpensaDTO exp = new ExpensaDTO();
+	
+	if (!expensas.isEmpty()) {
+		Session sessionCobro = HibernateUtil.getSession();
+		ExpensasCobroAppl cobroAppl = new ExpensasCobroAppl(sessionCobro);
+		exp = expensas.get(0);
+		List<ExpensaCobroDTO> cobros = cobroAppl.getCobroPorIdExpensas(exp.getId());
+		sessionCobro.close();
+		if (cobros.isEmpty()) {
+			mostrarDeuda = true;
+		} else {
+			ExpensaCobroDTO cobro = cobros.get(0);
+			if (cobro.getMontoPago() < exp.getMonto()) {
+				exp.setMonto(exp.getMonto() - cobro.getMontoPago());
+				mostrarDeuda = true;
+			}
+		}
+	}
 %>
 
 <table  cellpadding="0" cellspacing="0" >
@@ -41,9 +58,15 @@
 			 			<tr>
 			 				<td align="right"><label for="Orden">Orden: <%=exp.getPropiedad().getOrden()%></label> </td>
 			 			</tr>
+			 			<%if (mostrarDeuda) { %>
 			 			<tr>
 			 				<td align="right"><label for="monto">Monto: <%=exp.getMonto()%></label> </td>
 				 		</tr>
+				 		<% } else { %>
+				 		<tr>
+			 				<td align="right"><label for="monto">No existe deuda</label> </td>
+				 		</tr>
+				 		<% } %>
 				  		<tr>
 			  			<td> <a
 					href="expensasPropiedadesListado.jsp?id=<%=idEdificio%>">Volver</a> </td>

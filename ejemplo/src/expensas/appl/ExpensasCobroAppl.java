@@ -39,12 +39,23 @@ public class ExpensasCobroAppl {
 	@SuppressWarnings("unchecked")
 	public List<ExpensaCobroDTO> listarCobrosDePropiedad(Integer idPropiedad) {
 		Criteria criteria = session.createCriteria(ExpensaCobroDTO.class)
-			.createAlias("propiedad", "propiedad")
+			.createAlias("liquidacion", "liquidacion")
+			.createAlias("liquidacion.propiedad", "liquidacion.propiedad")
 			.add(Restrictions.eq("consolidado", false))
-			.add(Restrictions.eq("propiedad.id", idPropiedad));
+			.add(Restrictions.eq("liquidacion.propiedad.id", idPropiedad));
 		return criteria.list();
 	}
 
+	public List<ExpensaCobroDTO> getCobroPorIdExpensas(Integer idExpensa)
+	{
+		Criteria criteria = session.createCriteria(ExpensaCobroDTO.class)
+		.createAlias("liquidacion", "liquidacion")
+		.add(Restrictions.eq("consolidado", false))
+		.add(Restrictions.eq("liquidacion.id", idExpensa));
+		return criteria.list();
+	}
+
+	
 	public void setSession(Session session) {
 		this.session = session;
 	}

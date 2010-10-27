@@ -3,12 +3,17 @@ package actions;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import permisos.AdministradorDePermisos;
 import utilidades.HibernateUtil;
 
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
+import com.opensymphony.xwork2.interceptor.annotations.InputConfig;
+import com.opensymphony.xwork2.validator.annotations.ConversionErrorFieldValidator;
+import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
 
 import expensas.appl.ExpensaAppl;
 import expensas.appl.ExpensasCobroAppl;
@@ -26,6 +31,8 @@ public class CobroRegistrarAction extends ActionSupport  {
 	private boolean consolidado;
 	private int responsablecobro_id;
 	private int idPropiedad;
+	private double montoPago;
+	private int idEdificio;
 	
 	public void setIdPropiedad(int idPropiedad) {
 		this.idPropiedad = idPropiedad;
@@ -72,24 +79,51 @@ public class CobroRegistrarAction extends ActionSupport  {
 		return responsablecobro_id;
 	}
 	
+	private boolean existenciaCobro(int expId) {
+		Session session = HibernateUtil.getSession();
+		ExpensasCobroAppl expAppl = new ExpensasCobroAppl(session);
+		List<ExpensaCobroDTO> cobros = expAppl.getCobroPorIdExpensas(expId);
+		session.close();
+		if (cobros.isEmpty()) {
+			return false;
+		}
+		return true;
+	}
+	
+	public String mostrarFormulario() {
+		ExpensaAppl expAppl = new ExpensaAppl(); 
+		SessionFactory factory = HibernateUtil.getSessionFactory();	
+		List<ExpensaDTO> expensas = expAppl.getExpensaActivaPorIdProp(factory, this.idPropiedad );
+		if (expensas.isEmpty()) {
+			return "existe";
+		}
+		ExpensaDTO exp = expensas.get(0);
+		if (existenciaCobro(exp.getId())) {
+			return "existe";
+		}
+		return "mostrar";
+	}
+	
 	public String execute() {
-		ExpensaCobroDTO cobro = new ExpensaCobroDTO();
-		cobro.setComprobante(comprobante);
-		cobro.setConsolidado(false);
-		cobro.setFecha(fecha);
-		cobro.setResponsableCobro(AdministradorDePermisos.getInstancia().getUsuario());
-		
 		ExpensaAppl expAppl = new ExpensaAppl();
 		SessionFactory factory = HibernateUtil.getSessionFactory();	
 		List<ExpensaDTO> expensas = expAppl.getExpensaActivaPorIdProp(factory, this.idPropiedad );
+		if (expensas.isEmpty()) {
+			return ERROR;
+		}
 		
-		//TODO ver si esto va a quedar solo un registro de expensas...
+		//tomo el primero que es el activo
 		ExpensaDTO exp = expensas.get(0);
-
-		cobro.setIntereses(exp.getIntereses());
-		cobro.setMonto(exp.getMonto());
-		cobro.setTipo(exp.getTipo());
-		cobro.setPropiedad(exp.getPropiedad());
+		if (existenciaCobro(exp.getId())) {
+			return ERROR;
+		}
+		ExpensaCobroDTO cobro = new ExpensaCobroDTO();
+		cobro.setLiquidacion(exp);
+		cobro.setComprobante(comprobante);
+		cobro.setConsolidado(false);
+		cobro.setFecha(fecha);
+		cobro.setMontoPago(montoPago);
+		cobro.setResponsableCobro(AdministradorDePermisos.getInstancia().getUsuario());
 		
 		ExpensasCobroAppl cobroAppl = new ExpensasCobroAppl();
 		try {
@@ -98,7 +132,23 @@ public class CobroRegistrarAction extends ActionSupport  {
 			System.out.println(e);
 			return ERROR;
 		}
-		return SUCCESS;
+		return "existe";
+	}
+
+	public void setMontoPago(double montoPago) {
+		this.montoPago = montoPago;
+	}
+
+	public double getMontoPago() {
+		return montoPago;
+	}
+
+	public void setIdEdificio(int idEdificio) {
+		this.idEdificio = idEdificio;
+	}
+
+	public int getIdEdificio() {
+		return idEdificio;
 	}
 
 }

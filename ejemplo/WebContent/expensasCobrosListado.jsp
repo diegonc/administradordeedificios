@@ -8,24 +8,24 @@
 	<div class="cuerpo">
 		<table class="listado">
 			<thead>
-				<th>Nº Op</th>
-				<th>Tipo</th>
-				<th>Monto</th>
-				<th>Intereses</th>
-				<th>Fecha</th>
-				<th>Comprobante</th>
+				<tr>
+					<th>Fecha</th>
+					<th>Comprobante</th>
+					<th>Monto pago</th>
+					<th>Monto a pagar</th>
+					<th>Responsable</th>
+				</tr>
 			</thead>
 			<tbody>
 				<s:iterator value="cobros">
 					<tr>
-						<td><s:property value="numeroOperacion"/></td>
-						<td><s:property value="tipo"/></td>
-						<td><s:property value="monto"/></td>
-						<td><s:property value="intereses"/></td>
 						<td><s:property value="fecha"/></td>
 						<td><s:property value="comprobante"/></td>
+						<td><s:property value="montoPago"/></td>
+						<td><s:property value="liquidacion.monto"/></td>
+						<td><s:property value="responsableCobro.usuario"/></td>
 						<td>
-							<s:url id="url" action="eliminarCobro">
+							<s:url id="url" action="eliminarCobro" escapeAmp="false">
 								<s:param name="idCobro" value="id"/>
 								<s:param name="idPropiedad" value="idPropiedad"/>
 							</s:url>
