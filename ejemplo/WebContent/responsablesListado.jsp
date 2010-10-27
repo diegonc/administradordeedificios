@@ -4,9 +4,9 @@
 	<div class="titulo">
 		<h3>Responsables</h3>
 	</div>
-	<div class="cuerpo">
+	<div class="cuerpo" align="center">
 	<fieldset ><legend>Listado de Responsables</legend>
-		<table class="listado">
+		<table class="listado" align="center">
 			<thead>
 			<tr>
 				<th>DNI</th>

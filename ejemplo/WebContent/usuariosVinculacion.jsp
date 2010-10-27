@@ -56,150 +56,148 @@ function deshabilitarAdministrador(){
 	document.getElementById("administrador").disabled = (cobro||gasto||edif)?"":"disabled";
 }
 </script>
-<table  cellpadding="0" cellspacing="0" >
-<tr>
-	<td width="5"  class="borde"></td>
-	<td width="800" class="borde" align="center"> <span id="header"><h>Usuario</h></span></td>
-	<td width="5" class="borde"></td>
-</tr>
-</table>
-<table id="tablaUsuarios" height ="300" cellpadding="0" cellspacing="0" >
-<tr>
-	<td width="5"  class="borde"></td>
-	<td width="15"  class="fondo"></td>
-	<td width="770" class="fondo" align="left">
-		<form class="elegante" id="vincularUsuario" name="vincularUsuario" action="VinculacionUsuarioPerfilEdificio">
-			<fieldset>
-		  		<legend>Asignaci&oacute;n de Perfiles</legend>
-			 		<table border="0" cellpadding="0" cellspacing="0">
-			 			<tr>
-							<td height="14" colspan="4"></td>
-						</tr>
-			 	  		<tr>
-			  	  			<td></td> 
-			  	  			<td> </td>
-			 	  			<td><label for="user.usuario">Usuario:</label></td>
-			 	  			<td> <input type="hidden" id="user.usuario" name="user.usuario"   value="<%=usuario.getUsuario()%>" />&nbsp;&nbsp;<%=usuario.getUsuario()%></td>
-			 	  		</tr>
-			 	  		<tr>
-							<td height="14" colspan="4"></td>
-						</tr>
-					</table>
-					
-					<table border="0" cellpadding="0" cellspacing="0" width="100%">		
-						<tr>
-							<td align="right"><input type="checkbox" name="administrador" id="administrador" onclick="deshabilitarPerfiles()"  value="<%=PerfilDTO.ADMINISTRADOR%>"  <%=administrador%>/> </td>
-				  			<td><label for="administrador"><%=PerfilDTO.ADMINISTRADOR%></label></td>			  	  	
-				  		</tr>
-					</table>
-												
-					<table border="0" cellpadding="0" cellspacing="0" width="100%">								
-							<tr>
-								<td bgcolor="#F0F0F0"><input type="checkbox" name="responsableEdificios" id="responsableEdificios" value="<%=PerfilDTO.RESPONSABLE_EDIFICIO%>" <%=responsableEdificio%> onclick="deshabilitarAdministrador()" /> </td>
-			  	  				<td bgcolor="#F0F0F0"><label for="responsableEdificios"><%=PerfilDTO.RESPONSABLE_EDIFICIO%></label></td>
-			  	  				<td bgcolor="#F0F0F0" align="right"><img id="imagGrupo2" src="images/cerrar.jpg" alt="Agregar Edificios" onclick="cerrar('grupo2')"></img></td> 
-			  	  			</tr>
-			 	  	</table>
-			 	  	
-			 	  	<div id="grupo2"  style="display:none;">
-						<table border="0" cellpadding="0" cellspacing="0" >
-				  	  		<tr>		
-				 	  			<td colspan="2"> 
-				 	  			 	<s:optiontransferselect
-				 	  						label="Seleccione"
-				 	  						id="grupoEdif"
-				 	  						headerValue="--- Please Select ---"
-	      									name="listaEdificiosDefault"
-	      									list="listaEdificiosDefault"
-	      									rightTitle="Edificios seleccionados"      									
-	      									doubleHeaderValue="--- Please Select ---"
-	      									doubleId="edificiosResponsableEdificioResult"
-	      									doubleName="edificiosResponsableEdificioResult"
-	      									doubleList="edificiosResponsableEdificioResult">      										      									
-	      							</s:optiontransferselect>      								
-				 	  			</td>
-				 	  		</tr>
-							<tr>
-								<td height="14" colspan="4"></td>
-							</tr>
-						</table>	
-					</div>
-					
-					<table border="0" cellpadding="0" cellspacing="0" width="100%">	
-							<tr>			  	  			 
-			  	  				<td bgcolor="#F0F0F0"><input type="checkbox" name="responsableGastos" id="responsableGastos" value="<%=PerfilDTO.RESPONSABLE_GASTOS %>"   <%=responsableGastos%> onclick="deshabilitarAdministrador()"/> </td>
-			  	  				<td bgcolor="#F0F0F0"><label for="responsableGastos"><%=PerfilDTO.RESPONSABLE_GASTOS %></label></td>
-			  	  				<td bgcolor="#F0F0F0" align="right"><img src="images/cerrar.jpg" alt="Agregar Edificios" onclick="cerrar('grupo3')"></img></td> 				
-			  	  			</tr>
-			 	  	</table>
-			 	  	<div id="grupo3" style="display:none;">
-						<table border="0" cellpadding="0" cellspacing="0" >
-				  	  		<tr>		
-				 	  			<td colspan="2">  
-				 	  				<s:optiontransferselect
-				 	  					label="Seleccione"
-				 	  					id="grupoGastos"
-				 	  						headerValue="--- Please Select ---"
-	      									name="listaEdificiosDefault1"
-	      									list="listaEdificiosDefault1"
-	      									rightTitle="Edificios seleccionados"      									
-	      									doubleHeaderValue="--- Please Select ---"
-	      									doubleId="edificiosResponsableGastosResult"
-	      									doubleName="edificiosResponsableGastosResult"
-	      									doubleList="edificiosResponsableGastosResult">  
-	      							</s:optiontransferselect>	      								
-				 	  			</td>
-				 	  		</tr>
-							<tr>
-								<td height="14" colspan="4"></td>
-							</tr>
-						</table>	
-					</div>
-					
-														
-					<table border="0" cellpadding="0" cellspacing="0" width="100%">							
-							<tr>
-								<td bgcolor="#F0F0F0"><input type="checkbox" name="responsableCobros" id="responsableCobros" value="<%=PerfilDTO.RESPONSABLE_COBROS%>" <%=responsableCobros%> onclick="deshabilitarAdministrador()"/></td>			  	  			 
-			  	  				<td bgcolor="#F0F0F0"><label for="responsableCobros"><%=PerfilDTO.RESPONSABLE_COBROS%></label></td>
-			  	  				<td bgcolor="#F0F0F0" align="right"><img src="images/cerrar.jpg" alt="Agregar Edificios" onclick="cerrar('grupo4')"></img></td>
-			  	  				
-			 	  			</tr>
-			 	  	</table>								
-					<div id="grupo4" style="display:none;">
-						<table border="0" cellpadding="0" cellspacing="0" >
-				  	  		<tr>		
-				 	  			<td colspan="2">  
-				 	  				<s:optiontransferselect
-				 	  					label="Seleccione"
-				 	  						label="Seleccione"
-				 	  						id="grupoCobros"
-				 	  						headerValue="--- Please Select ---"
-	      									name="listaEdificiosDefault2"
-	      									list="listaEdificiosDefault2"
-	      									rightTitle="Edificios seleccionados"      									
-	      									doubleHeaderValue="--- Please Select ---"
-	      									doubleId="edificiosResponsableCobrosResult"
-	      									doubleName="edificiosResponsableCobrosResult"
-	      									doubleList="edificiosResponsableCobrosResult">
-	      							</s:optiontransferselect>	   					
-				 	  			</td>
-				 	  		</tr>
-							<tr>
-								<td height="14" colspan="4"></td>
-							</tr>
-						</table>	
-					</div>
-																										
-			  <s:actionerror />
-			  <input type="hidden" value="<%=usuario.getId()%>" id="id" name="id">	
-			<input type="button" value="Aceptar"  onclick="validar()" >
-			<input type="submit" value="Cancelar" name="redirectAction:VinculacionUsuario">
-			</fieldset>
-		</form>
-	</td>
-	<td width="15"  class="fondo"></td>
-	<td width="5" class="borde"></td>
-</tr>
 
-</table>
+<div class="contenido">
+	<div class="titulo"><h3>Asignaci&oacute;n de Perfiles</h3></div>
+	<div class="cuerpo">
+	<table id="tablaUsuarios" height ="300" cellpadding="0" cellspacing="0" >
+	<tr>
+		<td width="15"  class="fondo"></td>
+		<td width="770" class="fondo" align="left">
+			<form class="elegante" id="vincularUsuario" name="vincularUsuario" action="VinculacionUsuarioPerfilEdificio">
+				<fieldset>
+			  		<legend>Asignaci&oacute;n de Perfiles</legend>
+				 		<table border="0" cellpadding="0" cellspacing="0">
+				 			<tr>
+								<td height="14" colspan="4"></td>
+							</tr>
+				 	  		<tr>
+				  	  			<td></td> 
+				  	  			<td> </td>
+				 	  			<td><label for="user.usuario">Usuario:</label></td>
+				 	  			<td> <input type="hidden" id="user.usuario" name="user.usuario"   value="<%=usuario.getUsuario()%>" />&nbsp;&nbsp;<%=usuario.getUsuario()%></td>
+				 	  		</tr>
+				 	  		<tr>
+								<td height="14" colspan="4"></td>
+							</tr>
+						</table>
+						
+						<table border="0" cellpadding="0" cellspacing="0" width="100%">		
+							<tr>
+								<td align="right"><input type="checkbox" name="administrador" id="administrador" onclick="deshabilitarPerfiles()"  value="<%=PerfilDTO.ADMINISTRADOR%>"  <%=administrador%>/> </td>
+					  			<td><label for="administrador"><%=PerfilDTO.ADMINISTRADOR%></label></td>			  	  	
+					  		</tr>
+						</table>
+													
+						<table border="0" cellpadding="0" cellspacing="0" width="100%">								
+								<tr>
+									<td bgcolor="#F0F0F0"><input type="checkbox" name="responsableEdificios" id="responsableEdificios" value="<%=PerfilDTO.RESPONSABLE_EDIFICIO%>" <%=responsableEdificio%> onclick="deshabilitarAdministrador()" /> </td>
+				  	  				<td bgcolor="#F0F0F0"><label for="responsableEdificios"><%=PerfilDTO.RESPONSABLE_EDIFICIO%></label></td>
+				  	  				<td bgcolor="#F0F0F0" align="right"><img id="imagGrupo2" src="images/cerrar.jpg" alt="Agregar Edificios" onclick="cerrar('grupo2')"></img></td> 
+				  	  			</tr>
+				 	  	</table>
+				 	  	
+				 	  	<div id="grupo2"  style="display:none;">
+							<table border="0" cellpadding="0" cellspacing="0" >
+					  	  		<tr>		
+					 	  			<td colspan="2"> 
+					 	  			 	<s:optiontransferselect
+					 	  						label="Seleccione"
+					 	  						id="grupoEdif"
+					 	  						headerValue="--- Please Select ---"
+		      									name="listaEdificiosDefault"
+		      									list="listaEdificiosDefault"
+		      									rightTitle="Edificios seleccionados"      									
+		      									doubleHeaderValue="--- Please Select ---"
+		      									doubleId="edificiosResponsableEdificioResult"
+		      									doubleName="edificiosResponsableEdificioResult"
+		      									doubleList="edificiosResponsableEdificioResult">      										      									
+		      							</s:optiontransferselect>      								
+					 	  			</td>
+					 	  		</tr>
+								<tr>
+									<td height="14" colspan="4"></td>
+								</tr>
+							</table>	
+						</div>
+						
+						<table border="0" cellpadding="0" cellspacing="0" width="100%">	
+								<tr>			  	  			 
+				  	  				<td bgcolor="#F0F0F0"><input type="checkbox" name="responsableGastos" id="responsableGastos" value="<%=PerfilDTO.RESPONSABLE_GASTOS %>"   <%=responsableGastos%> onclick="deshabilitarAdministrador()"/> </td>
+				  	  				<td bgcolor="#F0F0F0"><label for="responsableGastos"><%=PerfilDTO.RESPONSABLE_GASTOS %></label></td>
+				  	  				<td bgcolor="#F0F0F0" align="right"><img src="images/cerrar.jpg" alt="Agregar Edificios" onclick="cerrar('grupo3')"></img></td> 				
+				  	  			</tr>
+				 	  	</table>
+				 	  	<div id="grupo3" style="display:none;">
+							<table border="0" cellpadding="0" cellspacing="0" >
+					  	  		<tr>		
+					 	  			<td colspan="2">  
+					 	  				<s:optiontransferselect
+					 	  					label="Seleccione"
+					 	  					id="grupoGastos"
+					 	  						headerValue="--- Please Select ---"
+		      									name="listaEdificiosDefault1"
+		      									list="listaEdificiosDefault1"
+		      									rightTitle="Edificios seleccionados"      									
+		      									doubleHeaderValue="--- Please Select ---"
+		      									doubleId="edificiosResponsableGastosResult"
+		      									doubleName="edificiosResponsableGastosResult"
+		      									doubleList="edificiosResponsableGastosResult">  
+		      							</s:optiontransferselect>	      								
+					 	  			</td>
+					 	  		</tr>
+								<tr>
+									<td height="14" colspan="4"></td>
+								</tr>
+							</table>	
+						</div>
+						
+															
+						<table border="0" cellpadding="0" cellspacing="0" width="100%">							
+								<tr>
+									<td bgcolor="#F0F0F0"><input type="checkbox" name="responsableCobros" id="responsableCobros" value="<%=PerfilDTO.RESPONSABLE_COBROS%>" <%=responsableCobros%> onclick="deshabilitarAdministrador()"/></td>			  	  			 
+				  	  				<td bgcolor="#F0F0F0"><label for="responsableCobros"><%=PerfilDTO.RESPONSABLE_COBROS%></label></td>
+				  	  				<td bgcolor="#F0F0F0" align="right"><img src="images/cerrar.jpg" alt="Agregar Edificios" onclick="cerrar('grupo4')"></img></td>
+				  	  				
+				 	  			</tr>
+				 	  	</table>								
+						<div id="grupo4" style="display:none;">
+							<table border="0" cellpadding="0" cellspacing="0" >
+					  	  		<tr>		
+					 	  			<td colspan="2">  
+					 	  				<s:optiontransferselect
+					 	  					label="Seleccione"
+					 	  						label="Seleccione"
+					 	  						id="grupoCobros"
+					 	  						headerValue="--- Please Select ---"
+		      									name="listaEdificiosDefault2"
+		      									list="listaEdificiosDefault2"
+		      									rightTitle="Edificios seleccionados"      									
+		      									doubleHeaderValue="--- Please Select ---"
+		      									doubleId="edificiosResponsableCobrosResult"
+		      									doubleName="edificiosResponsableCobrosResult"
+		      									doubleList="edificiosResponsableCobrosResult">
+		      							</s:optiontransferselect>	   					
+					 	  			</td>
+					 	  		</tr>
+								<tr>
+									<td height="14" colspan="4"></td>
+								</tr>
+							</table>	
+						</div>
+																											
+				  <s:actionerror />
+				  <input type="hidden" value="<%=usuario.getId()%>" id="id" name="id">	
+				
+				</fieldset>
+				<input type="button" value="Aceptar"  onclick="validar()" >
+				<input type="submit" value="Cancelar" name="redirectAction:VinculacionUsuario">
+			</form>
+		</td>
+		<td width="15"  class="fondo"></td>	
+	</tr>
+	
+	</table>
+	</div>
+</div>
 <jsp:include page="/WEB-INF/jspf/footer.jspf"></jsp:include>
