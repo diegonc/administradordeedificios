@@ -11,14 +11,23 @@
 	GastoRealDTO gasto = edifAppl.getGastosRealesPendientesPorid(
 			factory, id);
 %>
-
+<script src="calendario.js" type="text/javascript"></script>
 <script type="text/javascript">
+
+
+function armarFecha(elemento){
+	var anio = document.getElementById("anio").value;
+	var mes = document.getElementById("mes").value;
+	var dia = document.getElementById("dia").value;
+	elemento.value=dia+"/"+mes+"/"+anio;
+}
+
 function validar(thisform) {
 	var folio=document.getElementById("folio");
 	var monto=document.getElementById("monto");
 	var fechaPago=document.getElementById("fechaPago");
 	var nroFac=document.getElementById("nroFac");
-	
+	armarFecha(fechaPago);
 	valido=true;
 	if (isNaN(folio.value)) {
 		valido=false;
@@ -59,7 +68,7 @@ function validar(thisform) {
 			<fieldset>
 		  		<legend>Modificar Gasto Real Pendiente</legend>
 			 		<table  border="0" cellpadding="0" cellspacing="0" border="2">
-			 			<tr><td colspan="8" height="10"></td></tr>
+			 			<tr><td colspan="4" height="10"></td></tr>
 			 			<tr>
 			 				<td align="right"><label for="folio">Folio:</label> </td>
 				 			<td>&nbsp;&nbsp;<input type="text" id="folio" name="folio" value="<%=gasto.getNumeroFolio()%>" size="15"/></td>
@@ -72,29 +81,46 @@ function validar(thisform) {
 				 			<td align="right"><label for="razon_social">Razon Social:</label> </td>
 				 			<td>&nbsp;&nbsp;<input type="text" id="razon_social" name="razon_social" value="<%=gasto.getRazonSocial()%>" size="30"/></td>		
 				 		</tr>
+						<tr>	 		
+				 			<td height="30">&nbsp;</td>
+				 		</tr>	
 				 		<tr>
 				 			<td align="right"><label for="formaPago">Forma de Pago:</label> </td>
-				 			<td>&nbsp;&nbsp;<input type="text" id="formaPago" name="formaPago" value="<%=gasto.getFormaPago()%>"  size="15"/></td>
+				 			<td colspan="3">&nbsp;&nbsp;<input type="text" id="formaPago" name="formaPago" value="<%=gasto.getFormaPago()%>"  size="15"/></td>
+				 		</tr>
+				 		<tr>	 		
+				 			<td height="10">&nbsp;</td>
+				 		</tr>
+				 		<tr>	
 				 			<td align="right"><label for="nroFac">Nro. Factura:</label> </td>
-				 			<td>&nbsp;&nbsp;<input type="text" id="nroFac" name="nroFac" value="<%=gasto.getNumeroFacturaPago()%>"  size="15"/></td>
+				 			<td colspan="3">&nbsp;&nbsp;<input type="text" id="nroFac" name="nroFac" value="<%=gasto.getNumeroFacturaPago()%>"  size="15"/></td>				 			
+				 		</tr>
+				 		<tr>	 		
+				 			<td height="10">&nbsp;</td>
+				 		</tr>
+				 		<tr>	
 				 			<td align="right"><label for="fechaPago">Fecha Pago:</label> </td>
-				 			<td>&nbsp;&nbsp;<input type="text" id="fechaPago" name="fechaPago" value="<%=gasto.getFechaPago()%>"  size="15"/></td>
+				 			<td colspan="3">
+				 				&nbsp;&nbsp;<input type="hidden" id="fechaPago" name="fechaPago" value="<%=gasto.getFechaPago()%>"  size="15"/>
+				 				<input type="text" name="dia" maxlength="2" size="2" style="width:22px;" value="<%=gasto.getFechaPago().getDate()%>" >
+									&nbsp;<input type="text" name="mes" maxlength="2" size="2"  style="width:22px;"  value="<%=gasto.getFechaPago().getMonth()+1%>">
+									&nbsp;<input type="text" name="anio" maxlength="4" size="4" style="width:32px;" value="<%=gasto.getFechaPago().getYear() +1900%>" >
+									&nbsp;&nbsp;<a href="JavaScript:doNothing()" onclick="allowPrevious=true;setDateField(document.modifGastoReal.dia,document.modifGastoReal.mes,document.modifGastoReal.anio);top.newWin = window.open('calendario.jsp','cal','WIDTH=200,HEIGHT=160,TOP=200,LEFT=300')" onMouseOver="javascript: window.status = 'Abrir calendario'; return true;" onMouseOut="window.status=' '; return true;" >Fecha</a>
+				 			</td>
 				 		</tr>
 				 		<tr>
-				 			<td>&nbsp;&nbsp;<input type="text" style="display: none;" id="id" name="id" value="<%=gasto.getId()%>" readonly size="15"/></td>	
-				 			<td>&nbsp;&nbsp;<input type="text" style="display: none;" id="estado" name="estado" value="<%=gasto.getEstado()%>" readonly size="15"/></td>
-				 			<td>&nbsp;&nbsp;<input type="text" style="display: none;" id="id_tipo_gasto" name="id_tipo_gasto" value="<%=gasto.getTipoGasto().getId()%>" readonly size="15"/></td>
+				 			<td>&nbsp;&nbsp;<input type="text" style="display: none;" id="id" name="id" value="<%=gasto.getId()%>" readonly size="15"/>	
+				 			&nbsp;&nbsp;<input type="text" style="display: none;" id="estado" name="estado" value="<%=gasto.getEstado()%>" readonly size="15"/>
+				 			&nbsp;&nbsp;<input type="text" style="display: none;" id="id_tipo_gasto" name="id_tipo_gasto" value="<%=gasto.getTipoGasto().getId()%>" readonly size="15"/></td>
 				 			<td>&nbsp;&nbsp;<input type="text" style="display: none;" id="codigo_tipo_gasto" name="codigo_tipo_gasto" value="<%=gasto.getTipoGasto().getCodigo()%>" readonly size="15"/></td>
 				 			<td>&nbsp;&nbsp;<input type="text" style="display: none;" id="descripcion_tipo_gasto" name="descripcion_tipo_gasto" value="<%=gasto.getTipoGasto().getDescripcion()%>" readonly size="15"/></td>
 				 			<td>&nbsp;&nbsp;<input type="text" style="display: none;" id="edificio_id" name="edificio_id" value="<%=gasto.getEdificio().getId()%>" readonly size="15"/></td>
 				 		</tr>
-				  		<tr>
-			  			<td colspan="8"><input class="btn" type="button" value="Modificar" onclick="validar()" /></td>
-			  			<td> <a
-					href="GastosListarModifElimAction?id=<%=gasto.getEdificio().getId()%>">Volver</a> </td>
-			  			</tr>
+
 			  		</table>			  	
 			</fieldset>
+			<input class="btn" type="button" value="Aceptar" onclick="validar()" />&nbsp;
+			 <a	href="GastosListarModifElimAction?id=<%=gasto.getEdificio().getId()%>">Volver</a>
 		</form>
 	</td>
 	<td width="15"  class="fondo"></td>
