@@ -1,17 +1,23 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@page import="gastos.dto.TipoGastoDTO"%>
 <%@page import="edificio.EdificioDTO"%><jsp:include page="/WEB-INF/jspf/header.jspf"></jsp:include>
-<%@ page language="java" contentType="text/html" import="java.util.List"%>
-<%@ page language="java" contentType="text/html" import="gastos.*"%>
+<%@ page language="java" import="java.util.List"%>
+<%@ page language="java"  import="gastos.*"%>
 <jsp:useBean id="tiposGastos" scope="session" class="beans.TiposGastosBean"/>
 <jsp:useBean id="edificioBean" scope="session" class="beans.EdificiosBean"/>
 <%
 	List<TipoGastoDTO> tiposGastosList = tiposGastos.getTiposGastos();
 	int edificio = edificioBean.getIdEdificio();
 %>
-
+<script src="calendario.js" type="text/javascript"></script>
 <script type="text/javascript">
-
+function armarFecha(elemento){
+	var anio = document.getElementById("anio").value;
+	var mes = document.getElementById("mes").value;
+	var dia = document.getElementById("dia").value;
+	elemento.value=dia+"/"+mes+"/"+anio;
+}
 	function validar(){
 		validado=true;
 		var folio = document.getElementById("nroFolio");
@@ -25,7 +31,7 @@
 		var nroFactura = document.getElementById("gastoReal.numeroFacturaPago");
 		var fecha = document.getElementById("gastoReal.fechaPago");
 		var forma = document.getElementById("gastoReal.formaPago");
-	
+		armarFecha(fecha);
 		
 		if(folio.value==""){ alert("Debe completar el nroFolio"); validado=false;}
 		if(validado==true) if(isNaN(folio.value)){ alert("El nroFolio debe ser un valor numerico"); validado=false;}
@@ -60,6 +66,9 @@
 		document.getElementById("gastoReal.razonSocial").disabled=(real.checked==true)?"":"disabled";
 		document.getElementById("gastoReal.numeroFacturaPago").disabled=(real.checked==true)?"":"disabled";
 		document.getElementById("gastoReal.fechaPago").disabled=(real.checked==true)? "":"disabled";
+		document.getElementById("dia").disabled=(real.checked==true)? "":"disabled";
+		document.getElementById("mes").disabled=(real.checked==true)? "":"disabled";
+		document.getElementById("anio").disabled=(real.checked==true)? "":"disabled";
 		document.getElementById("gastoReal.formaPago").disabled=(real.checked==true)?"":"disabled";
 	}
 	
@@ -108,7 +117,7 @@
 			 			<tr>
 			 				<td></td>		
 				 			<td><label for="previsional"></label><input type="radio" id="previsional" name="tipo" value="previsional" onclick="habilitarInputsGastos()" checked="checked"/>Previsional</td>
-				 			<td align="right"><label for="gastoPrevision.anio">Anio:&nbsp;</label> </td>
+				 			<td align="right"><label for="gastoPrevision.anio">Año:&nbsp;</label> </td>
 				  			<td><input type="text" id="gastoPrevision.anio" name="gastoPrevision.anio" /></td>
 				  			<td align="right" width="150"><label for="gastoPrevision.mes">&nbsp;Mes:&nbsp;</label></td> 
 				  			<td><input type="text" id="gastoPrevision.mes" name="gastoPrevision.mes" /></td>
@@ -129,7 +138,13 @@
 				  		</tr>
 				  		<tr>	
 				  			<td align="right" ><label for="gastoReal.fechaPago">Fecha:&nbsp;</label>  </td>
-				  			<td colspan="4"><input type="text" id="gastoReal.fechaPago" name="gastoReal.fechaPago" disabled="disabled" /></td>
+				  			<td colspan="4">
+				  				<input type="hidden" id="gastoReal.fechaPago" name="gastoReal.fechaPago" disabled="disabled" />
+				  				&nbsp;&nbsp;<input type="text" name="dia" maxlength="2" size="2" style="width:22px;" disabled >
+								&nbsp;<input type="text" name="mes" maxlength="2" size="2"  style="width:22px;" disabled  >
+								&nbsp;<input type="text" name="anio" maxlength="4" size="4" style="width:32px;" disabled >
+								&nbsp;&nbsp;<a href="JavaScript:doNothing()" onclick="allowPrevious=true;setDateField(document.gastoAlta.dia,document.gastoAlta.mes,document.gastoAlta.anio);top.newWin = window.open('calendario.jsp','cal','WIDTH=200,HEIGHT=160,TOP=200,LEFT=300')" onMouseOver="javascript: window.status = 'Abrir calendario'; return true;" onMouseOut="window.status=' '; return true;" >Fecha</a>
+				  			</td>
 				  		</tr>
 				  		<tr>	
 				  			<td align="right" ><label for="gastoReal.numeroFacturaPago" ></label>  Nro Factura:&nbsp;</td>

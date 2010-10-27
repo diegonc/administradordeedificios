@@ -38,7 +38,7 @@
 		var montoPrevision = document.getElementById("tgMontoVariable.montoPrevision");
 		var proximoVencimiento=document.getElementById("tgMontoVariable.proximoVencimiento");
 		armarFecha(proximoVencimiento);
-		alert(proximoVencimiento.value);
+	
 		if(codigo.value==""){ alert("Debe completar el codigo"); validado=false;}
 		if(validado==true)if(descripcion.value==""){ alert("Debe completar la descripcion"); validado=false;}
 
@@ -68,6 +68,10 @@ function habilitarInputsMontos(){
 	var montoFijo= document.getElementById("montoFijo");
 	document.getElementById("tgMontoVariable.montoPrevision").disabled=(montoVariable.checked==true)?"":"disabled";
 	document.getElementById("tgMontoVariable.proximoVencimiento").disabled=(montoVariable.checked==true)? "":"disabled";
+	document.getElementById("anio").disabled=(montoVariable.checked==true)? "":"disabled";
+	document.getElementById("mes").disabled=(montoVariable.checked==true)? "":"disabled";
+	document.getElementById("dia").disabled=(montoVariable.checked==true)? "":"disabled";
+	
 	document.getElementById("tgMontoFijo.montoActual").disabled=(montoFijo.checked==true)?"":"disabled";
 	document.getElementById("tgMontoFijo.diaLimite").disabled=(montoFijo.checked==true)? "":"disabled";
 
@@ -85,6 +89,9 @@ function habilitarInputsOrdinario(){
 		document.getElementById("tgMontoVariable.montoPrevision").disabled="disabled";
 		document.getElementById("tgMontoFijo.diaLimite").disabled="disabled";
 		document.getElementById("tgMontoVariable.proximoVencimiento").disabled="disabled";
+		document.getElementById("anio").disabled="disabled";
+		document.getElementById("mes").disabled="disabled";
+		document.getElementById("dia").disabled="disabled";
 	}
 }
 
@@ -99,6 +106,9 @@ function habilitarInputsPlazo(){
 		document.getElementById("tgMontoVariable.montoPrevision").disabled="disabled";
 		document.getElementById("tgMontoFijo.diaLimite").disabled="disabled";
 		document.getElementById("tgMontoVariable.proximoVencimiento").disabled="disabled";
+		document.getElementById("mes").disabled="disabled";
+		document.getElementById("anio").disabled="disabled";
+		document.getElementById("dia").disabled="disabled";
 	}	
 }
 </script>

@@ -61,6 +61,9 @@ function habilitarInputsMontos(){
 	var montoFijo= document.getElementById("montoFijo");
 	document.getElementById("tgMontoVariable.montoPrevision").disabled=(montoVariable.checked==true)?"":"disabled";
 	document.getElementById("tgMontoVariable.proximoVencimiento").disabled=(montoVariable.checked==true)? "":"disabled";
+	document.getElementById("anio").disabled=(montoVariable.checked==true)? "":"disabled";
+	document.getElementById("mes").disabled=(montoVariable.checked==true)? "":"disabled";
+	document.getElementById("dia").disabled=(montoVariable.checked==true)? "":"disabled";
 	document.getElementById("tgMontoFijo.montoActual").disabled=(montoFijo.checked==true)?"":"disabled";
 	document.getElementById("tgMontoFijo.diaLimite").disabled=(montoFijo.checked==true)? "":"disabled";
 
@@ -78,6 +81,9 @@ function habilitarInputsOrdinario(){
 		document.getElementById("tgMontoVariable.montoPrevision").disabled="disabled";
 		document.getElementById("tgMontoFijo.diaLimite").disabled="disabled";
 		document.getElementById("tgMontoVariable.proximoVencimiento").disabled="disabled";
+		document.getElementById("dia").disabled="disabled";
+		document.getElementById("mes").disabled="disabled";
+		document.getElementById("anio").disabled="disabled";
 	}
 }
 
@@ -92,6 +98,9 @@ function habilitarInputsPlazo(){
 		document.getElementById("tgMontoVariable.montoPrevision").disabled="disabled";
 		document.getElementById("tgMontoFijo.diaLimite").disabled="disabled";
 		document.getElementById("tgMontoVariable.proximoVencimiento").disabled="disabled";
+		document.getElementById("dia").disabled="disabled";
+		document.getElementById("mes").disabled="disabled";
+		document.getElementById("anio").disabled="disabled";
 	}	
 }
 </script>
@@ -172,10 +181,10 @@ function habilitarInputsPlazo(){
 				  			<td><label for="tgMontoVariable.montoPrevision">Importe:&nbsp;</label></td> 
 				  			<td><input type="text" id="tgMontoVariable.montoPrevision" name="tgMontoVariable.montoPrevision" disabled="disabled"/></td>
 				  			<td><label for="tgMontoVariable.proximoVencimiento">&nbsp;Prox. Vto:&nbsp;</label></td>
-				  			<td><input type="hidden" id="tgMontoVariable.proximoVencimiento" name="tgMontoVariable.proximoVencimiento" disabled="disabled"/>
-				  				&nbsp;&nbsp;<input type="text" name="dia" maxlength="2" size="2" style="width:22px;" >
-								&nbsp;<input type="text" name="mes" maxlength="2" size="2"  style="width:22px;" >
-								&nbsp;<input type="text" name="anio" maxlength="4" size="4" style="width:32px;" >
+				  			<td height="30"><input type="hidden" id="tgMontoVariable.proximoVencimiento" name="tgMontoVariable.proximoVencimiento" disabled="disabled"/>
+				  				&nbsp;&nbsp;<input type="text" name="dia" maxlength="2" size="2" style="width:22px;" disabled >
+								&nbsp;<input type="text" name="mes" maxlength="2" size="2"  style="width:22px;" disabled  >
+								&nbsp;<input type="text" name="anio" maxlength="4" size="4" style="width:32px;" disabled >
 								&nbsp;&nbsp;<a href="JavaScript:doNothing()" onclick="allowPrevious=true;setDateField(tipoDeGastoAlta.dia,document.tipoDeGastoAlta.mes,document.tipoDeGastoAlta.anio);top.newWin = window.open('calendario.jsp','cal','WIDTH=200,HEIGHT=160,TOP=200,LEFT=300')" onMouseOver="javascript: window.status = 'Abrir calendario'; return true;" onMouseOut="window.status=' '; return true;" >Fecha</a>
 				  			
 				  			</td>
