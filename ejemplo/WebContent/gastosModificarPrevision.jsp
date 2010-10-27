@@ -79,12 +79,10 @@ function validar(thisform) {
 				 			<td>&nbsp;&nbsp;<input type="text" style="display: none;" id="descripcion_tipo_gasto" name="descripcion_tipo_gasto" value="<%=gasto.getTipoGasto().getDescripcion() %>" readonly size="15"/></td>
 				 			<td>&nbsp;&nbsp;<input type="text" style="display: none;" id="edificio_id" name="edificio_id" value="<%=gasto.getEdificio().getId() %>" readonly size="15"/></td>
 				 		</tr>
-				  		<tr>
-			  			<td colspan="8"><input class="btn" type="button" value="Modificar" onclick="validar()" /></td>
-			  			<td> <a href="GastosListarModifElimAction?id=<%=gasto.getEdificio().getId()%>">Volver</a> </td>
-			  			</tr>
+	
 			  		</table>			  	
 			</fieldset>
+			<input class="btn" type="button" value="Aceptar" onclick="validar()" />&nbsp;&nbsp; <a href="GastosListarModifElimAction?id=<%=gasto.getEdificio().getId()%>">Volver</a>
 		</form>
 	</td>
 	<td width="15"  class="fondo"></td>
