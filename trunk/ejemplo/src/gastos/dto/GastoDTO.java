@@ -52,7 +52,7 @@ public class GastoDTO implements Serializable{
 	public TipoGastoDTO getTipoGasto() {
 		return tipoGasto;
 	}
-	
+		
 	public void setTipoGasto(TipoGastoDTO tipoGasto) {
 		this.tipoGasto = tipoGasto;
 	}
