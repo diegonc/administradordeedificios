@@ -24,10 +24,10 @@
 <tr>
 <td width="5"  class="borde"></td>
 	<td width="15"  class="fondo"></td>
-	<td width="770" class="fondo" align="left">
+	<td width="770" class="fondo" align="center">
 		<form class="elegante" name="modifEdificio" id="modifEdificio" action="EdificioModifAction">
 			<fieldset>
-		  		<legend>Modificar de Edificios</legend>
+		  		<legend>Ver Edificio</legend>
 			 		<table  border="0" cellpadding="0" cellspacing="0" border="2">
 			 			<tr><td colspan="8" height="10"></td></tr>
 			 			<tr>
@@ -103,12 +103,10 @@
 				 			<td>&nbsp;&nbsp;<input type="text" id="fondoOrd" name="fondoOrd" value="<%=edificio.getFondo_ordinario() %>" readonly size="9"/></td>
 				 			<td align="right" ><label for="fondoExt">Fondo Extraordinario:</label> </td>
 				 			<td>&nbsp;&nbsp;<input type="text" id="fondoExt" name="fondoExt" value="<%=edificio.getFondo_extraordinario() %>" readonly size="9"/></td>
-			 			</tr>
-				  		<tr>		  	
-			  			<td> <a href="EdificioListarAction?redi=edificio">Volver</a> </td>
-			  			</tr>
+			 			</tr>				  	
 			  		</table>			  	
 			</fieldset>
+			<a href="EdificioListarAction?redi=edificio">Volver</a> 
 		</form>
 	</td>
 	<td width="15"  class="fondo"></td>
