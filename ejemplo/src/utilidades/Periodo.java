@@ -35,8 +35,8 @@ public class Periodo {
 		this.anio = anio;
 	}
 	
-	public Calendar toDate(){
-		return new GregorianCalendar(this.anio, this.mes, 1);
+	public Date toDate(){
+		return new GregorianCalendar(this.anio, this.mes-1, 1).getTime();
 	}
 	
 	public String obtenerFechaInicio(){
@@ -45,5 +45,15 @@ public class Periodo {
 	
 	public String obtenerFechaFin(){
 		return this.anio+"-"+this.mes+"-31";
+	}
+	
+	public Periodo obtenerPeriodoAnterior(){
+		Calendar calendar = new GregorianCalendar(this.anio, this.mes-2, 1);
+		return new Periodo(calendar.getTime());
+	}
+	
+	@Override
+	public String toString() {
+		return this.mes +" - "+this.anio;
 	}
 }

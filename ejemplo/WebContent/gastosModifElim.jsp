@@ -22,8 +22,9 @@
 			<fieldset><legend>Listado de Gastos Reales Pendientes</legend>
 			<table width="500" border="1" class="listado" >
 				<tr>
+					<td class="listado_par">Folio</td>
 					<td class="listado_par">Gasto</td>
-					<td class="listado_par">Razon Social</td>
+					<td class="listado_par">Razon&nbsp;Social</td>
 					<td class="listado_par">Detalle</td>
 					<td class="listado_par">Monto</td>
 					<td class="listado_par">&nbsp;</td>
@@ -34,7 +35,8 @@
 				</tr>	
 			<%for (GastoRealDTO gastoRealDTO : gastosReales) {  %>		
 				<tr>
-					<td><%= gastoRealDTO.getDetalle()%></td>
+					<td><%= gastoRealDTO.getNumeroFolio()%></td>
+					<td><%= gastoRealDTO.getTipoGasto().getDescripcion()%></td>
 					<td><%= gastoRealDTO.getRazonSocial()%></td>
 					<td><%= gastoRealDTO.getDetalle()%></td>
 					<td><%= gastoRealDTO.getMonto()%></td>	
@@ -52,6 +54,7 @@
 			<legend>Listado de Gastos Previstos Futuros</legend>
 			<table width="500" border="1" class="listado" >
 				<tr>
+					<td class="listado_par">Folio</td>
 					<td class="listado_par">Gasto</td>
 					<td class="listado_par">Detalle</td>
 					<td class="listado_par">Año</td>
@@ -62,7 +65,8 @@
 				</tr>	
 			<%for (GastoPrevisionDTO gastoPrevistosDTO : gastosPrevistos) {  %>		
 				<tr>
-					<td><%= gastoPrevistosDTO.getDetalle()%></td>
+					<td><%= gastoPrevistosDTO.getNumeroFolio()%></td>
+					<td><%= gastoPrevistosDTO.getTipoGasto().getDescripcion()%></td>
 					<td><%= gastoPrevistosDTO.getDetalle()%></td>
 					<td><%= gastoPrevistosDTO.getAnio()%></td>
 					<td><%= gastoPrevistosDTO.getMes()%></td>

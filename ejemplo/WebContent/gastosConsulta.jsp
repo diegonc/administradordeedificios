@@ -18,6 +18,7 @@
 		<table class="listado">
 			<thead>
 				<tr>
+					<td class="listado_par" >Folio</td>
 					<td class="listado_par" >Tipo Gasto</td>
 					<td class="listado_par">Monto</td>
 					<s:if test="categoriaElegida.equals('PREVISION')">
@@ -36,6 +37,7 @@
 			<s:if test="resultados != null && resultados.size() > 0">
 			<s:iterator value="resultados">
 			<tr>
+				<td><s:property value="numeroFolio" /></td>
 				<td><s:property value="tipoGasto.descripcion" /></td>
 				<td><s:property value="monto" /></td>
 				<s:if test="categoriaElegida.equals('PREVISION')">
