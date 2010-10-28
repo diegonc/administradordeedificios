@@ -31,7 +31,7 @@
 			<tr>
 				<td><%= edificioDTO.getNombre()%></td>
 				<td><a href="expensasPropiedadesListado.jsp?id=<%=edificioDTO.getId()%>">Ver Propiedades</a></td>	
-				<td><a href="#">Liquidar</a></td>
+				<td><a href="expensasLiquidacionResultante?id=<%=edificioDTO.getId()%>">Liquidar</a></td>
 			</tr>	
 		<%} %>				
 		

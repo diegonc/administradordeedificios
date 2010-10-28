@@ -47,18 +47,15 @@ function validar(){
 }
 function cerrar(id){
 	document.getElementById(id).style.display=document.getElementById(id).style.display=="none"?"block":"none";
-	if (document.getElementById(id).style.display=="none"){
-		document.getElementById("ima"+id).src="images/cerrar.jpg";
-	}else{
-		document.getElementById("ima"+id).src="images/abrir.jpg";
-	}
+	
 }
 
 function deshabilitarAdministrador(){
 	var cobro = document.getElementById("responsableCobros").checked;
 	var gasto = document.getElementById("responsableGastos").checked;
 	var edif = document.getElementById("responsableGastos").checked;
-	document.getElementById("administrador").disabled = (cobro||gasto||edif)?"":"disabled";
+	document.getElementById("administrador").disabled = (cobro||gasto||edif)?"disabled":"";
+	
 }
 </script>
 
@@ -98,7 +95,7 @@ function deshabilitarAdministrador(){
 								<tr>
 									<td bgcolor="#F0F0F0"><input type="checkbox" name="responsableEdificios" id="responsableEdificios" value="<%=PerfilDTO.RESPONSABLE_EDIFICIO%>" <%=responsableEdificio%> onclick="deshabilitarAdministrador()" /> </td>
 				  	  				<td bgcolor="#F0F0F0"><label for="responsableEdificios"><%=PerfilDTO.RESPONSABLE_EDIFICIO%></label></td>
-				  	  				<td bgcolor="#F0F0F0" align="right"><img id="imagrupo2" src="images/cerrar.jpg" alt="Agregar Edificios" onclick="cerrar('grupo2')"></img></td> 
+				  	  				<td bgcolor="#F0F0F0" align="right"><img id="imagrupo2"  src="images/cerrar.jpg" alt="Agregar Edificios" onclick="cerrar('grupo2')"></img></td> 
 				  	  			</tr>
 				 	  	</table>
 				 	  	
