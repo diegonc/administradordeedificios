@@ -29,8 +29,9 @@ public List<ExpensaDTO> obtenerExpensasFijas(int id){
 				//TODO: ver intereses
 				double deuda = propiedadActual.getCtaOrdSaldoExp()+ propiedadActual.getCtaOrdSaldoInt();
 				expensa.setDeudaPrevia(deuda);
-				expensa.setTipo("0");
-				expensa.setNumeroOperacion(0);
+				expensa.setTipo("O");
+				//TODO:ver el nro de operacion de donde sacarlo
+				expensa.setNumeroOperacion(expensa.getId());
 				expensasFijas.add(expensa);
 				
 			}
@@ -39,9 +40,11 @@ public List<ExpensaDTO> obtenerExpensasFijas(int id){
 		
 		for(ExpensaDTO exp: expensasFijas){
 			session.saveOrUpdate(exp);
+			
 			//System.out.println(exp.getPropiedad().getNivel() + "-"+exp.getPropiedad().getOrden()+"  "+ exp.getDeudaPrevia()+ "  "+ exp.getMonto() );
 		}
 		session.getTransaction().commit();
+		
 		return expensasFijas;
 	}
 
