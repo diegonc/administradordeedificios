@@ -2,6 +2,8 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page language="java" contentType="text/html" import="edificio.EdificioDTO"%>
 <%@ page language="java" contentType="text/html" import="gastos.dto.TipoGastoDTO"%>
+<%@ page language="java" contentType="text/html" import="expensas.dto.ExpensaDTO"%>
+<%@ page language="java" contentType="text/html" import="propiedades.PropiedadDTO"%>
 <%@ page language="java" contentType="text/html" import="gastos.dto.GastoDTO"%>
 <%@ page language="java" contentType="text/html" import="java.util.List"%>
 <%@ page language="java" contentType="text/html" import="java.util.HashMap"%>
@@ -93,14 +95,19 @@ function ocularYMostrar(id){
 		<tr class="listado_par" >
 			<td>Piso-DTO</td><td>Responsable</td><td>Saldo</br> Anterior</td><td>Exp.</br> Ordinarias</td><td>Int. Ord.</td><td>Total</br> Ord<td>Exp.</br>Extraord.</td><td>Int. ExtraOrd</td><td>Total</br>Extraord</td> 
 		</tr>
-		<%for (int h=0; h<20;h++){
+		<%
+		List<ExpensaDTO> expensas = detalleExpensa.getExpensas();
+		int h =0;
+		for (ExpensaDTO exp : expensas){
+			PropiedadDTO propiedad = exp.getPropiedad();
 			String color ="bgcolor= '#E0E0E0'";
 			if ((h%2)==0){
 				color="";
 			}
+			h++;
 		%>
 			<tr <%=color %>>
-				<td >Piso-<%=h %></td><td>Propiedad <%=h %></td><td>0</td><td>1000</td><td>0</td><td>0</td><td>100</td><td>0</td><td>0</td>
+				<td ><%=propiedad.getNivel() +" " + propiedad.getNivel() %></td><td> <%=propiedad.getPropietario().getDni() %></td><td><%=exp.getDeudaPrevia() %></td><td><%=exp.getMonto() %></td><td><%=exp.getIntereses()%></td><td>0</td><td>0</td><td>0</td><td>0</td>
 			</tr>
 			
 		<%} %>
