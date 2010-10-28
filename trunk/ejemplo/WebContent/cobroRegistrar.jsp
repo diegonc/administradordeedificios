@@ -9,7 +9,10 @@
 <%
 	int idEdificio = (Integer) ActionContext.getContext().getValueStack().findValue("idEdificio");
 	int idProp = (Integer) ActionContext.getContext().getValueStack().findValue("idPropiedad");
-	
+	ExpensaAppl expAppl = new ExpensaAppl();
+	SessionFactory factory = HibernateUtil.getSessionFactory();	
+	List<ExpensaDTO> expensasProp = expAppl.getExpensaActivaPorIdProp(factory,idProp);
+	ExpensaDTO expACobrar = expensasProp.get(0); 
 %>
 
 <script type="text/javascript">
@@ -57,26 +60,34 @@ function validar(thisform) {
 			<fieldset>
 		  		<legend>Registrar Cobro</legend>
 			 		<table  border="0" cellpadding="0" cellspacing="0" border="2">
-			 			<tr><td colspan="8" height="10"></td></tr>
+			 			<tr><td colspan="10" height="5"></td></tr>
+			 			<tr>
+			 				<tr><td colspan="5" height="10"></td></tr>
+			 				<legend>Información de la Expensa a Cobrar</legend>
+			 				<td align="right"><label for="operacion">Operacion: <%=expACobrar.getNumeroOperacion() %></label> </td>
+				 			<td align="right">&nbsp;<label for="operacion">Monto: <%=expACobrar.getMonto() %></label> </td>
+				 			<td align="right">&nbsp;<label for="edificio">Edificio: <%=expACobrar.getPropiedad().getTipoPropiedad().getEdificio().getNombre() %></label> </td>
+				 			<td align="right">&nbsp;<label for="nivel">Nivel: <%=expACobrar.getPropiedad().getNivel() %></label> </td>
+				 			<td align="right">&nbsp;<label for="orden">Orden: <%=expACobrar.getPropiedad().getOrden() %></label> </td>
+				 		</tr>
+				 		<tr><td colspan="25" height="10"></td></tr>
 			 			<tr>
 			 				<td align="right"><label for="folio">Comprobante:</label> </td>
 				 			<td>&nbsp;&nbsp;<input type="text" id="comprobante" name="comprobante" size="15"/></td>
 				 			<td align="right"><label for="fecha">Fecha Pago:</label> </td>
 				 			<td>&nbsp;&nbsp;<input type="text" id="fecha" name="fecha" size="15"/></td>
-				 		</tr>
-				 		<tr>
 				 			<td align="right"><label for="fecha">Monto Pago:</label> </td>
 				 			<td>&nbsp;&nbsp;<input type="text" id="montoPago" name="montoPago" size="15"/></td>
-				 			<td>&nbsp;&nbsp;<input type="text" style="display: none;" id="idPropiedad" name="idPropiedad" value=<%=idProp %> size="15"/></td>
-				 			<td>&nbsp;&nbsp;<input type="text" style="display: none;" id="idEdificio" name="idEdificio" value=<%=idEdificio %> size="15"/></td>
 				 		</tr>
 				  		<tr>
 			  			<td colspan="8"><input class="btn" type="button" value="Registrar" onclick="validar()" /></td>
 			  			<td> <a
 					href="expensasPropiedadesListado.jsp?id=<%=idEdificio%>">Volver</a> </td>
 			  			</tr>
-			  		</table>			  	
+			  		</table>		
 			</fieldset>
+			<input type="text" style="display: none;" id="idPropiedad" name="idPropiedad" value=<%=idProp %> size="15"/>	
+			<input type="text" style="display: none;" id="idEdificio" name="idEdificio" value=<%=idEdificio %> size="15"/>		  	
 		</form>
 	</td>
 	<td width="15"  class="fondo"></td>

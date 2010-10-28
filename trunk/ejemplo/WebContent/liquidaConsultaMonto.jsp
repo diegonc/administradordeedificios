@@ -1,5 +1,7 @@
 <%@page import="expensas.*"%>
-<%@page import="propiedades.PropiedadDTO"%><jsp:include page="/WEB-INF/jspf/header.jspf"></jsp:include>
+<%@page import="edificio.*"%>
+<%@page import="propiedades.*"%>
+<jsp:include page="/WEB-INF/jspf/header.jspf"></jsp:include>
 <%@ page language="java" contentType="text/html" import="java.util.*"%>
 <%@ page language="java" contentType="text/html" import="expensas.appl.*"%>
 <%@ page language="java" contentType="text/html" import="expensas.dto.*"%>
@@ -8,6 +10,23 @@
 <%
 	int idEdificio = Integer.parseInt(request.getParameter("idEdificio"));
 	int idProp = Integer.parseInt(request.getParameter("idProp"));	 
+	
+	Session hSession = HibernateUtil.getSession();
+	EdificioDTO edificio = (EdificioDTO) hSession.load(
+			EdificioDTO.class, idEdificio);
+	Set<TipoPropiedadDTO> tipos = edificio.getTipoPropiedades();
+	Iterator<TipoPropiedadDTO> iteradorTipos = tipos.iterator();
+	PropiedadDTO prop = new PropiedadDTO();
+	
+	while (iteradorTipos.hasNext()) {
+		List<PropiedadDTO> propiedades = iteradorTipos.next().getPropiedades();
+		for (PropiedadDTO propiedadDTO : propiedades) {
+			if (propiedadDTO.getId() == idProp) {
+				prop = propiedadDTO;		
+			}
+		}
+	}
+	
 	boolean mostrarDeuda = false;
 	
 	ExpensaAppl expAppl = new ExpensaAppl();
@@ -48,28 +67,31 @@
 			<fieldset>
 		  		<legend>Monto de Expensas a Pagar</legend>
 			 		<table  border="0" cellpadding="0" cellspacing="0" border="2">
-			 			<tr><td colspan="8" height="10"></td></tr>
 			 			<tr>
-			 				<td align="right"><label for="edificio">Edificio: <%=exp.getPropiedad().getTipoPropiedad().getEdificio().getNombre()%></label> </td>
+			 				<td align="right"><label for="edificio">Edificio: <%=prop.getTipoPropiedad().getEdificio().getNombre()%></label> </td>
+			 				<td align="right">&nbsp;&nbsp;<label for="Nivel">Nivel: <%=prop.getNivel()%></label> </td>
+			 				<td align="right">&nbsp;&nbsp;<label for="Orden">Orden: <%=prop.getOrden()%></label> </td>
 			 			</tr>
-			 			<tr>
-			 				<td align="right"><label for="Nivel">Nivel: <%=exp.getPropiedad().getNivel()%></label> </td>
-			 			</tr>
-			 			<tr>
-			 				<td align="right"><label for="Orden">Orden: <%=exp.getPropiedad().getOrden()%></label> </td>
-			 			</tr>
+			 			<tr><td colspan="5" height="10"></td></tr>
 			 			<%if (mostrarDeuda) { %>
 			 			<tr>
-			 				<td align="right"><label for="monto">Monto: <%=exp.getMonto()%></label> </td>
+			 				<td><label for="monto">Monto Adeudado por Expensas Liquidada: <%=exp.getMonto()%></label> </td>
 				 		</tr>
 				 		<% } else { %>
 				 		<tr>
-			 				<td align="right"><label for="monto">No existe deuda</label> </td>
+			 				<td align="right"><label for="monto">No existe liquidación adeudada</label> </td>
 				 		</tr>
 				 		<% } %>
+				 		<tr><td colspan="5" height="10"></td></tr>
+				 		<tr>
+			 				<td><label for="saldoOrd">Saldo Oridinario de la Propiedad: <%=prop.getCtaOrdSaldoExp()%></label> </td>
+				 		</tr>
+				 		<tr>
+			 				<td><label for="saldoExt">Saldo Extraordinario de la Propiedad: <%=prop.getCtaExtSaldoExp()%></label> </td>
+				 		</tr>
+				 		<tr><td colspan="5" height="10"></td></tr>
 				  		<tr>
-			  			<td> <a
-					href="expensasPropiedadesListado.jsp?id=<%=idEdificio%>">Volver</a> </td>
+			  			<td> <a href="expensasPropiedadesListado.jsp?id=<%=idEdificio%>">Volver</a> </td>
 			  			</tr>
 			  		</table>			  	
 			</fieldset>
