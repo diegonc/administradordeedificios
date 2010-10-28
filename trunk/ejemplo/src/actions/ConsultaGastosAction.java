@@ -86,7 +86,7 @@ public class ConsultaGastosAction extends SessionAwareAction implements Preparab
 		else if (categoriaElegida.equals("REAL"))
 			categoriaGasto = GastoRealDTO.class;
 		else
-			throw new IllegalArgumentException("Categoria invalidad: " + categoriaElegida);
+			throw new IllegalArgumentException("Categoria invalida: " + categoriaElegida);
 
 		Criteria criteria = session.createCriteria(categoriaGasto)
 			.createAlias("edificio", "edificio")
