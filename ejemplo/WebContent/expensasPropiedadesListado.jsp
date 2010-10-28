@@ -41,10 +41,10 @@ function redirecConsultaLiq() {
 <tr>
 	<td width="5" class="borde"></td>
 	<td width="15" class="fondo"></td>
-	<td width="770" class="fondo" align="left">
+	<td width="770" class="fondo" align="center">
 	<form class="elegante" id="expensasProp" name="expensasProp" action="expensasPropiedadesListado">
 	<fieldset><legend>Listado de Propiedades</legend>
-	<table width="500" border="1" class="listado">
+	<table width="500" border="1" class="listado" align="center">
 		<tr>
 			<td class="listado_par">Tipo Propieadad</td>
 			<td class="listado_par">Nivel</td>
@@ -72,7 +72,7 @@ function redirecConsultaLiq() {
 	<input type="button" value="Re-Liquidar" onclick=""> 
 	<input type="submit" value="Registrar Cobro" name="method:mostrarFormulario" >
 	<input type="submit" value="Consultar/Eliminar Cobros" name="method:consultarCobros">
-	<input type="button" value="Consultar Liquidaciones" onclick="redirecConsultaLiq()">
+	<input type="button" value="Consultar Deuda" onclick="redirecConsultaLiq()">
 	<a href="EdificioListarAction?redi=expensa">Volver</a></fieldset>
 	</form>
 </tr>
