@@ -2,6 +2,8 @@ package test.expensas;
 
 import edificio.EdificioAppl;
 import edificio.EdificioDTO;
+import expensas.appl.ExpensaAppl;
+import expensas.dto.ExpensaDTO;
 import gastos.dto.GastoDTO;
 import gastos.dto.GastoRealDTO;
 import gastos.dto.TipoGastoDTO;
@@ -316,6 +318,35 @@ public class TestExpensas extends TestCase {
 		
 		return resultado.doubleValue();		
 	}
+	
+	public void testObtenerExpensasFijas(){
+		
+		Session session = HibernateUtil.getSession();
+		session.beginTransaction();
+		EdificioAppl edificioAppl = new EdificioAppl();
+		EdificioDTO edificio = edificioAppl.getEdificio(HibernateUtil.getSessionFactory(), 1);
+		List<ExpensaDTO> expensasFijas = new ArrayList<ExpensaDTO>();
+		for (TipoPropiedadDTO tipoPropiedadActual : edificio.getTipoPropiedades()) {
+			List<PropiedadDTO> propiedades = tipoPropiedadActual.getPropiedades();
+			for (PropiedadDTO propiedadActual : propiedades) {
+				ExpensaDTO expensa = new ExpensaDTO();
+				expensa.setPropiedad(propiedadActual);
+				expensa.setMonto(tipoPropiedadActual.getMontoExp());
+				//TODO: ver intereses
+				double deuda = propiedadActual.getCtaOrdSaldoExp()+ propiedadActual.getCtaOrdSaldoInt();
+				expensa.setDeudaPrevia(deuda);
+				expensasFijas.add(expensa);
+			}
+			
+		}
+		
+		for(ExpensaDTO exp: expensasFijas){
+			session.saveOrUpdate(exp);
+			//System.out.println(exp.getPropiedad().getNivel() + "-"+exp.getPropiedad().getOrden()+"  "+ exp.getDeudaPrevia()+ "  "+ exp.getMonto() );
+		}
+		session.getTransaction().commit();
+	}
+
 
 		
 	
