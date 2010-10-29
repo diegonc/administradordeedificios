@@ -9,6 +9,7 @@ import gastos.appl.GastosAppl;
 public class GastoPrevisionDeleteAction extends ActionSupport{
 	
 	private int id;
+	private int edificio_id;
 	
 	public int getId() {
 		return id;
@@ -27,4 +28,11 @@ public class GastoPrevisionDeleteAction extends ActionSupport{
 			return ERROR;
 		}	
 	}
+	public void setEdificio_id(int edificio_id) {
+		this.edificio_id = edificio_id;
+	}
+	public int getEdificio_id() {
+		return edificio_id;
+	}
+
 }

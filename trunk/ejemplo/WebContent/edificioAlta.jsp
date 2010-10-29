@@ -124,9 +124,9 @@ function validar(thisform) {
 				 			<td align="right" ><label for="encargado_telefono">Tel:</label> </td>
 				 			<td>&nbsp;&nbsp;<input type="text" id="encargado_telefono" name="encargado_telefono" size="9"/></td>
 				 			<td align="right" ><label for="encargado_piso">Piso</label> &nbsp;&nbsp;
-				 			<input type="text" id="encargado_piso" name="encargado_piso" size="2" />
-				 			<label for="encargado_depto">Dpto</label> &nbsp;&nbsp;
-				 			<input type="text" id="encargado_depto" name="encargado_depto" size="2" />
+				 			<input type="text" id="encargado_piso" name="encargado_piso" size="2" /></td>
+				 			<td align="right" ><label for="encargado_depto">Dpto</label> &nbsp;&nbsp;
+				 			<input type="text" id="encargado_depto" name="encargado_depto" size="2" /></td>
 				 		
 			 			</tr>			
 			 			<tr><td colspan="8" height="10"></td></tr>	  		

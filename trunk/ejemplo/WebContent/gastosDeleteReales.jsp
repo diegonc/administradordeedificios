@@ -36,8 +36,9 @@
 			 			<tr><td colspan="8" height="10"></td></tr>
 			 			<tr>
 			 				<td align="right"><label for="nombre">Quiere eliminar el Gasto:</label> </td>
-				 			<td>&nbsp;&nbsp;<input type="text" id="nombre" name="nombre" value="<%=gasto.getDetalle()%>" readonly size="15"/></td>
+				 			<td>&nbsp;&nbsp;<input type="text" id="nombre" name="nombre" value="<%=gasto.getDetalle()%>" readonly size="30"/></td>
 				 			<td>&nbsp;&nbsp;<input type="text" style="display: none;" id="id" name="id" value="<%=gasto.getId()%>" readonly size="15"/></td>	
+				 			<td>&nbsp;&nbsp;<input type="text" style="display: none;" id="edificio_id" name="edificio_id" value="<%=gasto.getEdificio().getId()%>" readonly size="15"/></td>
 				 		</tr>				  		
 			  		</table>			  	
 			</fieldset>

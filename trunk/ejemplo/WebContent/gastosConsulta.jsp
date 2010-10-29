@@ -3,7 +3,7 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <div class="contenido">
 	<div class="titulo">
-		<h3>[Edificio: <s:property value="idEdificio"/>] >> Consulta de Gastos</h3>
+		<h3>Edificio: <s:property value="idEdificio"/> - Consulta de Gastos</h3>
 	</div>
 	<div class="cuerpo">
 		<s:form action="consultaGastos" method="GET">
@@ -14,7 +14,7 @@
 			<s:select multiple="true" label="Tipo Gasto" name="tipoGastoSeleccionados" list="tipoGastos" />
 			<s:submit method="listar" value="Buscar" />
 		</s:form>
-
+		
 		<table class="listado">
 			<thead>
 				<tr>
@@ -55,6 +55,7 @@
 			</s:if>
 			</tbody>
 		</table>
+		<a href="EdificioListarAction?redi=gasto">Volver</a>
 	</div>
 </div>
 <jsp:include page="/WEB-INF/jspf/footer.jspf" />

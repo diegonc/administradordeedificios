@@ -52,7 +52,6 @@ public class GastoRealConsolidarAction extends ActionSupport {
 		} catch (Exception e) {
 			return ERROR;
 		}
-
 	}
 
 	public void setIdEdificio(int idEdificio) {
