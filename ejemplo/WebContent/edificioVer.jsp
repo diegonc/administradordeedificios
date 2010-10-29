@@ -63,16 +63,16 @@
 			 			<tr>
 				 			<td><label for="apto_profesional">Apto Profesional</label></td>
 				 			<%if(edificio.getApto_profesional()==true) { %>
-				 				<td colspan="7">&nbsp;&nbsp;<label for="apto_profesional">SI</label></td>
+				 				<td><label for="apto_profesional">SI</label></td>
 				 			<% 	 } else { %>
-				 				<td colspan="7">&nbsp;&nbsp;<label for="apto_profesional">NO</label></td>
+				 				<td><label for="apto_profesional">NO</label></td>
 				 		    <% }    %>
 				 		</tr>				 		
 				  		<tr><td colspan="8" height="10"></td></tr>  		
 				  		<tr><td class="borderline" colspan="8" height="10"></td></tr>
 				  		<tr>	
 				  			<td align="right" ><label for="formaliq_exp">Forma Liq.:&nbsp;</label>  </td>
-				  			<td colspan="7">&nbsp;&nbsp;<input type="text" id="formaliq_exp" name="formaliq_exp" value="<%=edificio.getForma_liq_exp() %>" readonly size="10"/></input></td>
+				  			<td><input type="text" id="formaliq_exp" name="formaliq_exp" value="<%=edificio.getForma_liq_exp() %>" readonly size="17"/></input></td>
 				  		</tr>
 				  		<tr><td colspan="8" height="10"></td></tr>
 				  		<tr>	

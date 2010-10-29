@@ -49,8 +49,7 @@ public final class EdificioAppl {
 		try {
 			return (EdificioDTO) session.load(EdificioDTO.class, id);
 		} finally {
-			//TODO ver q comento el cierre de la session
-			//	session.close();
+			session.close();
 		}
 	}
 

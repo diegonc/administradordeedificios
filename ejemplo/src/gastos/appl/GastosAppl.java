@@ -91,13 +91,15 @@ public class GastosAppl {
 		java.util.Iterator<GastoPrevisionDTO> iter = results.iterator();
 		Date fecha = new Date();
 		Calendar calendario = Calendar.getInstance();
-		calendario.setTime(fecha); // fecha es el Date de antes.
+		calendario.setTime(fecha);
 		int anio = calendario.get(Calendar.YEAR);
-		int mes = calendario.get(Calendar.MONTH);
+		
+		//TODO ver porque pone el mes 9 si estamos en el 10
+		int mes = calendario.get(Calendar.MONTH) + 1;
 		
 		while (iter.hasNext()) {
 			GastoPrevisionDTO gasto = iter.next();
-			if (gasto.getEdificio().getId() == id && gasto.getAnio() >= anio && (gasto.getAnio() == anio &&  gasto.getMes() > mes)) {
+			if (gasto.getEdificio().getId() == id && (gasto.getAnio() > anio || (gasto.getAnio() == anio && gasto.getMes() > mes))) {
 			   listaLimpia.add(gasto);
 			}
 		}

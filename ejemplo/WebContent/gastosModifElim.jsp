@@ -2,12 +2,15 @@
 <%@page import="gastos.dto.GastoDTO"%>
 <%@page import="gastos.dto.GastoRealDTO"%>
 <%@page import="gastos.dto.GastoPrevisionDTO"%>
-<%@page import="permisos.AdministradorDePermisos"%><jsp:include page="/WEB-INF/jspf/header.jspf"></jsp:include>
+<%@page import="permisos.AdministradorDePermisos"%>
+<%@page import="com.opensymphony.xwork2.ActionContext"%>
+<jsp:include page="/WEB-INF/jspf/header.jspf"></jsp:include>
 <%@ page language="java" import="java.util.*"%>
 <%@ page language="java" import="gastos.*"%>
 <jsp:useBean id="lista" scope="session" class="beans.GastosBean"/>
 
 <%
+	int idEdificio = (Integer) ActionContext.getContext().getValueStack().findValue("id");
 	List<GastoRealDTO> gastosReales = lista.getGastosReales();
 	List<GastoPrevisionDTO> gastosPrevistos = lista.getGastosPrevistos();
 %>
@@ -18,9 +21,9 @@
 	<table id="tablaGastosReales" height="300" cellpadding="0" cellspacing="0" border="0" align="center">
 		<tr>
 			<td width="15" class="fondo"></td>
-			<td width="770" class="fondo" align="left">
+			<td width="770" class="fondo" align="center">
 			<fieldset><legend>Listado de Gastos Reales Pendientes</legend>
-			<table width="500" border="1" class="listado" >
+			<table width="500" border="1" class="listado" align="center">
 				<tr>
 					<td class="listado_par">Folio</td>
 					<td class="listado_par">Gasto</td>
@@ -52,7 +55,7 @@
 			</fieldset>	
 			<fieldset>
 			<legend>Listado de Gastos Previstos Futuros</legend>
-			<table width="500" border="1" class="listado" >
+			<table width="500" border="1" class="listado" align="center">
 				<tr>
 					<td class="listado_par">Folio</td>
 					<td class="listado_par">Gasto</td>
