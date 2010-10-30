@@ -1,6 +1,6 @@
+<%@ taglib prefix="s" uri="/struts-tags" %>
 <%@page import="expensas.appl.*"%>
 <%@page import="expensas.dto.*"%>
-
 <%@page import="com.opensymphony.xwork2.ActionContext"%><jsp:include page="/WEB-INF/jspf/header.jspf"></jsp:include>
 <%@ page language="java" contentType="text/html" import="java.util.*"%>
 <%@ page language="java" contentType="text/html" import="expensas.*"%>
@@ -14,28 +14,36 @@
 	List<ExpensaDTO> expensasProp = expAppl.getExpensaActivaPorIdProp(factory,idProp);
 	ExpensaDTO expACobrar = expensasProp.get(0); 
 %>
-
+<script src="calendario.js" type="text/javascript"></script>
 <script type="text/javascript">
+function armarFecha(elemento){
+	var anio = document.getElementById("anio").value;
+	var mes = document.getElementById("mes").value;
+	var dia = document.getElementById("dia").value;
+	elemento.value=dia+"/"+mes+"/"+anio;
+}
+
 function validar(thisform) {
-	var fechaPago=document.getElementById("fecha");
+	var fecha=document.getElementById("fecha");
 	var montoPago=document.getElementById("montoPago");
 	var comprobante=document.getElementById("comprobante");
+	armarFecha(fecha);
 	valido=true;
+	if (valido==true) {
+		if (comprobante.value=="") {
+			alert("Debe colocar un comprabante");
+			valido=false;
+		}
+	}
 	if(valido==true) {
-		if(/^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/.test(fechaPago.value)==false ){ 
+		if(/^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/.test(fecha.value)==false ){ 
 			alert("El formato de fecha de pago deber ser dd/mm/aaaa");
 			valido=false;
 		} 
 	}
 	if (valido==true) {
-		if (isNaN(montoPago.value)) {
+		if (isNaN(montoPago.value) || (montoPago.value=="")) {
 			alert("El monto pago debe ser un numero");
-			valido=false;
-		}
-	}
-	if (valido==true) {
-		if (comprobante.value=="") {
-			alert("Debe colocar un comprabante");
 			valido=false;
 		}
 	}
@@ -72,11 +80,16 @@ function validar(thisform) {
 				 		</tr>
 				 		<tr><td colspan="25" height="10"></td></tr>
 			 			<tr>
-			 				<td align="right"><label for="folio">Comprobante:</label> </td>
+			 				<td align="right"><label for="compro">Comprobante:</label> </td>
 				 			<td>&nbsp;&nbsp;<input type="text" id="comprobante" name="comprobante" size="15"/></td>
-				 			<td align="right"><label for="fecha">Fecha Pago:</label> </td>
-				 			<td>&nbsp;&nbsp;<input type="text" id="fecha" name="fecha" size="15"/></td>
-				 			<td align="right"><label for="fecha">Monto Pago:</label> </td>
+				 			<td align="right" ><label for="fechaPago">Fecha de Pago:&nbsp;</label>  </td>
+					  		<td><input style="display: none;" type="text" id="fecha" name="fecha" size="15"/>
+					  				&nbsp;&nbsp;<input type="text" name="dia" id="dia" maxlength="2" size="2" style="width:22px;" disabled >
+									&nbsp;<input type="text" name="mes" id="mes" maxlength="2" size="2"  style="width:22px;" disabled  >
+									&nbsp;<input type="text" name="anio" id="anio" maxlength="4" size="4" style="width:32px;" disabled >
+									&nbsp;<a href="JavaScript:doNothing()" onclick="allowPrevious=true;setDateField(document.regisCobro.dia,document.regisCobro.mes,document.regisCobro.anio);top.newWin = window.open('calendario.jsp','cal','WIDTH=200,HEIGHT=160,TOP=200,LEFT=300')" onMouseOver="javascript: window.status = 'Abrir calendario'; return true;" onMouseOut="window.status=' '; return true;" >Fecha</a>
+				 			</td>
+				 			<td align="right"><label for="monto">Monto Pago:</label> </td>
 				 			<td>&nbsp;&nbsp;<input type="text" id="montoPago" name="montoPago" size="15"/></td>
 				 		</tr>
 				  		<tr>
