@@ -1,5 +1,6 @@
 package actions;
 
+import edificio.EdificioDTO;
 import gastos.appl.TiposGastosAppl;
 import gastos.dto.GastoDTO;
 import gastos.dto.GastoPrevisionDTO;
@@ -17,12 +18,16 @@ import org.hibernate.criterion.Restrictions;
 
 import utilidades.SessionAwareAction;
 
+import com.opensymphony.xwork2.util.logging.Logger;
+import com.opensymphony.xwork2.util.logging.LoggerFactory;
 import com.opensymphony.xwork2.validator.annotations.ConversionErrorFieldValidator;
 import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
 import com.opensymphony.xwork2.Preparable;
 
 @SuppressWarnings("serial")
 public class ConsultaGastosAction extends SessionAwareAction implements Preparable {
+
+	private static final Logger LOG = LoggerFactory.getLogger(ConsultaGastosAction.class);
 
 	/* Parametros de la accion */
 	/*
@@ -59,6 +64,14 @@ public class ConsultaGastosAction extends SessionAwareAction implements Preparab
 	private List<GastoDTO> resultados;
 
 	public void prepare() throws Exception {
+		try {
+			EdificioDTO edificio = (EdificioDTO) getSession()
+				.get(EdificioDTO.class, idEdificio);
+			nombreEdificio = edificio.getNombre();
+		} catch(Exception e) {
+			LOG.warn("Error al obtener el nombre del edificio.", e);
+			nombreEdificio = "<<desconocido>>";
+		}
 	}
 
 	private Map<String,String> cargarTiposGastosDisponibles() {
