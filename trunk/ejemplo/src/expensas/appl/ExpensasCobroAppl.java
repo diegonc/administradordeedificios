@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.exception.ConstraintViolationException;
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 import expensas.dto.ExpensaCobroDTO;
@@ -51,7 +52,8 @@ public class ExpensasCobroAppl {
 		Criteria criteria = session.createCriteria(ExpensaCobroDTO.class)
 		.createAlias("liquidacion", "liquidacion")
 		.add(Restrictions.eq("consolidado", false))
-		.add(Restrictions.eq("liquidacion.id", idExpensa));
+		.add(Restrictions.eq("liquidacion.id", idExpensa)).addOrder(Order.desc("fecha"));
+		
 		return criteria.list();
 	}
 
