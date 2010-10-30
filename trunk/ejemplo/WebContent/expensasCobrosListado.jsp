@@ -33,8 +33,12 @@
 							<a href="<s:property value='#url'/>">Eliminar</a>
 						</td>
 						<td>
+							<s:url id="url" action="consolidarCobro" escapeAmp="false">
+								<s:param name="idCobro" value="id"/>
+								<s:param name="idPropiedad" value="idPropiedad"/>
+							</s:url>
 							<% if (AdministradorDePermisos.getInstancia().isAdministrador()) { %>
-							<a href="<s:property value='#'/>">Consolidar</a>
+							<a href="<s:property value='#url'/>">Consolidar</a>
 							<% } %>
 						</td>
 					</tr>
