@@ -51,7 +51,6 @@ public class ExpensasCobroAppl {
 	{
 		Criteria criteria = session.createCriteria(ExpensaCobroDTO.class)
 		.createAlias("liquidacion", "liquidacion")
-		.add(Restrictions.eq("consolidado", false))
 		.add(Restrictions.eq("liquidacion.id", idExpensa)).addOrder(Order.desc("fecha"));
 		
 		return criteria.list();

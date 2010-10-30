@@ -290,6 +290,18 @@
 				<param name="redi">expensa</param>
 			</result>
 		</action>
+		<action name="consolidarCobro" class="actions.ConsolidarCobrosAction">
+			<result name="volver-a-listado" type="redirectAction">
+				<param name="actionName">consultaCobros</param>
+				<param name="idPropiedad">${idPropiedad}</param>
+				<param name="idEdificio">${idEdificio}</param>
+			</result>
+			<result name="no-hay-edificio" type="redirectAction">
+				<param name="actionName">EdificioListarAction</param>
+				<param name="redi">expensa</param>
+			</result>
+		</action>
+		
 	</package>
 
 	<constant name="hibernatePlugin.customSessionFactoryClass"
