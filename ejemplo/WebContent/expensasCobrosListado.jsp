@@ -1,5 +1,6 @@
 <jsp:include page="/WEB-INF/jspf/header.jspf" />
 <%@ taglib prefix="s" uri="/struts-tags" %>
+<%@page import="permisos.AdministradorDePermisos"%>
 <div class="contenido">
 	<div class="titulo">
 		<h3></h3>
@@ -30,6 +31,11 @@
 								<s:param name="idPropiedad" value="idPropiedad"/>
 							</s:url>
 							<a href="<s:property value='#url'/>">Eliminar</a>
+						</td>
+						<td>
+							<% if (AdministradorDePermisos.getInstancia().isAdministrador()) { %>
+							<a href="<s:property value='#'/>">Consolidar</a>
+							<% } %>
 						</td>
 					</tr>
 				</s:iterator>

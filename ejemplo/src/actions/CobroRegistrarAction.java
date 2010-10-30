@@ -9,11 +9,7 @@ import org.hibernate.SessionFactory;
 import permisos.AdministradorDePermisos;
 import utilidades.HibernateUtil;
 
-import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
-import com.opensymphony.xwork2.interceptor.annotations.InputConfig;
-import com.opensymphony.xwork2.validator.annotations.ConversionErrorFieldValidator;
-import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
 
 import expensas.appl.ExpensaAppl;
 import expensas.appl.ExpensasCobroAppl;
