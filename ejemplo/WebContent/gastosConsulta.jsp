@@ -3,7 +3,7 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <div class="contenido">
 	<div class="titulo">
-		<h3>Edificio: <s:property value="idEdificio"/> - Consulta de Gastos</h3>
+		<h3>Edificio: "<s:property value="nombreEdificio"/>" - Consulta de Gastos</h3>
 	</div>
 	<div class="cuerpo">
 		<s:form action="consultaGastos" method="GET">

@@ -261,6 +261,7 @@
 
 		<action name="consultaGastos" method="input"
 			class="actions.ConsultaGastosAction">
+			<interceptor-ref name="pppStackHibernate" />
 			<result name="success">/gastosConsulta.jsp</result>
 			<result name="input">/gastosConsulta.jsp</result>
 		</action>
