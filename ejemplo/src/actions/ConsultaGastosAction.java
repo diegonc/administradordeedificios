@@ -18,6 +18,7 @@ import org.hibernate.criterion.Restrictions;
 import utilidades.SessionAwareAction;
 
 import com.opensymphony.xwork2.validator.annotations.ConversionErrorFieldValidator;
+import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
 import com.opensymphony.xwork2.Preparable;
 
 @SuppressWarnings("serial")
@@ -27,7 +28,7 @@ public class ConsultaGastosAction extends SessionAwareAction implements Preparab
 	/*
 	 * Categoria de gastos a mostrar.
 	 */
-	private String categoriaElegida = "";
+	private String categoriaElegida;
 	/*
 	 * Año utilizado al filtrar gastos de prevision.
 	 */
@@ -119,6 +120,7 @@ public class ConsultaGastosAction extends SessionAwareAction implements Preparab
 		return categoriaElegida;
 	}
 
+	@RequiredFieldValidator(message="Seleccione categoria.")
 	public void setCategoriaElegida(String categoriaElegida) {
 		this.categoriaElegida = categoriaElegida;
 	}

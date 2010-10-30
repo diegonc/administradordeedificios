@@ -14,14 +14,15 @@
 			<s:select multiple="true" label="Tipo Gasto" name="tipoGastoSeleccionados" list="tipoGastos" />
 			<s:submit method="listar" value="Buscar" />
 		</s:form>
-		
+
+		<s:set name="categoriaElegida" value="categoriaElegida == null ? '' : categoriaElegida"/>	
 		<table class="listado">
 			<thead>
 				<tr>
 					<td class="listado_par" >Folio</td>
 					<td class="listado_par" >Tipo Gasto</td>
 					<td class="listado_par">Monto</td>
-					<s:if test="categoriaElegida.equals('PREVISION')">
+					<s:if test="#categoriaElegida.equals('PREVISION')">
 					<td class="listado_par">Año</td>
 					<td class="listado_par">Mes</td>
 					</s:if>
@@ -40,7 +41,7 @@
 				<td><s:property value="numeroFolio" /></td>
 				<td><s:property value="tipoGasto.descripcion" /></td>
 				<td><s:property value="monto" /></td>
-				<s:if test="categoriaElegida.equals('PREVISION')">
+				<s:if test="#categoriaElegida.equals('PREVISION')">
 				<td><s:property value="anio" /></td>
 				<td><s:property value="mes" /></td>						
 				</s:if>
