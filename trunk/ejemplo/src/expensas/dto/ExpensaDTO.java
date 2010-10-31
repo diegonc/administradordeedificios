@@ -1,5 +1,7 @@
 package expensas.dto;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,7 +18,8 @@ import propiedades.PropiedadDTO;
 @Table(name="EXPENSA")
 @PrimaryKeyJoinColumn(name="EXPENSA_ID")
 public class ExpensaDTO {
-
+	public static final String tipoOrdinario="O";
+	public static final String tipoExtraordinario="E";
 	private double deudaPrevia;
 	private double interesSegundoVencimiento;
 	private int id;
@@ -25,7 +28,7 @@ public class ExpensaDTO {
 	private PropiedadDTO propiedad;
 	private double monto;
 	private double intereses;
-		
+	private Date fecha;
 		
 	@Column(name="DEUDA_PREVIA",nullable=true)
 	public double getDeudaPrevia() {
@@ -86,6 +89,14 @@ public class ExpensaDTO {
 	}
 	public void setIntereses(double intereses) {
 		this.intereses = intereses;
+	}
+	
+	@Column(name = "FECHA", nullable = true)
+	public Date getFecha() {
+		return fecha;
+	}
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
 	}
 		
 }

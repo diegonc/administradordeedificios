@@ -18,63 +18,15 @@ import utilidades.HibernateUtil;
 import utilidades.Periodo;
 import edificio.EdificioAppl;
 import edificio.EdificioDTO;
-import expensas.dto.ExpensaDTO;
+import expensas.calculo.ElementoProrrateo;
+import expensas.calculo.ResultadoProrrateo;
 import gastos.dto.GastoDTO;
 import gastos.dto.TipoGastoDTO;
 
 public class TestExpensas extends TestCase {
 	
-	public class ElementoProrrateo{
-		private double coeficiente;
-		private List<TipoPropiedadDTO> tiposDePropiedades = new ArrayList<TipoPropiedadDTO>();
-				
-		public double getCoeficiente() {
-			return coeficiente;
-		}
-		public void setCoeficiente(double coeficiente) {
-			this.coeficiente = coeficiente;
-		}
-		
-		public List<TipoPropiedadDTO> getTiposDePropiedades() {
-			return tiposDePropiedades;
-		}
-		
-		public void setTiposDePropiedades(List<TipoPropiedadDTO> tiposDePropiedades) {
-			this.tiposDePropiedades = tiposDePropiedades;
-		}
-		
-		public double getSuperficieTotal() {
-			double superficieActual = 0;
-			for(TipoPropiedadDTO tp: tiposDePropiedades){
-				superficieActual+= tp.getDivisor();
-			}
-			return superficieActual;
-		}
-		
-		@Override
-		public boolean equals(Object obj) {
-			return this.coeficiente==((ElementoProrrateo)obj).getCoeficiente();
-		}
-						
-	}
-	
-	public class ResultadoProrrateo{
-		
-		private TipoPropiedadDTO tipoPropiedad;
-		private double monto;
-		
-		public TipoPropiedadDTO getTipoPropiedad() {
-			return tipoPropiedad;
-		}
-		public void setTipoPropiedad(TipoPropiedadDTO tipoPropiedad) {
-			this.tipoPropiedad = tipoPropiedad;
-		}
-		public double getMonto() {
-			return monto;
-		}
-		public void setMonto(double monto) {
-			this.monto = monto;
-		}
+	private double redondeoDouble(double valor){
+		return Math.round(valor*Math.pow(10,2))/Math.pow(10,2);
 	}
 	
 	public HashMap<TipoPropiedadDTO, Double> obtenerProrrateoExpensasOrdinarias(EdificioDTO edificio){
@@ -205,29 +157,24 @@ public class TestExpensas extends TestCase {
 		for (ElementoProrrateo elementoProrrateo : elementosProrrateo) {
 			for (TipoPropiedadDTO tp : elementoProrrateo.getTiposDePropiedades()) {
 				ResultadoProrrateo resultadoProrrateo = new ResultadoProrrateo();
-				resultadoProrrateo.tipoPropiedad = tp;
+				resultadoProrrateo.setTipoPropiedad(tp);
 				coeficienteActual=elementoProrrateo.getCoeficiente();
 				if(coeficienteActual!=0){
-					resultadoProrrateo.monto = coeficienteActual*(tp.getDivisor()/superficieTotal2);
+					resultadoProrrateo.setMonto(coeficienteActual*(tp.getDivisor()/superficieTotal2));
 				}else{
 					double montoActual = 0;
 					for (Double coeficienteNoNulo: coeficientesNoNulos) {
 						montoActual+= coeficienteNoNulo*(tp.getDivisor()/superficieTotal2);
 					}
-					resultadoProrrateo.monto = montoActual +((1-sumaCoeficientesNoNulos)*(tp.getDivisor()/elementoProrrateo.getSuperficieTotal()));
+					resultadoProrrateo.setMonto(montoActual +((1-sumaCoeficientesNoNulos)*(tp.getDivisor()/elementoProrrateo.getSuperficieTotal())));
 				}
-				resultadoProrrateo.monto*=monto;
-				resultadoProrrateo.monto=redondeoDouble(resultadoProrrateo.monto);
+				resultadoProrrateo.setMonto(redondeoDouble(monto*resultadoProrrateo.getMonto()));
 				resultadosProrrateo.add(resultadoProrrateo);
 			}
 		}
 		return resultadosProrrateo;
 	}
-	
-	private double redondeoDouble(double valor){
-		return Math.round(valor*Math.pow(10,2))/Math.pow(10,2);
-	}
-			
+				
 	@SuppressWarnings("unchecked")
 	public List<GastoDTO> obtenerGastosOrdinariosPorEdificioYPeriodo(int idEdificio,Periodo periodo){
 		Session session = HibernateUtil.getSession();
@@ -284,64 +231,6 @@ public class TestExpensas extends TestCase {
 		
 		
 	}
-	
-	@SuppressWarnings("unchecked")
-	private List<GastoDTO> obtenerTipoPropiedadTipoGastoPorTipoGasto(TipoGastoDTO tipoGasto){
-		Session session = HibernateUtil.getSession();
-		Query query = session
-		.createQuery("select tpg from TipoPropiedadTipoGastoDTO tpg " +
-				"where tpg.tipoGasto =:tipoGasto");
-		
-		query.setParameter("tipoGasto", tipoGasto);
-		return query.list(); 
-		
-	}
-	
-	private double obtenerCoeficienteDeDistribucion(TipoPropiedadDTO tipoPropiedad, TipoGastoDTO tpg) {
-		Session session = HibernateUtil.getSession();
-		Query query = session
-		.createQuery("select tpg.coeficienteDistribucion from TipoPropiedadTipoGastoDTO tpg " +
-				"where tpg.tipoPropiedad =:tipoPropiedad and tpg.tipoGasto =:tipoGasto");
-		
-		query.setParameter("tipoPropiedad", tipoPropiedad);
-		query.setParameter("tipoGasto", tpg);
-		
-		Double resultado = (Double) query.uniqueResult();
-		
-		if(resultado==null) return 0;
-		
-		return resultado.doubleValue();		
-	}
-	
-	public void testObtenerExpensasFijas(){
-		
-		Session session = HibernateUtil.getSession();
-		session.beginTransaction();
-		EdificioAppl edificioAppl = new EdificioAppl();
-		EdificioDTO edificio = edificioAppl.getEdificio(HibernateUtil.getSessionFactory(), 1);
-		List<ExpensaDTO> expensasFijas = new ArrayList<ExpensaDTO>();
-		for (TipoPropiedadDTO tipoPropiedadActual : edificio.getTipoPropiedades()) {
-			List<PropiedadDTO> propiedades = tipoPropiedadActual.getPropiedades();
-			for (PropiedadDTO propiedadActual : propiedades) {
-				ExpensaDTO expensa = new ExpensaDTO();
-				expensa.setPropiedad(propiedadActual);
-				expensa.setMonto(tipoPropiedadActual.getMontoExp());
-				//TODO: ver intereses
-				double deuda = propiedadActual.getCtaOrdSaldoExp()+ propiedadActual.getCtaOrdSaldoInt();
-				expensa.setDeudaPrevia(deuda);
-				expensasFijas.add(expensa);
-			}
 			
-		}
-		
-		for(ExpensaDTO exp: expensasFijas){
-			session.saveOrUpdate(exp);
-			//System.out.println(exp.getPropiedad().getNivel() + "-"+exp.getPropiedad().getOrden()+"  "+ exp.getDeudaPrevia()+ "  "+ exp.getMonto() );
-		}
-		session.getTransaction().commit();
-	}
-
-
-		
 	
 }

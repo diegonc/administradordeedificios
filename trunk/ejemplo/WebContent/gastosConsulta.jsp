@@ -21,6 +21,7 @@
 				<tr>
 					<td class="listado_par" >Folio</td>
 					<td class="listado_par" >Tipo Gasto</td>
+					<td class="listado_par" >Detalle</td>
 					<td class="listado_par">Monto</td>
 					<s:if test="#categoriaElegida.equals('PREVISION')">
 					<td class="listado_par">Año</td>
@@ -40,6 +41,7 @@
 			<tr>
 				<td><s:property value="numeroFolio" /></td>
 				<td><s:property value="tipoGasto.descripcion" /></td>
+				<td><s:property value="detalle" /></td>
 				<td><s:property value="monto" /></td>
 				<s:if test="#categoriaElegida.equals('PREVISION')">
 				<td><s:property value="anio" /></td>
