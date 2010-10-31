@@ -90,9 +90,9 @@ public class ConsultaGastosAction extends SessionAwareAction implements Preparab
 		return SUCCESS;
 	}
 
-	@SuppressWarnings("unchecked")
 	private Criteria getCriteria() {
 		Session session = getSession();
+		@SuppressWarnings("rawtypes")
 		Class categoriaGasto = null;
 
 		if (categoriaElegida.equals("PREVISION"))

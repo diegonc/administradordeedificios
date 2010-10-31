@@ -150,7 +150,6 @@ public class VincularUsuarioPerfilEdificios extends ActionSupport {
 		this.id = id;
 	}	
 
-	@SuppressWarnings("unchecked")
 	public String vincular(){
 		
 		if(this.id!=null)
@@ -161,7 +160,7 @@ public class VincularUsuarioPerfilEdificios extends ActionSupport {
 				// TODO mostrar erros
 				e.printStackTrace();
 			}
-		Map session = ActionContext.getContext().getSession();
+		Map<String, Object> session = ActionContext.getContext().getSession();
 		UsuariosBean userEditar = new UsuariosBean();
 		userEditar.setUsuarioUnico(this.user);
 		obtenerTodosEdificios();

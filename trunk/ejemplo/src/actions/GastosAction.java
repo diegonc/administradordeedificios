@@ -112,10 +112,9 @@ public class GastosAction extends ActionSupport {
 		this.tipo = tipo;
 	}
 
-	@SuppressWarnings("unchecked")
 	public String cargaTiposDeGastos()
 	{
-		Map session = ActionContext.getContext().getSession();
+		Map<String, Object> session = ActionContext.getContext().getSession();
 		TiposGastosBean listaTipoGastos= new TiposGastosBean();
 		TiposGastosAppl tipoGastosAppl = new TiposGastosAppl();
 		List<TipoGastoDTO> listaG = (List<TipoGastoDTO>) tipoGastosAppl.getTiposGastosPorEdificio(this.idEdificio);

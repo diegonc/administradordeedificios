@@ -13,12 +13,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
-import propiedades.PropiedadDTO;
-
-
 import usuarios.dto.UsuarioDTO;
 
-@SuppressWarnings("serial")
 @Entity
 @Table(name="EXPENSA_COBRO")
 @PrimaryKeyJoinColumn(name="EXPENSA_ID")

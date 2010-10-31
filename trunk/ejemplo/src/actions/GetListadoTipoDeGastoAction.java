@@ -108,7 +108,6 @@ public class GetListadoTipoDeGastoAction extends ActionSupport implements Sessio
 			return "eliminar";
 		}
 				
-		@SuppressWarnings("unchecked")
 		public String editar(){
 			 //recupero los edificios
 			EdificiosBean listaEdificios = new EdificiosBean();
@@ -149,7 +148,7 @@ public class GetListadoTipoDeGastoAction extends ActionSupport implements Sessio
 			else tipoGastoEditar.setTipoGastoUnico(this.tipoGasto);
 			
 			
-			Map session = ActionContext.getContext().getSession();
+			Map<String, Object> session = ActionContext.getContext().getSession();
 		    session.put("edificios",listaEdificios);
 	        			
 	        session.put("tipoGastoBean",tipoGastoEditar);

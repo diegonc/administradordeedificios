@@ -127,7 +127,6 @@ public class TipoDeGastosAction extends ActionSupport {
 		this.descripcion = descripcion;
 	}
 
-	@SuppressWarnings("unchecked")
 	public String cargaEdificios()
 	{
 		EdificiosBean listaEdificios = new EdificiosBean();
@@ -135,7 +134,7 @@ public class TipoDeGastosAction extends ActionSupport {
 		SessionFactory factory = HibernateUtil.getSessionFactory();
 		ArrayList<EdificioDTO> listaE = (ArrayList<EdificioDTO>) edifAppl.getAllEdificios(factory);
 		listaEdificios.setEdificios(listaE);	
-		Map session = ActionContext.getContext().getSession();
+		Map<String, Object> session = ActionContext.getContext().getSession();
 	    session.put("edificios",listaEdificios);
 	    return "cargaEdificios";
 	}

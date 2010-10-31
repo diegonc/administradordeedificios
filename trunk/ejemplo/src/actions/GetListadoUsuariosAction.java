@@ -77,7 +77,6 @@ public class GetListadoUsuariosAction extends ActionSupport implements SessionAw
 	}
 	
 	
-	@SuppressWarnings("unchecked")
 	public String editar(){
 
 		if(this.id!=null)
@@ -87,7 +86,7 @@ public class GetListadoUsuariosAction extends ActionSupport implements SessionAw
 				// TODO mostrar error
 				e.printStackTrace();
 			}
-		Map session = ActionContext.getContext().getSession();
+		Map<String, Object> session = ActionContext.getContext().getSession();
 		UsuariosBean userEditar = new UsuariosBean();
 		userEditar.setUsuarioUnico(this.user);
         session.put("usuarioBean",userEditar);

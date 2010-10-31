@@ -1,21 +1,10 @@
 package test.expensas;
 
-import edificio.EdificioAppl;
-import edificio.EdificioDTO;
-import expensas.appl.ExpensaAppl;
-import expensas.dto.ExpensaDTO;
-import gastos.dto.GastoDTO;
-import gastos.dto.GastoRealDTO;
-import gastos.dto.TipoGastoDTO;
-
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 import junit.framework.TestCase;
 
@@ -27,6 +16,11 @@ import propiedades.TipoPropiedadDTO;
 import propiedades.TipoPropiedadTipoGastoDTO;
 import utilidades.HibernateUtil;
 import utilidades.Periodo;
+import edificio.EdificioAppl;
+import edificio.EdificioDTO;
+import expensas.dto.ExpensaDTO;
+import gastos.dto.GastoDTO;
+import gastos.dto.TipoGastoDTO;
 
 public class TestExpensas extends TestCase {
 	
