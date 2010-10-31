@@ -50,6 +50,7 @@ public class ExpensasCobroAppl {
 	@SuppressWarnings("unchecked")
 	public List<ExpensaCobroDTO> getCobroPorIdExpensas(Integer idExpensa)
 	{
+		Session session = HibernateUtil.getSession();
 		Criteria criteria = session.createCriteria(ExpensaCobroDTO.class)
 		.createAlias("liquidacion", "liquidacion")
 		.add(Restrictions.eq("liquidacion.id", idExpensa)).addOrder(Order.desc("fecha"));
