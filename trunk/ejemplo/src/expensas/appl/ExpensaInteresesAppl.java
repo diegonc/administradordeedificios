@@ -156,15 +156,15 @@ public class ExpensaInteresesAppl {
 		
 		Date fechaUltimaLiquidacion = obtenerFechaUltimaLiquidacion(edificio);
 		//TODO: ver porque no ppuedo obtener el cobro
-//		if (deudaPrevia>0.0){
-//			ExpensasCobroAppl cobroAppl = new ExpensasCobroAppl();
-//			List<ExpensaCobroDTO> cobros = cobroAppl.getCobroPorIdExpensas(expensa.getId());
-//			if (!cobros.isEmpty()){
-//				ExpensaCobroDTO ultimoCobro = cobros.get(0);
-//				fechaUltimaLiquidacion = ultimoCobro.getFecha();
-//			}
-//			
-//		}
+		if (deudaPrevia>0.0){
+			ExpensasCobroAppl cobroAppl = new ExpensasCobroAppl();
+			List<ExpensaCobroDTO> cobros = cobroAppl.getCobroPorIdExpensas(expensa.getId());
+			if (cobros!=null && !cobros.isEmpty()){
+				ExpensaCobroDTO ultimoCobro = cobros.get(0);
+				fechaUltimaLiquidacion = ultimoCobro.getFecha();
+			}
+			
+		}
 		
 		Date fechaPrimerVto = obtenerFechaVencimiento(edificio,true);	
 

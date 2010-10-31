@@ -16,7 +16,8 @@ public class ExpensaFijaAppl {
 	private final static String A_FECHA ="afecha";
 	private final static String PUNITORIO ="punitorio";
 	private final static String DIFERIDO ="diferido";
-public List<ExpensaDTO> obtenerExpensasFijas(int id){
+	
+	public List<ExpensaDTO> obtenerExpensasFijas(int id){
 		
 		Session session = HibernateUtil.getSession();
 	//	session.beginTransaction();
@@ -33,7 +34,7 @@ public List<ExpensaDTO> obtenerExpensasFijas(int id){
 				expensa.setPropiedad(propiedadActual);
 				expensa.setMonto(tipoPropiedadActual.getMontoExp());
 				expensa.setTipo("O");
-				System.out.println("idExpensa:"+expensa.getId());
+				
 				if (edificio.getMora().equalsIgnoreCase(PUNITORIO))
 					expensasIntereses.calcularInteresPunitorio(edificio, expensa);
 				if (edificio.getMora().equalsIgnoreCase(A_FECHA))
@@ -42,7 +43,7 @@ public List<ExpensaDTO> obtenerExpensasFijas(int id){
 					expensasIntereses.calcularInteresDiferidoProximaLiquidacion(edificio, expensa);
 					//TODO:ver el nro de operacion de donde sacarlo
 				actualizarSaldos(propiedadActual, expensa);
-				expensa.setNumeroOperacion(expensa.getId());
+				expensa.setNumeroOperacion(expensa.hashCode());
 				session.beginTransaction();
 				session.saveOrUpdate(expensa);
 				session.getTransaction().commit();	
@@ -62,6 +63,7 @@ public List<ExpensaDTO> obtenerExpensasFijas(int id){
 		
 		return expensasFijas;
 	}
+	
 private void actualizarSaldos(PropiedadDTO propiedadActual, ExpensaDTO expensa) {
 	if(expensa.getTipo().equalsIgnoreCase("O")){
 		propiedadActual.setCtaOrdSaldoExp(-(expensa.getDeudaPrevia()+expensa.getMonto()));
