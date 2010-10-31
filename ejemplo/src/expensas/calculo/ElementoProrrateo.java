@@ -5,10 +5,15 @@ import java.util.List;
 
 import propiedades.TipoPropiedadDTO;
 
-public class ElementoProrrateo{
+public class ElementoProrrateo implements Comparable<ElementoProrrateo>{
 	private double coeficiente;
-	private List<TipoPropiedadDTO> tiposDePropiedades = new ArrayList<TipoPropiedadDTO>();
+	private List<TipoPropiedadDTO> tiposDePropiedades;
 			
+	public ElementoProrrateo(){
+		tiposDePropiedades = new ArrayList<TipoPropiedadDTO>();
+		coeficiente = 1;
+	}
+	
 	public double getCoeficiente() {
 		return coeficiente;
 	}
@@ -35,6 +40,15 @@ public class ElementoProrrateo{
 	@Override
 	public boolean equals(Object obj) {
 		return this.coeficiente==((ElementoProrrateo)obj).getCoeficiente();
+	}
+
+	@Override
+	public int compareTo(ElementoProrrateo o) {
+		if(this.coeficiente>o.getCoeficiente()) 
+			return 1;
+		else if(this.coeficiente<o.getCoeficiente()) 
+			return -1;
+		return 0;
 	}
 					
 }
