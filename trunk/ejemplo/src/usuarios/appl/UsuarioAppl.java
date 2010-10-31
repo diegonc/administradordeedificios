@@ -1,6 +1,8 @@
 package usuarios.appl;
 import java.util.List;
 
+import javax.transaction.Transaction;
+
 import org.hibernate.ObjectNotFoundException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -37,16 +39,29 @@ public class UsuarioAppl {
 		}
     }
 	
-	public void updateUsuario(UsuarioDTO nuevoUsuario,int idUsuario)
-	{
-		session.beginTransaction();
-        UsuarioDTO usuario = (UsuarioDTO) session.load(UsuarioDTO.class, idUsuario);
-        usuario.setApellido(nuevoUsuario.getApellido());
-        usuario.setNombre(nuevoUsuario.getNombre());
-        usuario.setPassword(nuevoUsuario.getPassword());
-        usuario.setPerfiles(nuevoUsuario.getPerfiles());
-        session.update(usuario);
-        session.getTransaction().commit();
+	public void updateUsuario(UsuarioDTO nuevoUsuario,int idUsuario)	{
+		Session session = HibernateUtil.getSession();
+		org.hibernate.Transaction tr= session.beginTransaction();
+		boolean com=false;
+		try{
+        
+			UsuarioDTO usuario = (UsuarioDTO) session.load(UsuarioDTO.class, idUsuario);
+			usuario.getApellido();
+			usuario.setApellido(nuevoUsuario.getApellido());
+            usuario.setNombre(nuevoUsuario.getNombre());
+            usuario.setPassword(nuevoUsuario.getPassword());
+            session.update(usuario);
+            com = true;
+            
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			if(com)
+				tr.commit();
+			else
+				tr.rollback();
+		}
+            
     }
 	
 	public void removeUsuario(int idUsuario) throws UsuarioInexistenteException
