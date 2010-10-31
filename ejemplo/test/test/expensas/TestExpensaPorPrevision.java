@@ -1,9 +1,7 @@
 package test.expensas;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -21,8 +19,6 @@ import utilidades.Periodo;
 import edificio.EdificioAppl;
 import edificio.EdificioDTO;
 import gastos.dto.GastoDTO;
-import gastos.dto.GastoPrevisionDTO;
-import gastos.dto.GastoRealDTO;
 import gastos.dto.TipoGastoDTO;
 
 public class TestExpensaPorPrevision extends TestCase {

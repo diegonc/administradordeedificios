@@ -19,7 +19,6 @@ public class GastosListarModifElimAction extends ActionSupport {
 	private Map<String,Object> session;
 	private int id;
 	
-	@SuppressWarnings("unchecked")
 	public String execute() {
 		GastosBean listaGastos = new GastosBean();
 		GastosAppl gasAppl = new GastosAppl();
@@ -29,7 +28,7 @@ public class GastosListarModifElimAction extends ActionSupport {
 			ArrayList<GastoPrevisionDTO> gastosPrevistos = (ArrayList<GastoPrevisionDTO>) gasAppl.getGastosPrevistoFuturosPorEdificio(factory, id);
 			listaGastos.setGastosReales(lista);
 			listaGastos.setGastosPrevistos(gastosPrevistos);
-			Map session = ActionContext.getContext().getSession();
+			Map<String, Object> session = ActionContext.getContext().getSession();
 	        session.put("lista", listaGastos);
 	        this.setSession(session);
 	        return SUCCESS;

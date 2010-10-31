@@ -20,7 +20,6 @@ public class EdificioListarAction extends ActionSupport{
 	private Map<String,Object> session;
 	private String redi;
 	
-	@SuppressWarnings("unchecked")
 	public String execute() {
 		ArrayList<EdificioDTO> lista = new ArrayList<EdificioDTO>();
 		EdificiosBean listaEdificios = new EdificiosBean();
@@ -44,7 +43,7 @@ public class EdificioListarAction extends ActionSupport{
 			}
 			listaEdificios.setEdificios(lista);
 			
-			Map session = ActionContext.getContext().getSession();
+			Map<String, Object> session = ActionContext.getContext().getSession();
 	        session.put("lista",listaEdificios);
 	        this.setSession(session);
 	        if (redi.equals("edificio")) {

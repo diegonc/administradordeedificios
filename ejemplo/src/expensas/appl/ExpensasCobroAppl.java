@@ -47,6 +47,7 @@ public class ExpensasCobroAppl {
 		return criteria.list();
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<ExpensaCobroDTO> getCobroPorIdExpensas(Integer idExpensa)
 	{
 		Criteria criteria = session.createCriteria(ExpensaCobroDTO.class)
