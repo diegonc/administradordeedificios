@@ -93,10 +93,18 @@ function ocularYMostrar(id){
 		<table height="10" width="700"> <tr height="20"><td align="center"><div><h3>Detalle de la Liquidaci&oacute;n</h3></div></td><td><a href="#" onclick="ocularYMostrar('tabla2')"><span id="detalle2">Ver</span></a></td></tr></table>
 		<table id="tabla2" cellspacing="0" cellpadding="0" border="1" class="listado" align="center" style="display: none;">
 		<tr class="listado_par" >
-			<td>Piso-DTO</td><td>Responsable</td><td>Saldo</br> Anterior</td><td>Exp.</br> Ordinarias</td><td>Int. Ord.</td><td>Total</br> Ord<td>Exp.</br>Extraord.</td><td>Int. ExtraOrd</td><td>Total</br>Extraord</td> 
-		</tr>
+			<td>Piso-DTO</td>
+			<td>Responsable</td>
+			<td>Deuda</br> Previa</td>
+			<td>Exp.</br> Ordinarias</td>
+			<td>Int.PrimerVto</td>
+			<%if (edificio.getMora().equals("punitorio")){%>	
+				<td>Int. SegundoVto</td>
+			<%} %>			
+			</tr>
 		<%
 		List<ExpensaDTO> expensas = detalleExpensa.getExpensas();
+		
 		int h =0;
 		for (ExpensaDTO exp : expensas){
 			PropiedadDTO propiedad = exp.getPropiedad();
@@ -106,13 +114,22 @@ function ocularYMostrar(id){
 			}
 			h++;
 		%>
-			<tr <%=color %>>
-				<td ><%=propiedad.getNivel() +" " + propiedad.getNivel() %></td><td> <%=propiedad.getPropietario().getDni() %></td><td><%=exp.getDeudaPrevia() %></td><td><%=exp.getMonto() %></td><td><%=exp.getIntereses()%></td><td>0</td><td>0</td><td>0</td><td>0</td>
+		
+				<tr <%=color%>>
+					<td ><%=propiedad.getNivel() +" " + propiedad.getNivel() %></td>
+					<td> <%=propiedad.getPropietario().getDni() %></td>
+					<td><%=exp.getDeudaPrevia() %></td>
+					<td><%=exp.getMonto() %></td>
+					<td><%=exp.getIntereses()%></td>
+				<%if (edificio.getMora().equals("punitorio")){%>
+					<td><%=exp.getInteresSegundoVencimiento()%></td>
+				<%} %>				
 			</tr>
-			
-		<%} %>
+		
+		<%}%>
 		</table>
 		<table height="50"> <tr height="20"><td></td></tr></table>
+		
 		<a href="EdificioListarAction?redi=expensa">Volver</a>
 	</div>
 </div>
