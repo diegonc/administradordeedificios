@@ -10,6 +10,9 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.criterion.Expression;
 
+import propiedades.TipoPropiedadDTO;
+import utilidades.HibernateUtil;
+
 /**
  * Manipulación de una tabla simple con llave sencilla.
  */
@@ -173,4 +176,11 @@ public final class EdificioAppl {
 		return edificios.get(0);
 	}
 
+	@SuppressWarnings("unchecked")
+	public List<TipoPropiedadDTO> obtenerTipoPropiedadPorEdificio(int idEdificio){
+		Session session = HibernateUtil.getSession();
+		Query q = session.createQuery("select tp from TipoPropiedadDTO tp where tp.edificio.id =:idEdificio");
+		q.setInteger("idEdificio", idEdificio);
+		return q.list();
+	}
 }
