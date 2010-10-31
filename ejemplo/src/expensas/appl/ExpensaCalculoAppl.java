@@ -224,27 +224,5 @@ public class ExpensaCalculoAppl {
 		query.setInteger("idEdificio", idEdificio);
 		return query.list(); 
 	}
-	
-			
-	@SuppressWarnings("unchecked")
-	private List<GastoDTO> obtenerTipoPropiedadTipoGastoPorTipoGasto(TipoGastoDTO tipoGasto){
-		Query query = session.createQuery("select tpg from TipoPropiedadTipoGastoDTO tpg " +
-				"where tpg.tipoGasto =:tipoGasto");
-		query.setParameter("tipoGasto", tipoGasto);
-		return query.list(); 
-	}
-	
-	private double obtenerCoeficienteDeDistribucion(TipoPropiedadDTO tipoPropiedad, TipoGastoDTO tpg) {
-		Query query = session.createQuery("select tpg.coeficienteDistribucion from TipoPropiedadTipoGastoDTO tpg " +
-				"where tpg.tipoPropiedad =:tipoPropiedad and tpg.tipoGasto =:tipoGasto");
-		query.setParameter("tipoPropiedad", tipoPropiedad);
-		query.setParameter("tipoGasto", tpg);
-		
-		Double resultado = (Double) query.uniqueResult();
-		if(resultado==null) return 0;
-		return resultado.doubleValue();		
-	}
-
-
-	
+				
 }
