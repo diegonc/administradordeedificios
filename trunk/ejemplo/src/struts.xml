@@ -149,6 +149,7 @@
 	    
 		<action name="expensasLiquidacionResultante" class="actions.ExpensasLiquidacionResultanteAction">
 			    <result name="success">/expensasLiquidacion.jsp </result>			    
+			    <result name="error">expensasLiquidacionSeleccionPeriodo.jsp</result>
 	    </action> 
 		
 	</package>
