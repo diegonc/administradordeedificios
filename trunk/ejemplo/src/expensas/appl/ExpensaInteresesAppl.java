@@ -39,8 +39,9 @@ public class ExpensaInteresesAppl {
 		if (mes==0){
 			anio--;
 			mes=11;
+		}else{
+			mes--;
 		}
-
 		fechaActual.set(anio,mes, edificio.getDia_primer_vto());
 
 		return fechaActual.getTime();
@@ -61,10 +62,11 @@ public class ExpensaInteresesAppl {
 
 	}
 
-	
+	private double redondeoDouble(double valor){
+		return Math.round(valor*Math.pow(10,2))/Math.pow(10,2);
+	}
 	public void calcularInteresPunitorio(EdificioDTO edificio,ExpensaDTO expensa){
-		Session session = HibernateUtil.getSession();
-		session.beginTransaction();
+		
 		double interesPorDia = edificio.getTasa_anual()/(36000);
 		double deudaPrevia = 0.0;
 		double montoLiquidacion= expensa.getMonto();
@@ -83,6 +85,7 @@ public class ExpensaInteresesAppl {
 		long cantidadDiasDeudaPrimerVto = getDiferenciaEntreFechas(fechaPrimerVto, fechaUltimaLiquidacion);
 		double interesesPrimerVto = deudaPrevia*(interesPorDia*cantidadDiasDeudaPrimerVto);
 		expensa.setDeudaPrevia(deudaPrevia);
+		interesesPrimerVto = redondeoDouble(interesesPrimerVto);
 		expensa.setIntereses(interesesPrimerVto);
 		
 		
@@ -91,16 +94,8 @@ public class ExpensaInteresesAppl {
 		double interesesDeudaSegundoVto = deudaPrevia*(interesPorDia*(cantidadDiasDeudaPrimerVto +cantidadDiasEntreVtos));
 		double interesesTotalesSegundoVto = montoLiquidacion*cantidadDiasEntreVtos*interesPorDia;
 		interesesTotalesSegundoVto+=interesesDeudaSegundoVto;
-
-		if (expensa.getTipo().equalsIgnoreCase("O")){
-			propiedad.setCtaOrdSaldoInt(interesesPrimerVto);			
-		}else{
-			propiedad.setCtaExtSaldoInt(interesesPrimerVto);
-		}
-				
-		session.saveOrUpdate(expensa);
-		session.saveOrUpdate(propiedad);
-		session.getTransaction().commit();
+		interesesTotalesSegundoVto = redondeoDouble(interesesTotalesSegundoVto);
+		expensa.setInteresSegundoVencimiento(interesesTotalesSegundoVto);
 				
 	}
 	private double obtenerDeudaPrevia(double cuenta){
@@ -141,18 +136,8 @@ public class ExpensaInteresesAppl {
 		long cantidadDiasDeudaPrimerVto = getDiferenciaEntreFechas(fechaPrimerVto, fechaUltimaLiquidacion);
 		double interesesPrimerVto = deudaPrevia*(interesPorDia*cantidadDiasDeudaPrimerVto);
 		expensa.setDeudaPrevia(deudaPrevia);
-		expensa.setIntereses(interesesPrimerVto);
-		
-			
-		if (expensa.getTipo().equalsIgnoreCase("O")){
-			propiedad.setCtaOrdSaldoInt(interesesPrimerVto);			
-		}else{
-			propiedad.setCtaExtSaldoInt(interesesPrimerVto);
-		}
-				
-		session.saveOrUpdate(expensa);
-		session.saveOrUpdate(propiedad);
-		session.getTransaction().commit();
+		interesesPrimerVto = redondeoDouble(interesesPrimerVto);
+		expensa.setIntereses(interesesPrimerVto);	
 				
 	}
 
@@ -170,15 +155,16 @@ public class ExpensaInteresesAppl {
 		}
 		
 		Date fechaUltimaLiquidacion = obtenerFechaUltimaLiquidacion(edificio);
-		if (deudaPrevia>0.0){
-			ExpensasCobroAppl cobroAppl = new ExpensasCobroAppl();
-			List<ExpensaCobroDTO> cobros = cobroAppl.getCobroPorIdExpensas(expensa.getId());
-			if (!cobros.isEmpty()){
-				ExpensaCobroDTO ultimoCobro = cobros.get(0);
-				fechaUltimaLiquidacion = ultimoCobro.getFecha();
-			}
-			
-		}
+		//TODO: ver porque no ppuedo obtener el cobro
+//		if (deudaPrevia>0.0){
+//			ExpensasCobroAppl cobroAppl = new ExpensasCobroAppl();
+//			List<ExpensaCobroDTO> cobros = cobroAppl.getCobroPorIdExpensas(expensa.getId());
+//			if (!cobros.isEmpty()){
+//				ExpensaCobroDTO ultimoCobro = cobros.get(0);
+//				fechaUltimaLiquidacion = ultimoCobro.getFecha();
+//			}
+//			
+//		}
 		
 		Date fechaPrimerVto = obtenerFechaVencimiento(edificio,true);	
 
@@ -186,19 +172,10 @@ public class ExpensaInteresesAppl {
 		long cantidadDiasDeudaPrimerVto = getDiferenciaEntreFechas(fechaPrimerVto, fechaUltimaLiquidacion);
 		double interesesPrimerVto = deudaPrevia*(interesPorDia*cantidadDiasDeudaPrimerVto);
 		expensa.setDeudaPrevia(deudaPrevia);
-		expensa.setIntereses(interesesPrimerVto);
-		
-			
-		if (expensa.getTipo().equalsIgnoreCase("O")){
-			propiedad.setCtaOrdSaldoInt(interesesPrimerVto);			
-		}else{
-			propiedad.setCtaExtSaldoInt(interesesPrimerVto);
-		}
-				
-		session.saveOrUpdate(expensa);
-		session.saveOrUpdate(propiedad);
-		session.getTransaction().commit();
+		interesesPrimerVto = redondeoDouble(interesesPrimerVto);
+		expensa.setIntereses(interesesPrimerVto);								
 				
 	}
+	
 	
 }

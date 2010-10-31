@@ -19,14 +19,14 @@ public class ExpensaFijaAppl {
 public List<ExpensaDTO> obtenerExpensasFijas(int id){
 		
 		Session session = HibernateUtil.getSession();
-//		session.beginTransaction();
+	//	session.beginTransaction();
 		EdificioAppl edificioAppl = new EdificioAppl();
 		ExpensaInteresesAppl expensasIntereses = new ExpensaInteresesAppl();
 		EdificioDTO edificio = edificioAppl.getEdificio(HibernateUtil.getSessionFactory(), id);
 		
 		List<ExpensaDTO> expensasFijas = new ArrayList<ExpensaDTO>();
 		
-		for (TipoPropiedadDTO tipoPropiedadActual : edificio.getTipoPropiedades()) {
+		for (TipoPropiedadDTO tipoPropiedadActual : edificioAppl.obtenerTipoPropiedadPorEdificio(id)) {
 			List<PropiedadDTO> propiedades = tipoPropiedadActual.getPropiedades();
 			for (PropiedadDTO propiedadActual : propiedades) {
 				ExpensaDTO expensa = new ExpensaDTO();
@@ -42,29 +42,39 @@ public List<ExpensaDTO> obtenerExpensasFijas(int id){
 					expensasIntereses.calcularInteresDiferidoProximaLiquidacion(edificio, expensa);
 					//TODO:ver el nro de operacion de donde sacarlo
 				actualizarSaldos(propiedadActual, expensa);
-				expensa.setNumeroOperacion(expensa.getId());				
+				expensa.setNumeroOperacion(expensa.getId());
+				session.beginTransaction();
+				session.saveOrUpdate(expensa);
+				session.getTransaction().commit();	
 				expensasFijas.add(expensa);
 				
 			}
 			
 		}
 		
-		for(ExpensaDTO exp: expensasFijas){
-			session.beginTransaction();
-			session.saveOrUpdate(exp);
-			session.getTransaction().commit();	
-			//System.out.println(exp.getPropiedad().getNivel() + "-"+exp.getPropiedad().getOrden()+"  "+ exp.getDeudaPrevia()+ "  "+ exp.getMonto() );
-		}
+//		for(ExpensaDTO exp: expensasFijas){
+//			session.beginTransaction();
+//			session.saveOrUpdate(exp);
+//			session.getTransaction().commit();	
+//			//System.out.println(exp.getPropiedad().getNivel() + "-"+exp.getPropiedad().getOrden()+"  "+ exp.getDeudaPrevia()+ "  "+ exp.getMonto() );
+//		}
 		
 		
 		return expensasFijas;
 	}
 private void actualizarSaldos(PropiedadDTO propiedadActual, ExpensaDTO expensa) {
 	if(expensa.getTipo().equalsIgnoreCase("O")){
-		propiedadActual.setCtaOrdSaldoExp(expensa.getDeudaPrevia()+expensa.getMonto());
+		propiedadActual.setCtaOrdSaldoExp(-(expensa.getDeudaPrevia()+expensa.getMonto()));
+		propiedadActual.setCtaOrdSaldoInt(-expensa.getIntereses());
 	}else{
-		propiedadActual.setCtaExtSaldoExp(expensa.getDeudaPrevia()+expensa.getMonto());
+		propiedadActual.setCtaExtSaldoExp(-(expensa.getDeudaPrevia()+expensa.getMonto()));
+		propiedadActual.setCtaExtSaldoInt(-(expensa.getIntereses()));
 	}
+	Session session = HibernateUtil.getSession();
+	session.beginTransaction();
+	session.update(propiedadActual);
+	session.getTransaction().commit();
+	
 }
 
 }
