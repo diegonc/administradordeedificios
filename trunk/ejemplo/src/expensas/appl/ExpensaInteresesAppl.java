@@ -167,7 +167,7 @@ public class ExpensaInteresesAppl {
 		}
 		
 		Date fechaPrimerVto = obtenerFechaVencimiento(edificio,true);	
-
+		expensa.setFecha(fechaPrimerVto);
 		//Primer Vencimiento
 		long cantidadDiasDeudaPrimerVto = getDiferenciaEntreFechas(fechaPrimerVto, fechaUltimaLiquidacion);
 		double interesesPrimerVto = deudaPrevia*(interesPorDia*cantidadDiasDeudaPrimerVto);
