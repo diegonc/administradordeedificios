@@ -74,10 +74,12 @@ public class ExpensasLiquidacionResultanteAction extends ActionSupport {
 			session.put("edificio",edificio);
 			//Si es fijo no paso los gastos
 			if (edificio.getForma_liq_exp().equals("PRORRATEO")){
-				expensaDetalle.setGastosOrdinariosDelPeriodo(expensasPrevisionAppl.obtenerGastosPorEdificioYPeriodoAgrupadoPorTipo(id, periodo, ExpensaDTO.tipoOrdinario));		
+				gastosLiquidacion = expensasPrevisionAppl.obtenerGastosPorEdificioYPeriodoAgrupadoPorTipo(id, periodo, ExpensaDTO.tipoOrdinario);
+				expensaDetalle.setGastosOrdinariosDelPeriodo(gastosLiquidacion);		
 				expensaDetalle.setExpensasOrdinarias(expensasPrevisionAppl.obtenerExpensasPorTipoPorEdificioYPeriodo(gastosLiquidacion,id, ExpensaDTO.tipoOrdinario));
 				
-				expensaDetalle.setGastosOrdinariosDelPeriodo(expensasPrevisionAppl.obtenerGastosPorEdificioYPeriodoAgrupadoPorTipo(id, periodo, ExpensaDTO.tipoExtraordinario));		
+				gastosLiquidacion = expensasPrevisionAppl.obtenerGastosPorEdificioYPeriodoAgrupadoPorTipo(id, periodo, ExpensaDTO.tipoExtraordinario);
+				expensaDetalle.setGastosOrdinariosDelPeriodo(gastosLiquidacion);		
 				expensaDetalle.setExpensasOrdinarias(expensasPrevisionAppl.obtenerExpensasPorTipoPorEdificioYPeriodo(gastosLiquidacion,id, ExpensaDTO.tipoExtraordinario));
 			}else{
 				expensaDetalle.setExpensasOrdinarias(expensasFijasAppl.obtenerExpensasFijas(id));
