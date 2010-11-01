@@ -1,35 +1,53 @@
 package beans;
 
-import expensas.dto.ExpensaDTO;
-import gastos.dto.GastoDTO;
-import gastos.dto.TipoGastoDTO;
-
 import java.util.HashMap;
 import java.util.List;
 
+import expensas.calculo.ElementoPrevisionGasto;
+import expensas.dto.ExpensaDTO;
+import gastos.dto.TipoGastoDTO;
+
 public class LiquidacionBean {
 	
-	List<ExpensaDTO> expensas;
+	List<ExpensaDTO> expensasOrdinarias;
+	List<ExpensaDTO> expensasExtraordinarias;
+	HashMap<TipoGastoDTO, ElementoPrevisionGasto> gastosOrdinariosDelPeriodo;
+	HashMap<TipoGastoDTO, ElementoPrevisionGasto> gastosExtraordinariosDelPeriodo;
 	
-	public List<ExpensaDTO> getExpensas() {
-		return expensas;
+	public List<ExpensaDTO> getExpensasOrdinarias() {
+		return expensasOrdinarias;
 	}
 
-	public void setExpensas(List<ExpensaDTO> expensas) {
-		this.expensas = expensas;
+	public void setExpensasOrdinarias(List<ExpensaDTO> expensasOrdinarias) {
+		this.expensasOrdinarias = expensasOrdinarias;
 	}
 
-	HashMap<TipoGastoDTO, List<GastoDTO>> gastosDelPeriodo;
-	
-	public HashMap<TipoGastoDTO, List<GastoDTO>> getGastosDelPeriodo() {
-		return gastosDelPeriodo;
+	public List<ExpensaDTO> getExpensasExtraordinarias() {
+		return expensasExtraordinarias;
 	}
 
-	public void setGastosDelPeriodo(
-			HashMap<TipoGastoDTO, List<GastoDTO>> gastosDelPeriodo) {
-		this.gastosDelPeriodo = gastosDelPeriodo;
+	public void setExpensasExtraordinarias(List<ExpensaDTO> expensasExtraordinarias) {
+		this.expensasExtraordinarias = expensasExtraordinarias;
+	}
+	
+	public HashMap<TipoGastoDTO, ElementoPrevisionGasto> getGastosOrdinariosDelPeriodo() {
+		return gastosOrdinariosDelPeriodo;
+	}
+
+	public void setGastosOrdinariosDelPeriodo(
+			HashMap<TipoGastoDTO, ElementoPrevisionGasto> gastosOrdinariosDelPeriodo) {
+		this.gastosOrdinariosDelPeriodo = gastosOrdinariosDelPeriodo;
+	}
+
+	public HashMap<TipoGastoDTO, ElementoPrevisionGasto> getGastosExtraordinariosDelPeriodo() {
+		return gastosExtraordinariosDelPeriodo;
+	}
+
+	public void setGastosExtraordinariosDelPeriodo(
+			HashMap<TipoGastoDTO, ElementoPrevisionGasto> gastosExtraordinariosDelPeriodo) {
+		this.gastosExtraordinariosDelPeriodo = gastosExtraordinariosDelPeriodo;
 	}
 	
 	
-
 }
+
