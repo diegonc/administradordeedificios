@@ -71,6 +71,8 @@ public class PropiedadesAction extends ActionSupport implements Preparable {
 	private TipoPropiedadDTO tipoPropiedadActual;
 	/* Propiedad editada o creada. */
 	private PropiedadDTO entidad;
+	/* Lista de responsables disponibles. */
+	private Collection<String> listaResponsables;
 
 	public String getNombreEdificio() {
 		return nombreEdificio;
@@ -136,6 +138,14 @@ public class PropiedadesAction extends ActionSupport implements Preparable {
 	public void setEntidad(PropiedadDTO entidad) {
 		this.entidad = entidad;
 	}
+	
+	public Collection<String> getListaResponsables() {
+		return listaResponsables;
+	}
+
+	public void setListaResponsables(Collection<String> listaResponsables) {
+		this.listaResponsables = listaResponsables;
+	}
 
 	public void prepare() throws Exception {
 	}
@@ -200,7 +210,18 @@ public class PropiedadesAction extends ActionSupport implements Preparable {
 		}
 		
 		cargarListaTiposPropiedades();
+		cargarResponsables();
 		return "edicion";
+	}
+
+	private void cargarResponsables() {
+		List<Responsable> listaResponsables = daoResp.listar();
+		this.listaResponsables = new ArrayList<String>(); 
+		for (Responsable r : listaResponsables) {
+			Integer dni = r.getDni();
+			String sdni = dni.toString();
+			this.listaResponsables.add(sdni);
+		}
 	}
 
 	private void cargarListaTiposPropiedades() {
@@ -272,6 +293,7 @@ public class PropiedadesAction extends ActionSupport implements Preparable {
 			cargarEdificio(nombreEdificio);
 			if (edificioActual != null) {
 				cargarListaTiposPropiedades();
+				cargarResponsables();
 				return "edicion";
 			} else
 				addActionError("El edificio '" + nombreEdificio + "' no existe.");
@@ -363,8 +385,11 @@ public class PropiedadesAction extends ActionSupport implements Preparable {
 			if ( asociarResponsables() ) {
 				session.beginTransaction();
 				dao.grabar(entidad);
+				session.getTransaction().commit();
 			} else return validationErrors();
 		} catch (Exception e) {
+			session.getTransaction().rollback();
+			session.close();
 			LOG.error("No se pudo guardar la propiedad.", e);
 			addActionError(e.getMessage());
 			return validationErrors();
@@ -374,6 +399,7 @@ public class PropiedadesAction extends ActionSupport implements Preparable {
 	
 	public String validationErrors() {
 		cargarListaTiposPropiedades();
+		cargarResponsables();
 		return "edicion";
 	}
 
