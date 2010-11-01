@@ -22,6 +22,11 @@ import propiedades.TipoPropiedadDTO;
 @Table(name="EDIFICIO", uniqueConstraints=@UniqueConstraint(columnNames="NOMBRE"))
 @Proxy( lazy=false )
 public class EdificioDTO implements Serializable{
+	public final static String A_FECHA ="afecha";
+	public final static String PUNITORIO ="punitorio";
+	public final static String DIFERIDO ="diferido";	
+	public final static String FIJO ="fijo";
+	public final static String PRORRATEO ="prorrateo";
 	private int id;
 	private String nombre;
 	private double fondo_ordinario;
