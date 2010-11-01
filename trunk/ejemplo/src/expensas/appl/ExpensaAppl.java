@@ -8,7 +8,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
 
 import utilidades.HibernateUtil;
-
 import expensas.dto.ExpensaDTO;
 
 public class ExpensaAppl {
@@ -44,6 +43,22 @@ public class ExpensaAppl {
 		Integer nroOperacion = (Integer) query.uniqueResult();
 		if(nroOperacion==null) return 1;
 		return nroOperacion.intValue()+1;
+	}
+	
+	public ExpensaDTO obtenerExpensaUltimaLiquidacion(int idPropiedad, String tipoExpensa){
+		Session session = HibernateUtil.getSession();
+		Query query = session.createQuery("select ex from ExpensaDTO ex where" +
+				" ex.propiedad.id =:idPropiedad and ex.tipo =:tipoExpensa " +
+				"order by ex.numeroOperacion desc");
+		
+		query.setInteger("idPropiedad", idPropiedad);
+		query.setString("tipoExpensa", tipoExpensa);
+		
+		List<ExpensaDTO> expensas = query.list();
+		if(expensas.isEmpty()) return null;
+		else
+			return (ExpensaDTO)query.list().get(0);		
+		//return (Integer) query.uniqueResult();
 	}
 	
 	
