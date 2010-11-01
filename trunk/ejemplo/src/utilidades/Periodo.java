@@ -17,6 +17,11 @@ public class Periodo {
 		
 	}
 	
+	public Periodo(int mes,int anio){
+		this.mes = mes;
+		this.anio = anio;
+	}
+	
 	public Periodo(){}
 
 	public int getMes() {

@@ -1,6 +1,8 @@
 package test.expensas;
 
 import edificio.EdificioAppl;
+import expensas.appl.ExpensaAppl;
+import expensas.calculo.ElementoPrevisionGasto;
 import expensas.calculo.ElementoProrrateo;
 import expensas.calculo.ResultadoProrrateo;
 import expensas.dto.ExpensaDTO;
@@ -24,95 +26,10 @@ import propiedades.PropiedadDTO;
 import propiedades.TipoPropiedadDTO;
 import propiedades.TipoPropiedadTipoGastoDTO;
 import utilidades.HibernateUtil;
+import utilidades.NumberFormat;
 import utilidades.Periodo;
 
 public class TestExpensaPorPrevision extends TestCase {
-	
-	class ElementoPrevisionGasto{
-		List<GastoPrevisionDTO> previsiones;
-		List<GastoPrevisionDTO> previsionesMesAnterior;
-		List<GastoRealDTO> gastosRealesMesAnterior;
-				
-		public ElementoPrevisionGasto(){
-			this.previsiones = new ArrayList<GastoPrevisionDTO>();
-			this.previsionesMesAnterior = new ArrayList<GastoPrevisionDTO>();
-			this.gastosRealesMesAnterior = new ArrayList<GastoRealDTO>();
-		}
-		
-		public List<GastoPrevisionDTO> getPrevisiones() {
-			return previsiones;
-		}
-		
-		public void setPrevisiones(List<GastoPrevisionDTO> previsiones) {
-			this.previsiones = previsiones;
-		}
-		
-		public List<GastoPrevisionDTO> getPrevisionesMesAnterior() {
-			return previsionesMesAnterior;
-		}
-
-		public void setPrevisionesMesAnterior(
-				List<GastoPrevisionDTO> previsionesMesAnterior) {
-			this.previsionesMesAnterior = previsionesMesAnterior;
-		}
-		
-		public List<GastoRealDTO> getGastosRealesMesAnterior() {
-			return gastosRealesMesAnterior;
-		}
-
-		public void setGastosRealesMesAnterior(
-				List<GastoRealDTO> gastosRealesMesAnterior) {
-			this.gastosRealesMesAnterior = gastosRealesMesAnterior;
-		}
-		
-		public double obtenerMontoDiferenciaPrevisionGastoMesAnterior(){
-			double montoDiferencia = 0;
-			montoDiferencia = obtenerMontoGastosRealesMesAnterior();
-			montoDiferencia -= obtenerMontoPrevisionMesAnterior();
-			return redondeoDouble(montoDiferencia);
-		}
-	
-		public double obtenerMontoPrevisionMesAnterior(){
-			double monto= 0;
-			for (GastoPrevisionDTO g : this.previsionesMesAnterior) {
-				monto+=g.getMonto();
-			}
-			return redondeoDouble(monto);
-		}
-		
-		public double obtenerMontoGastosRealesMesAnterior(){
-			double monto= 0;
-			for (GastoRealDTO g : this.gastosRealesMesAnterior) {
-				monto+=g.getMonto();
-			}
-			return redondeoDouble(monto);
-		}
-		
-		public double obtenerMontoPrevisionMesActual(){
-			double monto= 0;
-			for (GastoPrevisionDTO g : this.previsiones) {
-				monto+=g.getMonto();
-			}
-			return redondeoDouble(monto);
-		}
-		
-		public double obtenerMontoTotal(){
-			double monto = 0;
-			monto = obtenerMontoDiferenciaPrevisionGastoMesAnterior()+obtenerMontoPrevisionMesActual();
-			return redondeoDouble(monto);
-		}
-	}
-
-	
-	/**
-	 * Utilidades
-	 * @param valor
-	 * @return
-	 */
-	private double redondeoDouble(double valor){
-		return Math.round(valor*Math.pow(10,2))/Math.pow(10,2);
-	}		
-	
 	
 	@SuppressWarnings("unchecked")
 	private List<GastoRealDTO> obtenerGastosRealesOrdinariosPorEdificioYPeriodo(int idEdificio,Periodo periodo){
@@ -219,20 +136,20 @@ public class TestExpensaPorPrevision extends TestCase {
 	        System.out.println(tipoGasto.getCodigo());
 	        
 	        System.out.println("******Previsiones mes anterior******");
-	        for (GastoDTO gastoActual : elementoPrevisionGasto.previsionesMesAnterior) {
+	        for (GastoDTO gastoActual : elementoPrevisionGasto.getPrevisionesMesAnterior()) {
 	        	System.out.println(gastoActual.getDetalle()+" : "+gastoActual.getMonto());
 			}
 	        System.out.println("Total previsiones mes anterior: " + elementoPrevisionGasto.obtenerMontoPrevisionMesAnterior());
 	        	        
 	        System.out.println("******Gastos mes anterior******");
-	        for (GastoDTO gastoActual : elementoPrevisionGasto.gastosRealesMesAnterior) {
+	        for (GastoDTO gastoActual : elementoPrevisionGasto.getGastosRealesMesAnterior()) {
 	        	System.out.println(gastoActual.getDetalle()+" : "+gastoActual.getMonto());
 			}
 	        System.out.println("Total gastos reales mes anterior: " + elementoPrevisionGasto.obtenerMontoGastosRealesMesAnterior());
 	        System.out.println("Total diferencia prevision gasto mes anterior: " + elementoPrevisionGasto.obtenerMontoDiferenciaPrevisionGastoMesAnterior());
 	        
 	        System.out.println("******Previsiones mes actual******");
-	        for (GastoDTO gastoActual : elementoPrevisionGasto.previsiones) {
+	        for (GastoDTO gastoActual : elementoPrevisionGasto.getPrevisiones()) {
 	        	System.out.println(gastoActual.getDetalle()+" : "+gastoActual.getMonto());
 			}
 	        System.out.println("Total previsiones mes actual: " + elementoPrevisionGasto.obtenerMontoPrevisionMesActual());
@@ -262,7 +179,7 @@ public class TestExpensaPorPrevision extends TestCase {
 			 			
 			for (ResultadoProrrateo resultadoActual : resultadoProrrateo) {
 				Double montoActual = (tipoPropiedadMontoExpensa.get(resultadoActual.getTipoPropiedad())==null)?0:tipoPropiedadMontoExpensa.get(resultadoActual.getTipoPropiedad());
-				tipoPropiedadMontoExpensa.put(resultadoActual.getTipoPropiedad(), redondeoDouble(resultadoActual.getMonto()+ montoActual));
+				tipoPropiedadMontoExpensa.put(resultadoActual.getTipoPropiedad(), NumberFormat.redondeoDouble(resultadoActual.getMonto()+ montoActual));
 				System.out.println(resultadoActual.getTipoPropiedad().getNombreTipo()+" : "+resultadoActual.getMonto());
 			}
 			System.out.println("-----------------------------------------------------------");
@@ -368,7 +285,7 @@ public class TestExpensaPorPrevision extends TestCase {
 	        tpActual = (TipoPropiedadDTO) it.next();
 	        ResultadoProrrateo resultadoProrrateo = new ResultadoProrrateo();
 	        resultadoProrrateo.setTipoPropiedad(tpActual);
-	        resultadoProrrateo.setMonto(redondeoDouble(monto*tipoPropiedadTotal.get(tpActual).doubleValue()));
+	        resultadoProrrateo.setMonto(NumberFormat.redondeoDouble(monto*tipoPropiedadTotal.get(tpActual).doubleValue()));
 	        resultadosProrrateo.add(resultadoProrrateo);
 	    }
 		
@@ -387,6 +304,7 @@ public class TestExpensaPorPrevision extends TestCase {
 		HashMap<TipoPropiedadDTO, Double> tipoPropiedadMontoExpensa = obtenerProrrateoExpensasOrdinarias(idEdificio,periodo);
 		List<ExpensaDTO> expensas= new ArrayList<ExpensaDTO>();
 		EdificioAppl edificioAppl = new EdificioAppl();
+		ExpensaAppl expensaAppl = new ExpensaAppl();
 		ExpensaDTO expensaActual;
 			
 		List<TipoPropiedadDTO> tiposDePropiedades = edificioAppl.obtenerTipoPropiedadPorEdificio(1);
@@ -397,12 +315,9 @@ public class TestExpensaPorPrevision extends TestCase {
 				montoExpensa = montoTotal*(propiedad.getDividendo()/tipoProp.getDivisor());
 				expensaActual = new ExpensaDTO();
 				expensaActual.setPropiedad(propiedad);
-				expensaActual.setMonto(redondeoDouble(montoExpensa));
+				expensaActual.setMonto(NumberFormat.redondeoDouble(montoExpensa));
 				expensaActual.setTipo(ExpensaDTO.tipoOrdinario);
-				
-				//TODO ver q debe tomar el numero siguiente por propiedad y tipo de expensa
-				expensaActual.setNumeroOperacion(expensaActual.getId());
-				
+				expensaActual.setNumeroOperacion(expensaAppl.obtenerNumeroDeOperacion(propiedad.getId(), ExpensaDTO.tipoOrdinario));
 				expensas.add(expensaActual);
 			}
 		}
@@ -424,4 +339,8 @@ public class TestExpensaPorPrevision extends TestCase {
 			System.out.println("Piso-Depto: " + propiedadActual.getNivel()+" - "+propiedadActual.getOrden()+" = "+expensa.getMonto());
 		}
 	}
+	
+		
+	
+	
 }

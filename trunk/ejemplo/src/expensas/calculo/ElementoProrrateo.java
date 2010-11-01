@@ -42,7 +42,6 @@ public class ElementoProrrateo implements Comparable<ElementoProrrateo>{
 		return this.coeficiente==((ElementoProrrateo)obj).getCoeficiente();
 	}
 
-	@Override
 	public int compareTo(ElementoProrrateo o) {
 		if(this.coeficiente>o.getCoeficiente()) 
 			return 1;
