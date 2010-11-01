@@ -35,12 +35,15 @@ public class NumberConverter extends StrutsTypeConverter {
             } else if (toType == BigInteger.class) {
                 return new BigInteger((String) value);
             } else {
-                Object convertedValue = performFallbackConversion(context, value, toType);
-                String stringValue = (String) value;
-                if (!isInRange((Number)convertedValue, stringValue,  toType))
-                        throw new XWorkException("Overflow or underflow casting: \"" + stringValue + "\" into class " + convertedValue.getClass().getName());
-
-                return convertedValue;
+            	String stringValue = (String) value;
+            	if (!toType.isPrimitive() && (stringValue == null || stringValue.length() == 0)) {
+            		return null;
+            	} else {
+            		Object convertedValue = performFallbackConversion(context, value, toType);
+            		if (!isInRange((Number)convertedValue, stringValue,  toType))
+            			throw new XWorkException("Overflow or underflow casting: \"" + stringValue + "\" into class " + convertedValue.getClass().getName());
+            		return convertedValue;
+            	}
             }
         } else if (value instanceof Object[]) {
             Object[] objArray = (Object[]) value;
