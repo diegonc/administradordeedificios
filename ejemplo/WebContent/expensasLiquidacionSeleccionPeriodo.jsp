@@ -42,11 +42,11 @@ function submit(){
 					 			
 					 			<tr>
 					 				<td align="right">Mes:
-					 					<input type="text" id="mes" name="mes" value="<%=mes%>"  size="5" />	 				
+					 					<input type="text" id="mes" name="mes" value="<%=mes%>"  size="5" readonly="readonly"  />	 				
 						 						
 					 				</td>
 					 				<td align="right">Año:
-					 					<input type="text" id="anio" name="anio" value="<%=anio%>"  size="5" />
+					 					<input type="text" id="anio" name="anio" value="<%=anio%>"  size="5"  readonly="readonly" />
 					 				</td>			 			
 								
 						 		</tr>
