@@ -7,17 +7,24 @@
 	<div class="cuerpo">
 		<s:actionerror />
 		<s:actionmessage />
-
-        <s:form action="responsablesFormulario!grabar" method="post"  cssClass="elegante">
-            <s:textfield requiredposition="right" required="true" name="dni" value="%{dni}" label="DNI" />
-            <s:textfield name="telefono" value="%{telefono}" label="Telefono" />
-            <s:textfield name="email" value="%{email}" label="Email" />
-            <s:textfield name="localidad" value="%{localidad}" label="Localidad" />
-            <s:textfield name="calle" value="%{calle}" label="Calle" />
-            <s:textfield name="ubicacion" value="%{ubicacion}" label="Ubicacion" />
-            <s:checkbox name="autoridad" value="%{autoridad}" label="Autoridad" />
-            <s:submit value="Aceptar" />
-            <s:submit value="Cancelar" name="redirectAction:responsablesListado" />
+		<fieldset>
+			<legend>Alta en el servicio</legend>
+	        <s:form action="responsablesFormulario!grabar" method="post"  cssClass="elegante">
+	            <s:textfield requiredposition="right" required="true" name="dni" value="%{dni}" label="DNI" />
+	            <s:textfield name="telefono" value="%{telefono}" label="Telefono" />
+	            <s:textfield name="email" value="%{email}" label="Email" />
+	            <s:textfield name="localidad" value="%{localidad}" label="Localidad" />
+	            <s:textfield name="calle" value="%{calle}" label="Calle" />
+	            <s:textfield name="ubicacion" value="%{ubicacion}" label="Ubicacion" />
+	            <s:checkbox name="autoridad" value="%{autoridad}" label="Autoridad" />
+	    </tbody></table>
+        </fieldset>
+	   	<table><tbody>
+	    <tr>
+	    <td colspan="2" >
+            <s:submit theme="simple" value="Aceptar" />
+            <s:submit theme="simple" value="Cancelar" name="redirectAction:responsablesListado" /></td>
+	    </tr>
         </s:form>
     </div>
 </div>

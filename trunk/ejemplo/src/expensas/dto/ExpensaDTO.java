@@ -29,9 +29,7 @@ public class ExpensaDTO {
 	private double monto;
 	private double intereses;
 	private Date fecha;
-	private int mes;
-	private int anio;
-		
+			
 	@Column(name="DEUDA_PREVIA",nullable=true)
 	public double getDeudaPrevia() {
 		return deudaPrevia;
@@ -101,22 +99,5 @@ public class ExpensaDTO {
 		this.fecha = fecha;
 	}
 	
-	@Column(name = "ANIO", nullable = true)
-	public int getMes() {
-		return mes;
-	}
-	public void setMes(int mes) {
-		this.mes = mes;
-	}
-	
-	@Column(name = "MES", nullable = true)
-	public int getAnio() {
-		return anio;
-	}
-	public void setAnio(int anio) {
-		this.anio = anio;
-	}
-	
-	
-		
+			
 }

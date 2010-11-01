@@ -5,6 +5,8 @@
 	<div class="cuerpo">
 		<s:actionerror />
 		<s:actionmessage />
+		<fieldset>
+		  		<legend>Alta en el servicio</legend>
 		<s:form action="tiposPropiedadesFormulario" method="post">
 			<s:hidden name="nombreEdificio" value="%{nombreEdificio}" />
 			<s:textfield required="true" name="entidad.nombreTipo" value="%{entidad.nombreTipo}" label="Nombre" />
@@ -48,8 +50,12 @@
 					</s:iterator>
 				</tbody>
 			</table>
-			<s:submit value="Aceptar" method="grabar" />
-			<s:submit value="Cancelar" method="cancelar" />
+			</fieldset>
+			<table><tbody>
+			<tr>
+	    	<td colspan="2" ><s:submit theme="simple" value="Aceptar" method="grabar" />
+	    	<s:submit theme="simple" value="Cancelar" method="cancelar" /></td>
+	    	</tr>
 		</s:form>
 	</div>
 </div>

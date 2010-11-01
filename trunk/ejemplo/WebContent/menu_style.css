@@ -45,7 +45,7 @@ h3#header { margin: 0; }
 td.header{color:#fff; background:#999999;}
 td.borde {background:black;}
 td.borderline {background: activeborder;}
-td.fondo {background:grey;}
+td.fondo {background:#f5f5f5;}
 table.principal{heigth:400; wid}
 form.elegante input { padding: .2em;}
 
