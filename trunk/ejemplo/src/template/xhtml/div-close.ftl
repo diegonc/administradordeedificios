@@ -1,2 +1,2 @@
-<#include "/${parameters.templateDir}/simple/div-close.ftl" />
-</td></tr>
+<#include "/${parameters.templateDir}/simple/div-close.ftl" /><#t>
+</td></tr><#t>
