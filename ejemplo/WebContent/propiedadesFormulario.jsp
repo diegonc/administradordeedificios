@@ -17,10 +17,27 @@
 				required="true" />
 	    <s:textfield required="true" name="entidad.nivel" value="%{entidad.nivel}" label="Nivel" />
 	    <s:textfield required="true" name="entidad.orden" value="%{entidad.orden}" label="Orden" />
-	    <s:textfield required="true" name="entidad.propietario.dni" value="%{entidad.propietario.dni}" label="Propietario" />
-	    <s:textfield name="entidad.inquilino.dni" value="%{entidad.inquilino.dni}" label="Inquilino" />
-   	    <s:textfield name="entidad.poderPropietario.dni" value="%{entidad.poderPropietario.dni}" label="Poder Propietario" />
-   	    <s:textfield name="entidad.poderInquilino.dni" value="%{entidad.poderInquilino.dni}" label="Poder Inquilino" />
+	    <s:select label="Propietario" 
+				headerKey="" headerValue="-- Seleccione un responsable --"
+				list="listaResponsables"
+				name="entidad.propietario.dni"
+				value="%{entidad.propietario.dni}"
+				required="true" />
+	    <s:select label="Inquilino" 
+				headerKey="" headerValue="Ninguno"
+				list="listaResponsables"
+				name="entidad.inquilino.dni"
+				value="%{entidad.inquilino.dni}"/>
+   	    <s:select label="Poder Propietario" 
+				headerKey="" headerValue="Ninguno"
+				list="listaResponsables"
+				name="entidad.poderPropietario.dni"
+				value="%{entidad.poderPropietario.dni}"/>
+   	    <s:select label="Poder Inquilino" 
+				headerKey="" headerValue="Ninguno"
+				list="listaResponsables"
+				name="entidad.poderInquilino.dni"
+				value="%{entidad.poderInquilino.dni}"/>
    	    <s:textfield name="entidad.dividendo" value="%{entidad.dividendo}" label="Dividendo" />
    	    </tbody></table>
 	   </fieldset>
