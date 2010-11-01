@@ -12,8 +12,7 @@ function submit(){
 <% String id =request.getParameter("id");
 	Calendar fechaActual = new GregorianCalendar();
 	int anio = fechaActual.get(Calendar.YEAR);
-	int anioDesde=anio-5;
-	int anioHasta=anio+1;
+	int mes = fechaActual.get(Calendar.MONTH)+1;
 %>
 <div class="contenido">
 	<div class="titulo"><h3>Liquidacion de Expensas</h3></div>
@@ -29,18 +28,11 @@ function submit(){
 					 			
 					 			<tr>
 					 				<td align="right">Mes:
-					 					<select  id="mes" name="mes" >
-						 				<%for (int i=1;i<=12;i++){ %>
-						 					<option value="<%=i%>"> <%=i%></option>
-						 				<%} %>
-						 				</select>		
+					 					<input type="text" id="mes" name="mes" value="<%=mes%>" readonly="readonly" size="5" />	 				
+						 						
 					 				</td>
 					 				<td align="right">Año:
-					 					<select  id="anio" name="anio" >
-						 				<%for (int j=anioDesde;j<=anioHasta;j++){ %>
-						 					<option value="<%=j%>"> <%=j%></option>
-						 				<%} %>
-						 				</select>		
+					 					<input type="text" id="anio" name="anio" value="<%=anio%>" readonly="readonly" size="5" />
 					 				</td>			 			
 								
 						 		</tr>
@@ -52,8 +44,7 @@ function submit(){
 					<a href="EdificioListarAction?redi=expensa">Volver</a> 
 				</form>
 			</td>
-			<td width="15"  class="fondo"></td>
-			<td width="5" class="borde"></td>
+			<td width="15"  class="fondo"></td>			
 		</tr>
 	</table>
 	<s:actionerror/>

@@ -30,9 +30,9 @@
 		<% for (EdificioDTO edificioDTO : edificios) {  %>		
 			<tr>
 				<td><%= edificioDTO.getNombre()%></td>
-				<td><a href="expensasPropiedadesListado.jsp?id=<%=edificioDTO.getId()%>">Ver Propiedades</a></td>	
-<!--				<td><a href="expensasLiquidacionResultante?id=<%=edificioDTO.getId()%>">Liquidar</a></td>-->
+				<td><a href="expensasPropiedadesListado.jsp?id=<%=edificioDTO.getId()%>">Ver Propiedades</a></td>
 				<td><a href="expensasLiquidacionSeleccionPeriodo.jsp?id=<%=edificioDTO.getId()%>">Liquidar</a></td>
+				
 			</tr>	
 		<%} %>				
 		
