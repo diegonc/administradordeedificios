@@ -131,7 +131,9 @@ public class GastoRealModifAction extends ActionSupport {
 			gastoAppl.updateGastoReal(factory, gastoReal);
 			return SUCCESS;
 		} catch (Exception e) {
-			return ERROR;
+			LOG.error(e.getMessage(), e);
+			addActionError("No se pudo actualizar el gasto.");
+			return "error";
 		}
 
 	}

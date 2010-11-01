@@ -24,6 +24,7 @@ public class EdificioDeleteAction extends ActionSupport{
 			edifAppl.deleteEdificio(factory, id);
 			return SUCCESS;
 		} catch (Exception e) {
+			addActionError("No se puede eliminar el edificio.");
 			return ERROR;
 		}	
 	}

@@ -1,4 +1,5 @@
 <jsp:include page="/WEB-INF/jspf/header.jspf"></jsp:include>
+<%@ taglib prefix="s" uri="/struts-tags" %>
 <script type="text/javascript">
 
 function habilita(){
@@ -167,6 +168,7 @@ function validar(thisform) {
 				 		</tr>				  	
 			  		</table>			  	
 			</fieldset>
+			<s:actionerror cssClass="error"/>
 			<input class="btn" type="button" value="Aceptar" onclick="validar()" />
 			<a href="EdificioListarAction?redi=edificio">Volver</a>
 						

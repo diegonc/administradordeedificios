@@ -57,4 +57,7 @@ public class GastoRealDTO extends GastoDTO{
 	public String getEstado() {
 		return estado;
 	}
+	public boolean estaConsolidado() {
+		return "C".equals(estado);
+	}
 }

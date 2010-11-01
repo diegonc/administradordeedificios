@@ -1,4 +1,5 @@
 <jsp:include page="/WEB-INF/jspf/header.jspf"></jsp:include>
+<%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page language="java" contentType="text/html" import="java.util.*"%>
 <%@ page language="java" contentType="text/html" import="edificio.*"%>
 <%@ page language="java" contentType="text/html" import="utilidades.*"%>
@@ -74,20 +75,19 @@ function validar(thisform) {
 		alert("Debe completar el monto de la tasa anual y debe ser un numero"); 
 		validado=false;
 	}
-	if((isNaN(dia_primer_vto.value) || (dia_primer_vto.value < 1) || (dia_primer_vto.value > 15)) && validado == true ) { 
-		alert("Debe completar el dia del primer vto"); 
+	if((isNaN(dia_primer_vto.value) || (parseInt(dia_primer_vto.value) < 1) || (parseInt(dia_primer_vto.value) > 15)) && validado == true ) { 
+		alert("El primer vencimiento debe ser menor que 15"); 
 		validado=false;
 	} 
-	if((dia_segundo_vto.value!="") && (isNaN(dia_segundo_vto.value) || (dia_segundo_vto.value < 0) 
-					|| (dia_segundo_vto.value > 15)) && validado == true ) { 
-		alert("Debe completar el dia del segundo vto"); 
+	if((dia_segundo_vto.value!="") && (isNaN(dia_segundo_vto.value)|| (parseInt(dia_segundo_vto.value) < 0) || ( parseInt(dia_segundo_vto.value) > 15)) && validado == true ) { 
+		alert("El segundo vencimiento debe ser menor que 15"); 
 		validado=false;
 	} 
 	if ((punitorio.checked==true) && (dia_segundo_vto.value=="") && validado == true ) {
 		alert("Si es punitorio debe completar el dia del segundo vto"); 
 		validado=false;
 	}
-	if ((dia_primer_vto.value > dia_segundo_vto.value) && (validado == true) && (punitorio.checked==true)){
+	if ((parseInt(dia_primer_vto.value) > parseInt(dia_segundo_vto.value)) && (validado == true) && (punitorio.checked==true)){
 		alert("El segundo vto debe ser posterior al primero"); 
 		validado=false;
 	}
@@ -209,6 +209,7 @@ function validar(thisform) {
 				 		</tr>
 				  		</table>			  	
 			</fieldset>
+			<s:actionerror cssClass="error"/>
 			<input class="btn" type="button" value="Aceptar" onclick="validar()" />
 			<a href="EdificioListarAction?redi=edificio">Volver</a>
 		</form>

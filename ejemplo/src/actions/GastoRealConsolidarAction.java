@@ -33,13 +33,15 @@ public class GastoRealConsolidarAction extends ActionSupport {
 		
 		if (gastoReal.getTipoGasto().getTipo().equals("EXT")) {
 			if(edificio.getFondo_extraordinario()< gastoReal.getMonto()) {
-				return "errorinsuf";
+				addActionError("No hay fondos para afrontar el gasto extraordinario.");
+				return ERROR;
 			} else {
 				edificio.setFondo_extraordinario(edificio.getFondo_extraordinario() - gastoReal.getMonto());
 			}
 		} else {
 			if(edificio.getFondo_ordinario()< gastoReal.getMonto()) {
-				return "errorinsuf";
+				addActionError("No hay fondos para afrontar el gasto ordinario.");
+				return ERROR;
 			} else {
 				edificio.setFondo_ordinario(edificio.getFondo_ordinario() - gastoReal.getMonto());
 			}
@@ -50,6 +52,7 @@ public class GastoRealConsolidarAction extends ActionSupport {
 			edificioAppl.updateEdificio(factory, edificio);
 			return SUCCESS;
 		} catch (Exception e) {
+			addActionError("No se ha podido realizar la operación pedida.");
 			return ERROR;
 		}
 	}

@@ -1,4 +1,5 @@
 <jsp:include page="/WEB-INF/jspf/header.jspf"></jsp:include>
+<%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page language="java" contentType="text/html" import="java.util.*"%>
 <%@ page language="java" contentType="text/html" import="edificio.*"%>
 <%@ page language="java" contentType="text/html" import="utilidades.*"%>
@@ -36,8 +37,9 @@
 				 			<td>&nbsp;&nbsp;<input type="text" id="nombre" name="nombre" value="<%=edificio.getNombre() %>" readonly size="15"/></td>
 				 			<td>&nbsp;&nbsp;<input type="text" style="display: none;" id="id" name="id" value="<%=edificio.getId() %>" readonly size="15"/></td>	
 				 		</tr>
-				  	</table>			  	
+				  	</table>
 			</fieldset>
+			<s:actionerror cssClass="error"/>
 			<input class="btn" type="button" value="Aceptar" onclick="submit()" />
 			<a href="EdificioListarAction?redi=edificio">Volver</a>
 		</form>

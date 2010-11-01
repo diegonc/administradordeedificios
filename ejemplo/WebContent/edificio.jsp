@@ -1,4 +1,5 @@
 <jsp:include page="/WEB-INF/jspf/header.jspf"></jsp:include>
+<%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page language="java" contentType="text/html" import="java.util.*"%>
 <%@ page language="java" contentType="text/html" import="edificio.*"%>
 <jsp:useBean id="lista" scope="session" class="beans.EdificiosBean"/>
@@ -39,6 +40,7 @@
 		</table> 
 			
 		</fieldset>
+		<s:actionerror cssClass="error"/>
 		<a href="edificioAlta.jsp">Agregar Edificio</a>				
 		</td>
 		<td width="15" class="fondo"></td>

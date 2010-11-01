@@ -53,36 +53,35 @@
 		</action>
 		<action name="GastosListarModifElimAction" class="actions.GastosListarModifElimAction">
 			<result name="success">/gastosModifElim.jsp</result>
-			<result name="error">/gastoError.jsp</result>
+			<result name="error">/gastosModifElim.jsp</result>
 		</action>
 		<action name="GastoRealDeleteAction" class="actions.GastoRealDeleteAction">
 			<result name="success" type="redirectAction">
 				<param name="actionName">GastosListarModifElimAction</param>
 				<param name="id">${edificio_id}</param>
 			</result>
-			<result name="error">/gastoError.jsp</result>
+			<result name="error">/gastosDeleteReales.jsp</result>
 		</action>
 		<action name="GastoPrevisionDeleteAction" class="actions.GastoPrevisionDeleteAction">
 			<result name="success" type="redirectAction">
 				<param name="actionName">GastosListarModifElimAction</param>
 				<param name="id">${edificio_id}</param>
 			</result>
-			<result name="error">/gastoError.jsp</result>
+			<result name="error">/gastosDeletePrevision.jsp</result>
 		</action>
 		<action name="GastoRealModifAction" class="actions.GastoRealModifAction">
 			<result name="success" type="redirectAction">
 				<param name="actionName">GastosListarModifElimAction</param>
 				<param name="id">${edificio_id}</param>
 			</result>
-			<result name="error">/gastoError.jsp</result>
+			<result name="error">/gastosModificarReal.jsp</result>
 		</action>
 		<action name="GastoRealConsolidarAction" class="actions.GastoRealConsolidarAction">
 			<result name="success" type="redirectAction">
 				<param name="actionName">GastosListarModifElimAction</param>
 				<param name="id">${idEdificio}</param>
 			</result>
-			<result name="error">/gastoError.jsp</result>
-			<result name="errorinsuf">/gastoErrorInsuf.jsp</result>
+			<result name="error">/gastosConsolidarReales.jsp</result>
 		</action>
 
 		<action name="GastoPrevisionModifAction" class="actions.GastoPrevisionModifAction">
@@ -90,7 +89,7 @@
 				<param name="actionName">GastosListarModifElimAction</param>
 				<param name="id">${edificio_id}</param>
 			</result>
-			<result name="error">/gastoError.jsp</result>
+			<result name="error">/gastosModificarPrevision.jsp</result>
 		</action>
 
 		<action name="EdificioAction" class="actions.EdificioAction">
@@ -98,14 +97,14 @@
 				<param name="actionName">EdificioListarAction</param>
 				<param name="redi">edificio</param>
 			</result>
-			<result name="error">/edificioError.jsp</result>
+			<result name="error">/edificioAlta.jsp</result>
 		</action>
 		<action name="EdificioListarAction" class="actions.EdificioListarAction">
 			<result name="edificios">/edificio.jsp</result>
 			<result name="gastos">/gastos.jsp</result>
 			<result name="success">/gastos.jsp</result>
 			<result name="expensas">/expensas.jsp</result>
-			<result name="error">/edificioError.jsp</result>
+			<result name="error">/edificio.jsp</result>
 			
 		</action>
 		<action name="EdificioModifAction" class="actions.EdificioModifAction">
@@ -113,14 +112,14 @@
 				<param name="actionName">EdificioListarAction</param>
 				<param name="redi">edificio</param>
 			</result>
-			<result name="error">/edificioError.jsp</result>
+			<result name="error">/edificioModif.jsp</result>
 		</action>
 		<action name="EdificioDeleteAction" class="actions.EdificioDeleteAction">
 			<result name="success" type="redirectAction">
 				<param name="actionName">EdificioListarAction</param>
 				<param name="redi">edificio</param>
 			</result>
-			<result name="error">/edificioError.jsp</result>
+			<result name="error">/edificioDelete.jsp</result>
 		</action>
 
 		<action name="expensasPropiedadesListado"
