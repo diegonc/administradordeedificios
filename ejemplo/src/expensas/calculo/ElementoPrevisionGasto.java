@@ -82,6 +82,19 @@ public class ElementoPrevisionGasto {
 			monto = obtenerMontoDiferenciaPrevisionGastoMesAnterior()+obtenerMontoPrevisionMesActual();
 			return NumberFormat.redondeoDouble(monto);
 		}
+		
+		public boolean existenPrevisionesMesAnterior(){
+			return !previsionesMesAnterior.isEmpty();
+		}
+		
+		public boolean existenPrevisionesMesActual(){
+			return !previsiones.isEmpty();
+		}
+		
+		public boolean existenGastosRealesMesAnterior(){
+			return !gastosRealesMesAnterior.isEmpty();
+		}
+		
 }
 
 
