@@ -9,6 +9,7 @@ import org.hibernate.Session;
 
 import propiedades.PropiedadDTO;
 import utilidades.HibernateUtil;
+import utilidades.NumberFormat;
 import edificio.EdificioDTO;
 import expensas.dto.ExpensaCobroDTO;
 import expensas.dto.ExpensaDTO;
@@ -36,6 +37,12 @@ public class ExpensaInteresesAppl {
 		Calendar fechaActual = new GregorianCalendar();
 		int mes = fechaActual.get(Calendar.MONTH);
 		int anio = fechaActual.get(Calendar.YEAR);
+		int dia = fechaActual.get(Calendar.DATE);
+		
+		if(dia>=edificio.getDia_primer_vto()){
+			mes++;
+			if(mes==12) mes=0;
+		}
 		if (mes==0){
 			anio--;
 			mes=11;
@@ -45,13 +52,19 @@ public class ExpensaInteresesAppl {
 		fechaActual.set(anio,mes, edificio.getDia_primer_vto());
 
 		return fechaActual.getTime();
-
 	}
 
 	private Date obtenerFechaVencimiento(EdificioDTO edificio, boolean esPrimerVto){
 		Calendar fechaActual = new GregorianCalendar();
 		int mes = fechaActual.get(Calendar.MONTH);
 		int anio = fechaActual.get(Calendar.YEAR);
+		int dia = fechaActual.get(Calendar.DATE);
+		
+		if(dia>=edificio.getDia_primer_vto()){
+			mes++;
+			if(mes==12) mes=0;
+		}
+		
 		if (esPrimerVto){
 			fechaActual.set(anio,mes, edificio.getDia_primer_vto());
 		}else{
@@ -62,9 +75,7 @@ public class ExpensaInteresesAppl {
 
 	}
 
-	private double redondeoDouble(double valor){
-		return Math.round(valor*Math.pow(10,2))/Math.pow(10,2);
-	}
+
 	public void calcularInteresPunitorio(EdificioDTO edificio,ExpensaDTO expensa){
 		
 		double interesPorDia = edificio.getTasa_anual()/(36000);
@@ -80,12 +91,13 @@ public class ExpensaInteresesAppl {
 		Date fechaUltimaLiquidacion = obtenerFechaUltimaLiquidacion(edificio);
 		Date fechaPrimerVto = obtenerFechaVencimiento(edificio,true);
 		Date fechaSegundoVto = obtenerFechaVencimiento(edificio,false);
+		expensa.setFecha(fechaPrimerVto);
 
 		//Primer Vencimiento
 		long cantidadDiasDeudaPrimerVto = getDiferenciaEntreFechas(fechaPrimerVto, fechaUltimaLiquidacion);
 		double interesesPrimerVto = deudaPrevia*(interesPorDia*cantidadDiasDeudaPrimerVto);
 		expensa.setDeudaPrevia(deudaPrevia);
-		interesesPrimerVto = redondeoDouble(interesesPrimerVto);
+		interesesPrimerVto = NumberFormat.redondeoDouble(interesesPrimerVto);
 		expensa.setIntereses(interesesPrimerVto);
 		
 		
@@ -94,7 +106,7 @@ public class ExpensaInteresesAppl {
 		double interesesDeudaSegundoVto = deudaPrevia*(interesPorDia*(cantidadDiasDeudaPrimerVto +cantidadDiasEntreVtos));
 		double interesesTotalesSegundoVto = montoLiquidacion*cantidadDiasEntreVtos*interesPorDia;
 		interesesTotalesSegundoVto+=interesesDeudaSegundoVto;
-		interesesTotalesSegundoVto = redondeoDouble(interesesTotalesSegundoVto);
+		interesesTotalesSegundoVto = NumberFormat.redondeoDouble(interesesTotalesSegundoVto);
 		expensa.setInteresSegundoVencimiento(interesesTotalesSegundoVto);
 				
 	}
@@ -121,22 +133,26 @@ public class ExpensaInteresesAppl {
 		
 		if (deudaPrevia>0.0){
 			ExpensasCobroAppl cobroAppl = new ExpensasCobroAppl();
-			List<ExpensaCobroDTO> cobros = cobroAppl.getCobroPorIdExpensas(expensa.getId());
-			if (!cobros.isEmpty()){
-				ExpensaCobroDTO ultimoCobro = cobros.get(0);
-				fechaUltimaLiquidacion = ultimoCobro.getFecha();			
-				
-			}
+			ExpensaAppl expensaAppl = new ExpensaAppl();
+			ExpensaDTO ultimaExpensa = expensaAppl.obtenerExpensaUltimaLiquidacion(propiedad.getId(), expensa.getTipo());
 			
+			if(ultimaExpensa!=null){
+				List<ExpensaCobroDTO> cobros = cobroAppl.getCobroPorIdExpensas(ultimaExpensa.getId());
+				if (!cobros.isEmpty()){
+					ExpensaCobroDTO ultimoCobro = cobros.get(0);
+					fechaUltimaLiquidacion = ultimoCobro.getFecha();			
+				}
+			}
 		}
 				
 		Date fechaPrimerVto = obtenerFechaVencimiento(edificio,true);	
+		expensa.setFecha(fechaPrimerVto);
 
 		//Primer Vencimiento
 		long cantidadDiasDeudaPrimerVto = getDiferenciaEntreFechas(fechaPrimerVto, fechaUltimaLiquidacion);
 		double interesesPrimerVto = deudaPrevia*(interesPorDia*cantidadDiasDeudaPrimerVto);
 		expensa.setDeudaPrevia(deudaPrevia);
-		interesesPrimerVto = redondeoDouble(interesesPrimerVto);
+		interesesPrimerVto = NumberFormat.redondeoDouble(interesesPrimerVto);
 		expensa.setIntereses(interesesPrimerVto);	
 				
 	}
@@ -155,27 +171,72 @@ public class ExpensaInteresesAppl {
 		}
 		
 		Date fechaUltimaLiquidacion = obtenerFechaUltimaLiquidacion(edificio);
-		//TODO: ver porque no ppuedo obtener el cobro
-		if (deudaPrevia>0.0){
-			ExpensasCobroAppl cobroAppl = new ExpensasCobroAppl();
-			List<ExpensaCobroDTO> cobros = cobroAppl.getCobroPorIdExpensas(expensa.getId());
-			if (cobros!=null && !cobros.isEmpty()){
-				ExpensaCobroDTO ultimoCobro = cobros.get(0);
-				fechaUltimaLiquidacion = ultimoCobro.getFecha();
-			}
-			
-		}
+		ExpensaAppl expensaAppl = new ExpensaAppl();
+		ExpensaDTO ultimaExpensa = expensaAppl.obtenerExpensaUltimaLiquidacion(propiedad.getId(), expensa.getTipo());
 		
+		if(ultimaExpensa!=null){
+			if (deudaPrevia>0.0){
+				ExpensasCobroAppl cobroAppl = new ExpensasCobroAppl();
+				List<ExpensaCobroDTO> cobros = cobroAppl.getCobroPorIdExpensas(ultimaExpensa.getId());
+				if (cobros!=null && !cobros.isEmpty()){
+					ExpensaCobroDTO ultimoCobro = cobros.get(0);
+					fechaUltimaLiquidacion = ultimoCobro.getFecha();
+				}
+			}
+		}
 		Date fechaPrimerVto = obtenerFechaVencimiento(edificio,true);	
 		expensa.setFecha(fechaPrimerVto);
 		//Primer Vencimiento
 		long cantidadDiasDeudaPrimerVto = getDiferenciaEntreFechas(fechaPrimerVto, fechaUltimaLiquidacion);
 		double interesesPrimerVto = deudaPrevia*(interesPorDia*cantidadDiasDeudaPrimerVto);
 		expensa.setDeudaPrevia(deudaPrevia);
-		interesesPrimerVto = redondeoDouble(interesesPrimerVto);
+		interesesPrimerVto = NumberFormat.redondeoDouble(interesesPrimerVto);
 		expensa.setIntereses(interesesPrimerVto);								
-				
 	}
-	
-	
+	public void reliquidarConInteresAFechaDePago(EdificioDTO edificio,ExpensaDTO expensa){
+		Session session = HibernateUtil.getSession();
+		session.beginTransaction();
+		double interesPorDia = edificio.getTasa_anual()/(36000);
+		double deudaPrevia = 0.0;		
+		PropiedadDTO propiedad = expensa.getPropiedad();
+		if (expensa.getTipo().equalsIgnoreCase("O")){
+			deudaPrevia = obtenerDeudaPrevia(propiedad.getCtaOrdSaldoExp());			
+		}else{
+			deudaPrevia = obtenerDeudaPrevia(propiedad.getCtaExtSaldoExp());
+		}
+		
+		//
+		
+		ExpensaAppl expensaAppl = new ExpensaAppl();
+		ExpensaDTO ultimaExpensa = expensaAppl.obtenerExpensaUltimaLiquidacion(propiedad.getId(), expensa.getTipo());
+		Date fechaUltimaLiquidacion =(Date)ultimaExpensa.getFecha();
+		if(ultimaExpensa!=null){
+			if (deudaPrevia>0.0){
+				ExpensasCobroAppl cobroAppl = new ExpensasCobroAppl();
+				List<ExpensaCobroDTO> cobros = cobroAppl.getCobroPorIdExpensas(ultimaExpensa.getId());
+				if (cobros!=null && !cobros.isEmpty()){
+					ExpensaCobroDTO ultimoCobro = cobros.get(0);
+					fechaUltimaLiquidacion = ultimoCobro.getFecha();
+				}
+			}
+		
+		}
+		expensa.setDeudaPrevia(deudaPrevia);
+		Calendar fechaActual = new GregorianCalendar();
+		Date fechaPrimerVto = fechaActual.getTime();	
+		//TODO: ver si no va otra fecha
+		expensa.setFecha(fechaPrimerVto);
+		//Primer Vencimiento
+		if(fechaUltimaLiquidacion.before(fechaPrimerVto)){
+			long cantidadDiasDeudaPrimerVto = getDiferenciaEntreFechas(fechaPrimerVto, fechaUltimaLiquidacion);
+			double interesesPrimerVto = deudaPrevia*(interesPorDia*cantidadDiasDeudaPrimerVto);
+			
+			interesesPrimerVto = NumberFormat.redondeoDouble(interesesPrimerVto);
+			expensa.setIntereses(interesesPrimerVto);
+		}else{
+			
+			expensa.setIntereses(0);
+		}
+	}
+
 }

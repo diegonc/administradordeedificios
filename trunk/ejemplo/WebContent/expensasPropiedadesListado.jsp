@@ -12,7 +12,8 @@
 	EdificioDTO edificio = (EdificioDTO) hSession.load(
 			EdificioDTO.class, id);
 	Set<TipoPropiedadDTO> tipos = edificio.getTipoPropiedades();
-	Iterator<TipoPropiedadDTO> iteradorTipos = tipos.iterator();
+	
+	
 %>
 
 <script type="text/javascript">
@@ -25,7 +26,15 @@ function redirecConsultaLiq() {
 		}
 	}
 }
-
+function redirecReLiq() {
+	elem=document.getElementsByName('propElegida');
+	for(i=0;i<elem.length;i++) {
+		if (elem[i].checked) {
+			idProp = elem[i].value;
+			location.href = "expensasLiquidacionResultante!reliquidar?id="+<%=edificio.getId()%>+"&idProp="+idProp;
+		}
+	}
+}
 </script>
 
 <table cellpadding="0" cellspacing="0">
@@ -51,7 +60,9 @@ function redirecConsultaLiq() {
 			<td class="listado_par">Orden</td>
 			<td class="listado_par">&nbsp;</td>
 		</tr>
-		<%
+		<%if(tipos!=null){
+			Iterator<TipoPropiedadDTO>	 iteradorTipos = tipos.iterator();
+			
 			while (iteradorTipos.hasNext()) {
 				TipoPropiedadDTO tipoProp = iteradorTipos.next();
 				List<PropiedadDTO> propiedades = tipoProp.getPropiedades();
@@ -66,14 +77,18 @@ function redirecConsultaLiq() {
 		<%
 			}
 			}
+		}
 		%>
 	</table>
+	</fieldset>
 	<input type="hidden" value="<%=id%>" name="idEdificio">
-	<input type="button" value="Re-Liquidar" onclick=""> 
+	<%if (edificio.getMora().equals(EdificioDTO.A_FECHA)){ %>
+		<input type="button" value="Re-Liquidar" onclick="redirecReLiq()" > 
+	<%} %>
 	<input type="submit" value="Registrar Cobro" name="method:mostrarFormulario" >
 	<input type="submit" value="Consultar/Eliminar Cobros" name="method:consultarCobros">
 	<input type="button" value="Consultar Deuda" onclick="redirecConsultaLiq()">
-	<a href="EdificioListarAction?redi=expensa">Volver</a></fieldset>
+	<a href="EdificioListarAction?redi=expensa">Volver</a>
 	</form>
 </tr>
 

@@ -5,11 +5,15 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
+import org.hibernate.Session;
+
 import propiedades.PropiedadDTO;
 import propiedades.TipoPropiedadDTO;
+import utilidades.HibernateUtil;
 import utilidades.NumberFormat;
 import utilidades.Periodo;
 import edificio.EdificioAppl;
+import edificio.EdificioDTO;
 import expensas.calculo.ElementoPrevisionGasto;
 import expensas.calculo.ResultadoProrrateo;
 import expensas.dto.ExpensaDTO;
@@ -122,13 +126,30 @@ public class ExpensaPrevisionAppl extends ExpensaCalculoAppl {
 	    return tipoPropiedadMontoExpensa; 
 	}
 			
+	private void actualizarSaldos(PropiedadDTO propiedadActual, ExpensaDTO expensa) {
+		if(expensa.getTipo().equalsIgnoreCase("O")){
+			propiedadActual.setCtaOrdSaldoExp(-(expensa.getDeudaPrevia()+expensa.getMonto()));
+			propiedadActual.setCtaOrdSaldoInt(-expensa.getIntereses());
+		}else{
+			propiedadActual.setCtaExtSaldoExp(-(expensa.getDeudaPrevia()+expensa.getMonto()));
+			propiedadActual.setCtaExtSaldoInt(-(expensa.getIntereses()));
+		}
+		Session session = HibernateUtil.getSession();
+		session.beginTransaction();
+		session.update(propiedadActual);
+		session.getTransaction().commit();
+	}
+	
 	private List<ExpensaDTO> calcularExpensaPorTipoYEdificio(HashMap<TipoPropiedadDTO, Double> tipoPropiedadMontoExpensa,String tipoExpensa,int idEdificio){
 		double montoExpensa = 0;
 		double montoTotal=0;
+		Session session = HibernateUtil.getSession();
 		List<ExpensaDTO> expensas= new ArrayList<ExpensaDTO>();
 		EdificioAppl edificioAppl = new EdificioAppl();
 		ExpensaAppl expensaAppl = new ExpensaAppl();
+		ExpensaInteresesAppl expensasIntereses = new ExpensaInteresesAppl();
 		ExpensaDTO expensaActual;
+		EdificioDTO edificio = edificioAppl.getEdificio(HibernateUtil.getSessionFactory(), idEdificio);
 		
 		List<TipoPropiedadDTO> tiposDePropiedades = edificioAppl.obtenerTipoPropiedadPorEdificio(idEdificio);
 		
@@ -141,6 +162,19 @@ public class ExpensaPrevisionAppl extends ExpensaCalculoAppl {
 				expensaActual.setMonto(NumberFormat.redondeoDouble(montoExpensa));
 				expensaActual.setTipo(tipoExpensa);
 				expensaActual.setNumeroOperacion(expensaAppl.obtenerNumeroDeOperacion(propiedad.getId(), tipoExpensa));
+				
+				if (edificio.getMora().equalsIgnoreCase(EdificioDTO.PUNITORIO))
+					expensasIntereses.calcularInteresPunitorio(edificio, expensaActual);
+				if (edificio.getMora().equalsIgnoreCase(EdificioDTO.A_FECHA))
+					expensasIntereses.calcularInteresAFechaDePago(edificio, expensaActual);
+				if (edificio.getMora().equalsIgnoreCase(EdificioDTO.DIFERIDO))
+					expensasIntereses.calcularInteresDiferidoProximaLiquidacion(edificio, expensaActual);
+				actualizarSaldos(propiedad, expensaActual);
+				session.beginTransaction();
+				session.saveOrUpdate(expensaActual);
+				session.getTransaction().commit();			
+				
+				
 				expensas.add(expensaActual);
 			}
 		}	
