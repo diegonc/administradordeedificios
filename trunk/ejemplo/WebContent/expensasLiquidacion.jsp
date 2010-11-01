@@ -1,9 +1,11 @@
-<jsp:include page="/WEB-INF/jspf/header.jspf"></jsp:include>
+
+<%@page import="javax.lang.model.element.Element"%><jsp:include page="/WEB-INF/jspf/header.jspf"></jsp:include>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page language="java" contentType="text/html" import="edificio.EdificioDTO"%>
 <%@ page language="java" contentType="text/html" import="gastos.dto.TipoGastoDTO"%>
 <%@ page language="java" contentType="text/html" import="expensas.dto.ExpensaDTO"%>
 <%@ page language="java" contentType="text/html" import="propiedades.PropiedadDTO"%>
+<%@ page language="java" contentType="text/html" import="expensas.calculo.ElementoPrevisionGasto"%>
 <%@ page language="java" contentType="text/html" import="gastos.dto.GastoDTO"%>
 <%@ page language="java" contentType="text/html" import="java.util.List"%>
 <%@ page language="java" contentType="text/html" import="java.util.HashMap"%>
@@ -47,22 +49,28 @@ function ocularYMostrar(id){
 			
 		  <%
 		  	double montoTotal=0;
-			HashMap<TipoGastoDTO,List<GastoDTO>> tipoGastoGasto =detalleExpensa.getGastosDelPeriodo();
+		    HashMap<TipoGastoDTO, ElementoPrevisionGasto> tipoGastoGasto = detalleExpensa.getGastosOrdinariosDelPeriodo();
 			Iterator<TipoGastoDTO> it = tipoGastoGasto.keySet().iterator();
+			double montoAcumulado=0.0;
 		    while (it.hasNext()) {
 		        TipoGastoDTO tipoGasto = (TipoGastoDTO) it.next();
-		        List<GastoDTO> gastosEnTipo = (List<GastoDTO>) tipoGastoGasto.get(tipoGasto);
+		        ElementoPrevisionGasto gastosEnTipo = (ElementoPrevisionGasto) tipoGastoGasto.get(tipoGasto);
 		  %>
-		    <tr bgcolor="#E0E0E0">
-		        <td>&nbsp;&nbsp;</td>
-				<td><%=tipoGasto.getDescripcion()%></td>
-				<td>&nbsp;&nbsp;</td>
-			</tr>		
-		    <%  double montoAcumulado =0;
-		    	for (GastoDTO gastoActual : gastosEnTipo) {
-		        	montoAcumulado+=gastoActual.getMonto();
-		        	montoTotal+=gastoActual.getMonto();
-		    %>
+			    <tr bgcolor="#E0E0E0">
+			       
+					<td colspan="4" align="center"><%=tipoGasto.getDescripcion()%></td>
+					
+				</tr>
+				<tr>	
+					<td>&nbsp;&nbsp;</td>
+					<td colspan="1">Previsiones del mes Anterior</td>
+					<td>&nbsp;&nbsp;</td>		
+					<td>&nbsp;&nbsp;</td>			
+				</tr>
+		    <%  
+		    	montoAcumulado =gastosEnTipo.obtenerMontoPrevisionMesAnterior();
+		    	for (GastoDTO gastoActual : gastosEnTipo.getPrevisionesMesAnterior()) {
+		     %>
 		        	<tr>
 				        <td><%=gastoActual.getNumeroFolio()%></td>
 						<td><%=gastoActual.getDetalle()%></td>
@@ -73,20 +81,67 @@ function ocularYMostrar(id){
 		         }
 		    %>
 		    		<tr class="listado_par">
-				        <td>&nbsp;</td>
+		    			<td>&nbsp;&nbsp;</td>
+				        <td colspan="2"> Total previsiones del mes anterior</td>				       
+						<td><%=montoAcumulado %></td>
+					</tr>		  
+					 <tr>
+					 	<td>&nbsp;&nbsp;</td>
+						<td colspan="1">Gastos Reales del Mes</td>
+						<td>&nbsp;&nbsp;</td>		
+						<td>&nbsp;&nbsp;</td>
+					</tr>
+			<%  montoAcumulado =gastosEnTipo.obtenerMontoGastosRealesMesAnterior();
+		    	for (GastoDTO gastoActual : gastosEnTipo.getGastosRealesMesAnterior()) {
+		     %>
+		        	<tr>
+				        <td><%=gastoActual.getNumeroFolio()%></td>
+						<td><%=gastoActual.getDetalle()%></td>
+						<td><%=gastoActual.getMonto()%></td>
+						<td>&nbsp;</td>
+					</tr>				
+		   <%
+		         }
+		    %>
+		   			<tr class="listado_par">
+		    			<td>&nbsp;&nbsp;</td>
+				        <td colspan="2"> Total Gastos Reales del mes anterior</td>				       
+						<td><%=montoAcumulado %></td>
+					</tr>	
+					<tr class="listado_par">
+		    			<td>&nbsp;&nbsp;</td>
+				        <td colspan="2"> Total del mes anterior</td>				       
+						<td><%=gastosEnTipo.obtenerMontoDiferenciaPrevisionGastoMesAnterior()%></td>
+					</tr>
+		    		<tr>
+		    			<td>&nbsp;&nbsp;</td>
+				        <td colspan="1"> Previsiones del mes Actual</td>						
 						<td>&nbsp;</td>
 						<td>&nbsp;</td>
+						
+					</tr>
+		   <%  montoAcumulado =gastosEnTipo.obtenerMontoPrevisionMesActual();
+		    	for (GastoDTO gastoActual : gastosEnTipo.getPrevisiones()) {
+		     %>
+		        	<tr>
+				        <td><%=gastoActual.getNumeroFolio()%></td>
+						<td><%=gastoActual.getDetalle()%></td>
+						<td><%=gastoActual.getMonto()%></td>
+						<td>&nbsp;</td>
+					</tr>				
+		   <%
+		         }
+		    %>
+		    		<tr class="listado_par">
+		    			<td>&nbsp;&nbsp;</td>
+				        <td colspan="2"> Total previsiones del mes Actual</td>				     
 						<td><%=montoAcumulado %></td>
 					</tr>
-		    <%
+		   
+				
+		 <%
 		     }			
-			 %>
-			<tr >
-				<td>&nbsp;</td>
-				<td>Monto Total</td>
-				<td>&nbsp;</td>
-				<td><%=montoTotal%></td>
-			</tr>			 
+		 %> 
 		</table>
 <%} %>
 				
@@ -103,7 +158,7 @@ function ocularYMostrar(id){
 			<%} %>			
 			</tr>
 		<%
-		List<ExpensaDTO> expensas = detalleExpensa.getExpensas();
+		List<ExpensaDTO> expensas = detalleExpensa.getExpensasOrdinarias();
 		
 		int h =0;
 		for (ExpensaDTO exp : expensas){
