@@ -185,7 +185,7 @@ function habilitarInputsPlazo(){
 				  				&nbsp;&nbsp;<input type="text" name="dia" maxlength="2" size="2" style="width:22px;" disabled >
 								&nbsp;<input type="text" name="mes" maxlength="2" size="2"  style="width:22px;" disabled  >
 								&nbsp;<input type="text" name="anio" maxlength="4" size="4" style="width:32px;" disabled >
-								&nbsp;&nbsp;<a href="JavaScript:doNothing()" onclick="allowPrevious=true;setDateField(tipoDeGastoAlta.dia,document.tipoDeGastoAlta.mes,document.tipoDeGastoAlta.anio);top.newWin = window.open('calendario.jsp','cal','WIDTH=200,HEIGHT=160,TOP=200,LEFT=300')" onMouseOver="javascript: window.status = 'Abrir calendario'; return true;" onMouseOut="window.status=' '; return true;" >Fecha</a>
+								&nbsp;&nbsp;<a href="JavaScript:doNothing()" onclick="allowPrevious=true;setDateField(tipoDeGastoAlta.dia,document.tipoDeGastoAlta.mes,document.tipoDeGastoAlta.anio);top.newWin = window.open('calendario.jsp','cal','WIDTH=200,HEIGHT=160,TOP=200,LEFT=300')" onMouseOver="javascript: window.status = 'Abrir calendario'; return true;" onMouseOut="window.status=' '; return true;" ><img src="images/calendario.gif" ></img></a>
 				  			
 				  			</td>
 				  		</tr>			  		
