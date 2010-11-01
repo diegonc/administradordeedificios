@@ -7,7 +7,12 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
 
+import propiedades.PropiedadDTO;
+import propiedades.TipoPropiedadDTO;
+
 import utilidades.HibernateUtil;
+import utilidades.Periodo;
+import edificio.EdificioDTO;
 import expensas.dto.ExpensaDTO;
 
 public class ExpensaAppl {
@@ -58,8 +63,27 @@ public class ExpensaAppl {
 		if(expensas.isEmpty()) return null;
 		else
 			return (ExpensaDTO)query.list().get(0);		
-		//return (Integer) query.uniqueResult();
 	}
+	
+	public boolean existeExpensaUltimaLiquidacion(int idEdificio, int mes, int anio){
+		Session session = HibernateUtil.getSession();
+		Periodo periodo = new Periodo(mes, anio);
+		String fechaInicio = periodo.obtenerFechaInicio();
+		String fechaFin = periodo.obtenerFechaFin();
+					
+		Query query = session.createQuery("select ex from TipoPropiedadDTO tp,EdificioDTO ed,PropiedadDTO p, ExpensaDTO ex" +
+				" where tp.edificio.id=ed.id and p.tipoPropiedad.id = tp.id and ex.propiedad.id=p.id " +
+				"and ed.id =:idEdificio and ex.fecha between :fechaInicio and :fechaFin");
+		
+		query.setInteger("idEdificio", idEdificio);
+		query.setString("fechaInicio", fechaInicio);
+		query.setString("fechaFin", fechaFin);
+		
+		List<ExpensaDTO> expensas = query.list();
+		if(expensas.isEmpty()) return false;
+		return true;		
+	}
+	
 	
 	
 }

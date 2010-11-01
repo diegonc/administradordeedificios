@@ -126,13 +126,10 @@ public class ExpensasLiquidacionResultanteAction extends ActionSupport {
 	public String execute() {
 		
 		Periodo periodo = new Periodo(mes,anio); 
+		ExpensaAppl expensaAppl = new ExpensaAppl();
 		
-		//TODO: ver si la liquidacion es del mes
-		if (mes==1 && anio==2005){
-			ExpensaAppl expensaAppl = new ExpensaAppl();
-			//expensaAppl.obtenerExpensaUltimaLiquidacion(idPropiedad, tipoExpensa);
-			
-			addActionError("Ese mes se encuentra liquidado.");
+		if (expensaAppl.existeExpensaUltimaLiquidacion(id, mes, anio)){
+			addActionError("El periodo ya se encuentra liquidado.");
 			return "error";
 		}else{
 			HashMap<TipoGastoDTO, ElementoPrevisionGasto> gastosLiquidacion = null;
