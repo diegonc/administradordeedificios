@@ -45,22 +45,7 @@ public class TestExpensaPorPrevision extends TestCase {
 									
 		return query.list();
 	}
-	
-	@SuppressWarnings("unchecked")
-	private List<GastoRealDTO> obtenerGastosRealesExtraordinariosPorEdificioYPeriodo(int idEdificio,Periodo periodo){
-		Session session = HibernateUtil.getSession();
-		
-		Query query = session.createQuery("select g from GastoRealDTO g where " +
-							"g.fechaPago between :fechaInicio and :fechaFin and g.edificio =:idEdificio" +
-							" and g.tipoGasto.tipo = 'EXT' ");
-		
-		query.setString("fechaInicio", periodo.obtenerFechaInicio());
-		query.setString("fechaFin", periodo.obtenerFechaFin());
-		query.setInteger("idEdificio", idEdificio);
-									
-		return query.list();
-	}
-		
+			
 	@SuppressWarnings("unchecked")
 	private List<GastoPrevisionDTO> obtenerPrevisionesPorEdificioYPeriodo(int idEdificio,Periodo periodo){
 		Session session = HibernateUtil.getSession();

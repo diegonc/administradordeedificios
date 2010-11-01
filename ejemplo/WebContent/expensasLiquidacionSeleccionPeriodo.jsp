@@ -2,17 +2,31 @@
 <%@page import="java.util.GregorianCalendar"%>
 <%@page import="java.util.Calendar"%>
 <%@page import="java.util.Date"%>
-<jsp:include page="/WEB-INF/jspf/header.jspf"></jsp:include>
+
+<%@page import="edificio.EdificioAppl"%>
+<%@page import="utilidades.HibernateUtil"%>
+<%@page import="edificio.EdificioDTO"%><jsp:include page="/WEB-INF/jspf/header.jspf"></jsp:include>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <script>
 function submit(){
 	
 }
 </script>
-<% String id =request.getParameter("id");
+<% 	String id =request.getParameter("id");
 	Calendar fechaActual = new GregorianCalendar();
 	int anio = fechaActual.get(Calendar.YEAR);
 	int mes = fechaActual.get(Calendar.MONTH)+1;
+	int dia = fechaActual.get(Calendar.DATE);
+	EdificioAppl edificioAppl = new EdificioAppl();
+	EdificioDTO edificio = edificioAppl.getEdificio(HibernateUtil.getSessionFactory(),Integer.parseInt(id));
+	if(dia>=edificio.getDia_primer_vto()){
+		mes++;
+		if(mes==13){ 
+			mes=1;
+			anio++;
+		}
+	}
+	
 %>
 <div class="contenido">
 	<div class="titulo"><h3>Liquidacion de Expensas</h3></div>
@@ -28,11 +42,11 @@ function submit(){
 					 			
 					 			<tr>
 					 				<td align="right">Mes:
-					 					<input type="text" id="mes" name="mes" value="<%=mes%>" readonly="readonly" size="5" />	 				
+					 					<input type="text" id="mes" name="mes" value="<%=mes%>"  size="5" />	 				
 						 						
 					 				</td>
 					 				<td align="right">Año:
-					 					<input type="text" id="anio" name="anio" value="<%=anio%>" readonly="readonly" size="5" />
+					 					<input type="text" id="anio" name="anio" value="<%=anio%>"  size="5" />
 					 				</td>			 			
 								
 						 		</tr>
