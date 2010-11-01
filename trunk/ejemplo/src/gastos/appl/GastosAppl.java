@@ -119,22 +119,19 @@ public class GastosAppl {
 	}
 
 	public void deleteGastoReal(SessionFactory factory, int id) {
-		boolean commit = false;
 		Session session = factory.openSession();
 		Transaction transaction = session.beginTransaction();
 		try {
-			Query query = session
-			.createQuery("DELETE FROM GastoRealDTO g WHERE g.id = :id");
-			query.setInteger("id", id);
-			query.executeUpdate();
-			commit = true;
+			GastoRealDTO gasto = (GastoRealDTO) session.get(GastoRealDTO.class, id);
+			if (gasto.estaConsolidado())
+				throw new IllegalStateException("El gasto ya esta consolidado.");
+			session.delete(gasto);
+			transaction.commit();
+		} catch(RuntimeException e) {
+			transaction.rollback();
+			throw e;
 		} finally {
-			if (commit) {
-				transaction.commit();
-			}
-			else {
-				transaction.rollback();
-			}
+			session.close();
 		}
 	}
 	

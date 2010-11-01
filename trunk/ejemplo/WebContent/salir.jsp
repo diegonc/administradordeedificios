@@ -8,7 +8,8 @@
 <div id="contenedor">
 <div >
 <ul class="menu"> 
-<li class="top"><a href="#" class="top_link"><span>Logout</span></a></li>
+<li class="top">
+<a href='<s:url value="index.jsp"/>' class="top_link"><span>Login</span></a></li>
 </ul>
 </div>
 <table id="tablaLogin" height ="200" cellpadding="0" cellspacing="0">

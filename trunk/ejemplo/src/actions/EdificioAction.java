@@ -183,10 +183,9 @@ public class EdificioAction extends ActionSupport {
 		SessionFactory factory = HibernateUtil.getSessionFactory();		
 		try {
 			edificioAppl.insertEdificio(factory.openSession(), cargarEdificioDTO());
-			factory.close();
 			return "success";
 		} catch (HibernateException he) {
-			factory.close();
+			addActionError("No se ha podido realizar la operación pedida: Clave Duplicada");
 			return "error";
 		}
 	}

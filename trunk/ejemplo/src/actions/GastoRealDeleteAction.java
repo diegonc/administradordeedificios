@@ -25,6 +25,9 @@ public class GastoRealDeleteAction extends ActionSupport{
 			edifAppl.deleteGastoReal(factory, id);
 			return SUCCESS;
 		} catch (Exception e) {
+			String msg = "No se puede eliminar el gasto.";
+			LOG.error(msg, e);
+			addActionError(msg);
 			return ERROR;
 		}	
 	}

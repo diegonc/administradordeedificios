@@ -9,12 +9,16 @@ import utilidades.HibernateUtil;
 import beans.EdificiosBean;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
+import com.opensymphony.xwork2.util.logging.Logger;
+import com.opensymphony.xwork2.util.logging.LoggerFactory;
 
 import edificio.EdificioAppl;
 import edificio.EdificioDTO;
 
 @SuppressWarnings("serial")
 public class EdificioListarAction extends ActionSupport{
+	
+	private static final Logger LOG = LoggerFactory.getLogger(EdificioListarAction.class);
 	
 	@SuppressWarnings("unused")
 	private Map<String,Object> session;
@@ -55,8 +59,11 @@ public class EdificioListarAction extends ActionSupport{
 	        }
 	        return SUCCESS;
 		} catch (Exception e) {
+			String msg = "No se pueden listar edificios.";
+			LOG.error(msg, e);
+			addActionError(msg);
 			return ERROR;
-		}	
+		}
 	}
 	
 	public void setSession(Map<String, Object> arg0) {

@@ -1,5 +1,6 @@
 
 <%@page import="gastos.appl.GastosAppl"%>
+<%@ taglib prefix="s" uri="/struts-tags" %>
 <%@page import="gastos.dto.GastoRealDTO"%><jsp:include page="/WEB-INF/jspf/header.jspf"></jsp:include>
 <%@ page language="java" contentType="text/html" import="java.util.*"%>
 <%@ page language="java" contentType="text/html" import="gastos.*"%>
@@ -42,6 +43,7 @@
 				 		</tr>				  		
 			  		</table>			  	
 			</fieldset>
+			<s:actionerror cssClass="error"/>
 			<input class="btn" type="button" value="Aceptar" onclick="submit()" />&nbsp;<a href="GastosListarModifElimAction?id=<%=gasto.getEdificio().getId()%>">Volver</a>
 		</form>
 	</td>

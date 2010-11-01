@@ -129,7 +129,9 @@ public class GastoPrevisionModifAction extends ActionSupport {
 			gastoAppl.updateGastoPrevision(factory, gastoProvi);
 			return SUCCESS;
 		} catch (Exception e) {
-			return ERROR;
+			LOG.error(e.getMessage(), e);
+			addActionError("No se pudo actualizar el gasto.");
+			return "error";
 		}
 
 	}

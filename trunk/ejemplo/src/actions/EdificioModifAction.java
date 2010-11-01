@@ -212,10 +212,10 @@ public class EdificioModifAction extends ActionSupport {
 		try {
 			EdificioDTO edificio = cargarEdificioDTO();
 			edificioAppl.updateEdifcio(factory.openSession(), edificio);
-			factory.close();
 			return "success";
 		} catch (HibernateException he) {
-			factory.close();
+			LOG.error(he.getMessage(), he);
+			addActionError("No se pudo actualizar el edificio.");
 			return "error";
 		}
 	}

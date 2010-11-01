@@ -1,3 +1,4 @@
+<%@ taglib prefix="s" uri="/struts-tags" %>
 <%@page import="gastos.appl.GastosAppl"%>
 <%@page import="gastos.dto.GastoRealDTO"%>
 <%@page import="gastos.dto.GastoPrevisionDTO"%><jsp:include page="/WEB-INF/jspf/header.jspf"></jsp:include>
@@ -82,6 +83,7 @@ function validar(thisform) {
 	
 			  		</table>			  	
 			</fieldset>
+			<s:actionerror cssClass="error"/>
 			<input class="btn" type="button" value="Aceptar" onclick="validar()" />&nbsp;&nbsp; <a href="GastosListarModifElimAction?id=<%=gasto.getEdificio().getId()%>">Volver</a>
 		</form>
 	</td>

@@ -37,7 +37,7 @@
 							<a href="<s:property value='#url' />">Modificar</a>
 						</td>
 						<td>&nbsp;
-							<s:url id="url" action="responsablesFormulario!borrar">
+							<s:url id="url"  action="responsablesFormulario!borrar">
 								<s:param name="dni" value="dni" />
 							</s:url>
 							<a href="<s:property value='#url' />">Eliminar</a>

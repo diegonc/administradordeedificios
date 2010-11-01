@@ -33,6 +33,9 @@ public class GastosListarModifElimAction extends ActionSupport {
 	        this.setSession(session);
 	        return SUCCESS;
 		} catch (Exception e) {
+			String msg = "No se pueden listar gastos.";
+			LOG.error(msg, e);
+			addActionError(msg);
 			return ERROR;
 		}	
 	}
