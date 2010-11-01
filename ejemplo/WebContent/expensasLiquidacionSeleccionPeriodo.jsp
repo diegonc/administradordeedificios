@@ -23,7 +23,7 @@ function submit(){
 			<td width="770" class="fondo" align="left">
 				<form class="elegante" name="expensasLiquidacionResultante" action="expensasLiquidacionResultante">
 					<fieldset>
-				  		<legend>Seleccione un período para la Liquidación</legend>
+				  		<legend>Periodo de Liquidación</legend>
 					 		<table  border="0" cellpadding="0" cellspacing="0" border="2">
 					 			
 					 			<tr>
