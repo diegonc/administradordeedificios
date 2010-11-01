@@ -99,11 +99,11 @@ public class ExpensasLiquidacionResultanteAction extends ActionSupport {
 		ExpensaAppl expensaAppl = new ExpensaAppl();
 		ExpensaInteresesAppl expensaInteresesAppl = new ExpensaInteresesAppl();
 		List<ExpensaDTO> expensasOrdinarias = new ArrayList<ExpensaDTO>();
-		
+		session.put("edificio",edificio);
 		if (prop.getCtaOrdSaldoExp()<0){
 			ExpensaDTO expensaOrdinaria = expensaAppl.obtenerExpensaUltimaLiquidacion(idProp,ExpensaDTO.tipoOrdinario); 
 			expensaInteresesAppl .reliquidarConInteresAFechaDePago(edificio, expensaOrdinaria);
-			session.put("edificio",edificio);
+			
 			expensasOrdinarias.add(expensaOrdinaria);
 			liquidacion.setExpensasOrdinarias(expensasOrdinarias);
 		}

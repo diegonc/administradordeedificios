@@ -1,16 +1,27 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="s" uri="/struts-tags" %>
 <%@page import="java.util.GregorianCalendar"%>
 <%@page import="java.util.Calendar"%>
+<%@page import="java.util.Date"%>
 <%@ page language="java" import="expensas.dto.ExpensaDTO"%>
 <%@ page language="java" import="edificio.EdificioDTO"%>
-
 <jsp:useBean id="edificio" scope="session" class="edificio.EdificioDTO"/>
 <jsp:useBean id="detalleExpensa" scope="session" class="beans.LiquidacionBean"/>
-<%@page import="java.util.Date"%>
+
 <jsp:include page="/WEB-INF/jspf/header.jspf"></jsp:include>
-<%@ taglib prefix="s" uri="/struts-tags" %>
-<%ExpensaDTO expensaOrd = detalleExpensa.getExpensasOrdinarias().get(0); 
-  ExpensaDTO expensaExt = detalleExpensa.getExpensasExtraordinarias().get(0);
+
+<%	
+	ExpensaDTO expensaExt =null;
+	ExpensaDTO expensaOrd = null;	
+	if(detalleExpensa!=null){ 
+		if (edificio.getForma_liq_exp().equalsIgnoreCase(EdificioDTO.PRORRATEO)){
+	  		if(detalleExpensa.getExpensasExtraordinarias()!=null)
+				expensaExt = detalleExpensa.getExpensasExtraordinarias().get(0);
+		}
+		if(detalleExpensa.getExpensasOrdinarias()!=null)
+			expensaOrd = detalleExpensa.getExpensasOrdinarias().get(0);
+	}
+	
 %>
 <div class="contenido">
 	<div class="titulo"><h3>Reliquidación de Expensas</h3></div>
@@ -28,7 +39,9 @@
 					 				<td>La propiedad no tiene expensa vigente</td>
 					 			</tr>
 					 			<%} else{%>
-						 			<td colspan="6"> Expensa Ordinaria</td>
+					 				<tr>
+						 				<td class="listado_par" colspan="6"> Expensa Ordinaria</td>
+						 			</tr>
 						 			<tr>
 							 			<td>Piso</td>
 							 			<td>DTO</td>
@@ -46,7 +59,9 @@
 						 				<td><%=expensaOrd.getMonto()+expensaOrd.getDeudaPrevia()+expensaOrd.getIntereses() %>	</td> 							 			
 									</tr>
 									<%if(expensaExt!=null){ %>
-										<td colspan="6">Expensa Extraordinaria</td>
+										<tr>
+											<td class="listado_par" colspan="6">Expensa Extraordinaria</td>
+										</tr>	
 										<tr>
 								 			<td>Piso</td>
 								 			<td>DTO</td>
@@ -66,6 +81,7 @@
 									<%}%>
 									
 						 		<%} %>
+						 		
 					  		</table>
 <!--					  		<input type="hidden" name="id" id="id"></input>			  	-->
 					</fieldset>
@@ -75,9 +91,7 @@
 			</td>
 			<td width="15"  class="fondo"></td>			
 		</tr>
-	</table>
-	<s:actionerror/>
-	
+	</table>	
 	</div>
 </div>
 <jsp:include page="/WEB-INF/jspf/footer.jspf"></jsp:include>
