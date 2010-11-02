@@ -111,6 +111,12 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 			<artifactId>struts2-fullhibernatecore-plugin</artifactId>
 			<version>2.2.1.GA</version>
 		</dependency>
+
+		<dependency>
+			<groupId>fancy-struts2-tags</groupId>
+			<artifactId>fancy-struts2-tags</artifactId>
+			<version>1.0.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>
