@@ -33,21 +33,27 @@
 							<s:iterator value="tiposGastos.values()">
 								<tr>
 									<td>
-										<s:hidden
+										<s:hidden theme="simple"
 											name="%{'tiposGastos[\\''+tipoGasto.codigo+'\\'].tipoGasto.codigo'}"
 											value="%{tipoGasto.codigo}"/>
-										<s:hidden
+										<s:hidden theme="simple"
 											name="%{'tiposGastos[\\''+tipoGasto.codigo+'\\'].tipoGasto.descripcion'}"
 											value="%{tipoGasto.descripcion}" />
+										<s:property value="%{tipoGasto.descripcion}" />:
 									</td>
 									<td>
-										<s:textfield
+										<s:textfield theme="simple"
 											name="%{'tiposGastos[\\''+tipoGasto.codigo+'\\'].coeficienteDistribucion'}"
 											value="%{coeficienteDistribucion}"
 											label="%{tipoGasto.descripcion}"
 											size="10"/>
 									</td>
-									<td><s:checkbox fieldValue="%{tipoGasto.codigo}" name="codigosTipoGastoABorrar" value=""/></td>
+									<td>
+										<s:checkbox theme="simple"
+											fieldValue="%{tipoGasto.codigo}"
+											name="codigosTipoGastoABorrar"
+											value=""/>
+									</td>
 								</tr>
 							</s:iterator>
 						</tbody>
