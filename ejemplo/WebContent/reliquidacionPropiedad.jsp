@@ -30,7 +30,7 @@
 		<tr>
 			<td width="15"  class="fondo"></td>
 			<td width="770" class="fondo" align="left">
-				<form class="elegante" name="expensasLiquidacionResultante" action="expensasLiquidacionResultante">
+				<form class="elegante" name="expensasLiquidacionResultante" action="expensasLiquidacionResultante!registrarReliquidacion">
 					<fieldset>
 				  		<legend>Reliquidación</legend>
 					 		<table  border="0" cellpadding="0" cellspacing="0" class="listado">
@@ -83,7 +83,26 @@
 						 		<%} %>
 						 		
 					  		</table>
-<!--					  		<input type="hidden" name="id" id="id"></input>			  	-->
+					  		<table>
+						  		<tr>
+						  			<td>
+						  				<input type="checkbox" name="ordinaria" value="O">							  		
+							  		</td>
+							  		<td>
+							  			Expensas Ordinarias
+							  		</td>
+						  		</tr>
+						  		<tr>
+						  			<td>
+						  				<input type="checkbox" name="extraordinaria" value="E">							  		
+							  		</td>
+							  		<td>
+							  			Expensas Extraordinarias
+							  		</td>
+						  		</tr>
+					  		</table>
+					  		<input type="hidden" name="id" id="id" value="<%=edificio.getId() %>"></input>
+					  		<input type="hidden" name="idProp" id="idProp" value="<%=edificio.getId() %>"></input>			  	
 					</fieldset>
 					<input class="btn" type="button" value="Aceptar" onclick="submit()" />
 					<a href="EdificioListarAction?redi=expensa">Volver</a> 
