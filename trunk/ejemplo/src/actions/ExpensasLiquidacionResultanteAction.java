@@ -43,7 +43,10 @@ public class ExpensasLiquidacionResultanteAction extends ActionSupport {
 	private EdificioAppl edifAppl = new EdificioAppl();
 	private ExpensaFijaAppl expensasFijasAppl = new ExpensaFijaAppl();
 	private ExpensaPrevisionAppl expensasPrevisionAppl = new ExpensaPrevisionAppl();
+	private String ordinaria;
+	private String extraordinaria;
 	
+
 	public int getId() {
 		return id;
 	}
@@ -78,6 +81,50 @@ public class ExpensasLiquidacionResultanteAction extends ActionSupport {
 		this.idProp = idProp;
 	}
 	
+	
+
+
+	public String getOrdinaria() {
+		return ordinaria;
+	}
+
+	public void setOrdinaria(String ordinaria) {
+		this.ordinaria = ordinaria;
+	}
+
+	public String registrarReliquidacion(){
+		ExpensaAppl expensaAppl = new ExpensaAppl();
+		Map<String, Object> session = ActionContext.getContext().getSession();
+		LiquidacionBean liquidacion = (LiquidacionBean)session.get("detalleExpensa");
+		ExpensaDTO expensaOrdinaria = liquidacion.getExpensasOrdinarias().get(0);
+		
+		ExpensaDTO expensaExtraOrdinaria = liquidacion.getExpensasExtraordinarias().get(0);
+		expensaExtraOrdinaria.setNumeroOperacion(expensaAppl.obtenerNumeroDeOperacion(idProp, ExpensaDTO.tipoExtraordinario));
+		expensaOrdinaria.setNumeroOperacion(expensaAppl.obtenerNumeroDeOperacion(idProp, ExpensaDTO.tipoOrdinario));
+		Session hSession = HibernateUtil.getSession();
+		hSession.beginTransaction();
+		if (ordinaria!=null && ordinaria.equalsIgnoreCase(ExpensaDTO.tipoOrdinario)){			
+			hSession.saveOrUpdate(expensaOrdinaria);				
+		}
+		
+		if (extraordinaria!=null && extraordinaria.equalsIgnoreCase(ExpensaDTO.tipoExtraordinario)){			
+			hSession.saveOrUpdate(expensaExtraOrdinaria);
+			
+		}
+		hSession.getTransaction().commit();
+		
+		hSession.close();
+		
+		return "registrado";
+	}
+	public String getExtraordinaria() {
+		return extraordinaria;
+	}
+
+	public void setExtraordinaria(String extraordinaria) {
+		this.extraordinaria = extraordinaria;
+	}
+
 	public String reliquidar(){
 		LiquidacionBean liquidacion = new LiquidacionBean();
 		Map<String, Object> session = ActionContext.getContext().getSession();
@@ -106,6 +153,7 @@ public class ExpensasLiquidacionResultanteAction extends ActionSupport {
 			
 			expensasOrdinarias.add(expensaOrdinaria);
 			liquidacion.setExpensasOrdinarias(expensasOrdinarias);
+			liquidacion.setExpensasExtraordinarias(expensasOrdinarias);
 		}
 		
 		if(edificio.getForma_liq_exp().equalsIgnoreCase(EdificioDTO.PRORRATEO)){
@@ -148,7 +196,10 @@ public class ExpensasLiquidacionResultanteAction extends ActionSupport {
 				expensaDetalle.setGastosExtraordinariosDelPeriodo(gastosLiquidacion);		
 				expensaDetalle.setExpensasExtraordinarias(expensasPrevisionAppl.obtenerExpensasPorTipoPorEdificioYPeriodo(gastosLiquidacion,id, ExpensaDTO.tipoExtraordinario));
 			}else{
-				expensaDetalle.setExpensasOrdinarias(expensasFijasAppl.obtenerExpensasFijas(id));
+				expensaDetalle.setExpensasOrdinarias(expensasFijasAppl.obtenerExpensasFijas(id,ExpensaDTO.tipoOrdinario));
+				//TODO
+				//expensaDetalle.setExpensasExtraordinarias(expensasFijasAppl.obtenerExpensasFijas(id,ExpensaDTO.tipoExtraordinario));
+				
 			}
 			
 			session.put("detalleExpensa",expensaDetalle);		
