@@ -82,7 +82,7 @@ public class ExpensaInteresesAppl {
 		double deudaPrevia = 0.0;
 		double montoLiquidacion= expensa.getMonto();
 		PropiedadDTO propiedad = expensa.getPropiedad();
-		if (expensa.getTipo().equalsIgnoreCase("O")){
+		if (expensa.getTipo().equalsIgnoreCase(ExpensaDTO.tipoOrdinario)){
 			deudaPrevia = obtenerDeudaPrevia(propiedad.getCtaOrdSaldoExp());			
 		}else{
 			deudaPrevia = obtenerDeudaPrevia(propiedad.getCtaExtSaldoExp());
@@ -123,7 +123,8 @@ public class ExpensaInteresesAppl {
 		double interesPorDia = edificio.getTasa_anual()/(36000);
 		double deudaPrevia = 0.0;		
 		PropiedadDTO propiedad = expensa.getPropiedad();
-		if (expensa.getTipo().equalsIgnoreCase("O")){
+		//TODO: sumar intereses
+		if (expensa.getTipo().equalsIgnoreCase(ExpensaDTO.tipoOrdinario)){
 			deudaPrevia = obtenerDeudaPrevia(propiedad.getCtaOrdSaldoExp());			
 		}else{
 			deudaPrevia = obtenerDeudaPrevia(propiedad.getCtaExtSaldoExp());
@@ -151,7 +152,8 @@ public class ExpensaInteresesAppl {
 		//Primer Vencimiento
 		long cantidadDiasDeudaPrimerVto = getDiferenciaEntreFechas(fechaPrimerVto, fechaUltimaLiquidacion);
 		double interesesPrimerVto = deudaPrevia*(interesPorDia*cantidadDiasDeudaPrimerVto);
-		expensa.setDeudaPrevia(deudaPrevia);
+		//capitalizo los intereses
+		expensa.setDeudaPrevia(deudaPrevia + interesesPrimerVto);
 		interesesPrimerVto = NumberFormat.redondeoDouble(interesesPrimerVto);
 		expensa.setIntereses(interesesPrimerVto);	
 				
@@ -164,7 +166,7 @@ public class ExpensaInteresesAppl {
 		double interesPorDia = edificio.getTasa_anual()/(36000);
 		double deudaPrevia = 0.0;		
 		PropiedadDTO propiedad = expensa.getPropiedad();
-		if (expensa.getTipo().equalsIgnoreCase("O")){
+		if (expensa.getTipo().equalsIgnoreCase(ExpensaDTO.tipoOrdinario)){
 			deudaPrevia = obtenerDeudaPrevia(propiedad.getCtaOrdSaldoExp());			
 		}else{
 			deudaPrevia = obtenerDeudaPrevia(propiedad.getCtaExtSaldoExp());
@@ -199,7 +201,7 @@ public class ExpensaInteresesAppl {
 		double interesPorDia = edificio.getTasa_anual()/(36000);
 		double deudaPrevia = 0.0;		
 		PropiedadDTO propiedad = expensa.getPropiedad();
-		if (expensa.getTipo().equalsIgnoreCase("O")){
+		if (expensa.getTipo().equalsIgnoreCase(ExpensaDTO.tipoOrdinario)){
 			deudaPrevia = obtenerDeudaPrevia(propiedad.getCtaOrdSaldoExp());			
 		}else{
 			deudaPrevia = obtenerDeudaPrevia(propiedad.getCtaExtSaldoExp());

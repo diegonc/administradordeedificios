@@ -17,7 +17,7 @@ public class ExpensaFijaAppl {
 	private final static String PUNITORIO ="punitorio";
 	private final static String DIFERIDO ="diferido";
 	
-	public List<ExpensaDTO> obtenerExpensasFijas(int id){
+	public List<ExpensaDTO> obtenerExpensasFijas(int id, String tipoExpensa){
 		Session session = HibernateUtil.getSession();
 		EdificioAppl edificioAppl = new EdificioAppl();
 		ExpensaAppl expensaAppl = new ExpensaAppl();
@@ -31,8 +31,13 @@ public class ExpensaFijaAppl {
 			for (PropiedadDTO propiedadActual : propiedades) {
 				ExpensaDTO expensa = new ExpensaDTO();
 				expensa.setPropiedad(propiedadActual);
-				expensa.setMonto(tipoPropiedadActual.getMontoExp());
-				expensa.setTipo("O");
+				if (tipoExpensa.equalsIgnoreCase(ExpensaDTO.tipoOrdinario)){
+					expensa.setMonto(tipoPropiedadActual.getMontoExp());
+				}else{
+					//TODO
+					//expensa.setMonto(tipoPropiedadActual.getMontoExp());
+				}
+				expensa.setTipo(tipoExpensa);
 				
 				if (edificio.getMora().equalsIgnoreCase(PUNITORIO))
 					expensasIntereses.calcularInteresPunitorio(edificio, expensa);
@@ -53,7 +58,7 @@ public class ExpensaFijaAppl {
 	}
 	
 	private void actualizarSaldos(PropiedadDTO propiedadActual, ExpensaDTO expensa) {
-		if(expensa.getTipo().equalsIgnoreCase("O")){
+		if(expensa.getTipo().equalsIgnoreCase(ExpensaDTO.tipoOrdinario)){
 			propiedadActual.setCtaOrdSaldoExp(-(expensa.getDeudaPrevia()+expensa.getMonto()));
 			propiedadActual.setCtaOrdSaldoInt(-expensa.getIntereses());
 		}else{
