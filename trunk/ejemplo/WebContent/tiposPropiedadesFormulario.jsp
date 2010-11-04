@@ -10,7 +10,8 @@
 			<ss:fieldset legend="Alta en el servicio">
 				<s:hidden name="nombreEdificio" value="%{nombreEdificio}" />
 				<s:textfield required="true" name="entidad.nombreTipo" value="%{entidad.nombreTipo}" label="Nombre" />
-				<s:textfield name="entidad.montoExp" value="%{entidad.montoExp}" label="Monto Expensa" />
+				<s:textfield name="entidad.montoExp" value="%{entidad.montoExp}" label="Expensa Ordinaria" />
+				<s:textfield name="entidad.montoExpExt" value="%{entidad.montoExpExt}" label="Expensa Extraordinaria" />
 				<s:textfield name="entidad.divisor" value="%{entidad.divisor}" label="Divisor" />
 	
 				<s:div>

@@ -19,7 +19,8 @@
 					<thead>
 						<tr>
 							<td class="listado_par">Nombre</td>
-							<td class="listado_par">Monto Expensa</td>
+							<td class="listado_par">Expensa Ordinaria</td>
+							<td class="listado_par">Expensa Extraordinaria</td>
 							<td class="listado_par">Divisor</td>
 							<td class="listado_par" colspan="2">&nbsp;</td>
 						</tr>
@@ -28,8 +29,9 @@
 					<s:iterator value="lista">
 						<tr>
 							<td><s:property value="nombreTipo" /></td>
-							<td><s:property value="montoExp" /></td>
-							<td><s:property value="divisor" /></td>
+							<td align="center"><s:property value="montoExp" /></td>
+							<td align="center"><s:property value="montoExpExt" /></td>
+							<td align="center"><s:property value="divisor" /></td>
 							<td class="accion">
 								<s:url id="url" action="tiposPropiedadesFormulario!editar" escapeAmp="false">
 									<s:param name="nombreEdificio" value="[1].nombreEdificio" />
