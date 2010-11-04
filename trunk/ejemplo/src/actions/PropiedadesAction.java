@@ -29,6 +29,8 @@ import com.opensymphony.xwork2.util.logging.LoggerFactory;
 import edificio.EdificioAppl;
 import edificio.EdificioDTO;
 
+import utilidades.HibernateUtil;
+
 @SuppressWarnings("serial")
 public class PropiedadesAction extends ActionSupport implements Preparable {
 
@@ -392,7 +394,14 @@ public class PropiedadesAction extends ActionSupport implements Preparable {
 			session.close();
 			LOG.error("No se pudo guardar la propiedad.", e);
 			addActionError(e.getMessage());
-			return validationErrors();
+			/* La sesion de Hibernate ya no sirve. Se abre otra
+			 * para que validationErrors pueda funcionar. */
+			setSession(HibernateUtil.getSession());
+			try {
+				return validationErrors();
+			} finally {
+				session.close();
+			}
 		}
 		return SUCCESS;
 	}
