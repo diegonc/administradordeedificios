@@ -89,7 +89,6 @@
 				 			<td>&nbsp;&nbsp;<input type="text" id="mora" name="mora" value="<%=edificio.getMora() %>" readonly size="9"/></td>
 				 		</tr>
 				  		<tr><td colspan="8" height="10"></td></tr>
-				 		<tr><td colspan="8">Fondo</td></tr>
 				  		<tr>	
 				 			<td align="right"><label for="dia_primer_vto">Primer Vto:</label> </td>
 				 			<td>&nbsp;&nbsp;<input type="text" id="dia_primer_vto" name="dia_primer_vto" value="<%=edificio.getDia_primer_vto() %>" readonly size="9"/></td>
