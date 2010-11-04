@@ -227,6 +227,7 @@ public class TiposPropiedadesAction extends SessionAwareAction implements Prepar
 		},
 		conversionErrorFields = {
 			@ConversionErrorFieldValidator(fieldName = "entidad.montoExp", message = "El campo debe ser numerico."),
+			@ConversionErrorFieldValidator(fieldName = "entidad.montoExpExt", message = "El campo debe ser numerico."),
 			@ConversionErrorFieldValidator(fieldName = "entidad.divisor", message = "El campo debe ser numerico.")
 		})
 	public String grabar() {

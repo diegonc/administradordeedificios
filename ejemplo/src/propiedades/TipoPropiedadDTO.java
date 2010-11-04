@@ -19,6 +19,7 @@ public class TipoPropiedadDTO implements Serializable {
 	private int id;
 	private double montoExp;
 	private double divisor;
+	private double montoExpExt;
 	private List<PropiedadDTO> propiedades = new ArrayList<PropiedadDTO>();
 	private List<TipoPropiedadTipoGastoDTO> tipoGastos = new ArrayList<TipoPropiedadTipoGastoDTO>();
 
@@ -66,6 +67,15 @@ public class TipoPropiedadDTO implements Serializable {
 
 	public void setDivisor(double divisor) {
 		this.divisor = divisor;
+	}
+
+	@Column(name="MONTO_EXP_EXT")
+	public double getMontoExpExt() {
+		return montoExpExt;
+	}
+
+	public void setMontoExpExt(double montoExpExt) {
+		this.montoExpExt = montoExpExt;
 	}
 
 	@OneToMany(mappedBy = "tipoPropiedad")
