@@ -155,6 +155,10 @@
 			    <result name="success">/expensasLiquidacion.jsp </result>			    
 			    <result name="error">expensasLiquidacionSeleccionPeriodo.jsp</result>
 			    <result name="success1">/reliquidacionPropiedad.jsp </result>
+			    <result name="registrado" type="redirectAction">
+			    <param name="actionName">expensasPropiedadesListado.jsp</param>
+				<param name="id">${id}</param> 
+			    </result>
 	    </action> 
 		
 	</package>
