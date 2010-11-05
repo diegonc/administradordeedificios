@@ -312,6 +312,19 @@ public class PropiedadesAction extends ActionSupport implements Preparable {
 			entidad.setTipoPropiedad(tipoPropiedadActual);
 		}
 
+		/* Al remover un responsable opcional, Hibernate intenta
+		 * cambiar el dni del responsable anterior a null.
+		 *
+		 * XXX: se quitan los responsables persistentes.
+		 */
+		entidad.setPropietario(crearCopiaResponsable(entidad.getPropietario()));
+		entidad.setInquilino(crearCopiaResponsable(entidad.getInquilino()));
+		entidad.setPoderPropietario(crearCopiaResponsable(entidad.getPoderPropietario()));
+		entidad.setPoderInquilino(crearCopiaResponsable(entidad.getPoderInquilino()));
+	}
+
+	private Responsable crearCopiaResponsable(Responsable r) {
+		return r == null ? null : new Responsable(r.getDni());
 	}
 
 	private boolean asociarResponsables() {
