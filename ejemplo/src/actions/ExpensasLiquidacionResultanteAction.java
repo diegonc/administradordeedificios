@@ -96,25 +96,35 @@ public class ExpensasLiquidacionResultanteAction extends ActionSupport {
 		ExpensaAppl expensaAppl = new ExpensaAppl();
 		Map<String, Object> session = ActionContext.getContext().getSession();
 		LiquidacionBean liquidacion = (LiquidacionBean)session.get("detalleExpensa");
-		ExpensaDTO expensaOrdinaria = liquidacion.getExpensasOrdinarias().get(0);
 		
-		ExpensaDTO expensaExtraOrdinaria = liquidacion.getExpensasExtraordinarias().get(0);
-		expensaExtraOrdinaria.setNumeroOperacion(expensaAppl.obtenerNumeroDeOperacion(idProp, ExpensaDTO.tipoExtraordinario));
-		expensaOrdinaria.setNumeroOperacion(expensaAppl.obtenerNumeroDeOperacion(idProp, ExpensaDTO.tipoOrdinario));
-		Session hSession = HibernateUtil.getSession();
-		hSession.beginTransaction();
-		if (ordinaria!=null && ordinaria.equalsIgnoreCase(ExpensaDTO.tipoOrdinario)){			
-			hSession.saveOrUpdate(expensaOrdinaria);				
+		ExpensaDTO expensaOrdinaria = null;
+		ExpensaDTO expensaExtraOrdinaria = null;
+		if (liquidacion.getExpensasOrdinarias()!=null && !liquidacion.getExpensasOrdinarias().isEmpty()){
+			expensaOrdinaria = liquidacion.getExpensasOrdinarias().get(0);
+			expensaOrdinaria.setNumeroOperacion(expensaAppl.obtenerNumeroDeOperacion(idProp, ExpensaDTO.tipoOrdinario));
+		}
+		if (liquidacion.getExpensasExtraordinarias()!=null && !liquidacion.getExpensasExtraordinarias().isEmpty()){
+			expensaExtraOrdinaria = liquidacion.getExpensasExtraordinarias().get(0);
+			expensaExtraOrdinaria.setNumeroOperacion(expensaAppl.obtenerNumeroDeOperacion(idProp, ExpensaDTO.tipoExtraordinario));
 		}
 		
-		if (extraordinaria!=null && extraordinaria.equalsIgnoreCase(ExpensaDTO.tipoExtraordinario)){			
-			hSession.saveOrUpdate(expensaExtraOrdinaria);
+		
+		
+		if(expensaExtraOrdinaria!=null && expensaOrdinaria!=null){
+			Session hSession = HibernateUtil.getSession();
+			hSession.beginTransaction();
+			if (ordinaria!=null && ordinaria.equalsIgnoreCase(ExpensaDTO.tipoOrdinario)){			
+				hSession.saveOrUpdate(expensaOrdinaria);				
+			}
 			
+			if (extraordinaria!=null && extraordinaria.equalsIgnoreCase(ExpensaDTO.tipoExtraordinario)){			
+				hSession.saveOrUpdate(expensaExtraOrdinaria);
+				
+			}
+			hSession.getTransaction().commit();
+			
+			hSession.close();
 		}
-		hSession.getTransaction().commit();
-		
-		hSession.close();
-		
 		return "registrado";
 	}
 	public String getExtraordinaria() {
@@ -145,9 +155,10 @@ public class ExpensasLiquidacionResultanteAction extends ActionSupport {
 		
 		ExpensaAppl expensaAppl = new ExpensaAppl();
 		ExpensaInteresesAppl expensaInteresesAppl = new ExpensaInteresesAppl();
-		List<ExpensaDTO> expensasOrdinarias = new ArrayList<ExpensaDTO>();
+
 		session.put("edificio",edificio);
 		if (prop.getCtaOrdSaldoExp()<0){
+			List<ExpensaDTO> expensasOrdinarias = new ArrayList<ExpensaDTO>();
 			ExpensaDTO expensaOrdinaria = expensaAppl.obtenerExpensaUltimaLiquidacion(idProp,ExpensaDTO.tipoOrdinario); 
 			expensaInteresesAppl .reliquidarConInteresAFechaDePago(edificio, expensaOrdinaria);
 			
@@ -156,15 +167,14 @@ public class ExpensasLiquidacionResultanteAction extends ActionSupport {
 			liquidacion.setExpensasExtraordinarias(expensasOrdinarias);
 		}
 		
-		if(edificio.getForma_liq_exp().equalsIgnoreCase(EdificioDTO.PRORRATEO)){
-			if (prop.getCtaExtSaldoExp()<0){
+		if (prop.getCtaExtSaldoExp()<0){
 				ExpensaDTO expensaExtraordinaria = expensaAppl.obtenerExpensaUltimaLiquidacion(idProp,ExpensaDTO.tipoExtraordinario);
 				List<ExpensaDTO> expensasExtraordinarias = new ArrayList<ExpensaDTO>();
 				expensaInteresesAppl .reliquidarConInteresAFechaDePago(edificio, expensaExtraordinaria);
 				expensasExtraordinarias.add(expensaExtraordinaria);
 				liquidacion.setExpensasExtraordinarias(expensasExtraordinarias);
-			}
 		}
+	
 		session.put("detalleExpensa",liquidacion);	
         this.setSession(session);
 		
@@ -197,8 +207,7 @@ public class ExpensasLiquidacionResultanteAction extends ActionSupport {
 				expensaDetalle.setExpensasExtraordinarias(expensasPrevisionAppl.obtenerExpensasPorTipoPorEdificioYPeriodo(gastosLiquidacion,id, ExpensaDTO.tipoExtraordinario));
 			}else{
 				expensaDetalle.setExpensasOrdinarias(expensasFijasAppl.obtenerExpensasFijas(id,ExpensaDTO.tipoOrdinario));
-				//TODO
-				//expensaDetalle.setExpensasExtraordinarias(expensasFijasAppl.obtenerExpensasFijas(id,ExpensaDTO.tipoExtraordinario));
+				expensaDetalle.setExpensasExtraordinarias(expensasFijasAppl.obtenerExpensasFijas(id,ExpensaDTO.tipoExtraordinario));
 				
 			}
 			
