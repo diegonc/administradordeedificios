@@ -39,15 +39,12 @@ public class ExpensaInteresesAppl {
 		int anio = fechaActual.get(Calendar.YEAR);
 		int dia = fechaActual.get(Calendar.DATE);
 		
-		if(dia>=edificio.getDia_primer_vto()){
-			mes++;
-			if(mes==12) mes=0;
-		}
-		if (mes==0){
-			anio--;
-			mes=11;
-		}else{
+		if(dia<edificio.getDia_primer_vto()){
 			mes--;
+			if(mes==-1){
+				mes=11;
+				anio--;
+			}
 		}
 		fechaActual.set(anio,mes, edificio.getDia_primer_vto());
 
@@ -62,7 +59,10 @@ public class ExpensaInteresesAppl {
 		
 		if(dia>=edificio.getDia_primer_vto()){
 			mes++;
-			if(mes==12) mes=0;
+			if(mes==12){
+				mes=0;
+				anio++;
+			}
 		}
 		
 		if (esPrimerVto){

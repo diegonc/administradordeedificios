@@ -170,13 +170,13 @@ public class ExpensaProrrateoPrevisionAppl extends ExpensaCalculoAppl{
 				expensaActual.setTipo(tipoExpensa);
 				expensaActual.setNumeroOperacion(expensaAppl.obtenerNumeroDeOperacion(propiedad.getId(), tipoExpensa));
 				
-			/*	if (edificio.getMora().equalsIgnoreCase(EdificioDTO.PUNITORIO))
+				if (edificio.getMora().equalsIgnoreCase(EdificioDTO.PUNITORIO))
 					expensasIntereses.calcularInteresPunitorio(edificio, expensaActual);
 				if (edificio.getMora().equalsIgnoreCase(EdificioDTO.A_FECHA))
 					expensasIntereses.calcularInteresAFechaDePago(edificio, expensaActual);
 				if (edificio.getMora().equalsIgnoreCase(EdificioDTO.DIFERIDO))
 					expensasIntereses.calcularInteresDiferidoProximaLiquidacion(edificio, expensaActual);
-				actualizarSaldos(propiedad, expensaActual);*/
+				actualizarSaldos(propiedad, expensaActual);
 				session.beginTransaction();
 				session.saveOrUpdate(expensaActual);
 				session.getTransaction().commit();			

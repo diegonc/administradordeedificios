@@ -26,8 +26,6 @@ import expensas.appl.ExpensaAppl;
 import expensas.appl.ExpensaInteresesAppl;
 import expensas.appl.liquidacion.ExpensaFijaAppl;
 import expensas.appl.liquidacion.ExpensaProrrateoPrevisionAppl;
-import expensas.appl.liquidacion.ExpensaProrrateoPrevisionYGastosAppl;
-import expensas.calculo.ElementoPrevisionGasto;
 import expensas.dto.ExpensaDTO;
 import gastos.dto.GastoDTO;
 import gastos.dto.TipoGastoDTO;
@@ -98,37 +96,53 @@ public class ExpensasLiquidacionResultanteAction extends ActionSupport {
 		ExpensaAppl expensaAppl = new ExpensaAppl();
 		Map<String, Object> session = ActionContext.getContext().getSession();
 		LiquidacionBean liquidacion = (LiquidacionBean)session.get("detalleExpensa");
+		ExpensaDTO nuevaExpensaOrdinaria = new ExpensaDTO();
+		ExpensaDTO nuevaExpensaExtraordinaria = new ExpensaDTO();
 		
 		ExpensaDTO expensaOrdinaria = null;
 		ExpensaDTO expensaExtraOrdinaria = null;
 		if (liquidacion.getExpensasOrdinarias()!=null && !liquidacion.getExpensasOrdinarias().isEmpty()){
 			expensaOrdinaria = liquidacion.getExpensasOrdinarias().get(0);
 			expensaOrdinaria.setNumeroOperacion(expensaAppl.obtenerNumeroDeOperacion(idProp, ExpensaDTO.tipoOrdinario));
+			nuevaExpensaOrdinaria=copiarDatosExpensa(expensaOrdinaria);
 		}
 		if (liquidacion.getExpensasExtraordinarias()!=null && !liquidacion.getExpensasExtraordinarias().isEmpty()){
 			expensaExtraOrdinaria = liquidacion.getExpensasExtraordinarias().get(0);
 			expensaExtraOrdinaria.setNumeroOperacion(expensaAppl.obtenerNumeroDeOperacion(idProp, ExpensaDTO.tipoExtraordinario));
+			nuevaExpensaExtraordinaria = copiarDatosExpensa(expensaExtraOrdinaria);
 		}
+			
+		Session hSession = HibernateUtil.getSession();
 		
-		
-		
-		if(expensaExtraOrdinaria!=null && expensaOrdinaria!=null){
-			Session hSession = HibernateUtil.getSession();
+		if (expensaOrdinaria!=null &&ordinaria!=null && ordinaria.equalsIgnoreCase(ExpensaDTO.tipoOrdinario)){
 			hSession.beginTransaction();
-			if (ordinaria!=null && ordinaria.equalsIgnoreCase(ExpensaDTO.tipoOrdinario)){			
-				hSession.saveOrUpdate(expensaOrdinaria);				
-			}
-			
-			if (extraordinaria!=null && extraordinaria.equalsIgnoreCase(ExpensaDTO.tipoExtraordinario)){			
-				hSession.saveOrUpdate(expensaExtraOrdinaria);
-				
-			}
+			hSession.save(nuevaExpensaOrdinaria);
 			hSession.getTransaction().commit();
-			
-			hSession.close();
 		}
+		
+		if (expensaExtraOrdinaria!=null&& extraordinaria!=null && extraordinaria.equalsIgnoreCase(ExpensaDTO.tipoExtraordinario)){
+			hSession.beginTransaction();
+			hSession.save(nuevaExpensaExtraordinaria);
+			hSession.getTransaction().commit();
+		}
+		hSession.close();
+		
 		return "registrado";
 	}
+	
+	private ExpensaDTO copiarDatosExpensa(ExpensaDTO expensa) {
+		ExpensaDTO nuevaExpensa = new ExpensaDTO();
+		nuevaExpensa.setDeudaPrevia(expensa.getDeudaPrevia());
+		nuevaExpensa.setFecha(expensa.getFecha());
+		nuevaExpensa.setIntereses(expensa.getIntereses());
+		nuevaExpensa.setInteresSegundoVencimiento(expensa.getInteresSegundoVencimiento());
+		nuevaExpensa.setMonto(expensa.getMonto());
+		nuevaExpensa.setNumeroOperacion(expensa.getNumeroOperacion());
+		nuevaExpensa.setPropiedad(expensa.getPropiedad());
+		nuevaExpensa.setTipo(expensa.getTipo());
+		return nuevaExpensa;
+	}
+
 	public String getExtraordinaria() {
 		return extraordinaria;
 	}
@@ -163,12 +177,9 @@ public class ExpensasLiquidacionResultanteAction extends ActionSupport {
 			List<ExpensaDTO> expensasOrdinarias = new ArrayList<ExpensaDTO>();
 			ExpensaDTO expensaOrdinaria = expensaAppl.obtenerExpensaUltimaLiquidacion(idProp,ExpensaDTO.tipoOrdinario); 
 			expensaInteresesAppl .reliquidarConInteresAFechaDePago(edificio, expensaOrdinaria);
-			
 			expensasOrdinarias.add(expensaOrdinaria);
 			liquidacion.setExpensasOrdinarias(expensasOrdinarias);
-			liquidacion.setExpensasExtraordinarias(expensasOrdinarias);
 		}
-		
 		if (prop.getCtaExtSaldoExp()<0){
 				ExpensaDTO expensaExtraordinaria = expensaAppl.obtenerExpensaUltimaLiquidacion(idProp,ExpensaDTO.tipoExtraordinario);
 				List<ExpensaDTO> expensasExtraordinarias = new ArrayList<ExpensaDTO>();
