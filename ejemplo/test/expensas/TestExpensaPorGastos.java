@@ -23,7 +23,7 @@ import expensas.calculo.ResultadoProrrateo;
 import gastos.dto.GastoDTO;
 import gastos.dto.TipoGastoDTO;
 
-public class TestExpensas extends TestCase {
+public class TestExpensaPorGastos extends TestCase {
 	
 	private double redondeoDouble(double valor){
 		return Math.round(valor*Math.pow(10,2))/Math.pow(10,2);
