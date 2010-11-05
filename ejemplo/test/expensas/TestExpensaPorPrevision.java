@@ -1,4 +1,4 @@
-package test.expensas;
+package expensas;
 
 import edificio.EdificioAppl;
 import expensas.appl.ExpensaAppl;

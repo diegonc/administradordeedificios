@@ -1,4 +1,4 @@
-package test.expensas;
+package expensas;
 
 import java.util.HashMap;
 import java.util.Iterator;
