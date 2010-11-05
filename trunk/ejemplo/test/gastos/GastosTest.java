@@ -1,4 +1,4 @@
-package test.gastos;
+package gastos;
 
 import edificio.EdificioAppl;
 import edificio.EdificioDTO;
