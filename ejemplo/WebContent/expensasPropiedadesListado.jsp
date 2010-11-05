@@ -1,4 +1,5 @@
 <jsp:include page="/WEB-INF/jspf/header.jspf"></jsp:include>
+<%@ taglib prefix="s" uri="/struts-tags" %>
 <%@page import="propiedades.PropiedadDTO"%>
 <%@page import="propiedades.TipoPropiedadDTO"%>
 <%@ page language="java" contentType="text/html" import="java.util.*"%>
@@ -81,11 +82,13 @@ function redirecReLiq() {
 		%>
 	</table>
 	</fieldset>
+	<s:actionerror cssClass="error"/>	
 	<input type="hidden" value="<%=id%>" name="idEdificio">
 	<%if (edificio.getMora().equals(EdificioDTO.A_FECHA)){ %>
 		<input type="button" value="Re-Liquidar" onclick="redirecReLiq()" > 
 	<%} %>
-	<input type="submit" value="Registrar Cobro" name="method:mostrarFormulario" >
+	<input type="submit" value="Registrar Cobro Ord." name="method:mostrarFormularioOrd" >
+	<input type="submit" value="Registrar Cobro Ext." name="method:mostrarFormularioExt" >
 	<input type="submit" value="Consultar/Eliminar Cobros" name="method:consultarCobros">
 	<input type="button" value="Consultar Deuda" onclick="redirecConsultaLiq()">
 	<a href="EdificioListarAction?redi=expensa">Volver</a>

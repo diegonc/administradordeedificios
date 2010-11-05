@@ -129,8 +129,13 @@
 				<param name="idEdificio">${idEdificio}</param>
 				<param name="idPropiedad">${propElegida}</param>
 			</result>
-			<result name="registrar-cobro" type="redirectAction">
+			<result name="registrar-cobro-ord" type="redirectAction">
 				<param name="actionName">cobroRegistrarAction!mostrarFormulario</param>
+				<param name="idEdificio">${idEdificio}</param>
+				<param name="idPropiedad">${propElegida}</param>
+			</result>
+			<result name="registrar-cobro-ext" type="redirectAction">
+				<param name="actionName">cobroExtRegistrarAction!mostrarFormulario</param>
 				<param name="idEdificio">${idEdificio}</param>
 				<param name="idPropiedad">${propElegida}</param>
 			</result>
@@ -142,13 +147,21 @@
 		</action>
 		
 		<action name="cobroRegistrarAction" class="actions.CobroRegistrarAction">
-			<result name="existe" type="redirect">
+			<result name="error" type="redirect">
 			    <param name="location">/expensasPropiedadesListado.jsp</param>
 				<param name="id">${idEdificio}</param>
 			</result>
 			<result name="mostrar">/cobroRegistrar.jsp </result>
 			<result name="success">/expensas.jsp </result>
-			<result name="error">/expensas.jsp </result>
+	    </action> 
+	    
+	    <action name="cobroExtRegistrarAction" class="actions.CobroExtRegistrarAction">
+			<result name="error" type="redirect">
+			    <param name="location">/expensasPropiedadesListado.jsp</param>
+				<param name="id">${idEdificio}</param>
+			</result>
+			<result name="mostrar">/cobroExtRegistrar.jsp </result>
+			<result name="success">/expensas.jsp </result>
 	    </action> 
 	    
 		<action name="expensasLiquidacionResultante" class="actions.ExpensasLiquidacionResultanteAction">

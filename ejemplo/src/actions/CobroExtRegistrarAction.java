@@ -18,7 +18,7 @@ import expensas.dto.ExpensaDTO;
 import gastos.exception.GastoExistenteException;
 
 @SuppressWarnings("serial")
-public class CobroRegistrarAction extends ActionSupport  {
+public class CobroExtRegistrarAction extends ActionSupport  {
 	
 	private int id;
 	private Date fecha;
@@ -89,7 +89,7 @@ public class CobroRegistrarAction extends ActionSupport  {
 	public String mostrarFormulario() {
 		ExpensaAppl expAppl = new ExpensaAppl(); 
 		SessionFactory factory = HibernateUtil.getSessionFactory();	
-		List<ExpensaDTO> expensas = expAppl.getExpensaActivaPorIdProp(factory, this.idPropiedad );
+		List<ExpensaDTO> expensas = expAppl.getExpensaExtActivaPorIdProp(factory, this.idPropiedad );
 		if (expensas.isEmpty()) {
 			addActionError("No se encontro ninguna expensa para cobrar");
 			return "error";
@@ -105,7 +105,7 @@ public class CobroRegistrarAction extends ActionSupport  {
 	public String execute() {
 		ExpensaAppl expAppl = new ExpensaAppl();
 		SessionFactory factory = HibernateUtil.getSessionFactory();	
-		List<ExpensaDTO> expensas = expAppl.getExpensaActivaPorIdProp(factory, this.idPropiedad );
+		List<ExpensaDTO> expensas = expAppl.getExpensaExtActivaPorIdProp(factory, this.idPropiedad );
 		if (expensas.isEmpty()) {
 			return "error";
 		}

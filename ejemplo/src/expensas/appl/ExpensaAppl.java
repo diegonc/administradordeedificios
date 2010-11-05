@@ -24,7 +24,21 @@ public class ExpensaAppl {
 		Session session = factory.openSession();
 		try {
 			Query query = session
-			.createQuery("from ExpensaDTO u where u.propiedad.id=:idprop order by u.id");
+			.createQuery("from ExpensaDTO u where u.propiedad.id=:idprop and u.tipo='O' order by u.id DESC");
+			query.setInteger("idprop", propId);
+			List<ExpensaDTO> results = query.list();
+			return results; 
+		} finally {
+			session.close();
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<ExpensaDTO> getExpensaExtActivaPorIdProp(SessionFactory factory, int propId) {
+		Session session = factory.openSession();
+		try {
+			Query query = session
+			.createQuery("from ExpensaDTO u where u.propiedad.id=:idprop and u.tipo='E' order by u.id DESC");
 			query.setInteger("idprop", propId);
 			List<ExpensaDTO> results = query.list();
 			return results; 

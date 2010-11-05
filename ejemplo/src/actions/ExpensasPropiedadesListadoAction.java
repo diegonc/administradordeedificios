@@ -9,6 +9,7 @@ public class ExpensasPropiedadesListadoAction extends ActionSupport {
 	/* Parametros de la accion */
 	private Integer idEdificio;
 	private Integer propElegida;
+	private Integer tipo;
 
 	public String consultarCobros() {
 		return "consultar-cobros";
@@ -29,8 +30,21 @@ public class ExpensasPropiedadesListadoAction extends ActionSupport {
 		return this.propElegida;
 	}
 	
-	public String mostrarFormulario() {
-		return "registrar-cobro";
+	public String mostrarFormularioOrd() {
+		tipo = 0;
+		return "registrar-cobro-ord";
+	}
+	public String mostrarFormularioExt() {
+		tipo = 1;
+		return "registrar-cobro-ext";
+	}
+
+	public void setTipo(Integer tipo) {
+		this.tipo = tipo;
+	}
+
+	public Integer getTipo() {
+		return tipo;
 	}
 	
 	

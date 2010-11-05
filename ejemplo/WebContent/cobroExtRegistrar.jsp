@@ -12,8 +12,8 @@
 	int tip = (Integer) ActionContext.getContext().getValueStack().findValue("tipoACobrar");
 	ExpensaAppl expAppl = new ExpensaAppl();
 	SessionFactory factory = HibernateUtil.getSessionFactory();	
-	List<ExpensaDTO> expensasProp = expAppl.getExpensaActivaPorIdProp(factory,idProp);
-	ExpensaDTO expACobrar = expensasProp.get(0); 	
+	List<ExpensaDTO> expensasProp = expAppl.getExpensaExtActivaPorIdProp(factory,idProp);
+	ExpensaDTO expACobrar = expensasProp.get(0); 
 %>
 <script src="calendario.js" type="text/javascript"></script>
 <script type="text/javascript">
@@ -55,17 +55,17 @@ function validar(thisform) {
 </script>
 <div class="contenido">
 <div class="titulo">
-	<h3 id="header" align="center">Registro de Cobros de Expensas Ordinarias</h3>
+	<h3 id="header" align="center">Registro de Cobros de Expensas Extraordinarias</h3>
 </div>
 <div class="cuerpo">
-		<form class="elegante" name="regisCobro" id="regisCobro" action="cobroRegistrarAction">
+		<form class="elegante" name="regisCobro" id="regisCobro" action="cobroExtRegistrarAction">
 			<fieldset>
-		  		<legend>Registrar Cobro Expensas</legend>
+		  		<legend>Registrar Cobro</legend>
 			 		<table  border="0" cellpadding="3" cellspacing="3">
 			 			<tr><td colspan="10" height="5"></td></tr>
 			 			<tr>
 			 				<td><label for="operacion">Operacion: <%=expACobrar.getNumeroOperacion() %></label> </td>
-				 			<td>&nbsp;<label for="monto">Monto: <%=(-1) * (expACobrar.getPropiedad().getCtaOrdSaldoExp() + expACobrar.getPropiedad().getCtaOrdSaldoInt()) %></label> </td>
+				 			<td>&nbsp;<label for="monto">Monto: <%=(-1) * (expACobrar.getPropiedad().getCtaExtSaldoExp() + expACobrar.getPropiedad().getCtaExtSaldoInt()) %></label> </td>
 				 			<td>&nbsp;<label for="edificio">Edificio: <%=expACobrar.getPropiedad().getTipoPropiedad().getEdificio().getNombre() %></label> </td>
 				 			<td>&nbsp;<label for="nivel">Nivel: <%=expACobrar.getPropiedad().getNivel() %></label> </td>
 				 			<td>&nbsp;<label for="orden">Orden: <%=expACobrar.getPropiedad().getOrden() %></label> </td>
