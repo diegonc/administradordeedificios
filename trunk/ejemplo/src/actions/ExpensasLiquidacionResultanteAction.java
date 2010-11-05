@@ -23,9 +23,9 @@ import com.opensymphony.xwork2.ActionSupport;
 import edificio.EdificioAppl;
 import edificio.EdificioDTO;
 import expensas.appl.ExpensaAppl;
-import expensas.appl.ExpensaFijaAppl;
 import expensas.appl.ExpensaInteresesAppl;
-import expensas.appl.ExpensaPrevisionAppl;
+import expensas.appl.liquidacion.ExpensaFijaAppl;
+import expensas.appl.liquidacion.ExpensaProrrateoPrevisionYGastosAppl;
 import expensas.calculo.ElementoPrevisionGasto;
 import expensas.dto.ExpensaDTO;
 import gastos.dto.TipoGastoDTO;
@@ -42,7 +42,7 @@ public class ExpensasLiquidacionResultanteAction extends ActionSupport {
 	private Map<String, Object> session;
 	private EdificioAppl edifAppl = new EdificioAppl();
 	private ExpensaFijaAppl expensasFijasAppl = new ExpensaFijaAppl();
-	private ExpensaPrevisionAppl expensasPrevisionAppl = new ExpensaPrevisionAppl();
+	private ExpensaProrrateoPrevisionYGastosAppl expensasPrevisionAppl = new ExpensaProrrateoPrevisionYGastosAppl();
 	private String ordinaria;
 	private String extraordinaria;
 	
