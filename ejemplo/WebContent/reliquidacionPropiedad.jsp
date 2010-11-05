@@ -14,10 +14,9 @@
 	ExpensaDTO expensaExt =null;
 	ExpensaDTO expensaOrd = null;	
 	if(detalleExpensa!=null){ 
-		if (edificio.getForma_liq_exp().equalsIgnoreCase(EdificioDTO.PRORRATEO)){
-	  		if(detalleExpensa.getExpensasExtraordinarias()!=null)
+		if(detalleExpensa.getExpensasExtraordinarias()!=null)
 				expensaExt = detalleExpensa.getExpensasExtraordinarias().get(0);
-		}
+	
 		if(detalleExpensa.getExpensasOrdinarias()!=null)
 			expensaOrd = detalleExpensa.getExpensasOrdinarias().get(0);
 	}
@@ -32,55 +31,42 @@
 			<td width="770" class="fondo" align="left">
 				<form class="elegante" name="expensasLiquidacionResultante" action="expensasLiquidacionResultante!registrarReliquidacion">
 					<fieldset>
-				  		<legend>Reliquidación</legend>
-					 		<table  border="0" cellpadding="0" cellspacing="0" class="listado">
+				  		<legend>Reliquidación	 </legend>
+					 		<table  border="0" cellpadding="0" cellspacing="0" class="listado" wi>
 					 			<%if(expensaOrd==null){ %>
 					 			<tr>
 					 				<td>La propiedad no tiene expensa vigente</td>
 					 			</tr>
 					 			<%} else{%>
+					 			<tr>&nbsp;&nbsp; Nivel:&nbsp; <%=expensaOrd.getPropiedad().getNivel() %> &nbsp;&nbsp;&nbsp;Orden: &nbsp;<%=expensaOrd.getPropiedad().getOrden() %></tr>
+					 			<%if (expensaOrd!=null){ %>
 					 				<tr>
 						 				<td class="listado_par" colspan="6"> Expensa Ordinaria</td>
 						 			</tr>
+						 		
 						 			<tr>
-							 			<td>Piso</td>
-							 			<td>DTO</td>
-							 			<td>Monto</td>
-							 			<td>Deuda Previa</td>
-							 			<td>Int primer vto</td>
-							 			<td>Total</td>
-							 		</tr>
-						 			<tr>
-						 				<td><%=expensaOrd.getPropiedad().getNivel() %>	</td>			 			
-						 				<td><%=expensaOrd.getPropiedad().getOrden() %>	</td>			 			
-						 				<td><%=expensaOrd.getMonto() %>	</td>			 			
-						 				<td><%=expensaOrd.getDeudaPrevia() %>	</td>			 			
-						 				<td><%=expensaOrd.getIntereses() %>	</td>		
-						 				<td><%=expensaOrd.getMonto()+expensaOrd.getDeudaPrevia()+expensaOrd.getIntereses() %>	</td> 							 			
+						 				<td>
+							 				Monto ultima Liquidaci&oacute;n: &nbsp;<%=expensaOrd.getMonto() %>	<br>			 			
+							 				Deuda a la fecha: &nbsp;<%=expensaOrd.getDeudaPrevia() %>	<br>		 			
+							 				Intereses en la reliquidaci&oacute;n: &nbsp;<%=expensaOrd.getIntereses() %>	<br>						 						
+							 				Total Adeudado:&nbsp;<%=expensaOrd.getDeudaPrevia()+expensaOrd.getIntereses() %>	
+						 				</td> 							 			
 									</tr>
-									<%if(expensaExt!=null){ %>
+								<%} %>
+								<%if (expensaExt!=null){ %>
 										<tr>
-											<td class="listado_par" colspan="6">Expensa Extraordinaria</td>
+											<td class="listado_par" colspan="1">Expensa Extraordinaria</td>
 										</tr>	
 										<tr>
-								 			<td>Piso</td>
-								 			<td>DTO</td>
-								 			<td>Monto</td>
-								 			<td>Deuda Previa</td>
-								 			<td>Int primer vto</td>
-								 			<td>Total</td>
-								 		</tr>
-										<tr>
-							 				<td><%=expensaExt.getPropiedad().getNivel() %>	</td>			 			
-							 				<td><%=expensaExt.getPropiedad().getOrden() %>	</td>			 			
-							 				<td><%=expensaExt.getMonto() %>	</td>			 			
-							 				<td><%=expensaExt.getDeudaPrevia() %>	</td>			 			
-							 				<td><%=expensaExt.getIntereses() %>	</td>		
-							 				<td><%=expensaExt.getMonto()+expensaExt.getDeudaPrevia()+expensaExt.getIntereses() %>	</td> 							 			
+							 				<td>
+									 				Monto &uacute;ltima Liquidaci&oacute;n:&nbsp;<%=expensaExt.getMonto() %><br>			 			
+									 				Deuda a la fecha:&nbsp;<%=expensaExt.getDeudaPrevia() %>				 	<br>		
+									 				Intereses en la reliquidaci&oacute;n:&nbsp;<%=expensaExt.getIntereses() %>		<br>	
+									 				Total Adeuda:&nbsp;<%=expensaExt.getDeudaPrevia()+expensaExt.getIntereses() %><br>
+							 				</td> 							 			
 										</tr>
 									<%}%>
-									
-						 		<%} %>
+						<%}%>
 						 		
 					  		</table>
 					  		<table>
