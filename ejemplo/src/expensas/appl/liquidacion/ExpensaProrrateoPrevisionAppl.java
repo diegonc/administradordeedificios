@@ -50,17 +50,12 @@ public class ExpensaProrrateoPrevisionAppl extends ExpensaCalculoAppl{
 	
 	public List<ExpensaDTO> obtenerExpensasPorTipoPorEdificioYPeriodo(HashMap<TipoGastoDTO, List<GastoDTO>> tipoGastoGasto,int idEdificio,String tipoExpensa){
 		List<GastoDTO> gastosPorTipo = obtenerGastosTotalizadosPorTipo(tipoGastoGasto); 
-		
-		System.out.println("******************************************************************************************");
-		
-		for (GastoDTO g : gastosPorTipo) {
-			System.out.println(g.getTipoGasto().getDescripcion()+"-"+g.getMonto());
+		List<ExpensaDTO> expensas = new ArrayList<ExpensaDTO>();
+		if(gastosPorTipo!=null && !gastosPorTipo.isEmpty()){
+			HashMap<TipoPropiedadDTO, Double> tipoPropiedadMontoExpensa = obtenerProrrateoExpensas(gastosPorTipo);
+			expensas = calcularExpensaPorTipoYEdificio(tipoPropiedadMontoExpensa,tipoExpensa,idEdificio);
 		}
-		
-		System.out.println("******************************************************************************************");
-		
-		HashMap<TipoPropiedadDTO, Double> tipoPropiedadMontoExpensa = obtenerProrrateoExpensas(gastosPorTipo);
-		return calcularExpensaPorTipoYEdificio(tipoPropiedadMontoExpensa,tipoExpensa,idEdificio);
+		return expensas;
 	}
 					
 	
@@ -89,16 +84,16 @@ public class ExpensaProrrateoPrevisionAppl extends ExpensaCalculoAppl{
 	        tipoGasto = (TipoGastoDTO) it.next();
 	        gastos = (List<GastoDTO>) tipoGastoGasto.get(tipoGasto);
 	        gastoActual = new GastoDTO();
-	        gastoActual.setTipoGasto(tipoGasto);
-	        gastoActual.setMonto(sumarizarGastos(gastos));
-	        gastosTotalizados.add(gastoActual);
+		    gastoActual.setTipoGasto(tipoGasto);
+		    gastoActual.setMonto(sumarizarGastos(gastos));
+		    gastosTotalizados.add(gastoActual);
 	    }
 		return gastosTotalizados;
 	}
 			
 	private HashMap<TipoPropiedadDTO, Double> obtenerProrrateoExpensas(List<GastoDTO> gastos){
 		HashMap<TipoPropiedadDTO, Double> tipoPropiedadMontoExpensa = new HashMap<TipoPropiedadDTO, Double>();
-						
+		
 		for(GastoDTO gastoActual: gastos){
 			System.out.println("Codigo: " + gastoActual.getTipoGasto().getCodigo());
 			System.out.println("Descripcion: " + gastoActual.getTipoGasto().getDescripcion());
@@ -113,6 +108,7 @@ public class ExpensaProrrateoPrevisionAppl extends ExpensaCalculoAppl{
 			}
 			System.out.println("-----------------------------------------------------------");
 		}
+		
 		Iterator<TipoPropiedadDTO> it = tipoPropiedadMontoExpensa.keySet().iterator();
 	    while (it.hasNext()) {
 	        TipoPropiedadDTO tipoPropiedad = (TipoPropiedadDTO) it.next();
