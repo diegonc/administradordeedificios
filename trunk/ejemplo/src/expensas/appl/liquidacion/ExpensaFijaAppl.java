@@ -1,4 +1,4 @@
-package expensas.appl;
+package expensas.appl.liquidacion;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +10,8 @@ import propiedades.TipoPropiedadDTO;
 import utilidades.HibernateUtil;
 import edificio.EdificioAppl;
 import edificio.EdificioDTO;
+import expensas.appl.ExpensaAppl;
+import expensas.appl.ExpensaInteresesAppl;
 import expensas.dto.ExpensaDTO;
 
 public class ExpensaFijaAppl {
