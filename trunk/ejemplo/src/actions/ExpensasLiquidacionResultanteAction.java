@@ -25,9 +25,11 @@ import edificio.EdificioDTO;
 import expensas.appl.ExpensaAppl;
 import expensas.appl.ExpensaInteresesAppl;
 import expensas.appl.liquidacion.ExpensaFijaAppl;
+import expensas.appl.liquidacion.ExpensaProrrateoPrevisionAppl;
 import expensas.appl.liquidacion.ExpensaProrrateoPrevisionYGastosAppl;
 import expensas.calculo.ElementoPrevisionGasto;
 import expensas.dto.ExpensaDTO;
+import gastos.dto.GastoDTO;
 import gastos.dto.TipoGastoDTO;
 
 @SuppressWarnings("serial")
@@ -42,7 +44,7 @@ public class ExpensasLiquidacionResultanteAction extends ActionSupport {
 	private Map<String, Object> session;
 	private EdificioAppl edifAppl = new EdificioAppl();
 	private ExpensaFijaAppl expensasFijasAppl = new ExpensaFijaAppl();
-	private ExpensaProrrateoPrevisionYGastosAppl expensasPrevisionAppl = new ExpensaProrrateoPrevisionYGastosAppl();
+	private ExpensaProrrateoPrevisionAppl expensasPrevisionAppl = new ExpensaProrrateoPrevisionAppl();
 	private String ordinaria;
 	private String extraordinaria;
 	
@@ -190,7 +192,7 @@ public class ExpensasLiquidacionResultanteAction extends ActionSupport {
 			addActionError("El periodo ya se encuentra liquidado.");
 			return "error";
 		}else{
-			HashMap<TipoGastoDTO, ElementoPrevisionGasto> gastosLiquidacion = null;
+			HashMap<TipoGastoDTO, List<GastoDTO>> gastosLiquidacion = null;
 			SessionFactory factory = HibernateUtil.getSessionFactory();
 			EdificioDTO edificio = edifAppl.getEdificio(factory, id);
 			LiquidacionBean expensaDetalle = new LiquidacionBean();
