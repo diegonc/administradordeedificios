@@ -16,7 +16,6 @@ import edificio.EdificioAppl;
 import edificio.EdificioDTO;
 import expensas.appl.ExpensaAppl;
 import expensas.appl.ExpensaInteresesAppl;
-import expensas.calculo.ElementoPrevisionGasto;
 import expensas.calculo.ResultadoProrrateo;
 import expensas.dto.ExpensaDTO;
 import gastos.dto.GastoDTO;
@@ -24,6 +23,16 @@ import gastos.dto.TipoGastoDTO;
 
 public class ExpensaProrrateoPrevisionAppl extends ExpensaCalculoAppl{
 
+	public List<ExpensaDTO> calcularExpensasOrdinariasDePropiedadesPorEdificioYPeriodo(int idEdificio,Periodo periodo){
+		HashMap<TipoPropiedadDTO, Double> tipoPropiedadMontoExpensa = obtenerProrrateoExpensasOrdinarias(idEdificio,periodo);
+		return calcularExpensaPorTipoYEdificio(tipoPropiedadMontoExpensa,ExpensaDTO.tipoOrdinario,idEdificio);
+	}
+	
+	public List<ExpensaDTO> calcularExpensasExtraordinariasDePropiedadesPorEdificioYPeriodo(int idEdificio,Periodo periodo){
+		HashMap<TipoPropiedadDTO, Double> tipoPropiedadMontoExpensa = obtenerProrrateoExpensasExtraordinarias(idEdificio,periodo);
+		return calcularExpensaPorTipoYEdificio(tipoPropiedadMontoExpensa,ExpensaDTO.tipoExtraordinario,idEdificio);
+	}
+	
 		
 	public HashMap<TipoGastoDTO, List<GastoDTO>> obtenerGastosPorEdificioYPeriodoAgrupadoPorTipo(int idEdificio,Periodo periodo,String tipoExpensa){
 		List<GastoDTO> previsiones = obtenerPrevisionesPorEdificioYPeriodo(idEdificio, periodo,tipoExpensa);
@@ -36,54 +45,67 @@ public class ExpensaProrrateoPrevisionAppl extends ExpensaCalculoAppl{
 			listadoGastos.add(gastoActual);
 			tipoGastoGasto.put(gastoActual.getTipoGasto(), listadoGastos);
 		}
-		
-		Iterator<TipoGastoDTO> it = tipoGastoGasto.keySet().iterator();
-	    while (it.hasNext()) {
-	        TipoGastoDTO tipoGasto = (TipoGastoDTO) it.next();
-	        List<GastoDTO> gastosEnTipo = (List<GastoDTO>) tipoGastoGasto.get(tipoGasto);
-	        System.out.println(tipoGasto.getCodigo());
-	        for (GastoDTO gastoActual : gastosEnTipo) {
-	        	System.out.println(gastoActual.getDetalle()+" : "+gastoActual.getMonto());
-	        }
-	    }
 		return tipoGastoGasto;
 	}
 	
-			
+	public List<ExpensaDTO> obtenerExpensasPorTipoPorEdificioYPeriodo(HashMap<TipoGastoDTO, List<GastoDTO>> tipoGastoGasto,int idEdificio,String tipoExpensa){
+		List<GastoDTO> gastosPorTipo = obtenerGastosTotalizadosPorTipo(tipoGastoGasto); 
+		
+		System.out.println("******************************************************************************************");
+		
+		for (GastoDTO g : gastosPorTipo) {
+			System.out.println(g.getTipoGasto().getDescripcion()+"-"+g.getMonto());
+		}
+		
+		System.out.println("******************************************************************************************");
+		
+		HashMap<TipoPropiedadDTO, Double> tipoPropiedadMontoExpensa = obtenerProrrateoExpensas(gastosPorTipo);
+		return calcularExpensaPorTipoYEdificio(tipoPropiedadMontoExpensa,tipoExpensa,idEdificio);
+	}
+					
+	
+	private double sumarizarGastos(List<GastoDTO> gastos){
+		double montoTotal = 0;
+		for (GastoDTO g: gastos) {
+			montoTotal+=g.getMonto();
+		}
+		return montoTotal;
+	}
+	
 	/**
 	 * Totaliza los gastos por tipo de gasto.
 	 * @param tipoGastoElementoPrevisionGasto
 	 * @return
 	 */
-	public List<GastoDTO> obtenerGastosTotalizadosPorTipo(HashMap<TipoGastoDTO, ElementoPrevisionGasto> tipoGastoElementoPrevisionGasto){
-		ElementoPrevisionGasto elementoPrevisionGasto ;
+	private List<GastoDTO> obtenerGastosTotalizadosPorTipo(HashMap<TipoGastoDTO, List<GastoDTO>> tipoGastoGasto){
+		List<GastoDTO> gastos ;
 		GastoDTO gastoActual;
 		TipoGastoDTO tipoGasto;
-		List<GastoDTO> gastos = new ArrayList<GastoDTO>();
+		List<GastoDTO> gastosTotalizados = new ArrayList<GastoDTO>();
 		
-		Iterator<TipoGastoDTO> it = tipoGastoElementoPrevisionGasto.keySet().iterator();
+		Iterator<TipoGastoDTO> it = tipoGastoGasto.keySet().iterator();
 			
 		while (it.hasNext()) {
 	        tipoGasto = (TipoGastoDTO) it.next();
-	        elementoPrevisionGasto = (ElementoPrevisionGasto) tipoGastoElementoPrevisionGasto.get(tipoGasto);
+	        gastos = (List<GastoDTO>) tipoGastoGasto.get(tipoGasto);
 	        gastoActual = new GastoDTO();
 	        gastoActual.setTipoGasto(tipoGasto);
-	        gastoActual.setMonto(elementoPrevisionGasto.obtenerMontoTotal());
-	        gastos.add(gastoActual);
+	        gastoActual.setMonto(sumarizarGastos(gastos));
+	        gastosTotalizados.add(gastoActual);
 	    }
-		return gastos;
+		return gastosTotalizados;
 	}
 			
-	public HashMap<TipoPropiedadDTO, Double> obtenerProrrateoExpensas(List<GastoDTO> gastos, String tipoExpensa){
+	private HashMap<TipoPropiedadDTO, Double> obtenerProrrateoExpensas(List<GastoDTO> gastos){
 		HashMap<TipoPropiedadDTO, Double> tipoPropiedadMontoExpensa = new HashMap<TipoPropiedadDTO, Double>();
 						
 		for(GastoDTO gastoActual: gastos){
 			System.out.println("Codigo: " + gastoActual.getTipoGasto().getCodigo());
 			System.out.println("Descripcion: " + gastoActual.getTipoGasto().getDescripcion());
-			System.out.println("Detalle: " + gastoActual.getDetalle());
 			System.out.println("Monto: " + gastoActual.getMonto());
 			List<ResultadoProrrateo> resultadoProrrateo = generarResultadoDeProrrateo(gastoActual);
-			 			
+			 		
+			System.out.println("\nProrrateo");
 			for (ResultadoProrrateo resultadoActual : resultadoProrrateo) {
 				Double montoActual = (tipoPropiedadMontoExpensa.get(resultadoActual.getTipoPropiedad())==null)?0:tipoPropiedadMontoExpensa.get(resultadoActual.getTipoPropiedad());
 				tipoPropiedadMontoExpensa.put(resultadoActual.getTipoPropiedad(), NumberFormat.redondeoDouble(resultadoActual.getMonto()+ montoActual));
@@ -102,27 +124,14 @@ public class ExpensaProrrateoPrevisionAppl extends ExpensaCalculoAppl{
 			
 	private HashMap<TipoPropiedadDTO, Double> obtenerProrrateoExpensasOrdinarias(int idEdificio,Periodo periodo){
 		List<GastoDTO> gastos = obtenerPrevisionesPorEdificioYPeriodo(idEdificio, periodo,ExpensaDTO.tipoOrdinario);
-		return obtenerProrrateoExpensas(gastos,ExpensaDTO.tipoOrdinario);
+		return obtenerProrrateoExpensas(gastos);
 	}
 	
 	private HashMap<TipoPropiedadDTO, Double> obtenerProrrateoExpensasExtraordinarias(int idEdificio, Periodo periodo) {
 		List<GastoDTO> gastos = obtenerPrevisionesPorEdificioYPeriodo(idEdificio, periodo,ExpensaDTO.tipoExtraordinario);
-		return obtenerProrrateoExpensas(gastos,ExpensaDTO.tipoExtraordinario);
-		
+		return obtenerProrrateoExpensas(gastos);
 	}
-	
-	public List<ExpensaDTO> calcularExpensasOrdinariasDePropiedadesPorEdificioYPeriodo(int idEdificio,Periodo periodo){
-		HashMap<TipoPropiedadDTO, Double> tipoPropiedadMontoExpensa = obtenerProrrateoExpensasOrdinarias(idEdificio,periodo);
-		return calcularExpensaPorTipoYEdificio(tipoPropiedadMontoExpensa,ExpensaDTO.tipoOrdinario,idEdificio);
-	}
-	
-	
-	public List<ExpensaDTO> calcularExpensasExtraordinariasDePropiedadesPorEdificioYPeriodo(int idEdificio,Periodo periodo){
-		HashMap<TipoPropiedadDTO, Double> tipoPropiedadMontoExpensa = obtenerProrrateoExpensasExtraordinarias(idEdificio,periodo);
-		return calcularExpensaPorTipoYEdificio(tipoPropiedadMontoExpensa,ExpensaDTO.tipoExtraordinario,idEdificio);
-	}
-	
-		
+			
 	private void actualizarSaldos(PropiedadDTO propiedadActual, ExpensaDTO expensa) {
 		if(expensa.getTipo().equalsIgnoreCase("O")){
 			propiedadActual.setCtaOrdSaldoExp(-(expensa.getDeudaPrevia()+expensa.getMonto()));
@@ -136,6 +145,7 @@ public class ExpensaProrrateoPrevisionAppl extends ExpensaCalculoAppl{
 		session.update(propiedadActual);
 		session.getTransaction().commit();
 	}
+	
 	
 	private List<ExpensaDTO> calcularExpensaPorTipoYEdificio(HashMap<TipoPropiedadDTO, Double> tipoPropiedadMontoExpensa,String tipoExpensa,int idEdificio){
 		double montoExpensa = 0;
@@ -160,13 +170,13 @@ public class ExpensaProrrateoPrevisionAppl extends ExpensaCalculoAppl{
 				expensaActual.setTipo(tipoExpensa);
 				expensaActual.setNumeroOperacion(expensaAppl.obtenerNumeroDeOperacion(propiedad.getId(), tipoExpensa));
 				
-				if (edificio.getMora().equalsIgnoreCase(EdificioDTO.PUNITORIO))
+			/*	if (edificio.getMora().equalsIgnoreCase(EdificioDTO.PUNITORIO))
 					expensasIntereses.calcularInteresPunitorio(edificio, expensaActual);
 				if (edificio.getMora().equalsIgnoreCase(EdificioDTO.A_FECHA))
 					expensasIntereses.calcularInteresAFechaDePago(edificio, expensaActual);
 				if (edificio.getMora().equalsIgnoreCase(EdificioDTO.DIFERIDO))
 					expensasIntereses.calcularInteresDiferidoProximaLiquidacion(edificio, expensaActual);
-				actualizarSaldos(propiedad, expensaActual);
+				actualizarSaldos(propiedad, expensaActual);*/
 				session.beginTransaction();
 				session.saveOrUpdate(expensaActual);
 				session.getTransaction().commit();			
