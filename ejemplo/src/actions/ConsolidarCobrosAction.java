@@ -1,6 +1,7 @@
 package actions;
 
 import org.apache.struts2.interceptor.validation.SkipValidation;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
 import propiedades.PropiedadDTO;
@@ -62,6 +63,8 @@ public class ConsolidarCobrosAction extends SessionAwareAction {
 			return back();
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);
+			if (e instanceof HibernateException)
+				renewSession();
 			return errorValidacion();
 		}
 	}

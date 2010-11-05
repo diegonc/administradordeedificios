@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.struts2.interceptor.validation.SkipValidation;
+import org.hibernate.HibernateException;
 
 import propiedades.Responsable;
 import propiedades.ResponsableAppl;
@@ -69,12 +70,18 @@ public class ResponsablesAction extends SessionAwareAction implements Preparable
 			}
         } catch (Exception e) {
 			addActionError(e.getMessage());
+			if (e instanceof HibernateException)
+				renewSession();
 		}
 	}
 
 	@SkipValidation
 	public String listar() {
-		lista = dao.listar();
+		try {
+			lista = dao.listar();
+		} catch (Exception e) {
+			addActionError(e.getMessage());
+		}
 		return SUCCESS;
 	}
 	
@@ -93,6 +100,7 @@ public class ResponsablesAction extends SessionAwareAction implements Preparable
 		try {
 			getSession().beginTransaction();
 			dao.grabar(entidad);
+			getTransaction().commit();
 			return SUCCESS;
 		} catch (Exception e) {
 			addActionError(e.getMessage());
@@ -105,6 +113,7 @@ public class ResponsablesAction extends SessionAwareAction implements Preparable
 		try {
 			getSession().beginTransaction();
 			dao.eliminar(entidad);
+			getTransaction().commit();
 		} catch (Exception e) {
 			addActionError(e.getMessage());
 		}
