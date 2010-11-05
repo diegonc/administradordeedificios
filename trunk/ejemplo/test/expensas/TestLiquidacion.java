@@ -48,7 +48,7 @@ public class TestLiquidacion extends TestCase{
 		
 		/***************************************************************************************************************************/
 		
-		/*
+		
 		tipoGastoGastos = expensaProrrateoPrevisionAppl.obtenerGastosPorEdificioYPeriodoAgrupadoPorTipo(idEdificio, periodo, ExpensaDTO.tipoExtraordinario);
 		it = tipoGastoGastos.keySet().iterator();
 		System.out.println();
@@ -74,7 +74,7 @@ public class TestLiquidacion extends TestCase{
 			propiedadActual = expensa.getPropiedad();
 			System.out.println("Piso-Depto: " + propiedadActual.getNivel()+" - "+propiedadActual.getOrden()+" = "+expensa.getMonto());
 		}
-		 */
+		
 		
 	}
 }
