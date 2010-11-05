@@ -7,12 +7,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
 
-import propiedades.PropiedadDTO;
-import propiedades.TipoPropiedadDTO;
-
 import utilidades.HibernateUtil;
 import utilidades.Periodo;
-import edificio.EdificioDTO;
 import expensas.dto.ExpensaDTO;
 
 public class ExpensaAppl {
@@ -50,6 +46,7 @@ public class ExpensaAppl {
 		return nroOperacion.intValue()+1;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public ExpensaDTO obtenerExpensaUltimaLiquidacion(int idPropiedad, String tipoExpensa){
 		Session session = HibernateUtil.getSession();
 		Query query = session.createQuery("select ex from ExpensaDTO ex where" +
@@ -65,6 +62,8 @@ public class ExpensaAppl {
 			return (ExpensaDTO)query.list().get(0);		
 	}
 	
+	
+	@SuppressWarnings("unchecked")
 	public boolean existeExpensaUltimaLiquidacion(int idEdificio, int mes, int anio){
 		Session session = HibernateUtil.getSession();
 		Periodo periodo = new Periodo(mes, anio);

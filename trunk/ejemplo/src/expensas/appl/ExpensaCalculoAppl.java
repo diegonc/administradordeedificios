@@ -1,5 +1,10 @@
 package expensas.appl;
 
+import expensas.calculo.ElementoProrrateo;
+import expensas.calculo.ResultadoProrrateo;
+import expensas.dto.ExpensaDTO;
+import gastos.dto.GastoDTO;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -14,17 +19,11 @@ import propiedades.TipoPropiedadTipoGastoDTO;
 import utilidades.HibernateUtil;
 import utilidades.NumberFormat;
 import utilidades.Periodo;
-import expensas.calculo.ElementoProrrateo;
-import expensas.calculo.ResultadoProrrateo;
-import expensas.dto.ExpensaDTO;
-import gastos.dto.GastoDTO;
-import gastos.dto.GastoPrevisionDTO;
-import gastos.dto.GastoRealDTO;
 
 public abstract class ExpensaCalculoAppl {
 
 	@SuppressWarnings("unchecked")
-	protected List<GastoRealDTO> obtenerGastosRealesPorEdificioYPeriodo(int idEdificio,Periodo periodo,String tipoExpensa){
+	protected List<GastoDTO> obtenerGastosRealesPorEdificioYPeriodo(int idEdificio,Periodo periodo,String tipoExpensa){
 		Session session = HibernateUtil.getSession();
 		String consulta = "select gr from GastoRealDTO gr where gr.fechaPago between :fechaInicio and :fechaFin and gr.edificio =:idEdificio";
 		
@@ -39,7 +38,7 @@ public abstract class ExpensaCalculoAppl {
 	}
 	
 	@SuppressWarnings("unchecked")
-	protected List<GastoPrevisionDTO> obtenerPrevisionesPorEdificioYPeriodo(int idEdificio,Periodo periodo,String tipoExpensa){
+	protected List<GastoDTO> obtenerPrevisionesPorEdificioYPeriodo(int idEdificio,Periodo periodo,String tipoExpensa){
 		Session session = HibernateUtil.getSession();
 		String consulta = "select gp from GastoPrevisionDTO gp where gp.anio =:anio and gp.mes =:mes and gp.edificio =:idEdificio";
 		

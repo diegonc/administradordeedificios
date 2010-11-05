@@ -13,13 +13,12 @@ import edificio.EdificioAppl;
 import expensas.calculo.ResultadoProrrateo;
 import expensas.dto.ExpensaDTO;
 import gastos.dto.GastoDTO;
-import gastos.dto.GastoRealDTO;
 import gastos.dto.TipoGastoDTO;
 
 public class ExpensaSinPrevisionAppl extends ExpensaCalculoAppl{
 			
 	public HashMap<TipoGastoDTO, List<GastoDTO>> obtenerGastosPorEdificioYPeriodoAgrupadoPorTipo(int idEdificio,Periodo periodo,String tipoExpensa){
-		List<GastoRealDTO> gastos = obtenerGastosRealesPorEdificioYPeriodo(idEdificio, periodo,tipoExpensa);
+		List<GastoDTO> gastos = obtenerGastosRealesPorEdificioYPeriodo(idEdificio, periodo,tipoExpensa);
 		HashMap<TipoGastoDTO, List<GastoDTO>> tipoGastoGasto = new HashMap<TipoGastoDTO, List<GastoDTO>>();
 		
 		for(GastoDTO gastoActual: gastos){
@@ -42,7 +41,7 @@ public class ExpensaSinPrevisionAppl extends ExpensaCalculoAppl{
 		return tipoGastoGasto;
 	}
 		
-	public HashMap<TipoPropiedadDTO, Double> obtenerProrrateoExpensas(List<GastoRealDTO> gastos ,String tipoExpensa){
+	public HashMap<TipoPropiedadDTO, Double> obtenerProrrateoExpensas(List<GastoDTO> gastos ,String tipoExpensa){
 		
 		HashMap<TipoPropiedadDTO, Double> tipoPropiedadMontoExpensa = new HashMap<TipoPropiedadDTO, Double>();
 		
@@ -71,12 +70,12 @@ public class ExpensaSinPrevisionAppl extends ExpensaCalculoAppl{
 	}
 	
 	private HashMap<TipoPropiedadDTO, Double> obtenerProrrateoExpensasOrdinarias(int idEdificio,Periodo periodo){
-		List<GastoRealDTO> gastos = obtenerGastosRealesPorEdificioYPeriodo(idEdificio, periodo,ExpensaDTO.tipoOrdinario);
+		List<GastoDTO> gastos = obtenerGastosRealesPorEdificioYPeriodo(idEdificio, periodo,ExpensaDTO.tipoOrdinario);
 		return obtenerProrrateoExpensas(gastos,ExpensaDTO.tipoOrdinario);
 	}
 	
 	private HashMap<TipoPropiedadDTO, Double> obtenerProrrateoExpensasExtraordinarias(int idEdificio, Periodo periodo) {
-		List<GastoRealDTO> gastos = obtenerGastosRealesPorEdificioYPeriodo(idEdificio, periodo,ExpensaDTO.tipoExtraordinario);
+		List<GastoDTO> gastos = obtenerGastosRealesPorEdificioYPeriodo(idEdificio, periodo,ExpensaDTO.tipoExtraordinario);
 		return obtenerProrrateoExpensas(gastos,ExpensaDTO.tipoExtraordinario);
 		
 	}
