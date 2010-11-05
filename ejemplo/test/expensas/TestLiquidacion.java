@@ -43,7 +43,7 @@ public class TestLiquidacion extends TestCase{
 		PropiedadDTO propiedadActual;
 		for (ExpensaDTO expensa: expensas) {
 			propiedadActual = expensa.getPropiedad();
-			System.out.println("Piso-Depto: " + propiedadActual.getNivel()+" - "+propiedadActual.getOrden()+" = "+expensa.getMonto());
+			System.out.println(propiedadActual.getNivel()+";"+propiedadActual.getOrden()+";"+expensa.getMonto());
 		}
 		
 		/***************************************************************************************************************************/
