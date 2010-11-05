@@ -29,7 +29,7 @@ import utilidades.HibernateUtil;
 import utilidades.NumberFormat;
 import utilidades.Periodo;
 
-public class TestExpensaPorPrevision extends TestCase {
+public class TestExpensaPorPrevisionYGastos extends TestCase {
 	
 	@SuppressWarnings("unchecked")
 	private List<GastoRealDTO> obtenerGastosRealesOrdinariosPorEdificioYPeriodo(int idEdificio,Periodo periodo){
