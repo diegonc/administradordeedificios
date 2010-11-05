@@ -9,7 +9,7 @@ insert into `tipo_propiedad`(`ID`,`NOMBRE_TIPO`,`ID_EDIFICIO`,`montoExp`,`diviso
 insert into `tipo_propiedad`(`ID`,`NOMBRE_TIPO`,`ID_EDIFICIO`,`montoExp`,`divisor`) values (3,'Locales comerciales',1,200,40);
 insert into `tipo_propiedad`(`ID`,`NOMBRE_TIPO`,`ID_EDIFICIO`,`montoExp`,`divisor`) values (4,'Depto Planta Baja',1,300,120);
 insert into `tipo_propiedad`(`ID`,`NOMBRE_TIPO`,`ID_EDIFICIO`,`montoExp`,`divisor`) values (5,'Cocheras Descubiertas',1,120,20);
-insert into `tipo_propiedad`(`ID`,`NOMBRE_TIPO`,`ID_EDIFICIO`,`montoExp`,`divisor`) values (6,'Departamento',1,400,960);
+insert into `tipo_propiedad`(`ID`,`NOMBRE_TIPO`,`ID_EDIFICIO`,`montoExp`,`divisor`) values (6,'Departamento',1,400,640);
 
 
 -- Responsable
