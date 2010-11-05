@@ -37,7 +37,7 @@
 		<%} %>				
 		
 		</table> 
-		</fieldset>				
+		</fieldset>			
 		</td>
 		<td width="15" class="fondo"></td>
 		<td width="5" class="borde"></td>
