@@ -18,8 +18,6 @@ import expensas.calculo.ElementoPrevisionGasto;
 import expensas.calculo.ResultadoProrrateo;
 import expensas.dto.ExpensaDTO;
 import gastos.dto.GastoDTO;
-import gastos.dto.GastoPrevisionDTO;
-import gastos.dto.GastoRealDTO;
 import gastos.dto.TipoGastoDTO;
 
 public class ExpensaPrevisionAppl extends ExpensaCalculoAppl {
@@ -32,9 +30,9 @@ public class ExpensaPrevisionAppl extends ExpensaCalculoAppl {
 	 * @return
 	 */
 	public	HashMap<TipoGastoDTO, ElementoPrevisionGasto> obtenerGastosPorEdificioYPeriodoAgrupadoPorTipo(int idEdificio,Periodo periodo,String tipoExpensa){
-		List<GastoRealDTO> gastosRealesMesAnterior;
-		List<GastoPrevisionDTO> previsionesMesAnterior;
-		List<GastoPrevisionDTO> previsionesMesActual;
+		List<GastoDTO> gastosRealesMesAnterior;
+		List<GastoDTO> previsionesMesAnterior;
+		List<GastoDTO> previsionesMesActual;
 		Periodo periodoAnterior = periodo.obtenerPeriodoAnterior();
 				
 		gastosRealesMesAnterior = obtenerGastosRealesPorEdificioYPeriodo(idEdificio, periodoAnterior,tipoExpensa);
@@ -44,7 +42,7 @@ public class ExpensaPrevisionAppl extends ExpensaCalculoAppl {
 		HashMap<TipoGastoDTO, ElementoPrevisionGasto> mapa = new HashMap<TipoGastoDTO, ElementoPrevisionGasto>();
 		ElementoPrevisionGasto previsionGasto;
 			
-		for (GastoPrevisionDTO gp : previsionesMesAnterior) {
+		for (GastoDTO gp : previsionesMesAnterior) {
 			previsionGasto = mapa.get(gp.getTipoGasto());
 			if(previsionGasto==null){
 				previsionGasto = new ElementoPrevisionGasto();
@@ -53,7 +51,7 @@ public class ExpensaPrevisionAppl extends ExpensaCalculoAppl {
 			mapa.put(gp.getTipoGasto(),previsionGasto);
 		}
 	
-		for (GastoRealDTO gr : gastosRealesMesAnterior) {
+		for (GastoDTO gr : gastosRealesMesAnterior) {
 			previsionGasto = mapa.get(gr.getTipoGasto());
 			if(previsionGasto==null){
 				previsionGasto = new ElementoPrevisionGasto();
@@ -62,7 +60,7 @@ public class ExpensaPrevisionAppl extends ExpensaCalculoAppl {
 			mapa.put(gr.getTipoGasto(),previsionGasto);
 		}
 		
-		for (GastoPrevisionDTO gp : previsionesMesActual) {
+		for (GastoDTO gp : previsionesMesActual) {
 			previsionGasto = mapa.get(gp.getTipoGasto());
 			if(previsionGasto==null){
 				previsionGasto = new ElementoPrevisionGasto();
