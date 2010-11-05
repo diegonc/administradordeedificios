@@ -1,4 +1,4 @@
-package expensas.appl;
+package expensas.appl.liquidacion;
 
 import expensas.calculo.ElementoProrrateo;
 import expensas.calculo.ResultadoProrrateo;
