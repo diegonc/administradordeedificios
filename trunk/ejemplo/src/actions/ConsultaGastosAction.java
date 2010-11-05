@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
@@ -71,6 +72,9 @@ public class ConsultaGastosAction extends SessionAwareAction implements Preparab
 		} catch(Exception e) {
 			LOG.warn("Error al obtener el nombre del edificio.", e);
 			nombreEdificio = "<<desconocido>>";
+			if (e instanceof HibernateException) {
+				renewSession();
+			}
 		}
 	}
 
@@ -125,7 +129,11 @@ public class ConsultaGastosAction extends SessionAwareAction implements Preparab
 
 	@SuppressWarnings("unchecked")
 	public String listar() {
-		resultados = getCriteria().list();
+		try {
+			resultados = getCriteria().list();
+		} catch (IllegalArgumentException e) {
+			addActionError(e.getMessage());
+		}
 		return SUCCESS;
 	}
 

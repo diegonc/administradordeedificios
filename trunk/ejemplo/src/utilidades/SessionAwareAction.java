@@ -25,5 +25,11 @@ public abstract class SessionAwareAction extends ActionSupport {
 		onSetSession();
 	}
 
+	public final void renewSession() {
+		if (session.isOpen())
+			session.close();
+		setSession(HibernateUtil.getSession());
+	}
+
 	protected void onSetSession() { }
 }

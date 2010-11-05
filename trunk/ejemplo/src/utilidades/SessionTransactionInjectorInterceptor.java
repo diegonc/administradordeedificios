@@ -207,6 +207,9 @@ public class SessionTransactionInjectorInterceptor extends GenericInterceptor im
 			returnName = invocation.invoke();
 			
 			for (Session hibernateSession:injectedSessions) {
+				if (!hibernateSession.isOpen())
+					continue;
+				
 				Transaction hibernateTransation = hibernateSession.getTransaction();
 				
 				try {
@@ -228,7 +231,7 @@ public class SessionTransactionInjectorInterceptor extends GenericInterceptor im
 		
 			}
 
-			detectAndCommitHibernateTransactionCreatedLater(action);
+			detectAndCommitHibernateSessionCreatedLater(action);
 			detectAndCloseHibernateCoreSessionCreatedLater(action);
 			
 			log.debug("Injection Hibernate Session and Transaction process for "+sbMapping.toString()+" finished");
@@ -612,14 +615,8 @@ public class SessionTransactionInjectorInterceptor extends GenericInterceptor im
 				if (campo.isEnumConstant())
 					continue;
 				
-				// test for "singletons"
-				campo.setAccessible(true);
-				Object fieldValue = campo.get(targetObject);
-				
-				if ((fieldValue==null) || !isCandidadeClass(fieldValue.getClass()))
-					continue;
-				
 				try {
+					campo.setAccessible(true);
 					if ((campo.get(targetObject).equals(targetObject)) )
 						continue;
 				} catch (LazyInitializationException e) {
@@ -646,7 +643,7 @@ public class SessionTransactionInjectorInterceptor extends GenericInterceptor im
 		}
 	}
 	
-	private synchronized void detectAndCommitHibernateTransactionCreatedLater(Object targetObject) throws Exception {
+	private synchronized void detectAndCommitHibernateSessionCreatedLater(Object targetObject) throws Exception {
 		try {
 			if (readedObjectsByRequest.get(ServletActionContext.getRequest()).contains(targetObject))
 				return;
@@ -660,15 +657,10 @@ public class SessionTransactionInjectorInterceptor extends GenericInterceptor im
 					if (campo.isEnumConstant())
 						continue;
 					
-					// test for "singletons"
-					campo.setAccessible(true);
-					Object fieldValue = campo.get(targetObject);
-					
-					if ((fieldValue==null) || !isCandidadeClass(fieldValue.getClass()))
-						continue;
-					
 					try {
-						if ( (fieldValue!=null) && (campo.get(targetObject).equals(targetObject)) )
+						campo.setAccessible(true);
+						Object fieldValue = campo.get(targetObject);
+						if ( fieldValue == null || targetObject.equals(fieldValue) )
 							continue;
 					} catch (LazyInitializationException e) {
 						e.printStackTrace();
@@ -676,16 +668,17 @@ public class SessionTransactionInjectorInterceptor extends GenericInterceptor im
 					} 
 					
 					if (campo.getType().getName().equals(Session.class.getName())) {
-						if (campo.isAnnotationPresent(TransactionTarget.class)) {
+						if (campo.isAnnotationPresent(SessionTarget.class)) {
 							campo.setAccessible(true);
-							Transaction hibernateTransaction = (Transaction) campo.get(targetObject);
-							commitHibernateTransaction(hibernateTransaction);
+							Session hibernateSession = (Session) campo.get(targetObject);
+							commitHibernateTransaction(hibernateSession.getTransaction());
+							closeHibernateSession(hibernateSession);
 						}
 					} else {
 						campo.setAccessible(true);
 						Object subField = campo.get(targetObject);
 						if (subField!=null) {
-							detectAndCommitHibernateTransactionCreatedLater(subField);
+							detectAndCommitHibernateSessionCreatedLater(subField);
 						}
 					}
 				}
@@ -719,15 +712,10 @@ public class SessionTransactionInjectorInterceptor extends GenericInterceptor im
 					if (campo.isEnumConstant())
 						continue;
 					
-					// test for "singletons"
-					campo.setAccessible(true);
-					Object fieldValue = campo.get(targetObject);
-					
-					if ((fieldValue==null) || !isCandidadeClass(fieldValue.getClass()))
-						continue;
-					
 					try {
-						if ( (fieldValue!=null) && (campo.get(targetObject).equals(targetObject)) )
+						campo.setAccessible(true);
+						Object fieldValue = campo.get(targetObject);
+						if ( (fieldValue==null) || (fieldValue.equals(targetObject)) )
 							continue;
 					} catch (LazyInitializationException e) {
 						e.printStackTrace();
@@ -735,10 +723,11 @@ public class SessionTransactionInjectorInterceptor extends GenericInterceptor im
 					} 
 					
 					if (campo.getType().getName().equals(Session.class.getName())) {
-						if (campo.isAnnotationPresent(TransactionTarget.class)) {
+						if (campo.isAnnotationPresent(SessionTarget.class)) {
 							campo.setAccessible(true);
-							Transaction hibernateTransaction = (Transaction) campo.get(targetObject);
-							rollbackHibernateTransaction(hibernateTransaction);
+							Session hibernateSession = (Session) campo.get(targetObject);
+							rollbackHibernateTransaction(hibernateSession.getTransaction());
+							closeHibernateSession(hibernateSession);
 						}
 					} else {
 						campo.setAccessible(true);
