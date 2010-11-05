@@ -206,7 +206,8 @@ function ocularYMostrar(id){
 		
 		<%}%>
 		</table>
-<% if (edificio.getForma_liq_exp().equals("PRORRATEO")){ %>		
+		
+<% if (edificio.getForma_liq_exp().equals("PRORRATEO")){ %>
 		<table height="10" width="700"> <tr height="10"><td align="center"><div><h3>Gastos Extraordinarios del Per&iacute;odo</h3></div></td><td><a href="#" onclick="ocularYMostrar('tabla3')" ><span id="detalle1">Ver</span></a></td></tr></table>
 		<table id="tabla3" width ="430" cellpadding="0" cellspacing="0" align="center" class="listado" style="display: none;">
 			<tr class="listado_par">
@@ -325,10 +326,10 @@ function ocularYMostrar(id){
 		     }			
 		 %> 
 		</table>
+<%} %>
 
-	<%} %>
 
-<% if (edificio.getForma_liq_exp().equals("PRORRATEO")){ %>		
+
 	<table height="10" width="700"> <tr height="20"><td align="center"><div><h3>Detalle de la Liquidaci&oacute;n</h3></div></td><td><a href="#" onclick="ocularYMostrar('tabla4')"><span id="detalle2">Ver</span></a></td></tr></table>
 		<table id="tabla4" cellspacing="0" cellpadding="0" border="1" class="listado" align="center" style="display: none;">
 		<tr class="listado_par" >
@@ -373,7 +374,7 @@ function ocularYMostrar(id){
 		
 		<%}%>
 		</table>
-	<%} %>
+
 		<table height="50"> <tr height="20"><td></td></tr></table>
 		
 		<a href="EdificioListarAction?redi=expensa">Volver</a>
