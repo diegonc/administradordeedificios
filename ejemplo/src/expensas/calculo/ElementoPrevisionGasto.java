@@ -1,7 +1,6 @@
 package expensas.calculo;
 
-import gastos.dto.GastoPrevisionDTO;
-import gastos.dto.GastoRealDTO;
+import gastos.dto.GastoDTO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,39 +9,39 @@ import utilidades.NumberFormat;
 
 public class ElementoPrevisionGasto {
 
-		List<GastoPrevisionDTO> previsiones;
-		List<GastoPrevisionDTO> previsionesMesAnterior;
-		List<GastoRealDTO> gastosRealesMesAnterior;
+		List<GastoDTO> previsiones;
+		List<GastoDTO> previsionesMesAnterior;
+		List<GastoDTO> gastosRealesMesAnterior;
 				
 		public ElementoPrevisionGasto(){
-			this.previsiones = new ArrayList<GastoPrevisionDTO>();
-			this.previsionesMesAnterior = new ArrayList<GastoPrevisionDTO>();
-			this.gastosRealesMesAnterior = new ArrayList<GastoRealDTO>();
+			this.previsiones = new ArrayList<GastoDTO>();
+			this.previsionesMesAnterior = new ArrayList<GastoDTO>();
+			this.gastosRealesMesAnterior = new ArrayList<GastoDTO>();
 		}
 		
-		public List<GastoPrevisionDTO> getPrevisiones() {
+		public List<GastoDTO> getPrevisiones() {
 			return previsiones;
 		}
 		
-		public void setPrevisiones(List<GastoPrevisionDTO> previsiones) {
+		public void setPrevisiones(List<GastoDTO> previsiones) {
 			this.previsiones = previsiones;
 		}
 		
-		public List<GastoPrevisionDTO> getPrevisionesMesAnterior() {
+		public List<GastoDTO> getPrevisionesMesAnterior() {
 			return previsionesMesAnterior;
 		}
 
 		public void setPrevisionesMesAnterior(
-				List<GastoPrevisionDTO> previsionesMesAnterior) {
+				List<GastoDTO> previsionesMesAnterior) {
 			this.previsionesMesAnterior = previsionesMesAnterior;
 		}
 		
-		public List<GastoRealDTO> getGastosRealesMesAnterior() {
+		public List<GastoDTO> getGastosRealesMesAnterior() {
 			return gastosRealesMesAnterior;
 		}
 
 		public void setGastosRealesMesAnterior(
-				List<GastoRealDTO> gastosRealesMesAnterior) {
+				List<GastoDTO> gastosRealesMesAnterior) {
 			this.gastosRealesMesAnterior = gastosRealesMesAnterior;
 		}
 		
@@ -55,7 +54,7 @@ public class ElementoPrevisionGasto {
 	
 		public double obtenerMontoPrevisionMesAnterior(){
 			double monto= 0;
-			for (GastoPrevisionDTO g : this.previsionesMesAnterior) {
+			for (GastoDTO g : this.previsionesMesAnterior) {
 				monto+=g.getMonto();
 			}
 			return NumberFormat.redondeoDouble(monto);
@@ -63,7 +62,7 @@ public class ElementoPrevisionGasto {
 		
 		public double obtenerMontoGastosRealesMesAnterior(){
 			double monto= 0;
-			for (GastoRealDTO g : this.gastosRealesMesAnterior) {
+			for (GastoDTO g : this.gastosRealesMesAnterior) {
 				monto+=g.getMonto();
 			}
 			return NumberFormat.redondeoDouble(monto);
@@ -71,7 +70,7 @@ public class ElementoPrevisionGasto {
 		
 		public double obtenerMontoPrevisionMesActual(){
 			double monto= 0;
-			for (GastoPrevisionDTO g : this.previsiones) {
+			for (GastoDTO g : this.previsiones) {
 				monto+=g.getMonto();
 			}
 			return NumberFormat.redondeoDouble(monto);
