@@ -95,8 +95,8 @@ public class CobroExtRegistrarAction extends ActionSupport  {
 			return "error";
 		}
 		ExpensaDTO exp = expensas.get(0);
-		if (existenciaCobro(exp.getId())) {
-			addActionError("Ya existe un cobro para esa expensa");
+		if (existenciaCobro(exp.getId()) || exp.getMonto() == 0) {
+			addActionError("Ya existe un cobro para esa expensa o su monto es 0");
 			return "error";
 		}
 		return "mostrar";

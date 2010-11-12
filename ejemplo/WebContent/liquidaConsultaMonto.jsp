@@ -27,13 +27,13 @@
 		}
 	}
 	
-	boolean mostrarDeuda = false;
+	boolean mostrarDeudaOrd = false;
 	
 	ExpensaAppl expAppl = new ExpensaAppl();
 	SessionFactory factory = HibernateUtil.getSessionFactory();	
 	List<ExpensaDTO> expensas = expAppl.getExpensaActivaPorIdProp(factory,idProp);
-	ExpensaDTO exp = new ExpensaDTO();
 	
+	ExpensaDTO exp = new ExpensaDTO();
 	if (!expensas.isEmpty()) {
 		Session sessionCobro = HibernateUtil.getSession();
 		ExpensasCobroAppl cobroAppl = new ExpensasCobroAppl(sessionCobro);
@@ -41,15 +41,36 @@
 		List<ExpensaCobroDTO> cobros = cobroAppl.getCobroPorIdExpensas(exp.getId());
 		sessionCobro.close();
 		if (cobros.isEmpty()) {
-			mostrarDeuda = true;
+			mostrarDeudaOrd = true;
 		} else {
 			ExpensaCobroDTO cobro = cobros.get(0);
 			if (cobro.getMontoPago() < exp.getMonto()) {
 				exp.setMonto(exp.getMonto() - cobro.getMontoPago());
-				mostrarDeuda = true;
+				mostrarDeudaOrd = true;
 			}
 		}
 	}
+	
+	boolean mostrarDeudaExt = false;
+	List<ExpensaDTO> expensasExtra = expAppl.getExpensaExtActivaPorIdProp(factory,idProp);
+	ExpensaDTO expExt = new ExpensaDTO();
+	if (!expensasExtra.isEmpty()) {
+		Session sessionCobro = HibernateUtil.getSession();
+		ExpensasCobroAppl cobroAppl = new ExpensasCobroAppl(sessionCobro);
+		expExt = expensasExtra.get(0);
+		List<ExpensaCobroDTO> cobrosExtra = cobroAppl.getCobroPorIdExpensas(exp.getId());
+		sessionCobro.close();
+		if (cobrosExtra.isEmpty()) {
+			mostrarDeudaExt = true;
+		} else {
+			ExpensaCobroDTO cobro = cobrosExtra.get(0);
+			if (cobro.getMontoPago() < expExt.getMonto()) {
+				expExt.setMonto(expExt.getMonto() - cobro.getMontoPago());
+				mostrarDeudaExt = true;
+			}
+		}
+	}
+	
 %>
 
 <table  cellpadding="0" cellspacing="0" >
@@ -73,13 +94,22 @@
 			 				<td align="right">&nbsp;&nbsp;<label for="Orden">Orden: <%=prop.getOrden()%></label> </td>
 			 			</tr>
 			 			<tr><td colspan="5" height="10"></td></tr>
-			 			<%if (mostrarDeuda) { %>
+			 			<%if (mostrarDeudaOrd) { %>
 			 			<tr>
-			 				<td><label for="monto">Monto Adeudado por Expensas Liquidada: <%=exp.getMonto()%></label> </td>
+			 				<td><label for="monto">Monto Adeudado por Expensas Ordinarias Liquidada: <%=exp.getMonto()%></label> </td>
 				 		</tr>
 				 		<% } else { %>
 				 		<tr>
-			 				<td align="right"><label for="monto">No existe liquidación adeudada</label> </td>
+			 				<td><label for="monto">No existe liquidación ordinaria adeudada</label> </td>
+				 		</tr>
+				 		<% } %>
+				 		<%if (mostrarDeudaExt) { %>
+			 			<tr>
+			 				<td><label for="monto">Monto Adeudado por Expensas Extraordinaria Liquidada: <%=expExt.getMonto()%></label> </td>
+				 		</tr>
+				 		<% } else { %>
+				 		<tr>
+			 				<td><label for="monto">No existe liquidación extraordinaria adeudada</label> </td>
 				 		</tr>
 				 		<% } %>
 				 		<tr><td colspan="5" height="10"></td></tr>

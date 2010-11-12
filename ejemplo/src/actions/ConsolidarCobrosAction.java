@@ -46,18 +46,31 @@ public class ConsolidarCobrosAction extends SessionAwareAction {
 	public String execute() {
 		try {
 			Session session = getSession();
+			PropiedadDTO propiedad = (PropiedadDTO) getSession().get(PropiedadDTO.class, idPropiedad);
 			ExpensaCobroDTO cobro = (ExpensaCobroDTO) session.get(ExpensaCobroDTO.class, idCobro);
 			EdificioAppl edifAppl = new EdificioAppl();
 			EdificioDTO edificio = cobro.getLiquidacion().getPropiedad().getTipoPropiedad().getEdificio();
-			//TODO ver si quedo como o y e el tipo
+			
+			//primero le suma al saldo de intereses y si este pasa el 0 se lo suma al del saldo..
 			if (cobro.getLiquidacion().getTipo().equals("O")) {
 				edificio.setFondo_ordinario(edificio.getFondo_ordinario() + cobro.getMontoPago());
+				propiedad.setCtaOrdSaldoInt(propiedad.getCtaOrdSaldoInt() + cobro.getMontoPago());
+				if (propiedad.getCtaOrdSaldoInt() > 0) {
+					propiedad.setCtaOrdSaldoExp(propiedad.getCtaOrdSaldoExp() + propiedad.getCtaOrdSaldoInt());
+					propiedad.setCtaOrdSaldoInt(0);
+				}
 			} else {
 				edificio.setFondo_extraordinario(edificio.getFondo_extraordinario() + cobro.getMontoPago());
+				propiedad.setCtaExtSaldoInt(propiedad.getCtaExtSaldoInt() + cobro.getMontoPago());
+				if (propiedad.getCtaExtSaldoInt() > 0) {
+					propiedad.setCtaExtSaldoExp(propiedad.getCtaExtSaldoExp() + propiedad.getCtaExtSaldoInt());
+					propiedad.setCtaExtSaldoInt(0);
+				}
 			}
 			edifAppl.updateEdifcio(session, edificio);
 			cobro.setConsolidado(true);
 			session.beginTransaction();
+			session.update(propiedad);
 			session.update(cobro);
 			session.getTransaction().commit();
 			return back();
