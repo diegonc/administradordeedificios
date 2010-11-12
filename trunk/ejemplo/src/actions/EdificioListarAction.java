@@ -41,7 +41,7 @@ public class EdificioListarAction extends ActionSupport{
 				if (AdministradorDePermisos.getInstancia().isResponsableGastos()&& redi.equals("gasto")) {
 					lista = (ArrayList<EdificioDTO>) AdministradorDePermisos.getInstancia().getEdificiosResponsableGastos();	
 				}
-				if (AdministradorDePermisos.getInstancia().isResponsableCobros()&& redi.equals("expensa")){
+				if (AdministradorDePermisos.getInstancia().isResponsableCobros()&& (redi.equals("expensa") || (redi.equals("planes")))){
 					lista = (ArrayList<EdificioDTO>) AdministradorDePermisos.getInstancia().getEdificiosResponsableCobros();
 				}
 			}
@@ -56,6 +56,8 @@ public class EdificioListarAction extends ActionSupport{
 	        	return "gastos";
 	        } else if (redi.equals("expensa")) {
 	        	return "expensas";
+	        } else if (redi.equals("planes")) {
+	        	return "planes";
 	        }
 	        return SUCCESS;
 		} catch (Exception e) {

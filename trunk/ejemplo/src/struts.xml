@@ -104,6 +104,7 @@
 			<result name="gastos">/gastos.jsp</result>
 			<result name="success">/gastos.jsp</result>
 			<result name="expensas">/expensas.jsp</result>
+			<result name="planes">/planes.jsp</result>
 			<result name="error">/edificio.jsp</result>
 			
 		</action>
