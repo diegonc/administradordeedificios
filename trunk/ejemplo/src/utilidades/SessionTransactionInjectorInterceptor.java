@@ -671,8 +671,10 @@ public class SessionTransactionInjectorInterceptor extends GenericInterceptor im
 						if (campo.isAnnotationPresent(SessionTarget.class)) {
 							campo.setAccessible(true);
 							Session hibernateSession = (Session) campo.get(targetObject);
-							commitHibernateTransaction(hibernateSession.getTransaction());
-							closeHibernateSession(hibernateSession);
+							if (hibernateSession.isOpen()) {
+								commitHibernateTransaction(hibernateSession.getTransaction());
+								closeHibernateSession(hibernateSession);
+							}
 						}
 					} else {
 						campo.setAccessible(true);
@@ -726,8 +728,10 @@ public class SessionTransactionInjectorInterceptor extends GenericInterceptor im
 						if (campo.isAnnotationPresent(SessionTarget.class)) {
 							campo.setAccessible(true);
 							Session hibernateSession = (Session) campo.get(targetObject);
-							rollbackHibernateTransaction(hibernateSession.getTransaction());
-							closeHibernateSession(hibernateSession);
+							if (hibernateSession.isOpen()) {
+								rollbackHibernateTransaction(hibernateSession.getTransaction());
+								closeHibernateSession(hibernateSession);
+							}
 						}
 					} else {
 						campo.setAccessible(true);

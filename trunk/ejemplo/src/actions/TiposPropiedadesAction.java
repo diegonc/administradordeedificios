@@ -96,8 +96,6 @@ public class TiposPropiedadesAction extends SessionAwareAction implements Prepar
 
 	@Override
 	protected void onSetSession() {
-		//XXX: la transaccion debe iniciarse para que los cambios persistan.
-		getSession().beginTransaction();
 		// XXX: todos los DAOs deben usar la misma sesion.
 		dao.setSession(getSession());
 		dao.setTransaction(getTransaction());
@@ -232,6 +230,7 @@ public class TiposPropiedadesAction extends SessionAwareAction implements Prepar
 		})
 	public String grabar() {
 		try {
+			getSession().beginTransaction();
 			edificioActual.agregarTipo(entidad);
 			dao.grabar(entidad);
 			mergeTiposGastos();
@@ -279,6 +278,7 @@ public class TiposPropiedadesAction extends SessionAwareAction implements Prepar
 
 	public String borrar() {
 		try {
+			getSession().beginTransaction();
 			dao.eliminar(entidad);
 			getTransaction().commit();
 		} catch (HibernateException e) {
