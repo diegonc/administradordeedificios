@@ -152,8 +152,8 @@ public class ExpensaInteresesAppl {
 		//Primer Vencimiento
 		long cantidadDiasDeudaPrimerVto = getDiferenciaEntreFechas(fechaPrimerVto, fechaUltimaLiquidacion);
 		double interesesPrimerVto = deudaPrevia*(interesPorDia*cantidadDiasDeudaPrimerVto);
-		//capitalizo los intereses
-		expensa.setDeudaPrevia(deudaPrevia + interesesPrimerVto);
+		
+		expensa.setDeudaPrevia(deudaPrevia );
 		interesesPrimerVto = NumberFormat.redondeoDouble(interesesPrimerVto);
 		expensa.setIntereses(interesesPrimerVto);	
 				
