@@ -174,6 +174,10 @@
 				<param name="id">${id}</param> 
 			    </result>
 	    </action> 
+		<action name="expensasHistorialAction" class="actions.ExpensasHistorialAction">
+			    <result name="success">/expensasHistorial.jsp </result>
+			    <result name="mostrar">/expensasHistorialDetalle.jsp </result>					    
+	    </action> 
 		
 	</package>
 
