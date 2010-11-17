@@ -51,7 +51,9 @@
 	<li class="top"><a href="#" class="top_link"><span>Cobros</span></a>
 		<ul class="sub">
 			<li><a href="EdificioListarAction?redi=expensa">Expensas</a></li>
+			<li><a href="expensasHistorialAction">Liquidaciones-Historial</a></li>
 			<li><a href="EdificioListarAction?redi=planes">Planes</a></li>                    
+			                    
 		</ul>
 	</li>
 	<%} %>
