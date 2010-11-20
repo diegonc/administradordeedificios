@@ -2,27 +2,26 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@page import="propiedades.PropiedadDTO"%>
 <%@page import="propiedades.TipoPropiedadDTO"%>
+<jsp:useBean id="lista" scope="session" class="beans.PropiedadesBean"/>
 <%@ page language="java" contentType="text/html" import="java.util.*"%>
-<%@ page language="java" contentType="text/html" import="edificio.*"%>
 <%@ page language="java" contentType="text/html" import="utilidades.*"%>
 <%@ page language="java" contentType="text/html"
 	import="org.hibernate.*"%>
 <%
-	int id = Integer.parseInt(request.getParameter("id"));
-	Session hSession = HibernateUtil.getSession();
-	EdificioDTO edificio = (EdificioDTO) hSession.load(
-			EdificioDTO.class, id);
-	Set<TipoPropiedadDTO> tipos = edificio.getTipoPropiedades();
-	
-	
+	ArrayList<PropiedadDTO> propiedades = lista.getPropiedades();
+	String tipo = "";
+	if (lista.getTipo().equals("ord")) {
+		tipo = "ordinarios";
+	} else if (lista.getTipo().equals("ext")) {
+		tipo = "extraordinarios";
+	}
 %>
 
 <table cellpadding="0" cellspacing="0">
 	<tr>
 		<td width="5" class="borde"></td>
 		<td width="800" class="borde" align="center">
-		<h3 id="header">Planes - Listado Propiedades edifcio " <%=edificio.getNombre()%>
-		"</h3>
+		<h3 id="header">Planes <%=tipo%> - Propiedades edificio " <%=propiedades.get(0).getTipoPropiedad().getEdificio().getNombre()%>"</h3>
 		</td>
 		<td width="5" class="borde"></td>
 	</tr>
@@ -40,34 +39,24 @@
 			<td class="listado_par">Orden</td>
 			<td class="listado_par">&nbsp;</td>
 		</tr>
-		<%if(tipos!=null){
-			Iterator<TipoPropiedadDTO>	 iteradorTipos = tipos.iterator();
-			
-			while (iteradorTipos.hasNext()) {
-				TipoPropiedadDTO tipoProp = iteradorTipos.next();
-				List<PropiedadDTO> propiedades = tipoProp.getPropiedades();
-				for (PropiedadDTO propiedadDTO : propiedades) {
+		<%for (PropiedadDTO propiedadDTO : propiedades) {
 		%>
 		<tr>
 			<td><%=propiedadDTO.getTipoPropiedad().getNombreTipo()%></td>
 			<td><%=propiedadDTO.getNivel()%></td>
 			<td><%=propiedadDTO.getOrden()%></td>
-			<td align="center"><a href="#">Calcular</a></td>
+			<td bgcolor="#F0F0F0">
+				<input type="checkbox" name="elegido" id="elegido" value="<%=propiedadDTO.getId()%>"/> 
+			</td>
 		</tr>
 		<%
-			}
-			}
 		}
 		%>
 	</table>
+	<input class="btn" type="button" value="Calcular Plan"/>
 	</fieldset>
 	<s:actionerror cssClass="error"/>	
 	<a href="EdificioListarAction?redi=planes">Volver</a>
 	</form>
 </tr>
-
-<%
-	hSession.close();
-%>
-
 <jsp:include page="/WEB-INF/jspf/footer.jspf" />

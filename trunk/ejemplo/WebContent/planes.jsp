@@ -1,4 +1,5 @@
 <jsp:include page="/WEB-INF/jspf/header.jspf"></jsp:include>
+<%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page language="java" contentType="text/html" import="java.util.*"%>
 <%@ page language="java" contentType="text/html" import="edificio.*"%>
 <%@ page language="java" contentType="text/html" import="usuarios.dto.*"%>
@@ -25,17 +26,19 @@
 			<tr>
 				<td class="listado_par">Nombre</td>
 				<td class="listado_par"></td>
+				<td class="listado_par"></td>
 			</tr>	
 		<% for (EdificioDTO edificioDTO : edificios) {  %>		
 			<tr>
 				<td><%= edificioDTO.getNombre()%></td>
-				<td><a href="planesPropiedadesListado.jsp?id=<%=edificioDTO.getId()%>">Ver Propiedades</a></td>
-				
+				<td><a href="planesPropListarAction?id=<%=edificioDTO.getId()%>&tipo=ord">Propiedades deuda ordinaria</a></td>
+				<td><a href="planesPropListarAction?id=<%=edificioDTO.getId()%>&tipo=ext">Propiedades deuda extraordinaria</a></td>
 			</tr>	
 		<%} %>				
 		
 		</table> 
 		</fieldset>			
+		<s:actionerror cssClass="error"/>
 		</td>
 		<td width="15" class="fondo"></td>
 		<td width="5" class="borde"></td>

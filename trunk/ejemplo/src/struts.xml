@@ -178,6 +178,14 @@
 			    <result name="success">/expensasHistorial.jsp </result>
 			    <result name="mostrar">/expensasHistorialDetalle.jsp </result>					    
 	    </action> 
+	    <action name="planesPropListarAction" class="actions.PlanesPropListarAction">
+			    <result name="success">/planesPropiedadesListado.jsp </result>
+			    <result name="error" type="redirectAction">
+					<param name="actionName">EdificioListarAction</param>
+					<param name="redi">planes</param>
+				</result>					    
+	    </action> 
+	    
 		
 	</package>
 
