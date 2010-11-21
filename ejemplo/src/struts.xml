@@ -185,8 +185,10 @@
 					<param name="redi">planes</param>
 				</result>					    
 	    </action> 
-	    
-		
+	    <action name="CalculoPlanesAction" class="actions.CalculoPlanesAction">
+			    <result name="success">/planesExpensasListado.jsp </result>
+			    <result name="error">/ </result>					    
+	    </action> 
 	</package>
 
 	<package name="experimental" extends="hibernate-default">

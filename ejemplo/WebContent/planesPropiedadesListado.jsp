@@ -30,14 +30,21 @@
 	<td width="5" class="borde"></td>
 	<td width="15" class="fondo"></td>
 	<td width="770" class="fondo" align="center">
-	<form class="elegante" id="expensasProp" name="expensasProp" action="expensasPropiedadesListado">
+	<form class="elegante" id="CalculoPlanesAction" name="CalculoPlanesAction" action="CalculoPlanesAction">
 	<fieldset><legend>Listado de Propiedades</legend>
+	<table width="500">
+	<tr> Amortizacion: <%=propiedades.get(0).getTipoPropiedad().getEdificio().getAmortizacion()%>  </tr>
+	<tr> Interes: <%=propiedades.get(0).getTipoPropiedad().getEdificio().getTasa_anual()%> </tr>
+	</table>
 	<table width="500" border="1" class="listado" align="center">
 		<tr>
 			<td class="listado_par">Tipo Propieadad</td>
 			<td class="listado_par">Nivel</td>
 			<td class="listado_par">Orden</td>
 			<td class="listado_par">&nbsp;</td>
+		</tr>
+		<tr>
+			<td><input type="text" style="display: none;" id="tipo" name="tipo" value="<%=lista.getTipo()%>" size="15"/></td>
 		</tr>
 		<%for (PropiedadDTO propiedadDTO : propiedades) {
 		%>
@@ -53,7 +60,7 @@
 		}
 		%>
 	</table>
-	<input class="btn" type="button" value="Calcular Plan"/>
+	<input class="btn" type="button" value="Calcular Plan" onclick="submit()"/>
 	</fieldset>
 	<s:actionerror cssClass="error"/>	
 	<a href="EdificioListarAction?redi=planes">Volver</a>
