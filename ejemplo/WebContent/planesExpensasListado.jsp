@@ -1,5 +1,7 @@
 
-<%@page import="expensas.dto.ExpensaDTO"%><jsp:include page="/WEB-INF/jspf/header.jspf"></jsp:include>
+<%@page import="expensas.dto.ExpensaDTO"%>
+<%@page import="propiedades.ResponsableAppl"%>
+<%@page import="propiedades.Responsable"%><jsp:include page="/WEB-INF/jspf/header.jspf"></jsp:include>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@page import="propiedades.PropiedadDTO"%>
 <%@page import="propiedades.TipoPropiedadDTO"%>
@@ -8,6 +10,19 @@
 <%@ page language="java" contentType="text/html" import="utilidades.*"%>
 <%@ page language="java" contentType="text/html"
 	import="org.hibernate.*"%>
+	
+<script type="text/javascript">
+function validar(thisform) {
+	var cantCuotas = document.getElementById("cantCuotas");
+	if (cantCuotas.value=="" || isNaN(cantCuotas.value)) {
+		alert("La cantidad de cuotas debe ser numerico");
+	} else {
+		document.CalculoCuotasAction.submit();
+	}
+}
+
+</script>
+
 <%
 	List<ExpensaDTO> expensas = new ArrayList<ExpensaDTO>();
 	String tipo = "";
@@ -57,17 +72,24 @@
 			<td><%=expensasDTO.getNumeroOperacion()%></td>
 			<td><%=expensasDTO.getMonto()%></td>
 			<td bgcolor="#F0F0F0">
-				<input type="checkbox" name="elegido" id="elegido" value="<%=expensasDTO.getId()%>"/> 
+				<input type="checkbox" name="expElegidas" id="expElegidas" value="<%=expensasDTO.getId()%>"/> 
 			</td>
 		</tr>
 		<%
 		}
+		//TODO: listar los responsables para elegir el que se hara cargo del plan
 		%>
+	
 	</table>
-	<input class="btn" type="button" value="Calcular Cuotas" onclick="submit()"/>
+	<table>
+	<tr>
+		<td>Cantidad de Cuotas del Plan: <input type="text" id="cantCuotas" name="cantCuotas" size="3"/></td>
+	</tr>
+	</table>
+	<input class="btn" type="button" value="Calcular Cuotas" onclick="validar()"/>
 	</fieldset>
 	<s:actionerror cssClass="error"/>	
-	<a href="planesPropListarAction?id=<%=idEdificio %>&tipo=<%=redi%>">Volver</a>
+	<a href="planesPropListarAction?id=<%=idEdificio%>&tipo=<%=redi%>">Volver</a>
 	</form>
 </tr>
 <jsp:include page="/WEB-INF/jspf/footer.jspf" />

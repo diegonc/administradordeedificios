@@ -23,9 +23,6 @@ public class CalculoPlanesAction extends ActionSupport {
 	private String elegido;
 	private String tipo;
 	private Map<String,Object> session;
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	public String execute() {
@@ -33,6 +30,10 @@ public class CalculoPlanesAction extends ActionSupport {
 		SessionFactory factory = HibernateUtil.getSessionFactory();	
 		ArrayList<ExpensaDTO> listaExpensas = new ArrayList<ExpensaDTO>();
 		LiquidacionBean expensas = new LiquidacionBean();
+		
+		if (elegido == null) {
+			return ERROR;
+		}
 		
 		//parceo el string a array de Integer..
 		ArrayList<Integer> listaId = new ArrayList<Integer>();
