@@ -7,6 +7,20 @@
 <%@ page language="java" contentType="text/html" import="utilidades.*"%>
 <%@ page language="java" contentType="text/html"
 	import="org.hibernate.*"%>
+	
+<script type="text/javascript">
+function validar(thisform) {
+	var elegido = document.getElementById("elegido");
+	if (elegido.value == null) {
+		alert("Debe elegir una propiedad");
+	} else {
+		alert(elegido.value);
+		document.CalculoPlanesAction.submit();
+	}
+}
+
+</script>
+
 <%
 	ArrayList<PropiedadDTO> propiedades = lista.getPropiedades();
 	String tipo = "";
@@ -60,7 +74,7 @@
 		}
 		%>
 	</table>
-	<input class="btn" type="button" value="Calcular Plan" onclick="submit()"/>
+	<input class="btn" type="button" value="Seleccionar Expensas" onclick="submit()"/>
 	</fieldset>
 	<s:actionerror cssClass="error"/>	
 	<a href="EdificioListarAction?redi=planes">Volver</a>

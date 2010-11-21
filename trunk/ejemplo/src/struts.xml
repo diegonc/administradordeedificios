@@ -187,7 +187,17 @@
 	    </action> 
 	    <action name="CalculoPlanesAction" class="actions.CalculoPlanesAction">
 			    <result name="success">/planesExpensasListado.jsp </result>
-			    <result name="error">/ </result>					    
+			    <result name="error" type="redirectAction">
+					<param name="actionName">EdificioListarAction</param>
+					<param name="redi">planes</param>
+				</result>	    
+	    </action> 
+	     <action name="CalculoCuotasAction" class="actions.CalculoCuotasAction">
+			    <result name="success">/planesCuotasListado.jsp </result>
+			    <result name="error" type="redirectAction">
+					<param name="actionName">EdificioListarAction</param>
+					<param name="redi">planes</param>
+				</result>	    
 	    </action> 
 	</package>
 
