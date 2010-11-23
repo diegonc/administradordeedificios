@@ -31,6 +31,7 @@ public class PlanDTO {
 
 	private int cantidadCuotas;
 	private double monto;
+
 	private double saldoPlan;
 	private double saldoIntereses;
 
@@ -128,5 +129,9 @@ public class PlanDTO {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+	
+	public void setCuotas(List<CuotaDTO> cuotas) {
+		this.cuotas = cuotas;
 	}
 }

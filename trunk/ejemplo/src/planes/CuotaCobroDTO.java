@@ -26,10 +26,26 @@ public class CuotaCobroDTO {
 
 	private Date fecha;
 	private String comprobante;
+	
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public void setCuota(CuotaDTO cuota) {
+		this.cuota = cuota;
+	}
+
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
+	}
+
+	public void setComprobante(String comprobante) {
+		this.comprobante = comprobante;
+	}
 
 	@Id
 	@Column(name="ID")
-	public int getIda() {
+	public int getId() {
 		return id;
 	}
 	

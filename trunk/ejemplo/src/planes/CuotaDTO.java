@@ -23,15 +23,44 @@ import propiedades.Responsable;
 public class CuotaDTO {
 
 	private int id;
-
+	
 	private int numeroCuota;
 	private PlanDTO plan;
-
 	private double monto;
 	private Double intereses;
-
 	private Boolean atrasado;
 	private Double interesSegundoVencimiento;
+	
+	
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public void setNumeroCuota(int numeroCuota) {
+		this.numeroCuota = numeroCuota;
+	}
+
+	public void setPlan(PlanDTO plan) {
+		this.plan = plan;
+	}
+
+	public void setMonto(double monto) {
+		this.monto = monto;
+	}
+
+	public void setIntereses(Double intereses) {
+		this.intereses = intereses;
+	}
+
+	public void setAtrasado(Boolean atrasado) {
+		this.atrasado = atrasado;
+	}
+
+	public void setInteresSegundoVencimiento(Double interesSegundoVencimiento) {
+		this.interesSegundoVencimiento = interesSegundoVencimiento;
+	}
+
+
 	
 	@Id
 	@Column(name="ID")
