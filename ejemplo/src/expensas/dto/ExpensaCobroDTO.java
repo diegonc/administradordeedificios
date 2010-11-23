@@ -17,7 +17,6 @@ import usuarios.dto.UsuarioDTO;
 
 @Entity
 @Table(name="EXPENSA_COBRO")
-@PrimaryKeyJoinColumn(name="EXPENSA_ID")
 public class ExpensaCobroDTO {
 
 	private Date fecha;
