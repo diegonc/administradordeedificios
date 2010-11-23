@@ -51,7 +51,10 @@
     <mapping class="usuarios.dto.UsuarioPerfilDTO"/>
     <mapping class="usuarios.dto.UsuarioPerfilEdificioDTO"/>
     
-    
+    <!-- package planes -->
+    <mapping class="planes.PlanDTO"/>
+    <mapping class="planes.CuotaDTO"/>
+    <mapping class="planes.CuotaCobroDTO"/>
         
     
   </session-factory>
