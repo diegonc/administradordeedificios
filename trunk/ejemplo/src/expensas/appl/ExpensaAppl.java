@@ -97,6 +97,16 @@ public class ExpensaAppl {
 		return true;		
 	}
 	
+	@SuppressWarnings("unchecked")
+	public ExpensaDTO getExpensasById(int idExp) {
+		Session session = HibernateUtil.getSession();
+		Query query = session.createQuery("from ExpensaDTO u where u.id=:id");
+		query.setInteger("id", idExp);
+		List<ExpensaDTO> expensas = query.list();
+		if(expensas.isEmpty()) return null;
+		else
+			return (ExpensaDTO)query.list().get(0);		
+	}
 	
 	
 }
