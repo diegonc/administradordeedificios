@@ -1,6 +1,6 @@
---- -----------------------------------------------------
---- Table PLAN
---- -----------------------------------------------------
+-- -----------------------------------------------------
+-- Table PLAN
+-- -----------------------------------------------------
 CREATE TABLE PLAN (
 	ID INTEGER NOT NULL,
 	CANTIDAD_COUTAS INTEGER NOT NULL,
@@ -17,9 +17,9 @@ CREATE TABLE PLAN (
 
 CREATE INDEX PLAN_FK1 ON PLAN (RESPONSABLE_DNI);
 
---- -----------------------------------------------------
---- Table PLAN_EXPENSA_COBRO
---- -----------------------------------------------------
+-- -----------------------------------------------------
+-- Table PLAN_EXPENSA_COBRO
+-- -----------------------------------------------------
 CREATE TABLE PLAN_EXPENSA_COBRO (
 	PLAN_ID INTEGER NOT NULL,
 	COBRO_ID INTEGER NOT NULL,
@@ -32,9 +32,9 @@ CREATE TABLE PLAN_EXPENSA_COBRO (
 CREATE INDEX PLAN_EXPENSA_COBRO_FK1 ON PLAN_EXPENSA_COBRO (COBRO_ID);
 CREATE INDEX PLAN_EXPENSA_COBRO_FK2 ON PLAN_EXPENSA_COBRO (PLAN_ID);
 
---- -----------------------------------------------------
---- Table CUOTA
---- -----------------------------------------------------
+-- -----------------------------------------------------
+-- Table CUOTA
+-- -----------------------------------------------------
 CREATE TABLE CUOTA (
     ID INTEGER NOT NULL,
     ATRASADO BIT,
@@ -50,9 +50,9 @@ CREATE TABLE CUOTA (
 
 CREATE INDEX CUOTA_FK1 ON CUOTA (PLAN_ID);
 
---- -----------------------------------------------------
---- Table CUOTA_COBRO
---- -----------------------------------------------------
+-- -----------------------------------------------------
+-- Table CUOTA_COBRO
+-- -----------------------------------------------------
 CREATE TABLE CUOTA_COBRO (
     ID INTEGER NOT NULL,
     COMPROBANTE VARCHAR(255) NOT NULL,
