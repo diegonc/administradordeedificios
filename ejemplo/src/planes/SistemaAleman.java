@@ -1,5 +1,35 @@
 package planes;
-
+/**
+ * Sistema Alemán
+ * --------------
+ * 
+ * La cuota se compone de una porción constante del monto del prestamo y del
+ * interés sobre el monto restante a la fecha.
+ * 
+ * M: monto del prestamo
+ * n: cantidad de periodos (coutas)
+ * t: tasa de interes del periodo
+ * 
+ * A: amortizacion de capital
+ * Ci: monto de la cuota i
+ * Ii: interes acumulado hasta la cuota i
+ * 
+ * ---------------
+ * 
+ * A = M/n
+ * 
+ * Ci = A + t*(M - iA)
+ * 
+ * Ii = t*M*i - t*A*i*(i - 1)/2   ; 0 < i <= n
+ *    = 0                         ; i = 0
+ * 
+ * Interes total: In   = t*M/2 * (1 + n)
+ * --------------
+ * 
+ * Total a pagar: M + In
+ * --------------
+ * 
+ **/
 public class SistemaAleman {
 
 	private double capital;
