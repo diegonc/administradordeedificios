@@ -1,6 +1,6 @@
 package actions;
 
-import java.awt.List;
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
@@ -23,7 +23,7 @@ public class CalculoCuotasAction  extends ActionSupport {
 	
 	private Date fecha;
 	private int responsableDNI;
-	private String expElegidas;
+	private List<Integer> expElegidas;
 	private int cantCuotas;
 	
 	private Double monto = 0.0;
@@ -38,9 +38,7 @@ public class CalculoCuotasAction  extends ActionSupport {
 		
 		ExpensaAppl expAppl = new ExpensaAppl();
 		ArrayList<ExpensaDTO> expensas = new ArrayList<ExpensaDTO>();
-		ArrayList<Integer> listaId = new ArrayList<Integer>();
-		for (String numero: expElegidas.split (", "))
-			listaId.add (new Integer (numero));
+		List<Integer> listaId = expElegidas;
 		java.util.Iterator<Integer> iteId = listaId.iterator();
 		
 		int expId;
@@ -94,12 +92,12 @@ public class CalculoCuotasAction  extends ActionSupport {
 	}
 
 
-	public void setExpElegidas(String expElegidas) {
+	public void setExpElegidas(List<Integer> expElegidas) {
 		this.expElegidas = expElegidas;
 	}
 
 
-	public String getExpElegidas() {
+	public List<Integer> getExpElegidas() {
 		return expElegidas;
 	}
 
