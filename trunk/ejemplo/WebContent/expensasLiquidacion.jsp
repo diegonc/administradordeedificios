@@ -17,6 +17,12 @@
 <jsp:useBean id="edificio" scope="session" class="edificio.EdificioDTO"/>
 <jsp:useBean id="detalleExpensa" scope="session" class="beans.LiquidacionBean"/>
 <script type="text/javascript">
+
+function Abrir_ventana (pagina) {
+	var opciones="toolbar=no,location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=yes, width=508, height=365, top=85, left=140";
+	window.open(pagina,"",opciones);
+}
+
 function ocularYMostrar(id){
 	document.getElementById(id).style.display=document.getElementById(id).style.display=="none"?"block":"none";
 	if (id=="tabla1"){
@@ -141,7 +147,7 @@ function ocularYMostrar(id){
 		
 		<%}%>
 		</table>
-		
+		<table height="50"> <tr height="20"><td><a href="javascript:Abrir_ventana('expensasOrdinariasImpresion.jsp')">Imprimir</a></td></tr></table>
 <% if (edificio.getForma_liq_exp().equals("PRORRATEO")){ %>
 		<table height="10" width="700"> <tr height="10"><td align="center"><div><h3>Gastos Extraordinarios del Per&iacute;odo</h3></div></td><td><a href="#" onclick="ocularYMostrar('tabla3')" ><span id="detalle1">Ver</span></a></td></tr></table>
 		<table id="tabla3" width ="430" cellpadding="0" cellspacing="0" align="center" class="listado" style="display: none;">
@@ -199,7 +205,7 @@ function ocularYMostrar(id){
 		</table>
 <%} %>
 
-
+	
 
 	<table height="10" width="700"> <tr height="20"><td align="center"><div><h3>Detalle de la Liquidaci&oacute;n</h3></div></td><td><a href="#" onclick="ocularYMostrar('tabla4')"><span id="detalle2">Ver</span></a></td></tr></table>
 		<table id="tabla4" cellspacing="0" cellpadding="0" border="1" class="listado" align="center" style="display: none;">
@@ -246,8 +252,9 @@ function ocularYMostrar(id){
 		<%}%>
 		</table>
 
-		<table height="50"> <tr height="20"><td></td></tr></table>
-		
+		<table height="50"> <tr height="20"><td>		<a href="javascript:Abrir_ventana('expensasExtraordinariasImpresion.jsp')">Imprimir</a></td></tr></table>
+
+
 		<a href="EdificioListarAction?redi=expensa">Volver</a>
 	</div>
 </div>
