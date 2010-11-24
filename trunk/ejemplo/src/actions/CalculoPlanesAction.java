@@ -1,19 +1,15 @@
 package actions;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
-
-import javassist.bytecode.Descriptor.Iterator;
 
 import org.hibernate.SessionFactory;
 
 import utilidades.HibernateUtil;
-
 import beans.LiquidacionBean;
 
-import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ActionContext;
+import com.opensymphony.xwork2.ActionSupport;
 
 import expensas.appl.ExpensaAppl;
 import expensas.dto.ExpensaDTO;
