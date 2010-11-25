@@ -193,7 +193,11 @@
 				</result>	    
 	</action>
 		<action name="CalculoCuotasAction" class="actions.CalculoCuotasAction">
-			<result name="success">/planesCuotasListado.jsp </result>
+			<result name="confirmacion">/planesCuotasListado.jsp </result>
+			<result name="success" type="redirectAction">
+				<param name="actionName">EdificioListarAction</param>
+				<param name="redi">planes</param>
+			</result>
 			<result name="error" type="redirectAction">
 				<param name="actionName">EdificioListarAction</param>
 				<param name="redi">planes</param>
