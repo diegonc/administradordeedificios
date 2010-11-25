@@ -136,4 +136,9 @@ public class PlanDTO {
 	public void setCuotas(List<CuotaDTO> cuotas) {
 		this.cuotas = cuotas;
 	}
+
+	public void addCuota(CuotaDTO cuota) {
+		cuotas.add(cuota);
+		cuota.setPlan(this);
+	}
 }

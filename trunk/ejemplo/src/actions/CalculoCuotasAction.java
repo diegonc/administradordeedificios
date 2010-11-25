@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
 
+import permisos.AdministradorDePermisos;
 import planes.CuotaDTO;
+import planes.PlanBuilder;
 import planes.PlanDTO;
 import propiedades.ResponsableAppl;
 
@@ -13,6 +15,7 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 import expensas.appl.ExpensaAppl;
+import expensas.dto.ExpensaCobroDTO;
 import expensas.dto.ExpensaDTO;
 
 
@@ -34,63 +37,62 @@ public class CalculoCuotasAction  extends ActionSupport {
 	private Map<String,Object> session;
 	
 	public String execute() {
-		PlanDTO plan = new PlanDTO();
+		List<ExpensaCobroDTO> expensas = crearExpensaCobros();
 		
-		ExpensaAppl expAppl = new ExpensaAppl();
-		ArrayList<ExpensaDTO> expensas = new ArrayList<ExpensaDTO>();
-		List<Integer> listaId = expElegidas;
-		java.util.Iterator<Integer> iteId = listaId.iterator();
+		monto = calcularMonto(expensas);
+		tasaMensual = expensas.get(0).getLiquidacion().getPropiedad().getTipoPropiedad().getEdificio().getTasa_anual() / (100*12);
+		tipoAmort =  expensas.get(0).getLiquidacion().getPropiedad().getTipoPropiedad().getEdificio().getAmortizacion();
+		tipoExp = expensas.get(0).getLiquidacion().getTipo();
 		
-		int expId;
-		while (iteId.hasNext()) {
-			expId = iteId.next();
-			ExpensaDTO exp = expAppl.getExpensasById(expId);
-			expensas.add(exp);
-			monto = monto + exp.getMonto();
+		PlanBuilder pb = new PlanBuilder();
+		pb.setTasa(tasaMensual);
+		pb.setTipo(tipoExp);
+		pb.setSistema(tipoAmort);
+		pb.setFecha(fecha);
+		pb.setCantidadCuotas(cantCuotas);
+		//TODO buscar el responsable por DNI que viene de planesExpensasListado.jsp... tambien TODO
+		//pb.setResponsable(respAppl.buscar(30761872));
+		
+		for (ExpensaCobroDTO cobro : expensas) {
+			pb.addExpensaCobro(cobro);
 		}
 		
-		tasaMensual = expensas.get(0).getPropiedad().getTipoPropiedad().getEdificio().getTasa_anual() / (100*12);
-		tipoAmort =  expensas.get(0).getPropiedad().getTipoPropiedad().getEdificio().getAmortizacion();
-		tipoExp = expensas.get(0).getTipo();
-		
-		Double dividendo = 0.0;
-		Double divisor = 0.0;
-		Double MontoCuota = 0.0;
-		if (tipoAmort.equals("FRANCES")) {
-			dividendo = Math.pow(1+tasaMensual,cantCuotas)-1;
-			divisor = tasaMensual * Math.pow((1 + tasaMensual),cantCuotas);
-			MontoCuota = monto / (dividendo/divisor);
-			int i = 0;
-			while (i<cantCuotas) {
-				CuotaDTO cuota = new CuotaDTO();
-				cuota.setIntereses(MontoCuota * (1 - (1/Math.pow(1+tasaMensual, cantCuotas - i + 1))));
-				cuota.setMonto(MontoCuota * (1 / Math.pow(1+tasaMensual, cantCuotas - i + 1)));
-				cuota.setNumeroCuota(i+1);
-				ListaCuotas.add(cuota);
-				i++;
-			}
-			Double saldoTotal = cantCuotas * MontoCuota;
-			Double intereses = saldoTotal - monto;
-			
-			//TODO buscar el responsable por DNI que viene de planesExpensasListado.jsp... tambien TODO
-			//plan.setResponsable(respAppl.buscar(30761872));
-			plan.setFecha(fecha);
-			plan.setTipo(tipoExp);
-			plan.setCantidadCuotas(cantCuotas);
-			plan.setMonto(monto);
-			plan.setSaldoIntereses(intereses);
-			plan.setSaldoPlan(saldoTotal);
-			plan.setCuotas(ListaCuotas);
-			
-		} else if (tipoAmort.equals("ALEMAN")) {
-			
-		}
+		PlanDTO plan = pb.calcularPlan();
+
 		Map<String, Object> session = ActionContext.getContext().getSession();
 		session.put("lista",plan);
 		this.setSession(session);
 		return SUCCESS;
 	}
 
+	private double calcularMonto(List<ExpensaCobroDTO> expensas) {
+		double monto = 0;
+		
+		for (ExpensaCobroDTO e : expensas) {
+			monto += e.getMontoPago();
+		}
+		
+		return monto;
+	}
+
+	private List<ExpensaCobroDTO> crearExpensaCobros() {
+		List<ExpensaCobroDTO> cobros = new ArrayList<ExpensaCobroDTO>();
+		ExpensaAppl expAppl = new ExpensaAppl();
+				
+		for (int expId : expElegidas) {
+			// TODO: cada instancia obtenida viene de una sesión de Hibernate distinta.
+			ExpensaDTO exp = expAppl.getExpensasById(expId);
+			ExpensaCobroDTO cobro = new ExpensaCobroDTO();
+			cobro.setLiquidacion(exp);
+			cobro.setComprobante("plan");
+			cobro.setConsolidado(false);
+			cobro.setFecha(fecha);
+			cobro.setMontoPago(exp.getMonto());
+			cobro.setResponsableCobro(AdministradorDePermisos.getInstancia().getUsuario());
+			cobros.add(cobro);
+		}
+		return cobros;
+	}
 
 	public void setExpElegidas(List<Integer> expElegidas) {
 		this.expElegidas = expElegidas;
