@@ -23,11 +23,23 @@ function armarFecha(elemento){
 
 function validar(thisform) {
 	var fecha=document.getElementById("fecha");
+	var respo=document.getElementById("resp");
+	var valido=true;
 	armarFecha(fecha);
 	var cantCuotas = document.getElementById("cantCuotas");
 	if (cantCuotas.value=="" || isNaN(cantCuotas.value)) {
 		alert("La cantidad de cuotas debe ser numerico");
-	} else {
+		valido=false;
+	} 
+	if (fecha.value=="//" && valido==true) {
+		alert("Debe elgir una fecha para el plan");
+		valido=false;
+	}
+	if (respo.value=="" && valido==true) {
+		alert("Debe elegir un responsable");
+		valido=false;
+	}
+	if (valido==true) {
 		document.CalculoCuotasAction.submit();
 	}
 }
@@ -106,7 +118,7 @@ function validar(thisform) {
 	<tr>
 	<td><label for="responsableDNI">Responsable:</label></td>
 	<td>
-	<s:select theme="simple" label="Responsable" 
+	<s:select theme="simple" label="Responsable" id="resp"
 					headerKey="" headerValue="-- Seleccione un responsable --"
 					list="responsables"
 					key="responsableDNI"

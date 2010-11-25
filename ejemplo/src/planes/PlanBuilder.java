@@ -84,7 +84,7 @@ public class PlanBuilder {
 			plan.addCuota(cuota);
 		}
 
-		plan.setSaldoPlan(sistema.getMonto());
+		plan.setSaldoPlan(sistema.getMontoTotal());
 		plan.setSaldoIntereses(sistema.getInteresTotal());
 
 		return plan;

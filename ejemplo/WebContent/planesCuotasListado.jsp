@@ -11,7 +11,9 @@
 			<div>Tipo:  <s:property value="plan.tipo" /> </div>
 			<div>Responsable: <s:property value="plan.responsable.nombre"/></div>
 			<div>Monto: <s:property value="plan.monto"/></div>
+			<div>Saldo Intereses: <s:property value="plan.saldoIntereses"/></div>
 			<div>Cantidad cuotas: <s:property value="plan.cantidadCuotas"/></div>
+			<div>Saldo del Plan: <s:property value="plan.saldoPlan"/></div>	
 		</div>
 		<div>
 			<div><h4>Detalle de expensas a cancelar</h4></div>
@@ -46,7 +48,7 @@
 				<thead>
 					<tr>
 						<th>Cuota</th>
-						<th>Monto</th>
+						<th>Monto Amortizado</th>
 						<th>Interes</th>
 						<th>Total</th>
 					</tr>
