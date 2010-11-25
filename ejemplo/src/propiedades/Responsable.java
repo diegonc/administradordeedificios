@@ -11,6 +11,7 @@ import javax.persistence.Version;
 public class Responsable {
 
 	private Integer dni;
+	private String nombre;
 	private String telefono;
 	private String email;
 	private String localidad;
@@ -40,6 +41,10 @@ public class Responsable {
 	@Id @Column(name="DNI", nullable=false)
 	public Integer getDni() { return dni; }
 	public void setDni(Integer dni) { this.dni = dni; }
+
+	@Column(name="NOMBRE")
+	public String getNombre() { return nombre; }
+	public void setNombre(String nombre) { this.nombre = nombre; }
 
 	@Column(name="TELEFONO")
 	public String getTelefono() { return telefono; }
