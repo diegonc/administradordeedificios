@@ -25,39 +25,40 @@ public class CalculoCuotasAction  extends ActionSupport {
 	private int responsableDNI;
 	private List<Integer> expElegidas;
 	private int cantCuotas;
-	
-	private Double tasaMensual = 0.0;
-	private String tipoAmort;
-	private String tipoExp;
 
 	private PlanDTO plan;
 	
 	public String execute() {
+		plan = crearPlan();
+		return "confirmacion";
+	}
+	
+	public String confirmar() {
+		plan = crearPlan();
+		// TODO: aca se guarda el plan.
+		return SUCCESS;
+	}
+
+	private PlanDTO crearPlan() {
 		//TODO inyectar la sesion con el interceptor.
 		Session hSession = HibernateUtil.getSession();
-		ResponsableAppl respAppl = new ResponsableAppl(hSession);
-		List<ExpensaCobroDTO> expensas = crearExpensaCobros();
-
-		tasaMensual = expensas.get(0).getLiquidacion().getPropiedad().getTipoPropiedad().getEdificio().getTasa_anual() / (100*12);
-		tipoAmort =  expensas.get(0).getLiquidacion().getPropiedad().getTipoPropiedad().getEdificio().getAmortizacion();
-		tipoExp = expensas.get(0).getLiquidacion().getTipo();
-		
-		PlanBuilder pb = new PlanBuilder();
-		pb.setTasa(tasaMensual);
-		pb.setTipo(tipoExp);
-		pb.setSistema(tipoAmort);
-		pb.setFecha(fecha);
-		pb.setCantidadCuotas(cantCuotas);
-		pb.setResponsable(respAppl.buscar(responsableDNI));
-		
-		for (ExpensaCobroDTO cobro : expensas) {
-			pb.addExpensaCobro(cobro);
+		try {
+			ResponsableAppl respAppl = new ResponsableAppl(hSession);
+			List<ExpensaCobroDTO> expensas = crearExpensaCobros();
+			
+			PlanBuilder pb = new PlanBuilder();
+			pb.setFecha(fecha);
+			pb.setCantidadCuotas(cantCuotas);
+			pb.setResponsable(respAppl.buscar(responsableDNI));
+			
+			for (ExpensaCobroDTO cobro : expensas) {
+				pb.addExpensaCobro(cobro);
+			}
+			
+			return pb.calcularPlan();
+		} finally {
+			hSession.close();
 		}
-		
-		plan = pb.calcularPlan();
-
-		hSession.close();
-		return SUCCESS;
 	}
 
 	private List<ExpensaCobroDTO> crearExpensaCobros() {

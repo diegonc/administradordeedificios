@@ -10,6 +10,7 @@ import java.util.Set;
 import org.apache.commons.beanutils.PropertyUtils;
 
 import propiedades.Responsable;
+import edificio.EdificioDTO;
 import expensas.dto.ExpensaCobroDTO;
 
 public class PlanBuilder {
@@ -102,20 +103,24 @@ public class PlanBuilder {
 		Double monto = (Double) propiedades.get("monto");
 		Double tasa = (Double) propiedades.get("tasa");
 		Integer cuotas = (Integer) propiedades.get("cantidadCuotas");
-
-		if (cuotas == null)
-		       throw new IllegalArgumentException("No se especificó la cantidad de cuotas.");
-
-		if (tasa == null)
-			tasa = ((ExpensaCobroDTO)((Set<ExpensaCobroDTO>) propiedades.get("cobrosCancelados"))
+		String nombreSistema = (String) propiedades.get("sistema");
+		EdificioDTO edificio = ((ExpensaCobroDTO)((Set<ExpensaCobroDTO>) propiedades.get("cobrosCancelados"))
 				.iterator().next())
 				.getLiquidacion()
 				.getPropiedad()
 				.getTipoPropiedad()
-				.getEdificio()
-				.getTasa_anual() / 100. / 12.;
+				.getEdificio();
 		
-		sistema = SistemaAmortizacion.crear((String)propiedades.get("sistema"), monto, tasa, cuotas);
+		if (cuotas == null)
+		       throw new IllegalArgumentException("No se especificó la cantidad de cuotas.");
+		
+		if (tasa == null)
+			tasa = edificio.getTasa_anual() / 100. / 12.;
+		
+		if (nombreSistema == null)
+			nombreSistema =  edificio.getAmortizacion();
+		
+		sistema = SistemaAmortizacion.crear(nombreSistema, monto, tasa, cuotas);
 	}
 
 	private void procesarCobros() {
