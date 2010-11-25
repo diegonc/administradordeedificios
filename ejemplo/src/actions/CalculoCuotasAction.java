@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Session;
+import org.hibernate.HibernateException;
 
 import permisos.AdministradorDePermisos;
 import planes.PlanBuilder;
@@ -34,9 +35,24 @@ public class CalculoCuotasAction  extends ActionSupport {
 	}
 	
 	public String confirmar() {
-		plan = crearPlan();
-		// TODO: aca se guarda el plan.
+		//TODO inyectar la sesion con el interceptor.
+		Session hSession = HibernateUtil.getSession();
+		try {
+			hSession.beginTransaction();
+			plan = crearPlan();
+			hSession.save(plan);
+			hSession.getTransaction().commit();
+		} catch (HibernateException e) {
+			hSession.getTransaction().rollback();
+			LOG.error("No se pudo guardar el plan.", e);
+		} finally {
+			hSession.close();
+		}
 		return SUCCESS;
+	}
+
+	public String cancelar() {
+		return ERROR;
 	}
 
 	private PlanDTO crearPlan() {
