@@ -30,6 +30,9 @@ public class CalculoCuotasAction  extends ActionSupport {
 	private PlanDTO plan;
 	
 	public String execute() {
+		if (expElegidas == null) {
+			return "error";
+		}
 		plan = crearPlan();
 		return "confirmacion";
 	}
