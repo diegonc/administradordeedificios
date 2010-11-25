@@ -191,14 +191,14 @@
 					<param name="actionName">EdificioListarAction</param>
 					<param name="redi">planes</param>
 				</result>	    
-	    </action> 
-	     <action name="CalculoCuotasAction" class="actions.CalculoCuotasAction">
-			    <result name="success">/planesCuotasListado.jsp </result>
-			    <result name="error" type="redirectAction">
-					<param name="actionName">EdificioListarAction</param>
-					<param name="redi">planes</param>
-				</result>	    
-	    </action> 
+	</action>
+		<action name="CalculoCuotasAction" class="actions.CalculoCuotasAction">
+			<result name="success">/planesCuotasListado.jsp </result>
+			<result name="error" type="redirectAction">
+				<param name="actionName">EdificioListarAction</param>
+				<param name="redi">planes</param>
+			</result>
+		</action>
 	</package>
 
 	<package name="experimental" extends="hibernate-default">
