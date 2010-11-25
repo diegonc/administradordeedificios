@@ -55,6 +55,9 @@ table.listado {
 	border-style: outset;
 	border-spacing: 2px;
 	border-collapse: separate;
+	/* Centrado */
+	margin-left:auto;
+	margin-right: auto;
 }
 
 table.listado th {
@@ -62,6 +65,7 @@ table.listado th {
 	padding: 1px;
 	border-style: inset;
 	border-color: gray;
+	background-color:#F0F0F0;
 }
 
 table.listado td {

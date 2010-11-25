@@ -4,16 +4,19 @@
 	<div class="titulo">
 		<h3>Plan de pago</h3>
 	</div>
-	<div class="cuerpo" align="center">
-		<div>Fecha: <s:property value="plan.fecha"/> </div>
-		<div>Tipo:  <s:property value="plan.tipo" /> </div>
-		<div>Responsable: <s:property value="plan.responsable.nombre"/></div>
-		<div>Monto: <s:property value="plan.monto"/></div>
-		<div>Cantidad cuotas: <s:property value="plan.cantidadCuotas"/></div>
-		<!-- TODO: hidden con el dni, fecha y cantidad cuotas. -->	
+	<div class="cuerpo">
+		<div>
+			<div><h4>Detalles del Plan</h4></div>
+			<div>Fecha: <s:property value="plan.fecha"/> </div>
+			<div>Tipo:  <s:property value="plan.tipo" /> </div>
+			<div>Responsable: <s:property value="plan.responsable.nombre"/></div>
+			<div>Monto: <s:property value="plan.monto"/></div>
+			<div>Cantidad cuotas: <s:property value="plan.cantidadCuotas"/>
+			<!-- TODO: hidden con el dni, fecha y cantidad cuotas. -->	
+			</div>
 		</div>
 		<div>
-			<div>Detalle de expensas a cancelar</div>
+			<div><h4>Detalle de expensas a cancelar</h4></div>
 			<table class="listado">
 				<thead>
 					<tr>
@@ -41,7 +44,7 @@
 			</table>
 		</div>
 		<div>
-			<div>Detalle de cuotas</div>
+			<div><h4>Detalle de cuotas</h4></div>
 			<table class="listado">
 				<thead>
 					<tr>

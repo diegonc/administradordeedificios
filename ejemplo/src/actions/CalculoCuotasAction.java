@@ -1,26 +1,22 @@
 package actions;
 
-import java.util.List;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Map;
+import java.util.List;
+
+import org.hibernate.Session;
 
 import permisos.AdministradorDePermisos;
-import planes.CuotaDTO;
 import planes.PlanBuilder;
 import planes.PlanDTO;
 import propiedades.ResponsableAppl;
+import utilidades.HibernateUtil;
 
-import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 import expensas.appl.ExpensaAppl;
 import expensas.dto.ExpensaCobroDTO;
 import expensas.dto.ExpensaDTO;
-
-import org.hibernate.Session;
-
-import utilidades.HibernateUtil;
 
 @SuppressWarnings("serial")
 public class CalculoCuotasAction  extends ActionSupport {
@@ -30,12 +26,9 @@ public class CalculoCuotasAction  extends ActionSupport {
 	private List<Integer> expElegidas;
 	private int cantCuotas;
 	
-	private Double monto = 0.0;
 	private Double tasaMensual = 0.0;
 	private String tipoAmort;
 	private String tipoExp;
-	private ArrayList<CuotaDTO> ListaCuotas = new ArrayList<CuotaDTO>();
-	private Map<String,Object> session;
 
 	private PlanDTO plan;
 	
@@ -44,8 +37,7 @@ public class CalculoCuotasAction  extends ActionSupport {
 		Session hSession = HibernateUtil.getSession();
 		ResponsableAppl respAppl = new ResponsableAppl(hSession);
 		List<ExpensaCobroDTO> expensas = crearExpensaCobros();
-		
-		monto = calcularMonto(expensas);
+
 		tasaMensual = expensas.get(0).getLiquidacion().getPropiedad().getTipoPropiedad().getEdificio().getTasa_anual() / (100*12);
 		tipoAmort =  expensas.get(0).getLiquidacion().getPropiedad().getTipoPropiedad().getEdificio().getAmortizacion();
 		tipoExp = expensas.get(0).getLiquidacion().getTipo();
@@ -64,22 +56,8 @@ public class CalculoCuotasAction  extends ActionSupport {
 		
 		plan = pb.calcularPlan();
 
-		Map<String, Object> session = ActionContext.getContext().getSession();
-		session.put("lista",plan);
-		this.setSession(session);
-
 		hSession.close();
 		return SUCCESS;
-	}
-
-	private double calcularMonto(List<ExpensaCobroDTO> expensas) {
-		double monto = 0;
-		
-		for (ExpensaCobroDTO e : expensas) {
-			monto += e.getMontoPago();
-		}
-		
-		return monto;
 	}
 
 	private List<ExpensaCobroDTO> crearExpensaCobros() {
@@ -138,14 +116,12 @@ public class CalculoCuotasAction  extends ActionSupport {
 		this.responsableDNI = responsableDNI;
 	}
 
-
-	public void setSession(Map<String,Object> session) {
-		this.session = session;
+	public PlanDTO getPlan() {
+		return plan;
 	}
 
-
-	public Map<String,Object> getSession() {
-		return session;
+	public void setPlan(PlanDTO plan) {
+		this.plan = plan;
 	}
 
 }
