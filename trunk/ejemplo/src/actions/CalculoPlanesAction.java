@@ -1,9 +1,13 @@
 package actions;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+
+import propiedades.ResponsableAppl;
 
 import utilidades.HibernateUtil;
 import beans.LiquidacionBean;
@@ -20,6 +24,8 @@ public class CalculoPlanesAction extends ActionSupport {
 	private String tipo;
 	private Map<String,Object> session;
 	private static final long serialVersionUID = 1L;
+	
+	private List<Integer> responsables;
 
 	public String execute() {
 		ExpensaAppl expAppl = new ExpensaAppl();
@@ -54,7 +60,19 @@ public class CalculoPlanesAction extends ActionSupport {
 		Map<String, Object> session = ActionContext.getContext().getSession();
 		session.put("lista",expensas);
 		this.setSession(session);
+		
+		responsables = cargarDNIResponsables();
+		
 		return SUCCESS;	
+	}
+
+	private List<Integer> cargarDNIResponsables() {
+		Session s = HibernateUtil.getSession();
+		try {
+			return new ResponsableAppl(s).listarDNIs();
+		} finally {
+			s.close();
+		}
 	}
 
 	public void setTipo(String tipo) {
@@ -79,5 +97,13 @@ public class CalculoPlanesAction extends ActionSupport {
 
 	public Map<String,Object> getSession() {
 		return session;
+	}
+
+	public List<Integer> getResponsables() {
+		return responsables;
+	}
+
+	public void setResponsables(List<Integer> responsables) {
+		this.responsables = responsables;
 	}
 }

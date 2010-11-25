@@ -5,6 +5,7 @@ import java.util.List;
 import utilidades.AbstractAppl;
 
 import org.hibernate.Session;
+import org.hibernate.criterion.Projections;
 
 public class ResponsableAppl extends AbstractAppl {
 
@@ -20,6 +21,13 @@ public class ResponsableAppl extends AbstractAppl {
 
 	public Responsable buscar(Integer dni) {
 		return (Responsable) session.get(Responsable.class, dni);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Integer> listarDNIs() {
+		return session.createCriteria(Responsable.class)
+			.setProjection(Projections.property("dni"))
+			.list();
 	}
 
 }

@@ -1,5 +1,6 @@
 package planes;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -37,8 +38,7 @@ public class PlanDTO {
 	private double saldoIntereses;
 
 	private Set<ExpensaCobroDTO> cobrosCancelados;
-	private List<CuotaDTO> cuotas;
-
+	private List<CuotaDTO> cuotas = new ArrayList<CuotaDTO>();
 	
 	@Id
 	@Column(name="ID", nullable=false)
