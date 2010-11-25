@@ -135,9 +135,9 @@ function armarFecha(elemento){
 					  			<td align="right" ><label for="gastoReal.fechaPago">Fecha:&nbsp;</label>  </td>
 					  			<td colspan="4">
 					  				<input type="hidden" id="gastoReal.fechaPago" name="gastoReal.fechaPago" disabled="disabled" />
-					  				&nbsp;&nbsp;<input type="text" name="dia" maxlength="2" size="2" style="width:22px;" disabled >
-									&nbsp;<input type="text" name="mes" maxlength="2" size="2"  style="width:22px;" disabled  >
-									&nbsp;<input type="text" name="anio" maxlength="4" size="4" style="width:32px;" disabled >
+					  				&nbsp;&nbsp;<input type="text" id="dia" name="dia" maxlength="2" size="2" style="width:22px;" disabled >
+									&nbsp;<input type="text" id="mes" name="mes" maxlength="2" size="2"  style="width:22px;" disabled  >
+									&nbsp;<input type="text" id="anio" name="anio" maxlength="4" size="4" style="width:32px;" disabled >
 									&nbsp;&nbsp;<a href="JavaScript:doNothing()" onclick="allowPrevious=true;setDateField(document.gastoAlta.dia,document.gastoAlta.mes,document.gastoAlta.anio);top.newWin = window.open('calendario.jsp','cal','WIDTH=200,HEIGHT=160,TOP=200,LEFT=300')" onMouseOver="javascript: window.status = 'Abrir calendario'; return true;" onMouseOut="window.status=' '; return true;" ><img src="images/calendario.gif" ></img></a>
 					  			</td>
 					  		</tr>
