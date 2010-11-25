@@ -30,7 +30,7 @@ package planes;
  * --------------
  * 
  **/
-public class SistemaAleman {
+public class SistemaAleman extends SistemaAmortizacion {
 
 	private double capital;
 	private double tasa;
@@ -45,18 +45,32 @@ public class SistemaAleman {
 		this.amortizacionCapital = this.capital / numeroCuotas;
 	}
 	
-	public double getInteresesTotales() {
+	@Override
+	public double getInteresTotal() {
 		return calcularInteresAcumulado(numeroCuotas);
 	}
+
+	@Override
+	public double getMonto() {
+		return capital;
+	}
+
+	@Override
+	public double getMontoTotal() {
+		return capital + getInteresTotal();
+	}
 	
+	@Override
 	public double getInteresCuota(int numeroCuota) {
 		return calcularInteres(numeroCuota);
 	}
 	
+	@Override
 	public double getCapitalCuota(int numeroCuota) {
 		return amortizacionCapital;
 	}
 	
+	@Override
 	public double getTotalCuota(int numeroCuota) {
 		return getCapitalCuota(numeroCuota) + getInteresCuota(numeroCuota);
 	}
@@ -74,6 +88,6 @@ public class SistemaAleman {
 			return (tasa * capital)
 			- (tasa * amortizacionCapital * (numeroCuota - 1));
 		
-		throw new IllegalArgumentException();
+		throw new IllegalArgumentException("El numero de cuota debe estar entre 1 y " + numeroCuotas);
 	}
 }
