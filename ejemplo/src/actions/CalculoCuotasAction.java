@@ -36,8 +36,11 @@ public class CalculoCuotasAction  extends ActionSupport {
 	private String tipoExp;
 	private ArrayList<CuotaDTO> ListaCuotas = new ArrayList<CuotaDTO>();
 	private Map<String,Object> session;
+
+	private PlanDTO plan;
 	
 	public String execute() {
+		//TODO inyectar la sesion con el interceptor.
 		Session hSession = HibernateUtil.getSession();
 		ResponsableAppl respAppl = new ResponsableAppl(hSession);
 		List<ExpensaCobroDTO> expensas = crearExpensaCobros();
@@ -59,13 +62,12 @@ public class CalculoCuotasAction  extends ActionSupport {
 			pb.addExpensaCobro(cobro);
 		}
 		
-		PlanDTO plan = pb.calcularPlan();
+		plan = pb.calcularPlan();
 
 		Map<String, Object> session = ActionContext.getContext().getSession();
 		session.put("lista",plan);
 		this.setSession(session);
 
-		//TODO ver si anda con la sesion cerrada
 		hSession.close();
 		return SUCCESS;
 	}
