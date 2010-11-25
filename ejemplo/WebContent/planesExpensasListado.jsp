@@ -103,7 +103,14 @@ function validar(thisform) {
 				&nbsp;<a href="JavaScript:doNothing()" onclick="allowPrevious=true;setDateField(document.CalculoCuotasAction.dia,document.CalculoCuotasAction.mes,document.CalculoCuotasAction.anio);top.newWin = window.open('calendario.jsp','cal','WIDTH=200,HEIGHT=160,TOP=200,LEFT=300')" onMouseOver="javascript: window.status = 'Abrir calendario'; return true;" onMouseOut="window.status=' '; return true;" ><img src="images/calendario.gif" ></img></a>
 			</td>
 	</tr>
-	
+	<tr>
+	<td><label for="responsableDNI">Responsable:</label></td>
+	<td>
+	<s:select theme="simple" label="Responsable" 
+					headerKey="" headerValue="-- Seleccione un responsable --"
+					list="responsables"
+					key="responsableDNI"
+					required="true" /> <span class="required">*</span></td>
 	</table>
 	<input class="btn" type="button" value="Calcular Cuotas" onclick="validar()"/>
 	</fieldset>
