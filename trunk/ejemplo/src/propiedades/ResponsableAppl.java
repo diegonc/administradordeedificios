@@ -4,7 +4,14 @@ import java.util.List;
 
 import utilidades.AbstractAppl;
 
+import org.hibernate.Session;
+
 public class ResponsableAppl extends AbstractAppl {
+
+	public ResponsableAppl() {}
+	public ResponsableAppl(Session s) {
+		session = s;
+	}
 	
 	@SuppressWarnings("unchecked")
 	public List<Responsable> listar() {
