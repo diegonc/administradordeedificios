@@ -18,8 +18,9 @@ import expensas.appl.ExpensaAppl;
 import expensas.dto.ExpensaCobroDTO;
 import expensas.dto.ExpensaDTO;
 
+import org.hibernate.Session;
 
-
+import utilidades.HibernateUtil;
 
 @SuppressWarnings("serial")
 public class CalculoCuotasAction  extends ActionSupport {
@@ -37,6 +38,8 @@ public class CalculoCuotasAction  extends ActionSupport {
 	private Map<String,Object> session;
 	
 	public String execute() {
+		Session hSession = HibernateUtil.getSession();
+		ResponsableAppl respAppl = new ResponsableAppl(hSession);
 		List<ExpensaCobroDTO> expensas = crearExpensaCobros();
 		
 		monto = calcularMonto(expensas);
@@ -50,8 +53,7 @@ public class CalculoCuotasAction  extends ActionSupport {
 		pb.setSistema(tipoAmort);
 		pb.setFecha(fecha);
 		pb.setCantidadCuotas(cantCuotas);
-		//TODO buscar el responsable por DNI que viene de planesExpensasListado.jsp... tambien TODO
-		//pb.setResponsable(respAppl.buscar(30761872));
+		pb.setResponsable(respAppl.buscar(responsableDNI));
 		
 		for (ExpensaCobroDTO cobro : expensas) {
 			pb.addExpensaCobro(cobro);
@@ -62,6 +64,9 @@ public class CalculoCuotasAction  extends ActionSupport {
 		Map<String, Object> session = ActionContext.getContext().getSession();
 		session.put("lista",plan);
 		this.setSession(session);
+
+		//TODO ver si anda con la sesion cerrada
+		hSession.close();
 		return SUCCESS;
 	}
 
