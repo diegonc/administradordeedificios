@@ -11,9 +11,7 @@
 			<div>Tipo:  <s:property value="plan.tipo" /> </div>
 			<div>Responsable: <s:property value="plan.responsable.nombre"/></div>
 			<div>Monto: <s:property value="plan.monto"/></div>
-			<div>Cantidad cuotas: <s:property value="plan.cantidadCuotas"/>
-			<!-- TODO: hidden con el dni, fecha y cantidad cuotas. -->	
-			</div>
+			<div>Cantidad cuotas: <s:property value="plan.cantidadCuotas"/></div>
 		</div>
 		<div>
 			<div><h4>Detalle de expensas a cancelar</h4></div>
@@ -37,7 +35,6 @@
 						</s:push>
 							<td><s:property value="liquidacion.fecha"/></td>
 							<td><s:property value="montoPago"/></td>
-							<!-- TODO: hidden con los id de las liquidaciones a cobrar. -->
 						</tr>
 					</s:iterator>
 				</tbody>
@@ -66,6 +63,20 @@
 				</tbody>
 			</table>
 		</div>
+		<!-- TODO: hidden con el dni, fecha y cantidad cuotas. -->
+		<!-- TODO: hidden con los id de las liquidaciones a cobrar. -->
+		<s:form action="CalculoCuotasAction">
+			<s:hidden name="fecha" value="plan.fecha" />
+			<s:hidden name="responsableDNI" value="plan.responsable.dni" />
+			<s:hidden name="cantCuotas" value="plan.cantidadCuotas" />
+			<s:iterator value="plan.cobrosCancelados">
+				<s:hidden name="expElegidas" value="liquidacion.id"/>
+			</s:iterator>
+			<s:div>
+				<s:submit theme="simple" value="Aceptar" name="method:confirmar" />
+				<s:submit theme="simple" value="Cancelar" name="method:cancelar" />
+			</s:div>
+		</s:form>
 	</div>
 </div>
 <jsp:include page="/WEB-INF/jspf/footer.jspf" />
