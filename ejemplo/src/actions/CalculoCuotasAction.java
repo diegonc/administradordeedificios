@@ -8,6 +8,7 @@ import org.hibernate.Session;
 import org.hibernate.HibernateException;
 
 import permisos.AdministradorDePermisos;
+import planes.CuotaDTO;
 import planes.PlanBuilder;
 import planes.PlanDTO;
 import propiedades.ResponsableAppl;
@@ -44,6 +45,10 @@ public class CalculoCuotasAction  extends ActionSupport {
 			hSession.beginTransaction();
 			plan = crearPlan();
 			hSession.save(plan);
+			// XXX: hibernate no hace cascada para las cuotas :/
+			for (CuotaDTO cuota : plan.getCuotas()) {
+				hSession.save(cuota);
+			}
 			hSession.getTransaction().commit();
 		} catch (HibernateException e) {
 			hSession.getTransaction().rollback();

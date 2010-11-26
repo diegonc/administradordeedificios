@@ -68,11 +68,11 @@
 		<!-- TODO: hidden con el dni, fecha y cantidad cuotas. -->
 		<!-- TODO: hidden con los id de las liquidaciones a cobrar. -->
 		<s:form action="CalculoCuotasAction">
-			<s:hidden name="fecha" value="plan.fecha" />
-			<s:hidden name="responsableDNI" value="plan.responsable.dni" />
-			<s:hidden name="cantCuotas" value="plan.cantidadCuotas" />
+			<s:hidden name="fecha" value="%{plan.fecha}" />
+			<s:hidden name="responsableDNI" value="%{plan.responsable.dni}" />
+			<s:hidden name="cantCuotas" value="%{plan.cantidadCuotas}" />
 			<s:iterator value="plan.cobrosCancelados">
-				<s:hidden name="expElegidas" value="liquidacion.id"/>
+				<s:hidden name="expElegidas" value="%{liquidacion.id}"/>
 			</s:iterator>
 			<s:div>
 				<s:submit theme="simple" value="Aceptar" name="method:confirmar" />
