@@ -1,0 +1,61 @@
+<%@page import="planes.*"%>
+<jsp:include page="/WEB-INF/jspf/header.jspf"></jsp:include>
+<%@ page language="java" contentType="text/html" import="java.util.*"%>
+<%@ page language="java" contentType="text/html" import="utilidades.*"%>
+<%@ page language="java" contentType="text/html"
+	import="org.hibernate.*"%>
+
+<%
+	int idPlan = Integer.parseInt(request.getParameter("idPlan"));
+	PlanesAppl planAppl = new PlanesAppl();
+	PlanDTO plan = planAppl.getPlanById(idPlan);
+	List<CuotaDTO> cuotas = plan.getCuotas();
+%>
+<div class="contenido">
+	<div class="titulo"><h3>Detalle de Plan</h3></div>
+	<div class="cuerpo">
+	<form class="elegante" id="listadoPlanes" name="listadoPlanes">
+	<table>
+		<tr>
+		    <td>Responsable: <%=plan.getResponsable().getNombre()%></td>
+		</tr>
+		<tr>
+			<td>Fecha: <%=plan.getFecha()%> - Tipo:  <%=plan.getTipo()%> - Cuotas: <%=plan.getCantidadCuotas()%></td>
+		</tr>
+		
+		<tr>
+			<td>Monto: <%=plan.getMonto()%> - Intereses: <%=plan.getSaldoIntereses()%> -  Saldo: <%=plan.getSaldoPlan()%></td>
+		</tr>
+	</table>
+	<fieldset><legend>Cuotas</legend>	
+	<table width="500" border="1" class="listado" align="center">
+		<tr>
+			<td class="listado_par">Nro</td>
+			<td class="listado_par">Monto Amortizado</td>
+			<td class="listado_par">Intereses</td>
+			<td class="listado_par">Saldo</td>
+			<td class="listado_par">&nbsp;</td>
+			<td class="listado_par">&nbsp;</td>
+		</tr>
+		<%
+			for (CuotaDTO cuotaDTO : cuotas) {
+		%>
+		<tr>
+			<td><%=cuotaDTO.getNumeroCuota()%></td>
+			<td><%=cuotaDTO.getMonto()%></td>
+			<td><%=cuotaDTO.getIntereses()%></td>
+			<td><%=cuotaDTO.getMonto() + cuotaDTO.getIntereses() %>
+			<td><a href="#">Saldar</a></td>
+			<td><a href="#">Calcular Mora</a></td>
+		</tr>
+		<%
+		}
+		%>
+	
+	</table>
+	</fieldset>
+	<a href="planesListado.jsp?<%=plan.getResponsable().getDni() %>">Volver</a>
+	</form>
+	</div>
+	</div>
+<jsp:include page="/WEB-INF/jspf/footer.jspf" />

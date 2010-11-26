@@ -24,7 +24,7 @@
 						<th>Nivel</th>
 						<th>Orden</th>
 						<th>Fecha</th>
-						<th>Monto</th>
+						<th>Monto Total</th>
 					</tr>
 				</thead>
 				<tbody>
