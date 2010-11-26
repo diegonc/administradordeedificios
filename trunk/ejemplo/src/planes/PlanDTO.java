@@ -16,6 +16,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 import expensas.dto.ExpensaCobroDTO;
 import propiedades.Responsable;
 
@@ -85,6 +88,7 @@ public class PlanDTO {
 	}
 
 	@OneToMany
+	@Cascade(value=CascadeType.SAVE_UPDATE)
 	@JoinTable( name="PLAN_EXPENSA_COBRO",
 	            joinColumns=@JoinColumn(name="PLAN_ID", referencedColumnName="ID"),
 	            inverseJoinColumns=@JoinColumn(name="COBRO_ID", referencedColumnName="ID"))
@@ -93,6 +97,7 @@ public class PlanDTO {
 	}
 
 	@OneToMany(mappedBy="plan")
+	@Cascade(value=CascadeType.SAVE_UPDATE)
 	public List<CuotaDTO> getCuotas() {
 		return cuotas;
 	}
