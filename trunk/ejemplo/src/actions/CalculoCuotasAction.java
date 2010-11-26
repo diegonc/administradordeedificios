@@ -99,6 +99,7 @@ public class CalculoCuotasAction  extends ActionSupport {
 			cobro.setFecha(fecha);
 			cobro.setMontoPago(exp.getMonto());
 			cobro.setResponsableCobro(AdministradorDePermisos.getInstancia().getUsuario());
+			cobro.setConsolidado(true);
 			cobros.add(cobro);
 		}
 		return cobros;
