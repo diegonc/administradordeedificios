@@ -203,6 +203,11 @@
 				<param name="redi">planes</param>
 			</result>
 		</action>
+		<action name="PlanesConsultaAction" class="actions.PlanesConsultaAction">
+		    <result name="sinplan">/planesConsulta.jsp</result>
+			<result name="success">/planesListado.jsp</result>
+		</action>
+		
 	</package>
 
 	<package name="experimental" extends="hibernate-default">

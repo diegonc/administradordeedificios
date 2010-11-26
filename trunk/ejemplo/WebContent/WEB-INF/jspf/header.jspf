@@ -52,7 +52,8 @@
 		<ul class="sub">
 			<li><a href="EdificioListarAction?redi=expensa">Expensas</a></li>
 			<li><a href="EdificioListarAction?redi=planes">Planes</a></li>  
-			<li><a href="expensasHistorialAction">Liquidaciones-Historial</a></li>                   
+			<li><a href="expensasHistorialAction">Liquidaciones-Historial</a></li>       
+			<li><a href="planesConsulta.jsp">Planes-Historial</a></li>              
 		</ul>
 	</li>
 	<%} %>

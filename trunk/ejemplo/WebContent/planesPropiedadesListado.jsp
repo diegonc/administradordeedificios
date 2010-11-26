@@ -30,20 +30,9 @@ function validar(thisform) {
 		tipo = "extraordinarios";
 	}
 %>
-
-<table cellpadding="0" cellspacing="0">
-	<tr>
-		<td width="5" class="borde"></td>
-		<td width="800" class="borde" align="center">
-		<h3 id="header">Planes <%=tipo%> - Propiedades edificio " <%=propiedades.get(0).getTipoPropiedad().getEdificio().getNombre()%>"</h3>
-		</td>
-		<td width="5" class="borde"></td>
-	</tr>
-</table>
-<tr>
-	<td width="5" class="borde"></td>
-	<td width="15" class="fondo"></td>
-	<td width="770" class="fondo" align="center">
+<div class="contenido">
+<div class="titulo"><h3>Planes <%=tipo%> - Propiedades edificio " <%=propiedades.get(0).getTipoPropiedad().getEdificio().getNombre()%>"</h3></div>
+<div class="cuerpo">
 	<form class="elegante" id="CalculoPlanesAction" name="CalculoPlanesAction" action="CalculoPlanesAction">
 	<fieldset><legend>Listado de Propiedades</legend>
 	<table width="500">
@@ -79,5 +68,6 @@ function validar(thisform) {
 	<s:actionerror cssClass="error"/>	
 	<a href="EdificioListarAction?redi=planes">Volver</a>
 	</form>
-</tr>
+</div>
+</div>
 <jsp:include page="/WEB-INF/jspf/footer.jspf" />

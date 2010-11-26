@@ -97,7 +97,7 @@ public class CalculoCuotasAction  extends ActionSupport {
 			cobro.setComprobante("plan");
 			cobro.setConsolidado(false);
 			cobro.setFecha(fecha);
-			cobro.setMontoPago(exp.getMonto());
+			cobro.setMontoPago(exp.getMonto() + exp.getIntereses());
 			cobro.setResponsableCobro(AdministradorDePermisos.getInstancia().getUsuario());
 			cobro.setConsolidado(true);
 			cobros.add(cobro);

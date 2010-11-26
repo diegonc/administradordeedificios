@@ -61,20 +61,9 @@ function validar(thisform) {
 	}
 	int idEdificio = expensas.get(0).getPropiedad().getTipoPropiedad().getEdificio().getId();
 %>
-
-<table cellpadding="0" cellspacing="0">
-	<tr>
-		<td width="5" class="borde"></td>
-		<td width="800" class="borde" align="center">
-		<h3 id="header">Seleccion de expensas <%=tipo%></h3>
-		</td>
-		<td width="5" class="borde"></td>
-	</tr>
-</table>
-<tr>
-	<td width="5" class="borde"></td>
-	<td width="15" class="fondo"></td>
-	<td width="770" class="fondo" align="center">
+<div class="contenido">
+<div class="titulo"><h3>Seleccion de Expensas</h3></div>
+<div class="cuerpo">
 	<form class="elegante" id="CalculoCuotasAction" name="CalculoCuotasAction" action="CalculoCuotasAction">
 	<fieldset><legend>Listado de Expensas</legend>	
 	<table width="500" border="1" class="listado" align="center">
@@ -84,6 +73,7 @@ function validar(thisform) {
 			<td class="listado_par">Orden</td>
 			<td class="listado_par">Numero Op.</td>
 			<td class="listado_par">Monto</td>
+			<td class="listado_par">Intereses</td>
 			<td class="listado_par">&nbsp;</td>
 		</tr>
 		<%for (ExpensaDTO expensasDTO : expensas) {
@@ -94,6 +84,7 @@ function validar(thisform) {
 			<td><%=expensasDTO.getPropiedad().getOrden()%></td>
 			<td><%=expensasDTO.getNumeroOperacion()%></td>
 			<td><%=expensasDTO.getMonto()%></td>
+			<td><%=expensasDTO.getIntereses()%></td>
 			<td bgcolor="#F0F0F0">
 				<input type="checkbox" name="expElegidas" id="expElegidas" value="<%=expensasDTO.getId()%>"/> 
 			</td>
@@ -129,5 +120,6 @@ function validar(thisform) {
 	<s:actionerror cssClass="error"/>	
 	<a href="planesPropListarAction?id=<%=idEdificio%>&tipo=<%=redi%>">Volver</a>
 	</form>
-</tr>
+	</div>
+	</div>
 <jsp:include page="/WEB-INF/jspf/footer.jspf" />
