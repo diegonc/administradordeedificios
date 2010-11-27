@@ -23,6 +23,7 @@ function validar(thisform) {
 
 <%
 	ArrayList<PropiedadDTO> propiedades = lista.getPropiedades();
+	int dniResp = lista.getDniResp();
 	String tipo = "";
 	if (lista.getTipo().equals("ord")) {
 		tipo = "ordinarios";
@@ -31,7 +32,8 @@ function validar(thisform) {
 	}
 %>
 <div class="contenido">
-<div class="titulo"><h3>Planes <%=tipo%> - Propiedades edificio " <%=propiedades.get(0).getTipoPropiedad().getEdificio().getNombre()%>"</h3></div>
+<div class="titulo"><h3>Planes <%=tipo%> - Propiedades edificio " <%=propiedades.get(0).getTipoPropiedad().getEdificio().getNombre()%> "
+- Responsable " <%=dniResp %>"</h3></div>
 <div class="cuerpo">
 	<form class="elegante" id="CalculoPlanesAction" name="CalculoPlanesAction" action="CalculoPlanesAction">
 	<fieldset><legend>Listado de Propiedades</legend>
@@ -65,8 +67,9 @@ function validar(thisform) {
 	</table>
 	<input class="btn" type="button" value="Seleccionar Expensas" onclick="submit()"/>
 	</fieldset>
+		<input type="hidden" name="dniResp" value="<%=dniResp%>"></input>
 	<s:actionerror cssClass="error"/>	
-	<a href="EdificioListarAction?redi=planes">Volver</a>
+	<a href="planesElegirResponsable.jsp?idEdif=<%=propiedades.get(0).getTipoPropiedad().getEdificio().getId()%>">Volver</a>
 	</form>
 </div>
 </div>

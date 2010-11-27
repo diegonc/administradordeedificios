@@ -1,5 +1,6 @@
 <%@page import="planes.*"%>
 <jsp:include page="/WEB-INF/jspf/header.jspf"></jsp:include>
+<%@page import="permisos.AdministradorDePermisos"%>
 <%@ page language="java" contentType="text/html" import="java.util.*"%>
 <%@ page language="java" contentType="text/html" import="utilidades.*"%>
 <%@ page language="java" contentType="text/html"
@@ -10,6 +11,8 @@
 	PlanesAppl planAppl = new PlanesAppl();
 	PlanDTO plan = planAppl.getPlanById(idPlan);
 	List<CuotaDTO> cuotas = plan.getCuotas();
+	
+	CuotaCobroAppl cuotaCobroAppl = new CuotaCobroAppl();
 %>
 <div class="contenido">
 	<div class="titulo"><h3>Detalle de Plan</h3></div>
@@ -34,8 +37,11 @@
 			<td class="listado_par">Monto Amortizado</td>
 			<td class="listado_par">Intereses</td>
 			<td class="listado_par">Saldo</td>
-			<td class="listado_par">&nbsp;</td>
-			<td class="listado_par">&nbsp;</td>
+			<td class="listado_par">Pagos</td>
+			<td class="listado_par">Mora</td>
+			<% if (AdministradorDePermisos.getInstancia().isAdministrador()) { %>
+				<td class="listado_par">Consolidar</td>
+			<%} %>
 		</tr>
 		<%
 			for (CuotaDTO cuotaDTO : cuotas) {
@@ -45,8 +51,20 @@
 			<td><%=cuotaDTO.getMonto()%></td>
 			<td><%=cuotaDTO.getIntereses()%></td>
 			<td><%=cuotaDTO.getMonto() + cuotaDTO.getIntereses() %>
-			<td><a href="#">Saldar</a></td>
-			<td><a href="#">Calcular Mora</a></td>
+			<% if (!cuotaCobroAppl.existeCobro(cuotaDTO.getId()) && cuotaDTO.sePuedePagar() ) { %>
+				<td><a href="#">Saldar</a></td>
+			<%} else { %>
+				<td>&nbsp;</td>
+			<% } if (cuotaDTO.estaVencida()) {%>
+				<td><a href="#">Calcular Mora</a></td>
+			<%} else {%>
+				<td>&nbsp;</td>
+			<%} %>
+			<% if (AdministradorDePermisos.getInstancia().isAdministrador() && cuotaCobroAppl.existeCobro(cuotaDTO.getId())) { %>
+				<td><a href="#">Consolidar</a></td>
+			<%} else {%>
+				<td>&nbsp;</td>
+			<%} %>
 		</tr>
 		<%
 		}

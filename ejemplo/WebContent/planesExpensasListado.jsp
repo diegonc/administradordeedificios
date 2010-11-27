@@ -23,20 +23,15 @@ function armarFecha(elemento){
 
 function validar(thisform) {
 	var fecha=document.getElementById("fecha");
-	var respo=document.getElementById("resp");
+	var cantCuotas = document.getElementById("cantCuotas");
 	var valido=true;
 	armarFecha(fecha);
-	var cantCuotas = document.getElementById("cantCuotas");
 	if (cantCuotas.value=="" || isNaN(cantCuotas.value)) {
 		alert("La cantidad de cuotas debe ser numerico");
 		valido=false;
 	} 
 	if (fecha.value=="//" && valido==true) {
 		alert("Debe elgir una fecha para el plan");
-		valido=false;
-	}
-	if (respo.value=="" && valido==true) {
-		alert("Debe elegir un responsable");
 		valido=false;
 	}
 	if (valido==true) {
@@ -107,18 +102,13 @@ function validar(thisform) {
 			</td>
 	</tr>
 	<tr>
-	<td><label for="responsableDNI">Responsable:</label></td>
+	<td>Responsable: <input readonly size="7" id="responsableDNI" name="responsableDNI" value="<%=lista.getResponsable()%>"></input></td>
 	<td>
-	<s:select theme="simple" label="Responsable" id="resp"
-					headerKey="" headerValue="-- Seleccione un responsable --"
-					list="responsables"
-					key="responsableDNI"
-					required="true" /> <span class="required">*</span></td>
 	</table>
 	<input class="btn" type="button" value="Calcular Cuotas" onclick="validar()"/>
 	</fieldset>
 	<s:actionerror cssClass="error"/>	
-	<a href="planesPropListarAction?id=<%=idEdificio%>&tipo=<%=redi%>">Volver</a>
+	<a href="planesPropListarAction?id=<%=idEdificio%>&dni=<%=lista.getResponsable()%>&tipo=<%=redi%>">Volver</a>
 	</form>
 	</div>
 	</div>
