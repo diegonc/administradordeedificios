@@ -50,7 +50,7 @@
 			<td><%=cuotaDTO.getNumeroCuota()%></td>
 			<td><%=cuotaDTO.getMonto()%></td>
 			<td><%=cuotaDTO.getIntereses()%></td>
-			<td><%=cuotaDTO.getMonto() + cuotaDTO.getIntereses() %>
+			<td><%=cuotaDTO.getMonto() + cuotaDTO.getIntereses() %></td>
 			<% if (!cuotaCobroAppl.existeCobro(cuotaDTO.getId()) && cuotaDTO.sePuedePagar() ) { %>
 				<td><a href="#">Saldar</a></td>
 			<%} else { %>
