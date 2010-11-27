@@ -49,6 +49,9 @@ public class CalculoCuotasAction  extends ActionSupport {
 			for (CuotaDTO cuota : plan.getCuotas()) {
 				hSession.save(cuota);
 			}
+			// XXX: hibernate no hace cascada hasta las propiedades :/
+			for (ExpensaCobroDTO e : plan.getCobrosCancelados())
+				hSession.saveOrUpdate(e.getLiquidacion().getPropiedad());
 			hSession.getTransaction().commit();
 		} catch (HibernateException e) {
 			hSession.getTransaction().rollback();

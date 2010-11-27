@@ -9,6 +9,7 @@ import java.util.Set;
 
 import org.apache.commons.beanutils.PropertyUtils;
 
+import propiedades.PropiedadDTO;
 import propiedades.Responsable;
 import edificio.EdificioDTO;
 import expensas.dto.ExpensaCobroDTO;
@@ -136,6 +137,7 @@ public class PlanBuilder {
 				tipo = expensa.getLiquidacion().getTipo();
 				monto = expensa.getMontoPago();
 				propiedades.put("tipo", tipo);
+				cancelarSaldoPropiedad(expensa, tipo);
 			}
 
 			while (it.hasNext()) {
@@ -145,10 +147,23 @@ public class PlanBuilder {
 					throw new IllegalArgumentException("Los cobros recibidos no son del mismo tipo.");
 
 				monto += expensa.getMontoPago();
+				
+				cancelarSaldoPropiedad(expensa, tipo);
 			}
 
 			propiedades.put("monto", new Double(monto));
 		} else throw new IllegalArgumentException("No hay cobros para cancelar.");
+	}
+
+	private void cancelarSaldoPropiedad(ExpensaCobroDTO expensa, String tipo) {
+		PropiedadDTO propiedad = expensa.getLiquidacion().getPropiedad();
+		if (tipo.equals("O")) {
+			propiedad.setCtaOrdSaldoExp(0);
+			propiedad.setCtaOrdSaldoInt(0);
+		} else {
+			propiedad.setCtaExtSaldoExp(0);
+			propiedad.setCtaExtSaldoInt(0);
+		}
 	}
 
 }
