@@ -19,8 +19,8 @@ public class PlanesAppl {
 			q.setInteger("dni", dni);
 			List<PlanDTO> results = (List<PlanDTO>) q.list();
 			return results;
-		} catch (Exception e) {
-			return null;
+		} finally {
+			//session.close();
 		}
 	}
 	
@@ -31,8 +31,8 @@ public class PlanesAppl {
 			q.setInteger("id", id);
 			PlanDTO results = (PlanDTO) q.uniqueResult();
 			return results;
-		} catch (Exception e) {
-			return null;
+		}  finally {
+			//session.close();
 		}
 	}
 }

@@ -58,7 +58,7 @@ public class CalculoCuotasAction  extends ActionSupport {
 			hSession.getTransaction().rollback();
 			LOG.error("No se pudo guardar el plan.", e);
 		} finally {
-			//hSession.close();
+			//aqui habia un clo
 		}
 		return SUCCESS;
 	}
@@ -85,7 +85,7 @@ public class CalculoCuotasAction  extends ActionSupport {
 			
 			return pb.calcularPlan();
 		} finally {
-			//hSession.close();
+			//aqui habia un clo;
 		}
 	}
 
