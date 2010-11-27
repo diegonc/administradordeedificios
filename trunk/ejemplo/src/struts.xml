@@ -180,28 +180,23 @@
 	    </action> 
 	    <action name="planesPropListarAction" class="actions.PlanesPropListarAction">
 			    <result name="success">/planesPropiedadesListado.jsp </result>
-			    <result name="error" type="redirectAction">
-					<param name="actionName">EdificioListarAction</param>
-					<param name="redi">planes</param>
-				</result>					    
+			    <result name="error">/planesError.jsp</result>					    
 	    </action> 
 	    <action name="CalculoPlanesAction" class="actions.CalculoPlanesAction">
 			    <result name="success">/planesExpensasListado.jsp </result>
-			    <result name="error" type="redirectAction">
-					<param name="actionName">EdificioListarAction</param>
-					<param name="redi">planes</param>
-				</result>	    
-	</action>
+			   <result name="error">/planesError.jsp</result>		    
+		</action>
 		<action name="CalculoCuotasAction" class="actions.CalculoCuotasAction">
 			<result name="confirmacion">/planesCuotasListado.jsp </result>
 			<result name="success" type="redirectAction">
 				<param name="actionName">EdificioListarAction</param>
 				<param name="redi">planes</param>
 			</result>
-			<result name="error" type="redirectAction">
+			<result name="cancelar" type="redirectAction">
 				<param name="actionName">EdificioListarAction</param>
 				<param name="redi">planes</param>
 			</result>
+			<result name="error">/planesError.jsp</result>
 		</action>
 		<action name="PlanesConsultaAction" class="actions.PlanesConsultaAction">
 		    <result name="sinplan">/planesConsulta.jsp</result>

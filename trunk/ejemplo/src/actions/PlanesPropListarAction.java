@@ -29,9 +29,9 @@ import expensas.dto.ExpensaDTO;
 public class PlanesPropListarAction extends ActionSupport{
 	
 	private static final Logger LOG = LoggerFactory.getLogger(PlanesPropListarAction.class);
+	private int dni;
 	private int id;
 	private String tipo;
-	
 	@SuppressWarnings("unused")
 	private Map<String,Object> session;
 	private String redi;
@@ -64,14 +64,16 @@ public class PlanesPropListarAction extends ActionSupport{
 							Session session = HibernateUtil.getSession();
 							ExpensasCobroAppl expCobrosAppl = new ExpensasCobroAppl(session);
 							List<ExpensaCobroDTO> cobros = expCobrosAppl.getCobroPorIdExpensas(exp.getId());
-							session.close();
 							if (cobros.isEmpty() && exp.getMonto()!=0) {
-								listaPropiedades.agregarPropieadad(propiedadDTO);
+								if (estaResposable(propiedadDTO)) {
+									listaPropiedades.agregarPropieadad(propiedadDTO);
+								}
 							}
 						}
 					}
 				}
 				if (!listaPropiedades.getPropiedades().isEmpty()) {
+					listaPropiedades.setDniResp(dni);
 					Map<String, Object> session = ActionContext.getContext().getSession();
 					session.put("lista",listaPropiedades);
 					this.setSession(session);
@@ -89,6 +91,23 @@ public class PlanesPropListarAction extends ActionSupport{
 		return ERROR;
 	}
 	
+	private boolean estaResposable(PropiedadDTO propiedadDTO) {
+		if (propiedadDTO.getPropietario().getDni() == this.dni) {
+			return true;
+		}	 
+		if (propiedadDTO.getPoderInquilino() != null) {
+			if (propiedadDTO.getPoderInquilino().getDni()==this.dni) {
+				return true;
+			}
+		}
+		if (propiedadDTO.getPoderPropietario() != null) {
+			if (propiedadDTO.getPoderPropietario().getDni()==this.dni) {
+				 return true;
+			 }
+		}
+		return false;
+	}
+
 	public void setSession(Map<String, Object> arg0) {
 		this.session=arg0;
 	}
@@ -101,14 +120,6 @@ public class PlanesPropListarAction extends ActionSupport{
 		return redi;
 	}
 
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public int getId() {
-		return id;
-	}
-
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
@@ -116,4 +127,20 @@ public class PlanesPropListarAction extends ActionSupport{
 	public String getTipo() {
 		return tipo;
 	}
+
+	public void setDni(int dni) {
+		this.dni = dni;
+	}
+
+	public int getDni() {
+		return dni;
+	}
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 }

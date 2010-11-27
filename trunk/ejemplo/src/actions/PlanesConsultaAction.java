@@ -21,13 +21,14 @@ public class PlanesConsultaAction extends ActionSupport{
 		List<PlanDTO> planes = planAppl.getPlanByDNI(dni);
 		
 		if (planes.isEmpty()) {
-			return "sinplan";
+			addActionError("No existen planes para el responsable elegido");
+			return "sinplan";	
 		}
 		
 		PlanesBeans listaPlanes = new PlanesBeans();
 		listaPlanes.setPlanes(planes);
 		
-		Map<String, Object> session = ActionContext.getContext().getSession();
+		session = ActionContext.getContext().getSession();
 		session.put("lista",listaPlanes);
 		this.setSession(session);
 		

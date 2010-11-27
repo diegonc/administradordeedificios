@@ -32,6 +32,7 @@ public class CalculoCuotasAction  extends ActionSupport {
 	
 	public String execute() {
 		if (expElegidas == null) {
+			addActionError("No ha seleccionado ninguna expensa con deuda");
 			return "error";
 		}
 		plan = crearPlan();
@@ -57,13 +58,13 @@ public class CalculoCuotasAction  extends ActionSupport {
 			hSession.getTransaction().rollback();
 			LOG.error("No se pudo guardar el plan.", e);
 		} finally {
-			hSession.close();
+			//hSession.close();
 		}
 		return SUCCESS;
 	}
 
 	public String cancelar() {
-		return ERROR;
+		return "cancelar";
 	}
 
 	private PlanDTO crearPlan() {
@@ -84,7 +85,7 @@ public class CalculoCuotasAction  extends ActionSupport {
 			
 			return pb.calcularPlan();
 		} finally {
-			hSession.close();
+			//hSession.close();
 		}
 	}
 

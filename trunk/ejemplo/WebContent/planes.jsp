@@ -26,13 +26,11 @@
 			<tr>
 				<td class="listado_par">Nombre</td>
 				<td class="listado_par"></td>
-				<td class="listado_par"></td>
 			</tr>	
 		<% for (EdificioDTO edificioDTO : edificios) {  %>		
 			<tr>
 				<td><%= edificioDTO.getNombre()%></td>
-				<td><a href="planesPropListarAction?id=<%=edificioDTO.getId()%>&tipo=ord">Propiedades deuda ordinaria</a></td>
-				<td><a href="planesPropListarAction?id=<%=edificioDTO.getId()%>&tipo=ext">Propiedades deuda extraordinaria</a></td>
+				<td><a href="planesElegirResponsable.jsp?idEdif=<%=edificioDTO.getId()%>">Responsables</a></td>
 			</tr>	
 		<%} %>				
 		

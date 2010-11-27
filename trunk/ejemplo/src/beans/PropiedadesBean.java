@@ -9,6 +9,7 @@ public class PropiedadesBean {
 	private ArrayList<PropiedadDTO> propiedades = new ArrayList<PropiedadDTO>();
 	private int idPropiedad;
 	private String tipo;
+	private int dniResp;
 
 	public void setIdPropiedad(int idPropiedad) {
 		this.idPropiedad = idPropiedad;
@@ -36,6 +37,14 @@ public class PropiedadesBean {
 
 	public String getTipo() {
 		return tipo;
+	}
+
+	public void setDniResp(int dniResp) {
+		this.dniResp = dniResp;
+	}
+
+	public int getDniResp() {
+		return dniResp;
 	}
 
 }

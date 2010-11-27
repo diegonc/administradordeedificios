@@ -1,5 +1,11 @@
 package planes;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
+import javassist.bytecode.Descriptor.Iterator;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,6 +14,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+
+import expensas.dto.ExpensaCobroDTO;
 
 
 @Entity
@@ -53,7 +61,49 @@ public class CuotaDTO {
 		this.interesSegundoVencimiento = interesSegundoVencimiento;
 	}
 
-
+	public boolean sePuedePagar() {
+		Date fechaInicio = this.plan.getFecha();
+		
+		Calendar calendar = Calendar.getInstance();
+	    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		Date fechaActual = calendar.getTime();
+		
+		java.util.Iterator<ExpensaCobroDTO> ite = this.getPlan().getCobrosCancelados().iterator();
+		ExpensaCobroDTO expensa = ite.next();
+		int diaVto = expensa.getLiquidacion().getPropiedad().getTipoPropiedad().getEdificio().getDia_primer_vto();
+		
+		Date fechaVtoCuotaAnt = new Date();
+		fechaVtoCuotaAnt.setYear(fechaInicio.getYear());
+		fechaVtoCuotaAnt.setMonth(fechaInicio.getMonth() + this.numeroCuota - 1);
+		fechaVtoCuotaAnt.setDate(diaVto);
+		
+		if (fechaVtoCuotaAnt.before(fechaActual)) {
+			return true;
+		} 
+		return false;
+	}
+	
+	public boolean estaVencida() {
+		Date fechaInicio = this.plan.getFecha();
+		
+		Calendar calendar = Calendar.getInstance();
+	    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		Date fechaActual = calendar.getTime();
+		
+		java.util.Iterator<ExpensaCobroDTO> ite = this.getPlan().getCobrosCancelados().iterator();
+		ExpensaCobroDTO expensa = ite.next();
+		int diaVto = expensa.getLiquidacion().getPropiedad().getTipoPropiedad().getEdificio().getDia_primer_vto();
+		
+		Date fechaVtoCuota = new Date();
+		fechaVtoCuota.setYear(fechaInicio.getYear());
+		fechaVtoCuota.setMonth(fechaInicio.getMonth() + this.numeroCuota);
+		fechaVtoCuota.setDate(diaVto);
+		
+		if (fechaVtoCuota.before(fechaActual)) {
+			return true;
+		} 
+		return false;
+	}
 	
 	@Id
 	@Column(name="ID")

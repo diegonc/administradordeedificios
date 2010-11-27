@@ -10,10 +10,11 @@ import gastos.dto.TipoGastoDTO;
 
 public class LiquidacionBean {
 	
-	List<ExpensaDTO> expensasOrdinarias;
-	List<ExpensaDTO> expensasExtraordinarias;
-	HashMap<TipoGastoDTO, List<GastoDTO>> gastosOrdinariosDelPeriodo;
-	HashMap<TipoGastoDTO, List<GastoDTO>> gastosExtraordinariosDelPeriodo;
+	private List<ExpensaDTO> expensasOrdinarias;
+	private List<ExpensaDTO> expensasExtraordinarias;
+	private HashMap<TipoGastoDTO, List<GastoDTO>> gastosOrdinariosDelPeriodo;
+	private HashMap<TipoGastoDTO, List<GastoDTO>> gastosExtraordinariosDelPeriodo;
+	private int responsable;
 	
 	public List<ExpensaDTO> getExpensasOrdinarias() {
 		return expensasOrdinarias;
@@ -47,6 +48,14 @@ public class LiquidacionBean {
 	public void setGastosExtraordinariosDelPeriodo(
 			HashMap<TipoGastoDTO, List<GastoDTO>> gastosExtraordinariosDelPeriodo) {
 		this.gastosExtraordinariosDelPeriodo = gastosExtraordinariosDelPeriodo;
+	}
+
+	public void setResponsable(int responsable) {
+		this.responsable = responsable;
+	}
+
+	public int getResponsable() {
+		return responsable;
 	}
 	
 	
