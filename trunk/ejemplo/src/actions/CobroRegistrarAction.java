@@ -79,7 +79,6 @@ public class CobroRegistrarAction extends ActionSupport  {
 		Session session = HibernateUtil.getSession();
 		ExpensasCobroAppl expAppl = new ExpensasCobroAppl(session);
 		List<ExpensaCobroDTO> cobros = expAppl.getCobroPorIdExpensas(expId);
-		session.close();
 		if (cobros.isEmpty()) {
 			return false;
 		}

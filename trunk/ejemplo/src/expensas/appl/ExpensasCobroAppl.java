@@ -34,7 +34,7 @@ public class ExpensasCobroAppl {
         	throw new GastoExistenteException("Error al cargar el cobro.");
         }
         session.getTransaction().commit();
-        HibernateUtil.getSessionFactory().close();
+       // HibernateUtil.getSessionFactory().close();
 	}
 	
 	@SuppressWarnings("unchecked")
