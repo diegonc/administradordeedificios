@@ -32,6 +32,9 @@ public class CuotaDTO {
 	private Boolean atrasado;
 	private Double interesSegundoVencimiento;
 	
+	private double interesMora;
+	private Date fechaLiquidacion;
+	
 	
 	public void setId(int id) {
 		this.id = id;
@@ -141,6 +144,24 @@ public class CuotaDTO {
 	@Column(name="INTERES_2VTO")
 	public Double getInteresSegundoVencimiento() {
 		return interesSegundoVencimiento;
+	}
+
+	@Column(name="INTERES_MORA")
+	public double getInteresMora() {
+		return interesMora;
+	}
+
+	public void setInteresMora(double interesMora) {
+		this.interesMora = interesMora;
+	}
+
+	@Column(name="FECHA_LIQUIDACION")
+	public Date getFechaLiquidacion() {
+		return fechaLiquidacion;
+	}
+
+	public void setFechaLiquidacion(Date fechaLiquidacion) {
+		this.fechaLiquidacion = fechaLiquidacion;
 	}
 
 }
