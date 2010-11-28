@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<!DOCTYPE hibernate-configuration PUBLIC
+    "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+    
+<hibernate-configuration>
+
+  <session-factory>
+
+    <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+    <property name="hibernate.connection.url">jdbc:mysql://localhost/administracionedificios</property>
+    <property name="hibernate.connection.username">root</property>
+    <property name="hibernate.connection.password">root</property>
+    
+    <property name="hibernate.connection.pool_size">1</property>
+    <property name="hibernate.dialect">org.hibernate.dialect.MySQLInnoDBDialect</property>
+    <property name="transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</property>
+    <!--  property name="hibernate.hbm2ddl.auto">update</property>-->
+    <property name="hibernate.show_sql">false</property>
+    
+    <!-- package edificio -->
+    <mapping class="edificio.EdificioDTO"/>
+    
+    <!-- package expensas -->
+    <mapping class="expensas.dto.ExpensaCobroDTO"/>
+    <mapping class="expensas.dto.ExpensaDTO"/>
+    
+    <!-- package gastos -->
+    <mapping class="gastos.dto.GastoDTO"/>
+    <mapping class="gastos.dto.GastoPrevisionDTO"/>
+    <mapping class="gastos.dto.GastoRealDTO"/>
+    <mapping class="gastos.dto.TipoGastoDTO"/>
+    <mapping class="gastos.dto.TipoGastoEventualDTO"/>
+    <mapping class="gastos.dto.TipoGastoExtraordinarioDTO"/>
+    <mapping class="gastos.dto.TipoGastoMontoFijoDTO"/>
+    <mapping class="gastos.dto.TipoGastoMontoVariableDTO"/>
+    <mapping class="gastos.dto.TipoGastoOrdinarioDTO"/>
+    <mapping class="gastos.dto.TipoGastoPeriodicoDTO"/>
+    
+    
+    <!-- package propiedades -->
+    <mapping class="propiedades.PropiedadDTO"/>
+    <mapping class="propiedades.Responsable"/>
+    <mapping class="propiedades.TipoPropiedadDTO"/>
+    <mapping class="propiedades.TipoPropiedadTipoGastoDTO"/>
+    
+     <!-- package usuarios -->
+    <mapping class="usuarios.dto.PerfilDTO"/>
+    <mapping class="usuarios.dto.UsuarioDTO"/>
+    <mapping class="usuarios.dto.UsuarioPerfilDTO"/>
+    <mapping class="usuarios.dto.UsuarioPerfilEdificioDTO"/>
+    
+    <!-- package planes -->
+    <mapping class="planes.PlanDTO"/>
+    <mapping class="planes.CuotaDTO"/>
+    <mapping class="planes.CuotaCobroDTO"/>
+        
+    
+  </session-factory>
+
+  
+</hibernate-configuration>

@@ -1,0 +1,14 @@
+
+<table  cellpadding="0" cellspacing="0" >
+
+<tr>
+	<td width="5"   class="borde"></td>
+	<td width="800" class="borde" align="center"> <font color="#FFFFFF" style="background:#000000;" size="1" face="Verdana, Arial, Helvetica, sans-serif">
+	&copy; Copyright 2010 Facultad de Ingenier&iacute;a - Todos los derechos reservados.</font>
+	</td>
+	<td width="5"   class="borde"></td>
+</tr>
+</table>
+</div>
+</body>
+</html>

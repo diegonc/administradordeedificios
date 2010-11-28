@@ -1,0 +1,66 @@
+<%@ taglib prefix="s" uri="/struts-tags" %>
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml2/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<title>Nicolino Propiedades</title>
+    <link rel="stylesheet" href="<s:url value='/menu_style.css'/>" type="text/css" />
+</head>
+<body>
+<%@ page language="java" contentType="text/html" import="usuarios.dto.*"%>
+<%@ page language="java" contentType="text/html" import="permisos.*"%>
+<%AdministradorDePermisos administradorDePermisos = AdministradorDePermisos.getInstancia(); %>
+<div id="contenedor">
+<div>
+<ul class="menu">
+	<li class="top"><a href="home.jsp" class="top_link"><span>Home</span></a></li>
+	<%if (administradorDePermisos.isAdministrador()){ %>
+	<li class="top"><a href="#" class="top_link"><span>Administraci&oacute;n</span></a>
+		<ul class="sub">
+			 <li><a href="GetListadoUsuariosAction" >Usuarios</a></li>
+			 <li><a href="VinculacionUsuario" >Asignaci&oacute;n de Perfiles</a></li>
+		</ul>
+	</li>
+	<%} %>
+	<%if (administradorDePermisos.isAdministrador()||administradorDePermisos.isResponsableEdificios()){ %>
+	<li class="top"><a href="#" class="top_link"><span>Edificios</span></a>
+		<ul class="sub">
+			<li><a href="<s:url action='tiposPropiedadesListado'/>">Tipos de Propiedades</a></li>
+			<li><a href="<s:url action='propiedadesListado'/>">Propiedades</a></li>
+			<%if (administradorDePermisos.isAdministrador()) {%>
+			<li><a href="EdificioListarAction?redi=edificio">Edificios</a></li>
+			<%} %>
+            <li><a href="<s:url action='responsablesListado'/>">Responsables</a></li>            
+		</ul>
+	</li>
+	<%} %>
+	<%if (administradorDePermisos.isAdministrador()||administradorDePermisos.isResponsableGastos()|| administradorDePermisos.isResponsableEdificios() ){ %>
+	<li class="top"><a href="#" class="top_link"><span>Gastos</span></a>
+		<ul class="sub">
+		<%if (administradorDePermisos.isAdministrador()||administradorDePermisos.isResponsableEdificios()) {%>
+			<li><a href="GetListadoTipoDeGastoAction">Tipo de Gastos</a></li>
+		<%} %>
+		<%if (administradorDePermisos.isAdministrador()||administradorDePermisos.isResponsableGastos() ){%>	
+			<li><a href="EdificioListarAction?redi=gasto">Gastos </a></li>                    
+		<%} %>	
+		</ul>
+	</li>
+	<%} %>
+	<%if (administradorDePermisos.isAdministrador()||administradorDePermisos.isResponsableCobros()){ %>
+	<li class="top"><a href="#" class="top_link"><span>Cobros</span></a>
+		<ul class="sub">
+			<li><a href="EdificioListarAction?redi=expensa">Expensas</a></li>
+			<li><a href="EdificioListarAction?redi=planes">Planes</a></li>  
+			<li><a href="expensasHistorialAction">Liquidaciones-Historial</a></li>       
+			<li><a href="planesConsulta.jsp">Planes-Historial</a></li>              
+		</ul>
+	</li>
+	<%} %>
+	<li class="top"><a href="salir.jsp" class="top_link"><span>Salir</span></a></li>	
+</ul>
+</div>
+<div class="clear-both"></div>
+
+
+
