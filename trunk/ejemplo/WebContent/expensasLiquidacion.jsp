@@ -42,7 +42,7 @@ function ocularYMostrar(id){
 			<tr><td colspan="1" height="15"></td>
 			</tr>
 			<tr >
-				<td align="center">Edificio:<%=edificioDTO.getNombre()%></br><%=edificioDTO.getCalle()%>&nbsp;<%=edificioDTO.getNumero()%>&nbsp;<%=edificioDTO.getLocalidad()%></td>						
+				<td align="center">Edificio:<%=edificioDTO.getNombre()%><br/><%=edificioDTO.getCalle()%>&nbsp;<%=edificioDTO.getNumero()%>&nbsp;<%=edificioDTO.getLocalidad()%></td>						
 			</tr>
 			<tr><td colspan="1" height="15"></td>
 		</table>
@@ -109,8 +109,8 @@ function ocularYMostrar(id){
 			<td>Piso</td>
 			<td>DTO</td>
 			<td>Responsable</td>
-			<td>Deuda</br> Previa</td>
-			<td>Exp.</br> Ordinarias</td>
+			<td>Deuda<br/> Previa</td>
+			<td>Exp.<br/> Ordinarias</td>
 			<td>Int.PrimerVto</td>
 			<td>Total.PrimerVto</td>
 			<%if (edificio.getMora().equals("punitorio")){%>	
