@@ -4,6 +4,11 @@ import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.exception.ConstraintViolationException;
+
+import edificio.EdificioDTO;
+import gastos.exception.GastoExistenteException;
 
 import utilidades.HibernateUtil;
 
@@ -22,5 +27,17 @@ public class CuotaCobroAppl {
 		} catch (Exception e) {
 			return true;
 		}
+	}
+	
+	public int insertCobro(CuotaCobroDTO cobro) throws GastoExistenteException {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        try{
+        	session.save(cobro);
+        }catch(ConstraintViolationException e){
+        	throw new GastoExistenteException("Error al cargar el cobro.");
+        }
+        session.getTransaction().commit();
+       return cobro.getId();
 	}
 }
