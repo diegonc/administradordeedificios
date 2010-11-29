@@ -39,9 +39,7 @@
 			<td class="listado_par">Saldo</td>
 			<td class="listado_par">Pagos</td>
 			<td class="listado_par">Mora</td>
-			<% if (AdministradorDePermisos.getInstancia().isAdministrador()) { %>
-				<td class="listado_par">Consolidar</td>
-			<%} %>
+			<td class="listado_par">Consolidar</td>
 		</tr>
 		<%
 			for (CuotaDTO cuotaDTO : cuotas) {
@@ -55,7 +53,7 @@
 				<td><a href="cobroCuotaRegistrar.jsp?idCuota=<%=cuotaDTO.getId() %>">Saldar</a></td>
 			<%} else { %>
 				<td>&nbsp;</td>
-			<% } if (cuotaDTO.estaVencida()) {%>
+			<% } if (cuotaDTO.estaVencida() && !cuotaCobroAppl.existeCobro(cuotaDTO.getId())) {%>
 				<td><a href="#">Calcular Mora</a></td>
 			<%} else {%>
 				<td>&nbsp;</td>

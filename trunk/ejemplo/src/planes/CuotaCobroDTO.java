@@ -21,6 +21,7 @@ public class CuotaCobroDTO {
 
 	private Date fecha;
 	private String comprobante;
+	private boolean consolidado = false;
 	
 	public void setId(int id) {
 		this.id = id;
@@ -59,6 +60,15 @@ public class CuotaCobroDTO {
 	@Column(name="COMPROBANTE", nullable=false)
 	public String getComprobante() {
 		return comprobante;
+	}
+
+	public void setConsolidado(boolean consolidado) {
+		this.consolidado = consolidado;
+	}
+
+	@Column(name="CONSOLIDADO", nullable=false)
+	public boolean getConsolidado() {
+		return consolidado;
 	}
 
 }

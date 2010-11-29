@@ -37,7 +37,7 @@ function validar(thisform) {
 		} 
 	}
 	if (valido==true) {
-		document.regisCobro.submit();
+		document.regisCuotaCobro.submit();
 	}
 }
 </script>
@@ -65,12 +65,13 @@ function validar(thisform) {
 					  				&nbsp;&nbsp;<input type="text" name="dia" id="dia" maxlength="2" size="2" style="width:22px;" disabled >
 									&nbsp;<input type="text" name="mes" id="mes" maxlength="2" size="2"  style="width:22px;" disabled  >
 									&nbsp;<input type="text" name="anio" id="anio" maxlength="4" size="4" style="width:32px;" disabled >
-									&nbsp;<a href="JavaScript:doNothing()" onclick="allowPrevious=true;setDateField(document.regisCobro.dia,document.regisCobro.mes,document.regisCobro.anio);top.newWin = window.open('calendario.jsp','cal','WIDTH=200,HEIGHT=160,TOP=200,LEFT=300')" onMouseOver="javascript: window.status = 'Abrir calendario'; return true;" onMouseOut="window.status=' '; return true;" ><img src="images/calendario.gif" ></img></a>
+									&nbsp;<a href="JavaScript:doNothing()" onclick="allowPrevious=true;setDateField(document.regisCuotaCobro.dia,document.regisCuotaCobro.mes,document.regisCuotaCobro.anio);top.newWin = window.open('calendario.jsp','cal','WIDTH=200,HEIGHT=160,TOP=200,LEFT=300')" onMouseOver="javascript: window.status = 'Abrir calendario'; return true;" onMouseOut="window.status=' '; return true;" ><img src="images/calendario.gif" ></img></a>
 				 			</td>
 				 		</tr>
 			  		</table>		
 			</fieldset>
 			<input class="btn" type="button" value="Aceptar" onclick="validar()" />
+			<input type="text" style="display: none;" id="cuota_id" name="cuota_id" value=<%=cuota.getId() %> size="15"/>		  	
 			<a href="planesDetalle.jsp?idPlan=<%=cuota.getPlan().getId()%>">Volver</a>	
 		</form>
 </div>
