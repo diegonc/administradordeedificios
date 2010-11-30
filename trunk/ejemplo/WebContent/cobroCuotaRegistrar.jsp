@@ -53,9 +53,9 @@ function validar(thisform) {
 			 			<tr><td colspan="10" height="5"></td></tr>
 			 			<tr>
 			 				<td><label for="nroCuota">Cuota: <%=cuota.getNumeroCuota() %></label> </td>
-				 			<td>&nbsp;<label for="monto">Monto Amortizado: <%=cuota.getMonto() %></label> </td>
-				 			<td>&nbsp;<label for="interes">Interes: <%=cuota.getIntereses()%></label> </td>
-				 			<td>&nbsp;<label for="saldo">Saldo a Pagar: <%=cuota.getMonto()+cuota.getIntereses() %></label> </td>
+				 			<td>&nbsp;<label for="monto">Monto Amortizado: <%=NumberFormat.redondeoDouble(cuota.getMonto()) %></label> </td>
+				 			<td>&nbsp;<label for="interes">Interes: <%=NumberFormat.redondeoDouble(cuota.getIntereses())%></label> </td>
+				 			<td>&nbsp;<label for="saldo">Saldo a Pagar: <%=NumberFormat.redondeoDouble(cuota.getMonto()+cuota.getIntereses()) %></label> </td>
 				 		</tr>
 			 			<tr>
 			 				<td><label for="compro">Comprobante:</label> </td>

@@ -27,7 +27,8 @@
 		</tr>
 		
 		<tr>
-			<td>Monto: <%=plan.getMonto()%> - Intereses: <%=plan.getSaldoIntereses()%> -  Saldo: <%=plan.getSaldoPlan()%></td>
+			<td>Monto: <%=NumberFormat.redondeoDouble(plan.getMonto())%> - Intereses: <%=NumberFormat.redondeoDouble(plan.getSaldoIntereses())%> 
+			-  Saldo: <%=NumberFormat.redondeoDouble(plan.getSaldoPlan())%></td>
 		</tr>
 	</table>
 	<fieldset><legend>Cuotas</legend>	
@@ -46,11 +47,11 @@
 		%>
 		<tr>
 			<td><%=cuotaDTO.getNumeroCuota()%></td>
-			<td><%=cuotaDTO.getMonto()%></td>
-			<td><%=cuotaDTO.getIntereses()%></td>
-			<td><%=cuotaDTO.getMonto() + cuotaDTO.getIntereses() %></td>
+			<td><%=NumberFormat.redondeoDouble(cuotaDTO.getMonto())%></td>
+			<td><%=NumberFormat.redondeoDouble(cuotaDTO.getIntereses())%></td>
+			<td><%=NumberFormat.redondeoDouble(cuotaDTO.getMonto() + cuotaDTO.getIntereses()) %></td>
 			<% if (!cuotaCobroAppl.existeCobro(cuotaDTO.getId()) && cuotaDTO.sePuedePagar() ) { %>
-				<td><a href="cobroCuotaRegistrar.jsp?idCuota=<%=cuotaDTO.getId() %>">Saldar</a></td>
+				<td><a href="cobroCuotaRegistrar.jsp?idCuota=<%=cuotaDTO.getId()%>">Saldar</a></td>
 			<%} else { %>
 				<td>&nbsp;</td>
 			<% } if (cuotaDTO.estaVencida() && !cuotaCobroAppl.existeCobro(cuotaDTO.getId())) {%>
@@ -58,8 +59,8 @@
 			<%} else {%>
 				<td>&nbsp;</td>
 			<%} %>
-			<% if (AdministradorDePermisos.getInstancia().isAdministrador() && cuotaCobroAppl.existeCobro(cuotaDTO.getId())) { %>
-				<td><a href="#">Consolidar</a></td>
+			<% if (AdministradorDePermisos.getInstancia().isAdministrador() && cuotaCobroAppl.paraConsolidar(cuotaDTO.getId())) { %>
+				<td><a href="ConsolidarCuota?cuota_id=<%=cuotaDTO.getId() %>">Consolidar</a></td>
 			<%} else {%>
 				<td>&nbsp;</td>
 			<%} %>

@@ -20,6 +20,7 @@ public class CobroCuotaRegistrarAction extends ActionSupport  {
 	private String comprobante;
 	private int cuota_id;
 	private boolean consolidado;
+	private int idPlan;
 	
 	public void setId(int id) {
 		this.id = id;
@@ -53,8 +54,8 @@ public class CobroCuotaRegistrarAction extends ActionSupport  {
 	}
 	
 	public String execute() {
+		CuotaAppl cuotaAppl = new CuotaAppl();
 		try {
-			CuotaAppl cuotaAppl = new CuotaAppl();
 			CuotaCobroAppl cobroAppl = new CuotaCobroAppl();
 			CuotaCobroDTO cobroCuota = new CuotaCobroDTO();
 			cobroCuota.setComprobante(comprobante);
@@ -66,8 +67,14 @@ public class CobroCuotaRegistrarAction extends ActionSupport  {
 			addActionError("No se ha cargado el cobro");
 			return "error";
 		}
-		addActionError("Se cargo el cobro");
+		this.idPlan = cuotaAppl.getCuotaById(cuota_id).getPlan().getId();
 		return SUCCESS;	
+	}
+	public void setIdPlan(int idPlan) {
+		this.idPlan = idPlan;
+	}
+	public int getIdPlan() {
+		return idPlan;
 	}
 
 	

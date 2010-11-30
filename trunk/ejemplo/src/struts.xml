@@ -203,9 +203,19 @@
 			<result name="success">/planesListado.jsp</result>
 		</action>
 		<action name="cobroCuotaRegistrarAction" class="actions.CobroCuotaRegistrarAction">
-			<result name="success">/planesConsulta.jsp </result>
+			<result name="success" type="redirect">
+			    <param name="location">/planesDetalle.jsp</param>
+				<param name="idPlan">${idPlan}</param>
+			</result>
 	    	<result name="error">/planesConsulta.jsp </result>
 	    </action> 
+	    <action name="ConsolidarCuota" class="actions.ConsolidarCuota">
+			<result name="success" type="redirect">
+			    <param name="location">/planesDetalle.jsp</param>
+				<param name="idPlan">${idPlan}</param>
+			</result>
+	    	<result name="error">/planesConsulta.jsp </result>
+	    </action>    
 	</package>
 
 	<package name="experimental" extends="hibernate-default">
