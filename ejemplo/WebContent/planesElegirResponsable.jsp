@@ -47,7 +47,7 @@ function cargarDni(){
 						<s:actionerror cssClass="error"/>
 						<input type="hidden" name="dni"></input>
 						<input type="hidden" name="id" value="<%=idEdif%>"></input>
-						<input type="submit" value="Ver Planes" onclick="cargarDni()">
+						<input type="submit" value="Ver Expensas" onclick="cargarDni()">
 					</form>
 				</td>
 				<td width="15"  class="fondo"></td>

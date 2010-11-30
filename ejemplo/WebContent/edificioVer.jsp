@@ -99,9 +99,9 @@
 			 			<tr><td class="borderline" colspan="8" height="10"></td></tr>
 			 			<tr>
 			 				<td align="right"><label for="fondoOrd">Fondo Oridinario:</label> </td>
-				 			<td>&nbsp;&nbsp;<input type="text" id="fondoOrd" name="fondoOrd" value="<%=edificio.getFondo_ordinario() %>" readonly size="9"/></td>
+				 			<td>&nbsp;&nbsp;<input type="text" id="fondoOrd" name="fondoOrd" value="<%=NumberFormat.redondeoDouble(edificio.getFondo_ordinario()) %>" readonly size="9"/></td>
 				 			<td align="right" ><label for="fondoExt">Fondo Extraordinario:</label> </td>
-				 			<td>&nbsp;&nbsp;<input type="text" id="fondoExt" name="fondoExt" value="<%=edificio.getFondo_extraordinario() %>" readonly size="9"/></td>
+				 			<td>&nbsp;&nbsp;<input type="text" id="fondoExt" name="fondoExt" value="<%=NumberFormat.redondeoDouble(edificio.getFondo_extraordinario()) %>" readonly size="9"/></td>
 			 			</tr>				  	
 			  		</table>			  	
 			</fieldset>

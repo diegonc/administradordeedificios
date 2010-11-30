@@ -52,24 +52,29 @@
 			<td><%=NumberFormat.redondeoDouble(cuotaDTO.getMonto() + cuotaDTO.getIntereses()) %></td>
 			<% if (!cuotaCobroAppl.existeCobro(cuotaDTO.getId()) && cuotaDTO.sePuedePagar() ) { %>
 				<td><a href="cobroCuotaRegistrar.jsp?idCuota=<%=cuotaDTO.getId()%>">Saldar</a></td>
-			<%} else { %>
+			<%} else if (cuotaCobroAppl.existeCobro(cuotaDTO.getId())) { %>
+				<td>Saldado</td>
+			<% } else { %> 
 				<td>&nbsp;</td>
-			<% } if (cuotaDTO.estaVencida() && !cuotaCobroAppl.existeCobro(cuotaDTO.getId())) {%>
+			<%} if (cuotaDTO.estaVencida() && !cuotaCobroAppl.existeCobro(cuotaDTO.getId())) {%>
 				<td><a href="#">Calcular Mora</a></td>
 			<%} else {%>
 				<td>&nbsp;</td>
 			<%} %>
 			<% if (AdministradorDePermisos.getInstancia().isAdministrador() && cuotaCobroAppl.paraConsolidar(cuotaDTO.getId())) { %>
 				<td><a href="ConsolidarCuota?cuota_id=<%=cuotaDTO.getId() %>">Consolidar</a></td>
-			<%} else {%>
+			<%} else if (AdministradorDePermisos.getInstancia().isAdministrador() && cuotaCobroAppl.existeCobro(cuotaDTO.getId())) {%>
+				<td>Consolidado</td>
+			<%} else { %>
 				<td>&nbsp;</td>
-			<%} %>
+			<% } %>
 		</tr>
 		<%
 		}
 		%>
 	
 	</table>
+	<a href="#">Imprimir</a>
 	</fieldset>
 	<a href="planesListado.jsp?<%=plan.getResponsable().getDni() %>">Volver</a>
 	</form>

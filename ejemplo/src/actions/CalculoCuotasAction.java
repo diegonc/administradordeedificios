@@ -58,7 +58,6 @@ public class CalculoCuotasAction  extends ActionSupport {
 			hSession.getTransaction().rollback();
 			LOG.error("No se pudo guardar el plan.", e);
 		} finally {
-			//aqui habia un clo
 		}
 		return SUCCESS;
 	}
