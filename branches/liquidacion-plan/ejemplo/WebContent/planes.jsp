@@ -31,9 +31,7 @@
 			<tr>
 				<td><%= edificioDTO.getNombre()%></td>
 				<td><a href="planesElegirResponsable.jsp?idEdif=<%=edificioDTO.getId()%>">Responsables</a></td>
-				<td>
-				<s:url action="liquidarPlanesAction" var="url"><s:param name="idEdificio" value="<%=edificioDTO.getId()%>"/></s:url>
-				<a href="<s:property value="#url"/>">Liquidar</a></td> 
+				<td><a href="liquidarPlanesAction?idEdificio=<%=edificioDTO.getId()%>">Liquidar</a></td> 
 			</tr>	
 		<%} %>				
 		
