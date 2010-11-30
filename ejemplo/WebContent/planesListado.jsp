@@ -31,9 +31,9 @@
 			<td><%=planDTO.getId()%></td>
 			<td><%=planDTO.getFecha()%></td>
 			<td><%=planDTO.getCantidadCuotas()%></td>
-			<td><%=planDTO.getMonto()%></td>
-			<td><%=planDTO.getSaldoIntereses()%></td>
-			<td><%=planDTO.getSaldoPlan()%></td>
+			<td><%=NumberFormat.redondeoDouble(planDTO.getMonto())%></td>
+			<td><%=NumberFormat.redondeoDouble(planDTO.getSaldoIntereses())%></td>
+			<td><%=NumberFormat.redondeoDouble(planDTO.getSaldoPlan())%></td>
 			<td>
 				<a href="planesDetalle.jsp?idPlan=<%=planDTO.getId()%>">Detalle</a>
 			</td>
