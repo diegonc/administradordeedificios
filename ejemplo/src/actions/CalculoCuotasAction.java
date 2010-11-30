@@ -27,6 +27,7 @@ public class CalculoCuotasAction  extends ActionSupport {
 	private int responsableDNI;
 	private List<Integer> expElegidas;
 	private int cantCuotas;
+	private int descuento;
 
 	private PlanDTO plan;
 	
@@ -77,7 +78,7 @@ public class CalculoCuotasAction  extends ActionSupport {
 			pb.setFecha(fecha);
 			pb.setCantidadCuotas(cantCuotas);
 			pb.setResponsable(respAppl.buscar(responsableDNI));
-			
+
 			for (ExpensaCobroDTO cobro : expensas) {
 				pb.addExpensaCobro(cobro);
 			}
@@ -151,6 +152,14 @@ public class CalculoCuotasAction  extends ActionSupport {
 
 	public void setPlan(PlanDTO plan) {
 		this.plan = plan;
+	}
+
+	public void setDescuento(int descuento) {
+		this.descuento = descuento;
+	}
+
+	public int getDescuento() {
+		return descuento;
 	}
 
 }

@@ -24,6 +24,8 @@ function armarFecha(elemento){
 function validar(thisform) {
 	var fecha=document.getElementById("fecha");
 	var cantCuotas = document.getElementById("cantCuotas");
+	var intEdif = document.getElementById("intEdif");
+	var descuento = document.getElementById("descuento");
 	var valido=true;
 	armarFecha(fecha);
 	if (cantCuotas.value=="" || isNaN(cantCuotas.value)) {
@@ -32,6 +34,10 @@ function validar(thisform) {
 	} 
 	if (fecha.value=="//" && valido==true) {
 		alert("Debe elgir una fecha para el plan");
+		valido=false;
+	}
+	if (intEdif.value < descuento.value && valido==true) {
+		alert("El descuento no puede ser superior a la tasa anual del edificio");
 		valido=false;
 	}
 	if (valido==true) {
@@ -93,15 +99,18 @@ function validar(thisform) {
 	<table>
 	<tr>
 		<td>Cantidad de Cuotas del Plan: <input type="text" id="cantCuotas" name="cantCuotas" size="3"/></td>
-		<td><label for="fecha">Fecha:&nbsp;</label>  </td>
-			<td><input style="display: none;" type="text" id="fecha" name="fecha" size="15"/>
+		<td><label for="fecha">Fecha:&nbsp;</label> 
+			<input style="display: none;" type="text" id="fecha" name="fecha" size="15"/>
 				&nbsp;&nbsp;<input type="text" name="dia" id="dia" maxlength="2" size="2" style="width:22px;" disabled >
 				&nbsp;<input type="text" name="mes" id="mes" maxlength="2" size="2"  style="width:22px;" disabled  >
 				&nbsp;<input type="text" name="anio" id="anio" maxlength="4" size="4" style="width:32px;" disabled >
 				&nbsp;<a href="JavaScript:doNothing()" onclick="allowPrevious=true;setDateField(document.CalculoCuotasAction.dia,document.CalculoCuotasAction.mes,document.CalculoCuotasAction.anio);top.newWin = window.open('calendario.jsp','cal','WIDTH=200,HEIGHT=160,TOP=200,LEFT=300')" onMouseOver="javascript: window.status = 'Abrir calendario'; return true;" onMouseOut="window.status=' '; return true;" ><img src="images/calendario.gif" ></img></a>
-			</td>
+		</td>
+		<td>Descuento: <input type="text" id="descuento" name="descuento" size="3"/></td>	
+		
 	</tr>
 	<tr>
+	<td><input type="text" style="display: none;" id="intEdif" name="intEdif" value="<%=expensas.get(0).getPropiedad().getTipoPropiedad().getEdificio().getTasa_anual()%>" readonly/></td>
 	<td>Responsable: <input readonly size="7" id="responsableDNI" name="responsableDNI" value="<%=lista.getResponsable()%>"></input></td>
 	<td>
 	</table>
