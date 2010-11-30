@@ -1,15 +1,14 @@
 package planes;
 
-import gastos.dto.GastoRealDTO;
-
 import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
 
+import utilidades.AbstractAppl;
 import utilidades.HibernateUtil;
 
-public class PlanesAppl {
+public class PlanesAppl extends AbstractAppl {
 	
 	@SuppressWarnings("unchecked")
 	public List<PlanDTO> getPlanByDNI(int dni) {
@@ -34,5 +33,10 @@ public class PlanesAppl {
 		}  finally {
 			//session.close();
 		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<PlanDTO> listar() {
+		return (List<PlanDTO>)session.createCriteria(PlanDTO.class).list();
 	}
 }

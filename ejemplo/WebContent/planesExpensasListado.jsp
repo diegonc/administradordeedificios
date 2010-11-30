@@ -86,7 +86,6 @@ function validar(thisform) {
 		</tr>
 		<%
 		}
-		//TODO: listar los responsables para elegir el que se hara cargo del plan
 		%>
 	
 	</table>
