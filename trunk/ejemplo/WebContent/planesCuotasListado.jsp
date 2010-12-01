@@ -65,8 +65,6 @@
 				</tbody>
 			</table>
 		</div>
-		<!-- TODO: hidden con el dni, fecha y cantidad cuotas. -->
-		<!-- TODO: hidden con los id de las liquidaciones a cobrar. -->
 		<s:form action="CalculoCuotasAction">
 			<s:hidden name="fecha" value="%{plan.fecha}" />
 			<s:hidden name="responsableDNI" value="%{plan.responsable.dni}" />
