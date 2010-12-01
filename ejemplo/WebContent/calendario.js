@@ -550,11 +550,18 @@ function returnDate(inDay)
 	calDateFieldDia.value = arrayFecha[0];
 	calDateFieldMes.value = arrayFecha[1];
 	calDateFieldAnio.value = arrayFecha[2];
+	
+	if (calDateFieldDia.onchange)
+		calDateFieldDia.onchange();
+	if (calDateFieldMes.onchange)
+		calDateFieldMes.onchange();
+	if (calDateFieldAnio.onchange)
+		calDateFieldAnio.onchange();
 
     if (calDateField2) {
 	    calDateField2.value = outDate;
 		}
     //calDateField.focus();
-    top.newWin.close()
+    top.newWin.close();
 }
 

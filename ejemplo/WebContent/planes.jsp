@@ -25,12 +25,13 @@
 		<table width="500" border="1" class="listado" >
 			<tr>
 				<td class="listado_par">Nombre</td>
-				<td class="listado_par"></td>
+				<td colspan="2" class="listado_par"></td>
 			</tr>	
 		<% for (EdificioDTO edificioDTO : edificios) {  %>		
 			<tr>
 				<td><%= edificioDTO.getNombre()%></td>
 				<td><a href="planesElegirResponsable.jsp?idEdif=<%=edificioDTO.getId()%>">Responsables</a></td>
+				<td><a href="liquidarPlanesAction?idEdificio=<%=edificioDTO.getId()%>">Liquidar</a></td> 
 			</tr>	
 		<%} %>				
 		
