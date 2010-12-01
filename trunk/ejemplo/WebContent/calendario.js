@@ -373,7 +373,7 @@ function getMonthSelect() {
 }
 
 function createWeekdayList() {
-    weekdayList  = new Array('Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado')
+    weekdayList  = new Array('Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado');
     weekdayArray = new Array('Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa');
    
     var weekdays = "<TR BGCOLOR='" + headingCellColor + "'>";
