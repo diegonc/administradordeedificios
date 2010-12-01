@@ -186,18 +186,7 @@
 			    <result name="success">/planesExpensasListado.jsp </result>
 			   <result name="error">/planesError.jsp</result>		    
 		</action>
-		<action name="CalculoCuotasAction" class="actions.CalculoCuotasAction">
-			<result name="confirmacion">/planesCuotasListado.jsp </result>
-			<result name="success" type="redirectAction">
-				<param name="actionName">EdificioListarAction</param>
-				<param name="redi">planes</param>
-			</result>
-			<result name="cancelar" type="redirectAction">
-				<param name="actionName">EdificioListarAction</param>
-				<param name="redi">planes</param>
-			</result>
-			<result name="error">/planesError.jsp</result>
-		</action>
+		
 		<action name="PlanesConsultaAction" class="actions.PlanesConsultaAction">
 		    <result name="sinplan">/planesConsulta.jsp</result>
 			<result name="success">/planesListado.jsp</result>
@@ -377,6 +366,18 @@
 			</result>
 		</action>
 		
+		<action name="CalculoCuotasAction" class="actions.CalculoCuotasAction">
+			<result name="confirmacion">/planesCuotasListado.jsp </result>
+			<result name="success" type="redirectAction">
+				<param name="actionName">EdificioListarAction</param>
+				<param name="redi">planes</param>
+			</result>
+			<result name="cancelar" type="redirectAction">
+				<param name="actionName">EdificioListarAction</param>
+				<param name="redi">planes</param>
+			</result>
+			<result name="error">/planesError.jsp</result>
+		</action>
 	</package>
 
 	<constant name="hibernatePlugin.customSessionFactoryClass"

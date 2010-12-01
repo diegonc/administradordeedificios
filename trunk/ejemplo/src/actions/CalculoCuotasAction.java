@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.hibernate.Session;
 import org.hibernate.HibernateException;
 
 import permisos.AdministradorDePermisos;
@@ -12,17 +11,13 @@ import planes.CuotaDTO;
 import planes.PlanBuilder;
 import planes.PlanDTO;
 import propiedades.ResponsableAppl;
-import utilidades.HibernateUtil;
-
-import com.opensymphony.xwork2.ActionSupport;
-
-import expensas.appl.ExpensaAppl;
+import utilidades.SessionAwareAction;
 import expensas.dto.ExpensaCobroDTO;
 import expensas.dto.ExpensaDTO;
 
 @SuppressWarnings("serial")
-public class CalculoCuotasAction  extends ActionSupport {
-	
+public class CalculoCuotasAction extends SessionAwareAction {
+
 	private Date fecha;
 	private int responsableDNI;
 	private List<Integer> expElegidas;
@@ -30,7 +25,7 @@ public class CalculoCuotasAction  extends ActionSupport {
 	private int descuento;
 
 	private PlanDTO plan;
-	
+
 	public String execute() {
 		if (expElegidas == null) {
 			addActionError("No ha seleccionado ninguna expensa con deuda");
@@ -39,26 +34,25 @@ public class CalculoCuotasAction  extends ActionSupport {
 		plan = crearPlan();
 		return "confirmacion";
 	}
-	
+
 	public String confirmar() {
-		//TODO inyectar la sesion con el interceptor.
-		Session hSession = HibernateUtil.getSession();
 		try {
-			hSession.beginTransaction();
+			session.beginTransaction();
+			
 			plan = crearPlan();
-			hSession.save(plan);
+			session.save(plan);
 			// XXX: hibernate no hace cascada para las cuotas :/
 			for (CuotaDTO cuota : plan.getCuotas()) {
-				hSession.save(cuota);
+				session.save(cuota);
 			}
 			// XXX: hibernate no hace cascada hasta las propiedades :/
 			for (ExpensaCobroDTO e : plan.getCobrosCancelados())
-				hSession.saveOrUpdate(e.getLiquidacion().getPropiedad());
-			hSession.getTransaction().commit();
+				session.saveOrUpdate(e.getLiquidacion().getPropiedad());
+			
+			getTransaction().commit();
 		} catch (HibernateException e) {
-			hSession.getTransaction().rollback();
+			getTransaction().rollback();
 			LOG.error("No se pudo guardar el plan.", e);
-		} finally {
 		}
 		return SUCCESS;
 	}
@@ -68,41 +62,34 @@ public class CalculoCuotasAction  extends ActionSupport {
 	}
 
 	private PlanDTO crearPlan() {
-		//TODO inyectar la sesion con el interceptor.
-		Session hSession = HibernateUtil.getSession();
-		try {
-			ResponsableAppl respAppl = new ResponsableAppl(hSession);
-			List<ExpensaCobroDTO> expensas = crearExpensaCobros();
-			
-			PlanBuilder pb = new PlanBuilder();
-			pb.setFecha(fecha);
-			pb.setCantidadCuotas(cantCuotas);
-			pb.setResponsable(respAppl.buscar(responsableDNI));
+		ResponsableAppl respAppl = new ResponsableAppl(session);
+		List<ExpensaCobroDTO> expensas = crearExpensaCobros();
 
-			for (ExpensaCobroDTO cobro : expensas) {
-				pb.addExpensaCobro(cobro);
-			}
-			
-			return pb.calcularPlan();
-		} finally {
-			//aqui habia un clo;
+		PlanBuilder pb = new PlanBuilder();
+		pb.setFecha(fecha);
+		pb.setCantidadCuotas(cantCuotas);
+		pb.setResponsable(respAppl.buscar(responsableDNI));
+
+		for (ExpensaCobroDTO cobro : expensas) {
+			pb.addExpensaCobro(cobro);
 		}
+
+		return pb.calcularPlan();
 	}
 
 	private List<ExpensaCobroDTO> crearExpensaCobros() {
 		List<ExpensaCobroDTO> cobros = new ArrayList<ExpensaCobroDTO>();
-		ExpensaAppl expAppl = new ExpensaAppl();
-				
+
 		for (int expId : expElegidas) {
-			// TODO: cada instancia obtenida viene de una sesión de Hibernate distinta.
-			ExpensaDTO exp = expAppl.getExpensasById(expId);
+			ExpensaDTO exp = (ExpensaDTO)session.get(ExpensaDTO.class, expId); /* TODO: appl. */
 			ExpensaCobroDTO cobro = new ExpensaCobroDTO();
 			cobro.setLiquidacion(exp);
 			cobro.setComprobante("plan");
 			cobro.setConsolidado(false);
 			cobro.setFecha(fecha);
 			cobro.setMontoPago(exp.getMonto() + exp.getIntereses());
-			cobro.setResponsableCobro(AdministradorDePermisos.getInstancia().getUsuario());
+			cobro.setResponsableCobro(AdministradorDePermisos.getInstancia()
+					.getUsuario());
 			cobro.setConsolidado(true);
 			cobros.add(cobro);
 		}
@@ -113,34 +100,29 @@ public class CalculoCuotasAction  extends ActionSupport {
 		this.expElegidas = expElegidas;
 	}
 
-
 	public List<Integer> getExpElegidas() {
 		return expElegidas;
 	}
-
 
 	public void setCantCuotas(int cantCuotas) {
 		this.cantCuotas = cantCuotas;
 	}
 
-
 	public int getCantCuotas() {
 		return cantCuotas;
 	}
-	
+
 	public Date getFecha() {
 		return fecha;
 	}
 
-
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
 	}
-	
+
 	public int getResponsableDNI() {
 		return responsableDNI;
 	}
-
 
 	public void setResponsableDNI(int responsableDNI) {
 		this.responsableDNI = responsableDNI;
