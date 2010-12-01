@@ -53,6 +53,7 @@ public class CalculoCuotasAction extends SessionAwareAction {
 		} catch (HibernateException e) {
 			getTransaction().rollback();
 			LOG.error("No se pudo guardar el plan.", e);
+			addActionError("No se pudo guardar el plan.");
 		}
 		return SUCCESS;
 	}
