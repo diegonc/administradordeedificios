@@ -41,7 +41,7 @@
 							<tr>
 								<td><s:property value="id"/></td>
 								<td><s:property value="responsable.nombre"/></td>
-								<td><s:checkbox theme="simple" name="planes" value="%{id}"/></td>
+								<td><s:checkbox theme="simple" name="idPlanes" fieldValue="%{id}"/></td>
 							</tr>
 						</s:iterator>
 					</tbody>
