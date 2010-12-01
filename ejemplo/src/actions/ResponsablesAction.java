@@ -28,6 +28,9 @@ public class ResponsablesAction extends SessionAwareAction implements Preparable
 	@RequiredFieldValidator(message="El campo es obligatorio.")
 	public void setDni(Integer dni) { entidad.setDni(dni); }
 
+	public String getNombre() { return entidad.getNombre(); }
+	public void setNombre(String nombre) { entidad.setNombre(nombre); }
+
 	public String getTelefono() { return entidad.getTelefono(); }
 	public void setTelefono(String telefono) { entidad.setTelefono(telefono); }
 

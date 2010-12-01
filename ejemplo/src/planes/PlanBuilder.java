@@ -1,4 +1,4 @@
-ï»¿package planes;
+package planes;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -96,7 +96,7 @@ public class PlanBuilder {
 		procesarSistema();
 
 		if (propiedades.get("responsable") == null)
-			throw new IllegalArgumentException("No se especificÃ³ responsable.");
+			throw new IllegalArgumentException("No se especificó responsable.");
 	}
 
 	@SuppressWarnings("unchecked")
@@ -113,7 +113,7 @@ public class PlanBuilder {
 				.getEdificio();
 		
 		if (cuotas == null)
-		       throw new IllegalArgumentException("No se especificÃ³ la cantidad de cuotas.");
+		       throw new IllegalArgumentException("No se especificó la cantidad de cuotas.");
 		
 		if (tasa == null)
 			tasa = edificio.getTasa_anual() / 100. / 12.;
