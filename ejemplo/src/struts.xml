@@ -357,8 +357,8 @@
 		
 		<action name="liquidarPlanesAction"
 				class="actions.LiquidarPlanesAction">
-			<result name="success">/planesLiquidacion.jsp</result>
-			<result name="error" type="redirectAction">
+			<result name="confirmar">/planesLiquidacion.jsp</result>
+			<result name="success" type="redirectAction">
 				<param name="actionName">EdificioListarAction</param>
 				<param name="redi">planes</param>
 			</result>
