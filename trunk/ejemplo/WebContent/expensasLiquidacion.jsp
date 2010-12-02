@@ -19,7 +19,7 @@
 <script type="text/javascript">
 
 function Abrir_ventana (pagina) {
-	var opciones="toolbar=no,location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=yes, width=508, height=365, top=85, left=140";
+	var opciones="toolbar=no,location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, width=800, height=1400, top=85, left=140";
 	window.open(pagina,"",opciones);
 }
 
