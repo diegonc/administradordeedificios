@@ -31,8 +31,8 @@
 </table>
 		
 <% if (edificio.getForma_liq_exp().equals("PRORRATEO")){ %>
-		<table height="10" width="700"> <tr height="10"><td align="center"><div><h3>Gastos Ordinarios del Per&iacute;odo</h3></div></td></tr></table>
-		<table id="tabla1" width ="430" cellpadding="0" cellspacing="0" align="center" >
+		<table height="10" width="700" border="0" align="center"> <tr height="10"><td align="center"><div><h3>Gastos Ordinarios del Per&iacute;odo</h3></div></td></tr></table>
+		<table id="tabla1" width ="430" cellpadding="0" cellspacing="0" align="center" border="1" >
 			<tr >
 				<td width="100">Nro Folio</td>
 				<td width="250">Descripci&oacute;n</td>
@@ -86,7 +86,50 @@
 		</table>
 		
 <%} %>		
+			<table height="10" width="700" align="center" border="0"> <tr height="20"><td align="center"><div><h3>Detalle de la Liquidaci&oacute;n</h3></div></td></tr></table>
+		<table id="tabla2" cellspacing="0" cellpadding="0" border="1" class="listado" align="center"">
+		<tr class="listado_par" >
+			<td>Piso</td>
+			<td>DTO</td>
+			<td>Responsable</td>
+			<td>Deuda<br/> Previa</td>
+			<td>Exp.<br/> Ordinarias</td>
+			<td>Int.PrimerVto</td>
+			<td>Total.PrimerVto</td>
+			<%if (edificio.getMora().equals("punitorio")){%>	
+				<td>Int. SegundoVto</td>
+				<td>Total SegundoVto</td>
+			<%} %>			
+			</tr>
+		<%
+		List<ExpensaDTO> expensas = detalleExpensa.getExpensasOrdinarias();
 		
+		int h =0;
+		for (ExpensaDTO exp : expensas){
+			PropiedadDTO propiedad = exp.getPropiedad();
+			String color ="bgcolor= '#E0E0E0'";
+			if ((h%2)==0){
+				color="";
+			}
+			h++;
+		%>
+		
+				<tr>
+					<td ><%=propiedad.getNivel()%></td>
+					<td><%=propiedad.getOrden() %></td>
+					<td> <%=propiedad.getPropietario().getDni() %></td>
+					<td><%=exp.getDeudaPrevia() %></td>
+					<td><%=exp.getMonto() %></td>
+					<td><%=exp.getIntereses()%></td>
+					<td><%= NumberFormat.redondeoDouble(exp.getIntereses()+exp.getDeudaPrevia()+exp.getMonto())%></td>
+				<%if (edificio.getMora().equals("punitorio")){%>
+					<td><%=exp.getInteresSegundoVencimiento()%></td>
+					<td><%=NumberFormat.redondeoDouble(exp.getInteresSegundoVencimiento()+exp.getDeudaPrevia()+exp.getMonto())%></td>
+				<%} %>				
+			</tr>
+		
+		<%}%>
+		</table>
 	
 		<table height="50"> <tr height="20"><td></td></tr></table>
 		<input type="button" onclick="javascript:print()" value="Imprimir">
