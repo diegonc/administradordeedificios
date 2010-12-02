@@ -4,6 +4,7 @@ import java.util.List;
 
 import utilidades.AbstractAppl;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Projections;
 
@@ -29,5 +30,13 @@ public class ResponsableAppl extends AbstractAppl {
 			.setProjection(Projections.property("dni"))
 			.list();
 	}
-
+	
+	public List<Integer> obtenerResponsablesConExpensas() {
+		 Query query = session.createQuery("select distinct r.dni from Responsable r , PropiedadDTO p, ExpensaDTO ex where ex.propiedad=p and "+
+				 			" (p.propietario.dni=r.dni " +
+							"or p.inquilino.dni=r.dni "+
+							"or p.poderPropietario.dni=r.dni " +
+							"or p.poderInquilino.dni=r.dni) ");
+		 return query.list();
+	}
 }
