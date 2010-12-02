@@ -14,11 +14,9 @@
 <%@ page language="java" contentType="text/html" import="utilidades.NumberFormat"%>
 <jsp:useBean id="edificio" scope="session" class="edificio.EdificioDTO"/>
 <jsp:useBean id="detalleExpensa" scope="session" class="beans.LiquidacionBean"/>
-<script type="text/javascript">
 
-
-</script>
-<% EdificioDTO edificioDTO = edificio;
+<% 
+EdificioDTO edificioDTO = edificio;
 %>
 
 <table cellpadding="0" cellspacing="0" width="700" align="center">
@@ -87,7 +85,7 @@
 		
 <%} %>		
 			<table height="10" width="700" align="center" border="0"> <tr height="20"><td align="center"><div><h3>Detalle de la Liquidaci&oacute;n</h3></div></td></tr></table>
-		<table id="tabla2" cellspacing="0" cellpadding="0" border="1" class="listado" align="center"">
+		<table  cellspacing="0" cellpadding="0" border="1" class="listado" align="center"">
 		<tr class="listado_par" >
 			<td>Piso</td>
 			<td>DTO</td>
@@ -100,7 +98,7 @@
 				<td>Int. SegundoVto</td>
 				<td>Total SegundoVto</td>
 			<%} %>			
-			</tr>
+			</tr>			
 		<%
 		List<ExpensaDTO> expensas = detalleExpensa.getExpensasOrdinarias();
 		

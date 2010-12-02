@@ -14,9 +14,9 @@
 <%@ page language="java" contentType="text/html" import="utilidades.NumberFormat"%>
 <jsp:useBean id="edificio" scope="session" class="edificio.EdificioDTO"/>
 <jsp:useBean id="detalleExpensa" scope="session" class="beans.LiquidacionBean"/>
-<script type="text/javascript">
-</script>
-<% EdificioDTO edificioDTO = edificio;
+
+<% 
+EdificioDTO edificioDTO = edificio;
 %>
 
 <table cellpadding="0" cellspacing="0" width="700" align="center">
@@ -28,8 +28,8 @@
 	<tr><td colspan="1" height="15"></td>
 </table>
 <% if (edificio.getForma_liq_exp().equals("PRORRATEO")){ %>
-		<table height="10" width="700"> <tr height="10"><td align="center"><div><h3>Gastos Extraordinarios del Per&iacute;odo</h3></div></td></tr></table>
-		<table id="tabla3" width ="430" cellpadding="0" cellspacing="0" align="center" >
+		<table height="10" width="700" align="center" > <tr height="10"><td align="center"><div><h3>Gastos Extraordinarios del Per&iacute;odo</h3></div></td></tr></table>
+		<table id="tabla3" width ="430" cellpadding="0" cellspacing="0" align="center" border="1">
 			<tr>
 				<td width="100">Nro Folio</td>
 				<td width="250">Descripci&oacute;n</td>
@@ -61,14 +61,20 @@
 		    	
 		    	montoAcumulado =0.0;
 		    	for (GastoDTO gastoActual : gastosEnTipo) {
+		    		int h=0;
+		    		String color ="bgcolor= '#E0E0E0'";
+					if ((h%2)==0){
+						color="";
+					}
 		     %>
-		        	<tr>
+		        	<tr<%=color%>>
 				        <td><%=gastoActual.getNumeroFolio()%></td>
 						<td><%=gastoActual.getDetalle()%></td>
 						<td><%=gastoActual.getMonto()%></td>
 						<td>&nbsp;</td>
 					</tr>				
 		   <%
+		   			h++;
 		   			montoAcumulado+=gastoActual.getMonto();
 		         }
 		    %>
@@ -84,11 +90,10 @@
 		</table>
 <%} %>
 
-	
 
-	<table height="10" width="700"> <tr height="20"><td align="center"><div><h3>Detalle de la Liquidaci&oacute;n</h3></div></tr></table>
-		<table id="tabla4" cellspacing="0" cellpadding="0" border="1" align="center" style="display: none;">
-		<tr>
+	<table height="10" width="700" align="center"> <tr height="20"><td align="center"><div><h3>Detalle de la Liquidaci&oacute;n</h3></div></td></tr></table>
+		<table id="tabla4" cellspacing="0" cellpadding="0" border="1" class="listado" align="center">
+		<tr class="listado_par" >
 			<td>Piso</td>
 			<td>DTO</td>
 			<td>Responsable</td>
@@ -104,13 +109,17 @@
 		<%
 		List<ExpensaDTO> expensas = detalleExpensa.getExpensasExtraordinarias();
 		
-		int h =0;
+		 int h =0;
 		for (ExpensaDTO exp : expensas){
 			PropiedadDTO propiedad = exp.getPropiedad();
-	
+			String color ="bgcolor= '#E0E0E0'";
+			if ((h%2)==0){
+				color="";
+			}
+			h++;
 		%>
 		
-				<tr >
+				<tr <%=color%>>
 					<td ><%=propiedad.getNivel()%></td>
 					<td><%=propiedad.getOrden()%></td>
 					<td> <%=propiedad.getPropietario().getDni() %></td>
@@ -126,6 +135,8 @@
 		
 		<%}%>
 		</table>
+	
+
 
 		<table height="50"> <tr height="20"><td></td></tr></table>
 		<input type="button" onclick="javascript:print()" value="Imprimir">
