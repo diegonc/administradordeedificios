@@ -6,6 +6,8 @@ import java.util.Map;
 
 import propiedades.PropiedadDTO;
 import propiedades.Responsable;
+import propiedades.ResponsableAppl;
+import utilidades.HibernateUtil;
 
 import beans.LiquidacionBean;
 import beans.ResponsablesBean;
@@ -13,6 +15,7 @@ import beans.ResponsablesBean;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
+import expensas.appl.ExpensaAppl;
 import expensas.dto.ExpensaDTO;
 
 public class ExpensasHistorialAction extends ActionSupport {
@@ -21,69 +24,105 @@ public class ExpensasHistorialAction extends ActionSupport {
 	
 	private int dni;
 	
+	private int dniElegido;
+	
+	private int idEdificio;
+	
+	private String consultarEdificio;
+	
+	private String tipoExpensaElegida;
+	
+	private Integer nivel=null;
+	
+	private Integer orden = null;
+	
+	
+	
+	public Integer getNivel() {
+		return nivel;
+	}
+	public void setNivel(Integer nivel) {
+		this.nivel = nivel;
+	}
+	public Integer getOrden() {
+		return orden;
+	}
+	public void setOrden(Integer orden) {
+		this.orden = orden;
+	}
+	public String getTipoExpensaElegida() {
+		return tipoExpensaElegida;
+	}
+	public void setTipoExpensaElegida(String tipoExpensaElegida) {
+		this.tipoExpensaElegida = tipoExpensaElegida;
+	}
+	public String getConsultarEdificio() {
+		return consultarEdificio;
+	}
+	public void setConsultarEdificio(String consultarEdificio) {
+		this.consultarEdificio = consultarEdificio;
+	}
+	public int getIdEdificio() {
+		return idEdificio;
+	}
+	public void setIdEdificio(int idEdificio) {
+		this.idEdificio = idEdificio;
+	}
 	public int getDni() {
 		return dni;
 	}
 	public void setDni(int dni) {
 		this.dni = dni;
 	}
+	
+	public int getDniElegido() {
+		return dniElegido;
+	}
+	public void setDniElegido(int dniElegido) {
+		this.dniElegido = dniElegido;
+	}
 	public String mostrar(){
 		LiquidacionBean bean = new LiquidacionBean();
-		//TODO: ver de traer expensas por responsable
-		List<ExpensaDTO> expensas = obtenerExpensas();
+		ExpensaAppl expensaAppl = new ExpensaAppl();
+		List<ExpensaDTO> expensas = new ArrayList<ExpensaDTO>();
+		if (consultarEdificio==null){
+			expensas = expensaAppl.historialExpensas(dniElegido, tipoExpensaElegida, null, orden, nivel);	
+		}else{
+			expensas = expensaAppl.historialExpensas(dniElegido, tipoExpensaElegida,Integer.valueOf(idEdificio), orden, nivel);
+		}
+			
+		
+		
 		bean.setExpensasOrdinarias(expensas);
 		Map<String, Object> session = ActionContext.getContext().getSession();
 		session.put("liquidaciones", bean);
+		
+		//TODO: borrar para control
+		System.out.println("Dni del responsable: " + this.dniElegido);
+		System.out.println("Elegio consultar por edificio: "+this.consultarEdificio);
+		System.out.println("Edificio elegido: "+this.idEdificio);
+		System.out.println("Nivel ingresado: "+this.nivel);
+		System.out.println("Orden ingresado: "+this.orden);
+		System.out.println("Tipo de expensa elegida: "+this.tipoExpensaElegida);
+		
 		return "mostrar";
 	}
-	private List<ExpensaDTO> obtenerExpensas() {
-		List<ExpensaDTO> expensas = new ArrayList<ExpensaDTO>();
-		ExpensaDTO exp1 = new ExpensaDTO();
-		ExpensaDTO exp2 = new ExpensaDTO();
-		exp1.setDeudaPrevia(1000);
-		exp2.setDeudaPrevia(1100);
-		exp1.setMonto(400);
-		exp2.setMonto(200);
-		exp1.setIntereses(122);
-		exp2.setIntereses(122);
-		exp1.setInteresSegundoVencimiento(12);
-		exp2.setInteresSegundoVencimiento(12);
-		exp1.setNumeroOperacion(1);
-		exp2.setNumeroOperacion(2);
-		exp1.setTipo(ExpensaDTO.tipoOrdinario);
-		exp2.setTipo(ExpensaDTO.tipoExtraordinario);
-		PropiedadDTO prop = new PropiedadDTO();
-		prop.setNivel(1);
-		prop.setOrden(2);
-		exp1.setPropiedad(prop);
-		exp2.setPropiedad(prop);				
-		expensas.add(exp1);
-		expensas.add(exp2);
-		return expensas;
-	}
+	
 	public String execute(){
 		Map<String, Object> session = ActionContext.getContext().getSession();
-		List<Responsable> listaDeResponsablesExistentes = new ArrayList<Responsable>();
-		//TODO: consultar responsables que tenga una propiedad asignada y alguna liquidacion
-		ResponsablesBean bean = obtenerResponsables(listaDeResponsablesExistentes);
-		bean.setResponsables(listaDeResponsablesExistentes);
-		session.put("responsables",bean);
+		
+		ResponsablesBean responsableBean = new ResponsablesBean();
+		ResponsableAppl responsableAppl = new ResponsableAppl(HibernateUtil.getSessionFactory().openSession());		
+		List<Integer> listaDeResponsablesExistentes = new ArrayList<Integer>();		
+		listaDeResponsablesExistentes = responsableAppl.obtenerResponsablesConExpensas();
+		responsableBean.setListaDNIs(listaDeResponsablesExistentes);
+		session.put("responsables",responsableBean);
 		
 		
 		
 		return "success";
 	}
-	private ResponsablesBean obtenerResponsables(
-			List<Responsable> listaDeResponsablesExistentes) {
-		Responsable responsable1 = new Responsable();
-		responsable1.setDni(new Integer(23243123));
-		Responsable responsable2 = new Responsable();
-		responsable2.setDni(new Integer(234242343));
-		ResponsablesBean bean = new ResponsablesBean();		
-		listaDeResponsablesExistentes.add(responsable1);
-		listaDeResponsablesExistentes.add(responsable2);
-		return bean;
-	}
+	
 	public Map<String, Object> getSession() {
 		return session;
 	}
