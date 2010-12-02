@@ -39,6 +39,10 @@ public class PlanBuilder {
 		propiedades.put("responsable", responsable);
 	}
 
+	public void setDescuento(int descuento) {
+		propiedades.put("descuento", descuento);
+	}
+	
 	public void addExpensaCobro(ExpensaCobroDTO cobro) {
 		@SuppressWarnings("unchecked")
 		Set<ExpensaCobroDTO> cobros = (Set<ExpensaCobroDTO>) propiedades.get("cobrosCancelados");
@@ -55,12 +59,9 @@ public class PlanBuilder {
 
 	public PlanDTO calcularPlan() {
 		procesarParametros();
-
 		PlanDTO plan = crearPlan();
-
 		propiedades.clear();
 		sistema = null;
-
 		return plan;
 	}
 
@@ -87,7 +88,8 @@ public class PlanBuilder {
 
 		plan.setSaldoPlan(sistema.getMontoTotal());
 		plan.setSaldoIntereses(sistema.getInteresTotal());
-
+		plan.setDescuento(sistema.getDescuento());
+		plan.setMontoDescuento(sistema.getMontoDescuento());
 		return plan;
 	}
 
@@ -102,6 +104,7 @@ public class PlanBuilder {
 	@SuppressWarnings("unchecked")
 	private void procesarSistema() {
 		Double monto = (Double) propiedades.get("monto");
+		Integer descuento = (Integer) propiedades.get("descuento");
 		Double tasa = (Double) propiedades.get("tasa");
 		Integer cuotas = (Integer) propiedades.get("cantidadCuotas");
 		String nombreSistema = (String) propiedades.get("sistema");
@@ -121,7 +124,7 @@ public class PlanBuilder {
 		if (nombreSistema == null)
 			nombreSistema =  edificio.getAmortizacion();
 		
-		sistema = SistemaAmortizacion.crear(nombreSistema, monto, tasa, cuotas);
+		sistema = SistemaAmortizacion.crear(nombreSistema, monto, tasa, cuotas, descuento);
 	}
 
 	private void procesarCobros() {
@@ -165,5 +168,6 @@ public class PlanBuilder {
 			propiedad.setCtaExtSaldoInt(0);
 		}
 	}
+
 
 }

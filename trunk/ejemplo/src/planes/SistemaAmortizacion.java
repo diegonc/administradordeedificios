@@ -48,13 +48,28 @@ public abstract class SistemaAmortizacion {
 	 * @return
 	 */
 	public abstract double getMontoTotal();
+	
+
+	/**
+	 * Obtiene descuento del plan.
+	 * 
+	 * @return
+	 */
+	public abstract int getDescuento();
+	
+	/**
+	 * Obtiene el monto del descuento del plan.
+	 * 
+	 * @return
+	 */
+	public abstract double getMontoDescuento();
 
 	public static SistemaAmortizacion crear(String sistema, Double monto,
-			Double tasa, Integer cuotas) {
+			Double tasa, Integer cuotas, int descuento) {
 		if ("ALEMAN".equals(sistema))
-			return new SistemaAleman(monto, tasa, cuotas);
+			return new SistemaAleman(monto, tasa, cuotas, descuento);
 		if ("FRANCES".equals(sistema))
-			return new SistemaFrances(monto, tasa, cuotas);
+			return new SistemaFrances(monto, tasa, cuotas, descuento);
 		
 		throw new IllegalArgumentException("Sitema de amortizacion '"+sistema+"' no soportado.");
 	}

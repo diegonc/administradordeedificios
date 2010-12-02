@@ -24,7 +24,6 @@ function armarFecha(elemento){
 function validar(thisform) {
 	var fecha=document.getElementById("fecha");
 	var cantCuotas = document.getElementById("cantCuotas");
-	var intEdif = document.getElementById("intEdif");
 	var descuento = document.getElementById("descuento");
 	var valido=true;
 	armarFecha(fecha);
@@ -36,8 +35,8 @@ function validar(thisform) {
 		alert("Debe elgir una fecha para el plan");
 		valido=false;
 	}
-	if (intEdif.value < descuento.value && valido==true) {
-		alert("El descuento no puede ser superior a la tasa anual del edificio");
+	if ((isNaN(descuento.value) || (descuento.value>100 || descuento.value<0)) && valido==true) {
+		alert("El descuento debe ser un numero entre 0 y 100");
 		valido=false;
 	}
 	if (valido==true) {

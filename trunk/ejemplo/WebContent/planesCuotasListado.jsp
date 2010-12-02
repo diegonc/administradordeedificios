@@ -12,8 +12,9 @@
 			<div>Responsable: <s:property value="plan.responsable.nombre"/></div>
 			<div>Monto: <s:property value="plan.monto"/></div>
 			<div>Saldo Intereses: <s:property value="plan.saldoIntereses"/></div>
-			<div>Cantidad cuotas: <s:property value="plan.cantidadCuotas"/></div>
+			<div>Descuento: <s:property value="plan.montoDescuento"/></div>
 			<div>Saldo del Plan: <s:property value="plan.saldoPlan"/></div>	
+			<div>Cantidad cuotas: <s:property value="plan.cantidadCuotas"/></div>
 		</div>
 		<div>
 			<div><h4>Detalle de expensas a cancelar</h4></div>
@@ -69,6 +70,7 @@
 			<s:hidden name="fecha" value="%{plan.fecha}" />
 			<s:hidden name="responsableDNI" value="%{plan.responsable.dni}" />
 			<s:hidden name="cantCuotas" value="%{plan.cantidadCuotas}" />
+			<s:hidden name="descuento" value="%{plan.descuento}"/>
 			<s:iterator value="plan.cobrosCancelados">
 				<s:hidden name="expElegidas" value="%{liquidacion.id}"/>
 			</s:iterator>

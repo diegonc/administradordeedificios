@@ -38,6 +38,7 @@
 								</table>
 						</fieldset>
 						<s:actionerror cssClass="error"/>
+						<a href="EdificioListarAction?redi=planes">Volver</a>
 						<input type="hidden" name="id" value="<%=idEdif%>"></input>
 						<input type="submit" value="Ver Expensas"/>
 					</form>
