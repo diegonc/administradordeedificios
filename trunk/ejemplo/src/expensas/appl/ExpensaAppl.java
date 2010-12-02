@@ -57,7 +57,7 @@ public class ExpensaAppl {
 		
 		Integer nroOperacion = (Integer) query.uniqueResult();
 		if(nroOperacion==null) return 1;
-		return nroOperacion.intValue()+1;
+		return (nroOperacion.intValue()+1);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -108,5 +108,34 @@ public class ExpensaAppl {
 			return (ExpensaDTO)query.list().get(0);		
 	}
 	
+	@SuppressWarnings("unchecked")
+	public List<ExpensaDTO> historialExpensas(int dniResponsable,String tipoExpensa,Integer idEdificio,Integer orden,Integer nivel){
+		Session session = HibernateUtil.getSession();
+						
+		String queryString = "select ex from PropiedadDTO p,ExpensaDTO ex " +
+						  	"where p = ex.propiedad and " +
+						  	"(p.propietario.dni=:dniResponsable " +
+							"or p.inquilino.dni=:dniResponsable " +
+							"or p.poderPropietario.dni=:dniResponsable " +
+							"or p.poderInquilino.dni=:dniResponsable) ";
+							
+		
+		if(tipoExpensa!=null) queryString+="and ex.tipo=:tipoExpensa ";
+		if(idEdificio!=null) queryString+="and p.tipoPropiedad.edificio=:idEdificio "; 
+		if(orden!=null) queryString+="and p.orden=:orden ";
+		if(nivel!=null) queryString+="and p.nivel=:nivel ";
+		queryString+="order by ex.fecha";
+		
+		Query query = session.createQuery(queryString);
+		
+		query.setInteger("dniResponsable", dniResponsable);
+		
+		if(tipoExpensa!=null) query.setString("tipoExpensa", tipoExpensa);
+		if(idEdificio!=null) query.setInteger("idEdificio", idEdificio); 
+		if(orden!=null) query.setInteger("orden", orden);
+		if(nivel!=null) query.setInteger("nivel", nivel);
+				
+		return query.list();
+	}
 	
 }
