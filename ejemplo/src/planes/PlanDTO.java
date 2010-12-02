@@ -41,10 +41,11 @@ public class PlanDTO {
 
 	private int cantidadCuotas;
 	private double monto;
-
+	private double montoDescuento;
 	private double saldoPlan;
 	private double saldoIntereses;
-
+	
+	private int porcDescuento;
 	private Set<ExpensaCobroDTO> cobrosCancelados;
 	private List<CuotaDTO> cuotas = new ArrayList<CuotaDTO>();
 
@@ -69,6 +70,11 @@ public class PlanDTO {
 	public double getSaldoIntereses() {
 		return saldoIntereses;
 	}
+	
+	@Column(name = "DESCUENTO", nullable = false)
+	public double getMontoDescuento() {
+		return montoDescuento;
+	}
 
 	@Column(name = "FECHA", nullable = false)
 	public Date getFecha() {
@@ -89,9 +95,8 @@ public class PlanDTO {
 	@Column(name = "CANTIDAD_COUTAS", nullable = false)
 	public int getCantidadCuotas() {
 		return cantidadCuotas;
-
 	}
-
+	
 	@OneToMany
 	@Cascade(value = CascadeType.SAVE_UPDATE)
 	@JoinTable(name = "PLAN_EXPENSA_COBRO", joinColumns = @JoinColumn(name = "PLAN_ID", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "COBRO_ID", referencedColumnName = "ID"))
@@ -105,6 +110,10 @@ public class PlanDTO {
 		return cuotas;
 	}
 
+	public void setMontoDescuento(double montoDescuento) {
+		this.montoDescuento = montoDescuento;
+	}
+	
 	public void setCobrosCancelados(Set<ExpensaCobroDTO> cobros) {
 		this.cobrosCancelados = cobros;
 	}
@@ -196,5 +205,14 @@ public class PlanDTO {
 	private EdificioDTO getEdificio() {
 		return cobrosCancelados.iterator().next().getLiquidacion()
 				.getPropiedad().getTipoPropiedad().getEdificio();
+	}
+
+	public void setDescuento(int descuento) {
+		this.porcDescuento = descuento;
+	}
+
+	@Transient
+	public int getDescuento() {
+		return porcDescuento;
 	}
 }

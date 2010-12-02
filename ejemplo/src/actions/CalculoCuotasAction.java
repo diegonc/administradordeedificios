@@ -70,7 +70,7 @@ public class CalculoCuotasAction extends SessionAwareAction {
 		pb.setFecha(fecha);
 		pb.setCantidadCuotas(cantCuotas);
 		pb.setResponsable(respAppl.buscar(responsableDNI));
-
+		pb.setDescuento(descuento);
 		for (ExpensaCobroDTO cobro : expensas) {
 			pb.addExpensaCobro(cobro);
 		}

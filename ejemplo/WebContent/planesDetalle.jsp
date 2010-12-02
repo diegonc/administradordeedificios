@@ -28,7 +28,7 @@
 		
 		<tr>
 			<td>Monto: <%=NumberFormat.redondeoDouble(plan.getMonto())%> - Intereses: <%=NumberFormat.redondeoDouble(plan.getSaldoIntereses())%> 
-			-  Saldo: <%=NumberFormat.redondeoDouble(plan.getSaldoPlan())%></td>
+			- Descuento: <%=NumberFormat.redondeoDouble(plan.getMontoDescuento()) %> Saldo: <%=NumberFormat.redondeoDouble(plan.getSaldoPlan())%></td>
 		</tr>
 	</table>
 	<fieldset><legend>Cuotas</legend>	

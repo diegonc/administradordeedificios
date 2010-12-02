@@ -35,14 +35,21 @@ public class SistemaAleman extends SistemaAmortizacion {
 	private double capital;
 	private double tasa;
 	private int numeroCuotas;
+	private double montoDescuento;
 	
 	private double amortizacionCapital;
+	private int descuento;
 
-	public SistemaAleman(double monto, double tasa, int numeroCuotas) {
+	public SistemaAleman(double monto, double tasa, int numeroCuotas, int descuento) {
 		this.capital = monto;
 		this.tasa = tasa;
 		this.numeroCuotas = numeroCuotas;
-		this.amortizacionCapital = this.capital / numeroCuotas;
+		
+		this.descuento = descuento;
+		this.montoDescuento = this.getInteresTotal() * descuento / 100;
+		
+		double descPorCuota = this.montoDescuento / this.numeroCuotas;
+		this.amortizacionCapital = (this.capital / numeroCuotas) - descPorCuota;
 	}
 	
 	@Override
@@ -57,7 +64,7 @@ public class SistemaAleman extends SistemaAmortizacion {
 
 	@Override
 	public double getMontoTotal() {
-		return capital + getInteresTotal();
+		return capital + getInteresTotal() - this.montoDescuento;
 	}
 	
 	@Override
@@ -85,9 +92,25 @@ public class SistemaAleman extends SistemaAmortizacion {
 	
 	private double calcularInteres(int numeroCuota) {
 		if (numeroCuota >= 1)
-			return (tasa * capital)
-			- (tasa * amortizacionCapital * (numeroCuota - 1));
+			return ((tasa * capital)
+			- (tasa * amortizacionCapital * (numeroCuota - 1)));
 		
 		throw new IllegalArgumentException("El numero de cuota debe estar entre 1 y " + numeroCuotas);
+	}
+
+	public void setDescuento(int descuento) {
+		this.descuento = descuento;
+	}
+
+	public int getDescuento() {
+		return descuento;
+	}
+
+	public void setMontoDescuento(double montoDescueto) {
+		this.montoDescuento = montoDescueto;
+	}
+
+	public double getMontoDescuento() {
+		return montoDescuento;
 	}
 }

@@ -21,6 +21,7 @@
 			<td class="listado_par">Cuotas</td>
 			<td class="listado_par">Monto</td>
 			<td class="listado_par">Intereses</td>
+			<td class="listado_par">Descuento</td>
 			<td class="listado_par">Saldo</td>
 			<td class="listado_par">&nbsp;</td>
 		</tr>
@@ -33,6 +34,7 @@
 			<td><%=planDTO.getCantidadCuotas()%></td>
 			<td><%=NumberFormat.redondeoDouble(planDTO.getMonto())%></td>
 			<td><%=NumberFormat.redondeoDouble(planDTO.getSaldoIntereses())%></td>
+			<td><%=NumberFormat.redondeoDouble(planDTO.getMontoDescuento())%></td>
 			<td><%=NumberFormat.redondeoDouble(planDTO.getSaldoPlan())%></td>
 			<td>
 				<a href="planesDetalle.jsp?idPlan=<%=planDTO.getId()%>">Detalle</a>
