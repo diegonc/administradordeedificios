@@ -4,13 +4,7 @@
 <%@ page language="java" contentType="text/html" import="propiedades.Responsable"%>
 <%@ page language="java" contentType="text/html" import="edificio.EdificioDTO"%>
 <jsp:useBean id="responsables" scope="session" class="beans.ResponsablesBean"/>
-<script type="text/javascript">
-function cargarDni(){
-	var index = document.getElementById("respon_selected");
-	var dniDirect =  document.getElementById("dni");
-	dniDirect.value =index.value;
-}
-</script>
+
 <%
 	List<Integer> listaResponsable = responsables.getListaDNIs();
 	List<EdificioDTO> listaEdificios = AdministradorDePermisos.getInstancia().getEdificiosAdministrador();
@@ -28,7 +22,7 @@ function cargarDni(){
 						 		<table  border="0" cellpadding="0" cellspacing="5" >
 							 		<tr>
 								 		<td>								 		
-									 		<select id="dni" name="dniElegido">
+									 		<select id="dniElegido" name="dniElegido">
 									 		<%for (Integer resp:listaResponsable) {%>
 									 				<option value="<%=resp%>"><%=resp%></option>
 									 			<%} %>
@@ -61,7 +55,7 @@ function cargarDni(){
 							 		
 								</table>
 						</fieldset>
-						<input type="hidden" name="dni"  ></input>
+						
 						<input type="submit" value="ver historial" onclick="cargarDni()">
 					</form>
 				</td>
