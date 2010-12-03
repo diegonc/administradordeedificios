@@ -38,20 +38,11 @@ function redirecReLiq() {
 }
 </script>
 
-<table cellpadding="0" cellspacing="0">
-	<tr>
-		<td width="5" class="borde"></td>
-		<td width="800" class="borde" align="center">
-		<h3 id="header">Expensas - Listado Propiedades edifcio " <%=edificio.getNombre()%>
-		"</h3>
-		</td>
-		<td width="5" class="borde"></td>
-	</tr>
-</table>
-<tr>
-	<td width="5" class="borde"></td>
-	<td width="15" class="fondo"></td>
-	<td width="770" class="fondo" align="center">
+<div class="contenido">
+<div class="titulo"><h3>Expensas - Listado Propiedades edifcio " <%=edificio.getNombre()%>
+		"</h3></div>
+
+	<div class="cuerpo">
 	<form class="elegante" id="expensasProp" name="expensasProp" action="expensasPropiedadesListado">
 	<fieldset><legend>Listado de Propiedades</legend>
 	<table width="500" border="1" class="listado" align="center">
@@ -93,7 +84,8 @@ function redirecReLiq() {
 	<input type="button" value="Consultar Deuda" onclick="redirecConsultaLiq()">
 	<a href="EdificioListarAction?redi=expensa">Volver</a>
 	</form>
-</tr>
+</div>
+</div>
 
 <%
 	hSession.close();
