@@ -22,12 +22,13 @@ function Abrir_ventana (pagina) {
 	CuotaCobroAppl cuotaCobroAppl = new CuotaCobroAppl();
 %>
 <div class="contenido">
-	<div class="titulo"><h3>Detalle de Plan</h3></div>
+	<div class="titulo"><h3>Detalle de Plan Numero <%=plan.getId() %></h3></div>
 	<div class="cuerpo">
 	<form class="elegante" id="listadoPlanes" name="listadoPlanes">
 	<table>
 		<tr>
 		    <td>Responsable: <%=plan.getResponsable().getNombre()%></td>
+			<td>Plan: <%=plan.getId()%></td>
 		</tr>
 		<tr>
 			<td>Fecha: <%=plan.getFecha()%> - Tipo:  <%=plan.getTipo()%> - Cuotas: <%=plan.getCantidadCuotas()%></td>

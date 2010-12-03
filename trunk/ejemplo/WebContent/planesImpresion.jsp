@@ -29,12 +29,13 @@ function mostrarBotones(){
 	CuotaCobroAppl cuotaCobroAppl = new CuotaCobroAppl();
 %>
 
-	<div class="titulo"><h3>Detalle de Plan</h3></div>
+	<div class="titulo"><h3>Detalle de Plan Numero <%=plan.getId() %></h3></div>
 	
 	
 	<table>
 		<tr>
 		    <td>Responsable: <%=plan.getResponsable().getNombre()%></td>
+		    <td>Plan: <%=plan.getId()%></td>
 		</tr>
 		<tr>
 			<td>Fecha: <%=plan.getFecha()%> - Tipo:  <%=plan.getTipo()%> - Cuotas: <%=plan.getCantidadCuotas()%></td>
