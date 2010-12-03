@@ -170,8 +170,12 @@ public class CuotaDTO {
 	private CuotaCobroDTO cobro;
 
 	@OneToOne(mappedBy = "cuota")
-	private CuotaCobroDTO getCobro() {
+	public CuotaCobroDTO getCobro() {
 		return cobro;
+	}
+	
+	public void setCobro(CuotaCobroDTO cobro) {
+		this.cobro = cobro;
 	}
 
 }
