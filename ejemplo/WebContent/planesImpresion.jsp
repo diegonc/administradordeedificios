@@ -4,6 +4,20 @@
 <%@ page language="java" contentType="text/html" import="utilidades.*"%>
 <%@ page language="java" contentType="text/html"
 	import="org.hibernate.*"%>
+<script type="text/javascript">
+function ocultarBotones(){
+	var bt1 = document.getElementById("boton1");
+	var bt2= document.getElementById("boton2");
+	bt2.style.display ="none";
+	bt1.style.display ="none";
+}
+function mostrarBotones(){
+	var bt1 = document.getElementById("boton1");
+	var bt2= document.getElementById("boton2");
+	bt2.style.display ="";
+	bt1.style.display ="";
+}
+</script>
 
 
 <%
@@ -17,7 +31,7 @@
 
 	<div class="titulo"><h3>Detalle de Plan</h3></div>
 	
-	<form  id="listadoPlanes" name="listadoPlanes">
+	
 	<table>
 		<tr>
 		    <td>Responsable: <%=plan.getResponsable().getNombre()%></td>
@@ -53,6 +67,6 @@
 		%>	
 	</table>
 	</fieldset>
-		<input type="button" onclick="javascript:print()" value="Imprimir">
-		<input type="button" onclick="javascript:window.close();" value="Cerrar">
+		<input type="button"  id="boton1" onclick="javascript:print()" value="Imprimir" onblur="ocultarBotones()" onfocus="mostrarBotones()">
+		<input type="button"  id="boton2" onclick="javascript:window.close();" value="Cerrar">
 	
