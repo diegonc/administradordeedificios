@@ -204,7 +204,7 @@ public class PlanDTO {
 	}
 
 	@Transient
-	private EdificioDTO getEdificio() {
+	public EdificioDTO getEdificio() {
 		return cobrosCancelados.iterator().next().getLiquidacion()
 				.getPropiedad().getTipoPropiedad().getEdificio();
 	}

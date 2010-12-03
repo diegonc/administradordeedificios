@@ -1,5 +1,6 @@
 package actions;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -38,18 +39,24 @@ public class LiquidarPlanesAction extends SessionAwareAction {
 	@InputConfig(methodName="input")
 	public String liquidar() {
 		try {
+			planes = new ArrayList<PlanDTO>();
 			getTransaction().begin();
 			for(Integer planId : idPlanes) {
 				PlanDTO plan = (PlanDTO)session.get(PlanDTO.class, planId) /*TODO: appl */;
-				if (plan != null)
+				if (plan != null) {
 					plan.liquidar(fecha);
+					planes.add(plan);
+				}
 			}
 			getTransaction().commit();
+			return SUCCESS;
 		} catch (Exception e) {
+			String msg = "No se pudieron liquidar los planes.";
 			getTransaction().rollback();
-			LOG.error("No se pudo liquidar planes.", e);
+			LOG.error(msg, e);
+			addActionError(msg);
+			return input();			
 		}
-		return SUCCESS;
 	}
 
 	@Override
@@ -90,4 +97,5 @@ public class LiquidarPlanesAction extends SessionAwareAction {
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
 	}
+
 }
