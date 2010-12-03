@@ -47,7 +47,6 @@ function Abrir_ventana (pagina) {
 			<td class="listado_par">Intereses</td>
 			<td class="listado_par">Saldo</td>
 			<td class="listado_par">Pagos</td>
-			<td class="listado_par">Mora</td>
 			<td class="listado_par">Consolidar</td>
 		</tr>
 		<%
@@ -64,12 +63,7 @@ function Abrir_ventana (pagina) {
 				<td><a href="cobroCuotaDetalle.jsp?idCuota=<%=cuotaDTO.getId()%>">Saldado</a></td>
 			<% } else { %> 
 				<td>&nbsp;</td>
-			<%} if (cuotaDTO.estaVencida() && !cuotaCobroAppl.existeCobro(cuotaDTO.getId())) {%>
-				<td><a href="#">Calcular Mora</a></td>
-			<%} else {%>
-				<td>&nbsp;</td>
-			<%} %>
-			<% if (AdministradorDePermisos.getInstancia().isAdministrador() && cuotaCobroAppl.paraConsolidar(cuotaDTO.getId())) { %>
+			<% } if (AdministradorDePermisos.getInstancia().isAdministrador() && cuotaCobroAppl.paraConsolidar(cuotaDTO.getId())) { %>
 				<td><a href="ConsolidarCuota?cuota_id=<%=cuotaDTO.getId() %>">Consolidar</a></td>
 			<%} else if (AdministradorDePermisos.getInstancia().isAdministrador() && cuotaCobroAppl.existeCobro(cuotaDTO.getId())) {%>
 				<td>Consolidado</td>
