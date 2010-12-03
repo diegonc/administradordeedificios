@@ -14,7 +14,20 @@
 <%@ page language="java" contentType="text/html" import="utilidades.NumberFormat"%>
 <jsp:useBean id="edificio" scope="session" class="edificio.EdificioDTO"/>
 <jsp:useBean id="detalleExpensa" scope="session" class="beans.LiquidacionBean"/>
-
+<script type="text/javascript">
+function ocultarBotones(){
+	var bt1 = document.getElementById("boton1");
+	var bt2= document.getElementById("boton2");
+	bt2.style.display ="none";
+	bt1.style.display ="none";
+}
+function mostrarBotones(){
+	var bt1 = document.getElementById("boton1");
+	var bt2= document.getElementById("boton2");
+	bt2.style.display ="";
+	bt1.style.display ="";
+}
+</script>
 <% 
 EdificioDTO edificioDTO = edificio;
 %>
@@ -23,7 +36,7 @@ EdificioDTO edificioDTO = edificio;
 	<tr><td colspan="1" height="15"></td>
 	</tr>
 	<tr >
-		<td align="center">Edificio:<%=edificioDTO.getNombre()%></br><%=edificioDTO.getCalle()%>&nbsp;<%=edificioDTO.getNumero()%>&nbsp;<%=edificioDTO.getLocalidad()%></td>						
+		<td align="center">Edificio:<%=edificioDTO.getNombre()%><br></br><%=edificioDTO.getCalle()%>&nbsp;<%=edificioDTO.getNumero()%>&nbsp;<%=edificioDTO.getLocalidad()%></td>						
 	</tr>
 	<tr><td colspan="1" height="15"></td>
 </table>
@@ -67,7 +80,7 @@ EdificioDTO edificioDTO = edificio;
 						color="";
 					}
 		     %>
-		        	<tr<%=color%>>
+		        	<tr>
 				        <td><%=gastoActual.getNumeroFolio()%></td>
 						<td><%=gastoActual.getDetalle()%></td>
 						<td><%=gastoActual.getMonto()%></td>
@@ -139,6 +152,6 @@ EdificioDTO edificioDTO = edificio;
 
 
 		<table height="50"> <tr height="20"><td></td></tr></table>
-		<input type="button" onclick="javascript:print()" value="Imprimir">
-		<input type="button" onclick="javascript:window.close();" value="Cerrar">
-		
+		<input type="button"  id="boton1" onclick="javascript:print()" value="Imprimir" onblur="ocultarBotones()" onfocus="mostrarBotones()">
+		<input type="button"  id="boton2" onclick="javascript:window.close();" value="Cerrar">
+	
