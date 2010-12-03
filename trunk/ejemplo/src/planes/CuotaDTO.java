@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -160,6 +161,17 @@ public class CuotaDTO {
 
 	public void setFechaLiquidacion(Date fechaLiquidacion) {
 		this.fechaLiquidacion = fechaLiquidacion;
+	}
+
+	public boolean estaCobrada() {
+		return getCobro() != null;
+	}
+	
+	private CuotaCobroDTO cobro;
+
+	@OneToOne(mappedBy = "cuota")
+	private CuotaCobroDTO getCobro() {
+		return cobro;
 	}
 
 }

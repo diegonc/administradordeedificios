@@ -165,40 +165,42 @@ public class PlanDTO {
 		if ("afecha".equals(edificio.getMora())) {
 			InteresAFecha interes = new InteresAFecha();
 			for (CuotaDTO cuota : cuotas) {
-				try {
-					double interesMora = interes.setDeuda(new DeudaAdapter(cuota))
-							.calcular(fecha).getInteres();
-	
-					cuota.setFechaLiquidacion(fecha);
-					cuota.setInteresMora(interesMora);
-				} catch (IllegalArgumentException e) {
-					// fecha es anterior a mes correspondiente a la cuota
-					cuota.setFechaLiquidacion(null);
-					cuota.setInteresMora(0.0);
-				}
+				if (!cuota.estaCobrada())
+					try {
+						double interesMora = interes.setDeuda(new DeudaAdapter(cuota))
+								.calcular(fecha).getInteres();
+		
+						cuota.setFechaLiquidacion(fecha);
+						cuota.setInteresMora(interesMora);
+					} catch (IllegalArgumentException e) {
+						// fecha es anterior a mes correspondiente a la cuota
+						cuota.setFechaLiquidacion(null);
+						cuota.setInteresMora(0.0);
+					}
 			}
 		} else if ("punitorio".equals(edificio.getMora())) {
 			InteresPunitorio interes = new InteresPunitorio(
 					edificio.getDia_primer_vto(), edificio.getDia_segundo_vto());
 			for (CuotaDTO cuota : cuotas) {
-				try {
-					interes.setDeuda(new DeudaAdapter(cuota))
-							.calcular(fecha);
-					
-					double interes1vto = interes.getInteres1vto();
-					double interes2vto = interes.getInteres2vto();
-	
-					cuota.setFechaLiquidacion(fecha);
-					cuota.setInteresMora(interes1vto);
-					cuota.setInteresSegundoVencimiento(interes2vto);
-				} catch (IllegalArgumentException e) {
-					// fecha es anterior a mes correspondiente a la cuota
-					cuota.setFechaLiquidacion(null);
-					cuota.setInteresMora(0.0);
-					cuota.setInteresSegundoVencimiento(0.0);
-				}
+				if (!cuota.estaCobrada())
+					try {
+						interes.setDeuda(new DeudaAdapter(cuota))
+								.calcular(fecha);
+						
+						double interes1vto = interes.getInteres1vto();
+						double interes2vto = interes.getInteres2vto();
+		
+						cuota.setFechaLiquidacion(fecha);
+						cuota.setInteresMora(interes1vto);
+						cuota.setInteresSegundoVencimiento(interes2vto);
+					} catch (IllegalArgumentException e) {
+						// fecha es anterior a mes correspondiente a la cuota
+						cuota.setFechaLiquidacion(null);
+						cuota.setInteresMora(0.0);
+						cuota.setInteresSegundoVencimiento(0.0);
+					}
 			}
-		} else throw new IllegalArgumentException("TODO: interes diferido de cuotas.");
+		} else throw new IllegalArgumentException("TODO: interes diferido de cuotas.(?)");
 	}
 
 	@Transient
