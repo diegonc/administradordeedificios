@@ -131,10 +131,10 @@ public class ExpensaProrrateoPrevisionAppl extends ExpensaCalculoAppl{
 	private void actualizarSaldos(PropiedadDTO propiedadActual, ExpensaDTO expensa) {
 		if(expensa.getTipo().equalsIgnoreCase(ExpensaDTO.tipoOrdinario)){
 			propiedadActual.setCtaOrdSaldoExp(-(expensa.getDeudaPrevia()+expensa.getMonto()));
-			propiedadActual.setCtaOrdSaldoInt(-(propiedadActual.getCtaOrdSaldoInt()+expensa.getIntereses()));
+			propiedadActual.setCtaOrdSaldoInt(-expensa.getIntereses());
 		}else{
 			propiedadActual.setCtaExtSaldoExp(-(expensa.getDeudaPrevia()+expensa.getMonto()));
-			propiedadActual.setCtaExtSaldoInt(-(propiedadActual.getCtaExtSaldoInt()+(expensa.getIntereses())));
+			propiedadActual.setCtaExtSaldoInt(-expensa.getIntereses());
 		}
 		Session session = HibernateUtil.getSession();
 		session.beginTransaction();
@@ -172,11 +172,11 @@ public class ExpensaProrrateoPrevisionAppl extends ExpensaCalculoAppl{
 					expensasIntereses.calcularInteresAFechaDePago(edificio, expensaActual);
 				if (edificio.getMora().equalsIgnoreCase(EdificioDTO.DIFERIDO))
 					expensasIntereses.calcularInteresDiferidoProximaLiquidacion(edificio, expensaActual);
+
 				actualizarSaldos(propiedad, expensaActual);
 				session.beginTransaction();
 				session.saveOrUpdate(expensaActual);
 				session.getTransaction().commit();			
-								
 				expensas.add(expensaActual);
 			}
 		}	

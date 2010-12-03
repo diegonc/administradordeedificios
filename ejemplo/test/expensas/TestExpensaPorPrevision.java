@@ -241,10 +241,10 @@ public class TestExpensaPorPrevision extends TestCase {
 	private void actualizarSaldos(PropiedadDTO propiedadActual, ExpensaDTO expensa) {
 		if(expensa.getTipo().equalsIgnoreCase("O")){
 			propiedadActual.setCtaOrdSaldoExp(-(expensa.getDeudaPrevia()+expensa.getMonto()));
-			propiedadActual.setCtaOrdSaldoInt(-(propiedadActual.getCtaOrdSaldoInt()+expensa.getIntereses()));
+			propiedadActual.setCtaOrdSaldoInt(-expensa.getIntereses());
 		}else{
 			propiedadActual.setCtaExtSaldoExp(-(expensa.getDeudaPrevia()+expensa.getMonto()));
-			propiedadActual.setCtaExtSaldoInt(-(propiedadActual.getCtaExtSaldoInt()+expensa.getIntereses()));
+			propiedadActual.setCtaExtSaldoInt(-expensa.getIntereses());
 		}
 		Session session = HibernateUtil.getSession();
 		session.beginTransaction();

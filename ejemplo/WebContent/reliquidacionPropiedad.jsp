@@ -70,6 +70,7 @@
 						 		
 					  		</table>
 					  		<table>
+					  		<%if (expensaOrd!=null){ %>
 						  		<tr>
 						  			<td>
 						  				<input type="checkbox" name="ordinaria" value="O">							  		
@@ -78,6 +79,8 @@
 							  			Expensas Ordinarias
 							  		</td>
 						  		</tr>
+						  	<%} %>	
+						  	<%if (expensaExt!=null){ %>
 						  		<tr>
 						  			<td>
 						  				<input type="checkbox" name="extraordinaria" value="E">							  		
@@ -86,9 +89,15 @@
 							  			Expensas Extraordinarias
 							  		</td>
 						  		</tr>
+						  <%} %>		
 					  		</table>
 					  		<input type="hidden" name="id" id="id" value="<%=edificio.getId() %>"></input>
-					  		<input type="hidden" name="idProp" id="idProp" value="<%=edificio.getId() %>"></input>			  	
+					  	<%if (expensaOrd!=null){ %>
+					  		<input type="hidden" name="idProp" id="idProp" value="<%=(expensaOrd.getPropiedad().getId()) %>"></input>
+					  	<%}%>
+					  	<%if (expensaExt!=null && expensaOrd==null){ %>
+					  		<input type="hidden" name="idProp" id="idProp" value="<%=(expensaExt.getPropiedad().getId()) %>"></input>
+					  	<%}%>				  	
 					</fieldset>
 					<input class="btn" type="button" value="Aceptar" onclick="submit()" />
 					<a href="EdificioListarAction?redi=expensa">Volver</a> 

@@ -65,11 +65,16 @@ function validar(thisform) {
 			 			<tr><td colspan="10" height="5"></td></tr>
 			 			<tr>
 			 				<td><label for="operacion">Operacion: <%=expACobrar.getNumeroOperacion() %></label> </td>
-				 			<td>&nbsp;<label for="monto">Monto: <%=(-1) * (expACobrar.getPropiedad().getCtaExtSaldoExp() + expACobrar.getPropiedad().getCtaExtSaldoInt()) %></label> </td>
 				 			<td>&nbsp;<label for="edificio">Edificio: <%=expACobrar.getPropiedad().getTipoPropiedad().getEdificio().getNombre() %></label> </td>
 				 			<td>&nbsp;<label for="nivel">Nivel: <%=expACobrar.getPropiedad().getNivel() %></label> </td>
 				 			<td>&nbsp;<label for="orden">Orden: <%=expACobrar.getPropiedad().getOrden() %></label> </td>
 				 		</tr>
+				 		<tr>	
+				 			<td><label for="monto">Monto: <%=(-1) * (expACobrar.getPropiedad().getCtaExtSaldoExp()) %></label> </td>
+				 			<td>&nbsp;<label for="intereses">Intereses: <%=(-1) * (expACobrar.getPropiedad().getCtaExtSaldoInt()) %></label> </td>
+				 			<td>&nbsp;<label for="total">Total: <%=(-1) * (expACobrar.getPropiedad().getCtaExtSaldoExp() + expACobrar.getPropiedad().getCtaExtSaldoInt()) %></label> </td>
+			 			</tr>
+			 			<tr><td colspan="10" height="20"></td></tr>
 			 			<tr>
 			 				<td><label for="compro">Comprobante:</label> </td>
 				 			<td>&nbsp;&nbsp;<input type="text" id="comprobante" name="comprobante" size="15"/></td>

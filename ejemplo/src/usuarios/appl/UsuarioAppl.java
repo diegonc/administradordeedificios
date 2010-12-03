@@ -1,14 +1,10 @@
 package usuarios.appl;
 import java.util.List;
 
-import javax.transaction.Transaction;
-
 import org.hibernate.ObjectNotFoundException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.exception.ConstraintViolationException;
-
-import edificio.EdificioDTO;
 
 import usuarios.dto.PerfilDTO;
 import usuarios.dto.UsuarioDTO;
@@ -16,6 +12,7 @@ import usuarios.dto.UsuarioPerfilDTO;
 import usuarios.exception.UsuarioExistenteException;
 import usuarios.exception.UsuarioInexistenteException;
 import utilidades.HibernateUtil;
+import edificio.EdificioDTO;
 
 public class UsuarioAppl {
 		

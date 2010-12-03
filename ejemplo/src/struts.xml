@@ -152,6 +152,7 @@
 			    <param name="location">/expensasPropiedadesListado.jsp</param>
 				<param name="id">${idEdificio}</param>
 			</result>
+			<result name="errorReLiquidar">/cobroRegistrar.jsp</result>
 			<result name="mostrar">/cobroRegistrar.jsp </result>
 			<result name="success">/expensas.jsp </result>
 	    </action> 
