@@ -49,7 +49,7 @@
 			</s:div>
 			<s:div>
 				<s:submit theme="simple" value="Liquidar" name="method:liquidar" />
-				<s:submit theme="simple" value="Volver" name="method:cancelar" />
+				<a href="EdificioListarAction?redi=planes">Volver</a>	
 			</s:div>
 		</s:form>
 	</div>
