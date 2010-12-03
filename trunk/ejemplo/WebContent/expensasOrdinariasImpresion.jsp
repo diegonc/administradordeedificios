@@ -103,7 +103,8 @@ EdificioDTO edificioDTO = edificio;
 			<td>Piso</td>
 			<td>DTO</td>
 			<td>Responsable</td>
-			<td>Deuda<br/> Previa</td>
+			<td>Deuda<br/> Previa<br/> Saldo</td>
+			<td>Deuda<br/> Previa<br/> Interes</td>
 			<td>Exp.<br/> Ordinarias</td>
 			<td>Int.PrimerVto</td>
 			<td>Total.PrimerVto</td>
@@ -130,6 +131,7 @@ EdificioDTO edificioDTO = edificio;
 					<td><%=propiedad.getOrden() %></td>
 					<td> <%=propiedad.getPropietario().getDni() %></td>
 					<td><%=exp.getDeudaPrevia() %></td>
+					<td><%=NumberFormat.redondeoDouble(-exp.getPropiedad().getCtaOrdSaldoInt()) %></td>
 					<td><%=exp.getMonto() %></td>
 					<td><%=exp.getIntereses()%></td>
 					<td><%= NumberFormat.redondeoDouble(exp.getIntereses()+exp.getDeudaPrevia()+exp.getMonto())%></td>
