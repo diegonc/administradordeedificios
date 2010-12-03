@@ -5,6 +5,13 @@
 <%@ page language="java" contentType="text/html" import="utilidades.*"%>
 <%@ page language="java" contentType="text/html"
 	import="org.hibernate.*"%>
+<script type="text/javascript">
+function Abrir_ventana (pagina) {
+	var opciones="toolbar=no,location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, width=800, height=1400, top=85, left=140";
+	window.open(pagina,"",opciones);
+}
+
+</script>	
 
 <%
 	int idPlan = Integer.parseInt(request.getParameter("idPlan"));
@@ -73,9 +80,9 @@
 		}
 		%>
 	
-	</table>
-	<a href="#">Imprimir</a>
+	</table>	
 	</fieldset>
+	<table height="50"> <tr height="20"><td><a href="javascript:Abrir_ventana('planesImpresion.jsp?idPlan=<%=idPlan%>')">Imprimir</a></td></tr></table>
 	<a href="planesListado.jsp?<%=plan.getResponsable().getDni() %>">Volver</a>
 	</form>
 	</div>
