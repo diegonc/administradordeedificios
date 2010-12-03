@@ -52,8 +52,10 @@
 		<ul class="sub">
 			<li><a href="EdificioListarAction?redi=expensa">Expensas</a></li>
 			<li><a href="EdificioListarAction?redi=planes">Planes</a></li>  
+			<%if (administradorDePermisos.isAdministrador()){%>
 			<li><a href="expensasHistorialAction">Liquidaciones-Historial</a></li>       
-			<li><a href="planesConsulta.jsp">Planes-Historial/Pagos</a></li>              
+			<li><a href="planesConsulta.jsp">Planes-Historial/Pagos</a></li>
+			<%} %>              
 		</ul>
 	</li>
 	<%} %>
