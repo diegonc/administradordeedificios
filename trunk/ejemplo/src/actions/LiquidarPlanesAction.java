@@ -2,6 +2,12 @@ package actions;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
+
+import org.apache.struts2.interceptor.validation.SkipValidation;
+
+import com.opensymphony.xwork2.interceptor.annotations.InputConfig;
+import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
 
 import planes.PlanDTO;
 import planes.PlanesAppl;
@@ -12,26 +18,37 @@ public class LiquidarPlanesAction extends SessionAwareAction {
 	private static final long serialVersionUID = 6264558227602407504L;
 	
 	private int idEdificio;
-	private int[] idPlanes;
+	private List<Integer> idPlanes;
 	
 	private Collection<PlanDTO> planes;
 	private PlanesAppl planesAppl = new PlanesAppl();
 
 	private Date fecha;
 	
+	@SkipValidation
 	public String execute() {
+		return input();
+	}
+	
+	public String input() {
 		planes = planesAppl.listar();
 		return "confirmar";
 	}
 	
+	@InputConfig(methodName="input")
 	public String liquidar() {
-		getTransaction().begin();
-		for(int i=0; i < idPlanes.length; i++) {
-			PlanDTO plan = (PlanDTO)session.get(PlanDTO.class, idPlanes[i]) /*TODO: appl */;
-			if (plan != null)
-				plan.liquidar(fecha);
+		try {
+			getTransaction().begin();
+			for(Integer planId : idPlanes) {
+				PlanDTO plan = (PlanDTO)session.get(PlanDTO.class, planId) /*TODO: appl */;
+				if (plan != null)
+					plan.liquidar(fecha);
+			}
+			getTransaction().commit();
+		} catch (Exception e) {
+			getTransaction().rollback();
+			LOG.error("No se pudo liquidar planes.", e);
 		}
-		getTransaction().commit();
 		return SUCCESS;
 	}
 
@@ -56,11 +73,12 @@ public class LiquidarPlanesAction extends SessionAwareAction {
 		return idEdificio;
 	}
 
-	public void setIdPlanes(int[] idPlanes) {
+	@RequiredFieldValidator(message="Debe seleccionar algún plan.")
+	public void setIdPlanes(List<Integer> idPlanes) {
 		this.idPlanes = idPlanes;
 	}
 
-	public int[] getIdPlanes() {
+	public List<Integer> getIdPlanes() {
 		return idPlanes;
 	}
 
@@ -68,6 +86,7 @@ public class LiquidarPlanesAction extends SessionAwareAction {
 		return fecha;
 	}
 
+	@RequiredFieldValidator(message="Debe seleccionar la fecha de liquidación.")
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
 	}
