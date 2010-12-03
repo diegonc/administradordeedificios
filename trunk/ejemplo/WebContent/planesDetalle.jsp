@@ -45,6 +45,7 @@ function Abrir_ventana (pagina) {
 			<td class="listado_par">Nro</td>
 			<td class="listado_par">Monto Amortizado</td>
 			<td class="listado_par">Intereses</td>
+			<td class="listado_par">Mora</td>			
 			<td class="listado_par">Saldo</td>
 			<td class="listado_par">Pagos</td>
 			<td class="listado_par">Consolidar</td>
@@ -56,7 +57,8 @@ function Abrir_ventana (pagina) {
 			<td><%=cuotaDTO.getNumeroCuota()%></td>
 			<td><%=NumberFormat.redondeoDouble(cuotaDTO.getMonto())%></td>
 			<td><%=NumberFormat.redondeoDouble(cuotaDTO.getIntereses())%></td>
-			<td><%=NumberFormat.redondeoDouble(cuotaDTO.getMonto() + cuotaDTO.getIntereses()) %></td>
+			<td><%=NumberFormat.redondeoDouble(cuotaDTO.getInteresMora())%></td>
+			<td><%=NumberFormat.redondeoDouble(cuotaDTO.getMonto() + cuotaDTO.getIntereses() + cuotaDTO.getInteresMora()) %></td>
 			<% if (!cuotaCobroAppl.existeCobro(cuotaDTO.getId()) && cuotaDTO.sePuedePagar() ) { %>
 				<td><a href="cobroCuotaRegistrar.jsp?idCuota=<%=cuotaDTO.getId()%>">Saldar</a></td>
 			<%} else if (cuotaCobroAppl.existeCobro(cuotaDTO.getId())) { %>
