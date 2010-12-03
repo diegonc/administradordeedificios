@@ -14,6 +14,18 @@ import utilidades.HibernateUtil;
 
 public class CuotaCobroAppl {
 	
+	public CuotaCobroDTO getCuotaCobroByIdCuota(int idCuotaCobro) {
+		Session session = HibernateUtil.getSession();
+		try {
+			Query q = session.createQuery("select c from CuotaCobroDTO c where c.cuota.id=:id");	
+			q.setInteger("id", idCuotaCobro);
+			CuotaCobroDTO result = (CuotaCobroDTO) q.uniqueResult();
+			return result;
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	
 	public boolean existeCobro(int cuotaID) {
 		Session session = HibernateUtil.getSession();
 		try {

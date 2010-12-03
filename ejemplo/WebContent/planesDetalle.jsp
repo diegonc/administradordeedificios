@@ -60,7 +60,7 @@ function Abrir_ventana (pagina) {
 			<% if (!cuotaCobroAppl.existeCobro(cuotaDTO.getId()) && cuotaDTO.sePuedePagar() ) { %>
 				<td><a href="cobroCuotaRegistrar.jsp?idCuota=<%=cuotaDTO.getId()%>">Saldar</a></td>
 			<%} else if (cuotaCobroAppl.existeCobro(cuotaDTO.getId())) { %>
-				<td>Saldado</td>
+				<td><a href="cobroCuotaDetalle.jsp?idCuota=<%=cuotaDTO.getId()%>">Saldado</a></td>
 			<% } else { %> 
 				<td>&nbsp;</td>
 			<%} if (cuotaDTO.estaVencida() && !cuotaCobroAppl.existeCobro(cuotaDTO.getId())) {%>
