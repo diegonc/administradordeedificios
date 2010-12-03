@@ -16,6 +16,7 @@ import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
 
 import edificio.EdificioAppl;
 import edificio.EdificioDTO;
+import expensas.appl.ExpensasCobroAppl;
 import expensas.dto.ExpensaCobroDTO;
 
 @SuppressWarnings("serial")
@@ -51,22 +52,9 @@ public class ConsolidarCobrosAction extends SessionAwareAction {
 			EdificioAppl edifAppl = new EdificioAppl();
 			EdificioDTO edificio = cobro.getLiquidacion().getPropiedad().getTipoPropiedad().getEdificio();
 			
-			//primero le suma al saldo de intereses y si este pasa el 0 se lo suma al del saldo..
-			if (cobro.getLiquidacion().getTipo().equals("O")) {
-				edificio.setFondo_ordinario(edificio.getFondo_ordinario() + cobro.getMontoPago());
-				propiedad.setCtaOrdSaldoInt(propiedad.getCtaOrdSaldoInt() + cobro.getMontoPago());
-				if (propiedad.getCtaOrdSaldoInt() > 0) {
-					propiedad.setCtaOrdSaldoExp(propiedad.getCtaOrdSaldoExp() + propiedad.getCtaOrdSaldoInt());
-					propiedad.setCtaOrdSaldoInt(0);
-				}
-			} else {
-				edificio.setFondo_extraordinario(edificio.getFondo_extraordinario() + cobro.getMontoPago());
-				propiedad.setCtaExtSaldoInt(propiedad.getCtaExtSaldoInt() + cobro.getMontoPago());
-				if (propiedad.getCtaExtSaldoInt() > 0) {
-					propiedad.setCtaExtSaldoExp(propiedad.getCtaExtSaldoExp() + propiedad.getCtaExtSaldoInt());
-					propiedad.setCtaExtSaldoInt(0);
-				}
-			}
+			ExpensasCobroAppl expensasCobroAppl = new ExpensasCobroAppl();
+			expensasCobroAppl.consolidarCobro(cobro);
+						
 			edifAppl.updateEdifcio(session, edificio);
 			cobro.setConsolidado(true);
 			session.beginTransaction();
@@ -81,7 +69,8 @@ public class ConsolidarCobrosAction extends SessionAwareAction {
 			return errorValidacion();
 		}
 	}
-
+	
+	
 	public String errorValidacion() {
 		return back();
 	}

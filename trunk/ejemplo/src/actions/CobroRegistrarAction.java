@@ -1,6 +1,8 @@
 package actions;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -8,9 +10,12 @@ import org.hibernate.SessionFactory;
 
 import permisos.AdministradorDePermisos;
 import utilidades.HibernateUtil;
+import utilidades.ManejadorDeFechasUtil;
 
 import com.opensymphony.xwork2.ActionSupport;
 
+import edificio.EdificioAppl;
+import edificio.EdificioDTO;
 import expensas.appl.ExpensaAppl;
 import expensas.appl.ExpensasCobroAppl;
 import expensas.dto.ExpensaCobroDTO;
@@ -101,21 +106,69 @@ public class CobroRegistrarAction extends ActionSupport  {
 		return "mostrar";
 	}
 	
+		
+	private Date obtenerFechaVencimiento(EdificioDTO edificio, boolean esPrimerVto){
+		Calendar fechaActual = new GregorianCalendar();
+		int mes = fechaActual.get(Calendar.MONTH);
+		int anio = fechaActual.get(Calendar.YEAR);
+		int dia = fechaActual.get(Calendar.DATE);
+		
+		if(dia>=edificio.getDia_primer_vto()){
+			mes++;
+			if(mes==12){
+				mes=0;
+				anio++;
+			}
+		}
+		
+		if (esPrimerVto){
+			fechaActual.set(anio,mes, edificio.getDia_primer_vto());
+		}else{
+			fechaActual.set(anio,mes, edificio.getDia_segundo_vto());
+		}
+
+		return fechaActual.getTime();
+	}
+	
+	private boolean validarCobroAFecha(ExpensaDTO expensa,EdificioDTO edificio){
+		ExpensaAppl expensaAppl = new ExpensaAppl();
+		ExpensaDTO  ultimaExpensa = expensaAppl.obtenerExpensaUltimaLiquidacion(expensa.getPropiedad().getId(),expensa.getTipo());
+		Date fechaVencimiento =  ultimaExpensa.getFecha();
+		
+		if (ManejadorDeFechasUtil.diferenciaEntreFechasSinHorario(fecha, fechaVencimiento)>0){
+			addActionError("Debe reliquidar la expensa para registrar el cobro.");
+			return false;
+		}
+		if(montoPago<expensa.getIntereses()) {
+			addActionError("El monto debe ser superior a los intereses adeudados");
+			return false;
+		}
+		return true;
+	}
+			
 	public String execute() {
 		ExpensaAppl expAppl = new ExpensaAppl();
 		SessionFactory factory = HibernateUtil.getSessionFactory();	
 		List<ExpensaDTO> expensas = expAppl.getExpensaActivaPorIdProp(factory, this.idPropiedad );
-		if (expensas.isEmpty()) {
-			return "error";
-		}
 		
+		if (expensas.isEmpty()) return "error";
+			
 		//tomo el primero que es el activo
-		ExpensaDTO exp = expensas.get(0);
-		if (existenciaCobro(exp.getId())) {
-			return "error";
+		ExpensaDTO expensa = expensas.get(0);
+		if (existenciaCobro(expensa.getId())) return "error";
+				
+		EdificioAppl edificioAppl = new EdificioAppl();
+		EdificioDTO edificio =edificioAppl.getEdificio(factory, idEdificio);
+		String tipoDeMora = edificio.getMora();
+						
+		if(tipoDeMora.equals(EdificioDTO.A_FECHA)){
+			if(!validarCobroAFecha(expensa,edificio)){ 
+				return "errorReLiquidar";
+			};
 		}
+								
 		ExpensaCobroDTO cobro = new ExpensaCobroDTO();
-		cobro.setLiquidacion(exp);
+		cobro.setLiquidacion(expensa);
 		cobro.setComprobante(comprobante);
 		cobro.setConsolidado(false);
 		cobro.setFecha(fecha);
@@ -126,8 +179,7 @@ public class CobroRegistrarAction extends ActionSupport  {
 		try {
 			cobroAppl.addCobroExpensas(cobro);
 		} catch (GastoExistenteException e) {
-			System.out.println(e);
-			addActionError("Erro al cargar la expensa");
+			addActionError("Error al cargar la expensa");
 			return "error";
 		}
 		return SUCCESS;

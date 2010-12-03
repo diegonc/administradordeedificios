@@ -3,7 +3,6 @@ package beans;
 import java.util.HashMap;
 import java.util.List;
 
-import expensas.calculo.ElementoPrevisionGasto;
 import expensas.dto.ExpensaDTO;
 import gastos.dto.GastoDTO;
 import gastos.dto.TipoGastoDTO;

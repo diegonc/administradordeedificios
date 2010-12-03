@@ -2,6 +2,9 @@ package actions;
 
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -32,8 +35,6 @@ import gastos.dto.TipoGastoDTO;
 
 @SuppressWarnings("serial")
 public class ExpensasLiquidacionResultanteAction extends ActionSupport {
-	
-
 	private int id;
 	private int idProp;
 	private int mes;
@@ -45,7 +46,6 @@ public class ExpensasLiquidacionResultanteAction extends ActionSupport {
 	private ExpensaProrrateoPrevisionAppl expensasPrevisionAppl = new ExpensaProrrateoPrevisionAppl();
 	private String ordinaria;
 	private String extraordinaria;
-	
 
 	public int getId() {
 		return id;
@@ -71,8 +71,6 @@ public class ExpensasLiquidacionResultanteAction extends ActionSupport {
 		this.anio = anio;
 	}
 
-
-
 	public int getIdProp() {
 		return idProp;
 	}
@@ -81,9 +79,6 @@ public class ExpensasLiquidacionResultanteAction extends ActionSupport {
 		this.idProp = idProp;
 	}
 	
-	
-
-
 	public String getOrdinaria() {
 		return ordinaria;
 	}
@@ -93,7 +88,6 @@ public class ExpensasLiquidacionResultanteAction extends ActionSupport {
 	}
 
 	public String registrarReliquidacion(){
-		ExpensaAppl expensaAppl = new ExpensaAppl();
 		Map<String, Object> session = ActionContext.getContext().getSession();
 		LiquidacionBean liquidacion = (LiquidacionBean)session.get("detalleExpensa");
 		ExpensaDTO nuevaExpensaOrdinaria = new ExpensaDTO();
@@ -103,26 +97,31 @@ public class ExpensasLiquidacionResultanteAction extends ActionSupport {
 		ExpensaDTO expensaExtraOrdinaria = null;
 		if (liquidacion.getExpensasOrdinarias()!=null && !liquidacion.getExpensasOrdinarias().isEmpty()){
 			expensaOrdinaria = liquidacion.getExpensasOrdinarias().get(0);
-			expensaOrdinaria.setNumeroOperacion(expensaAppl.obtenerNumeroDeOperacion(idProp, ExpensaDTO.tipoOrdinario));
 			nuevaExpensaOrdinaria=copiarDatosExpensa(expensaOrdinaria);
 		}
 		if (liquidacion.getExpensasExtraordinarias()!=null && !liquidacion.getExpensasExtraordinarias().isEmpty()){
 			expensaExtraOrdinaria = liquidacion.getExpensasExtraordinarias().get(0);
-			expensaExtraOrdinaria.setNumeroOperacion(expensaAppl.obtenerNumeroDeOperacion(idProp, ExpensaDTO.tipoExtraordinario));
 			nuevaExpensaExtraordinaria = copiarDatosExpensa(expensaExtraOrdinaria);
 		}
 			
 		Session hSession = HibernateUtil.getSession();
-		
+		PropiedadDTO propiedad = null;
+		if(nuevaExpensaOrdinaria!=null) propiedad = nuevaExpensaOrdinaria.getPropiedad();
+		else if(nuevaExpensaExtraordinaria!=null) propiedad = nuevaExpensaExtraordinaria.getPropiedad();
+						
 		if (expensaOrdinaria!=null &&ordinaria!=null && ordinaria.equalsIgnoreCase(ExpensaDTO.tipoOrdinario)){
 			hSession.beginTransaction();
 			hSession.save(nuevaExpensaOrdinaria);
+			propiedad.setCtaOrdSaldoInt(propiedad.getCtaOrdSaldoInt()-nuevaExpensaOrdinaria.getIntereses());
+			hSession.saveOrUpdate(propiedad);
 			hSession.getTransaction().commit();
 		}
 		
 		if (expensaExtraOrdinaria!=null&& extraordinaria!=null && extraordinaria.equalsIgnoreCase(ExpensaDTO.tipoExtraordinario)){
 			hSession.beginTransaction();
 			hSession.save(nuevaExpensaExtraordinaria);
+			propiedad.setCtaExtSaldoInt(propiedad.getCtaExtSaldoInt()-nuevaExpensaExtraordinaria.getIntereses());
+			hSession.saveOrUpdate(propiedad);
 			hSession.getTransaction().commit();
 		}
 		hSession.close();
@@ -132,12 +131,13 @@ public class ExpensasLiquidacionResultanteAction extends ActionSupport {
 	
 	private ExpensaDTO copiarDatosExpensa(ExpensaDTO expensa) {
 		ExpensaDTO nuevaExpensa = new ExpensaDTO();
+		ExpensaAppl expensaAppl = new ExpensaAppl();
 		nuevaExpensa.setDeudaPrevia(expensa.getDeudaPrevia());
 		nuevaExpensa.setFecha(expensa.getFecha());
 		nuevaExpensa.setIntereses(expensa.getIntereses());
 		nuevaExpensa.setInteresSegundoVencimiento(expensa.getInteresSegundoVencimiento());
 		nuevaExpensa.setMonto(expensa.getMonto());
-		nuevaExpensa.setNumeroOperacion(expensa.getNumeroOperacion());
+		nuevaExpensa.setNumeroOperacion(expensaAppl.obtenerNumeroDeOperacion(idProp, expensa.getTipo()));
 		nuevaExpensa.setPropiedad(expensa.getPropiedad());
 		nuevaExpensa.setTipo(expensa.getTipo());
 		return nuevaExpensa;
@@ -173,19 +173,23 @@ public class ExpensasLiquidacionResultanteAction extends ActionSupport {
 		ExpensaInteresesAppl expensaInteresesAppl = new ExpensaInteresesAppl();
 
 		session.put("edificio",edificio);
-		if (prop.getCtaOrdSaldoExp()<0){
+		Calendar fechaHoy= new GregorianCalendar();
+		Date fechaActual = fechaHoy.getTime();
+		if (prop.getCtaOrdSaldoExp()<0){			
 			List<ExpensaDTO> expensasOrdinarias = new ArrayList<ExpensaDTO>();
 			ExpensaDTO expensaOrdinaria = expensaAppl.obtenerExpensaUltimaLiquidacion(idProp,ExpensaDTO.tipoOrdinario); 
-			expensaInteresesAppl .reliquidarConInteresAFechaDePago(edificio, expensaOrdinaria);
+			//TODO cargar fecha por calendario
+			expensaInteresesAppl .reliquidarConInteresAFechaDePago(edificio, expensaOrdinaria,fechaActual);
 			expensasOrdinarias.add(expensaOrdinaria);
 			liquidacion.setExpensasOrdinarias(expensasOrdinarias);
 		}
 		if (prop.getCtaExtSaldoExp()<0){
-				ExpensaDTO expensaExtraordinaria = expensaAppl.obtenerExpensaUltimaLiquidacion(idProp,ExpensaDTO.tipoExtraordinario);
-				List<ExpensaDTO> expensasExtraordinarias = new ArrayList<ExpensaDTO>();
-				expensaInteresesAppl .reliquidarConInteresAFechaDePago(edificio, expensaExtraordinaria);
-				expensasExtraordinarias.add(expensaExtraordinaria);
-				liquidacion.setExpensasExtraordinarias(expensasExtraordinarias);
+			ExpensaDTO expensaExtraordinaria = expensaAppl.obtenerExpensaUltimaLiquidacion(idProp,ExpensaDTO.tipoExtraordinario);
+			List<ExpensaDTO> expensasExtraordinarias = new ArrayList<ExpensaDTO>();
+			//TODO cargar fecha por calendario
+			expensaInteresesAppl .reliquidarConInteresAFechaDePago(edificio, expensaExtraordinaria,fechaActual);
+			expensasExtraordinarias.add(expensaExtraordinaria);
+			liquidacion.setExpensasExtraordinarias(expensasExtraordinarias);
 		}
 	
 		session.put("detalleExpensa",liquidacion);	

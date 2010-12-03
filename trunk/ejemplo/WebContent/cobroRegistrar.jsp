@@ -4,6 +4,7 @@
 <%@page import="com.opensymphony.xwork2.ActionContext"%><jsp:include page="/WEB-INF/jspf/header.jspf"></jsp:include>
 <%@ page language="java" contentType="text/html" import="java.util.*"%>
 <%@ page language="java" contentType="text/html" import="expensas.*"%>
+<%@ page language="java" contentType="text/html" import="edificio.*"%>
 <%@ page language="java" contentType="text/html" import="utilidades.*"%>
 <%@ page language="java" contentType="text/html" import="org.hibernate.*"%>
 <%
@@ -17,6 +18,11 @@
 %>
 <script src="calendario.js" type="text/javascript"></script>
 <script type="text/javascript">
+function redirecReLiq() {
+	
+	location.href = "expensasLiquidacionResultante!reliquidar?id="+<%=idEdificio%>+"&idProp="+<%=idProp%>;
+	
+}
 function armarFecha(elemento){
 	var anio = document.getElementById("anio").value;
 	var mes = document.getElementById("mes").value;
@@ -65,11 +71,16 @@ function validar(thisform) {
 			 			<tr><td colspan="10" height="5"></td></tr>
 			 			<tr>
 			 				<td><label for="operacion">Operacion: <%=expACobrar.getNumeroOperacion() %></label> </td>
-				 			<td>&nbsp;<label for="monto">Monto: <%=(-1) * (expACobrar.getPropiedad().getCtaOrdSaldoExp() + expACobrar.getPropiedad().getCtaOrdSaldoInt()) %></label> </td>
 				 			<td>&nbsp;<label for="edificio">Edificio: <%=expACobrar.getPropiedad().getTipoPropiedad().getEdificio().getNombre() %></label> </td>
 				 			<td>&nbsp;<label for="nivel">Nivel: <%=expACobrar.getPropiedad().getNivel() %></label> </td>
 				 			<td>&nbsp;<label for="orden">Orden: <%=expACobrar.getPropiedad().getOrden() %></label> </td>
 				 		</tr>
+				 		<tr>	
+				 			<td><label for="monto">Monto: <%=(-1) * (expACobrar.getPropiedad().getCtaOrdSaldoExp()) %></label> </td>
+				 			<td>&nbsp;<label for="intereses">Intereses: <%=(-1) * (expACobrar.getPropiedad().getCtaOrdSaldoInt()) %></label> </td>
+				 			<td>&nbsp;<label for="total">Total: <%=(-1) * (expACobrar.getPropiedad().getCtaOrdSaldoExp() + expACobrar.getPropiedad().getCtaOrdSaldoInt()) %></label> </td>
+			 			</tr>
+			 			<tr><td colspan="10" height="20"></td></tr>
 			 			<tr>
 			 				<td><label for="compro">Comprobante:</label> </td>
 				 			<td>&nbsp;&nbsp;<input type="text" id="comprobante" name="comprobante" size="15"/></td>
@@ -84,14 +95,21 @@ function validar(thisform) {
 				 		<tr>
 				 			<td align="right"><label for="monto">Monto Pago:</label> </td>
 				 			<td>&nbsp;&nbsp;<input type="text" id="montoPago" name="montoPago" size="15"/></td>
+				 			<td colspan="2">
+				 				<%if (expACobrar.getPropiedad().getTipoPropiedad().getEdificio().getMora().equals(EdificioDTO.A_FECHA)){ %>
+								<input type="button" value="Re-Liquidar" onclick="redirecReLiq()" > 
+							<%} %>
+							</td>
 				 		</tr>
 			  		</table>		
 			</fieldset>
+			<s:actionerror cssClass="error"/>
 			<input class="btn" type="button" value="Aceptar" onclick="validar()" />
 			<a href="expensasPropiedadesListado.jsp?id=<%=idEdificio%>">Volver</a>
 			<input type="text" style="display: none;" id="idPropiedad" name="idPropiedad" value=<%=idProp %> size="15"/>	
 			<input type="text" style="display: none;" id="idEdificio" name="idEdificio" value=<%=idEdificio %> size="15"/>		  	
 		</form>
+		
 </div>
 </div>
 <jsp:include page="/WEB-INF/jspf/footer.jspf"></jsp:include>

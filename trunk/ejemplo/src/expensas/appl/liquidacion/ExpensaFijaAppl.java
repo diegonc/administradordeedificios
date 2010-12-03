@@ -36,7 +36,6 @@ public class ExpensaFijaAppl {
 				if (tipoExpensa.equalsIgnoreCase(ExpensaDTO.tipoOrdinario)){
 					expensa.setMonto(tipoPropiedadActual.getMontoExp());
 				}else{
-					
 					expensa.setMonto(tipoPropiedadActual.getMontoExpExt());
 				}
 				expensa.setTipo(tipoExpensa);
@@ -62,16 +61,15 @@ public class ExpensaFijaAppl {
 	private void actualizarSaldos(PropiedadDTO propiedadActual, ExpensaDTO expensa) {
 		if(expensa.getTipo().equalsIgnoreCase(ExpensaDTO.tipoOrdinario)){
 			propiedadActual.setCtaOrdSaldoExp(-(expensa.getDeudaPrevia()+expensa.getMonto()));
-			propiedadActual.setCtaOrdSaldoInt(-(propiedadActual.getCtaOrdSaldoInt()+expensa.getIntereses()));
+			propiedadActual.setCtaOrdSaldoInt(-expensa.getIntereses());
 		}else{
 			propiedadActual.setCtaExtSaldoExp(-(expensa.getDeudaPrevia()+expensa.getMonto()));
-			propiedadActual.setCtaExtSaldoInt(-(propiedadActual.getCtaExtSaldoInt()+(expensa.getIntereses())));
+			propiedadActual.setCtaExtSaldoInt(-expensa.getIntereses());
 		}
 		Session session = HibernateUtil.getSession();
 		session.beginTransaction();
 		session.update(propiedadActual);
 		session.getTransaction().commit();
 	}
-		
 
 }
