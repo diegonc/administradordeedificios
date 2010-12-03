@@ -215,7 +215,8 @@ function ocularYMostrar(id){
 			<td>Piso</td>
 			<td>DTO</td>
 			<td>Responsable</td>
-			<td>Deuda<br> Previa</td>
+			<td>Deuda<br/> Previa<br/> Saldo</td>
+			<td>Deuda<br/> Previa<br/> Interes</td>
 			<td>Exp.<br> Extraordinarias</td>
 			<td>Int.PrimerVto</td>
 			<td>Total.PrimerVto</td>
