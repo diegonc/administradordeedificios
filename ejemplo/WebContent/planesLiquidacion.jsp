@@ -25,8 +25,16 @@
 				full.value = dia + "/" + mes + "/" + anio;
 			}
 		</script>
+		<s:actionerror/>
 		<s:form action="liquidarPlanesAction" cssClass="elegante">
 			<ss:datetimepicker label="Fecha liquidacion" key="fecha" pickerfunc="show_picker" changefunc="update_date" />
+			<s:if test="fieldErrors != null && fieldErrors['idPlanes'] != null">
+				<s:iterator value="fieldErrors['idPlanes']" var="error">
+					<s:div>
+						<span class="errorMessage"><s:property value="#error"/></span>
+					</s:div>
+				</s:iterator>
+			</s:if>
 			<s:div>
 				<table class="listado">
 					<thead>
@@ -38,10 +46,11 @@
 					</thead>
 					<tbody>
 						<s:iterator value="planes">
+							<s:set var="checked" value="idPlanes != null && idPlanes.contains(id)"/>
 							<tr>
 								<td><s:property value="id"/></td>
 								<td><s:property value="responsable.nombre"/></td>
-								<td><s:checkbox theme="simple" name="idPlanes" fieldValue="%{id}"/></td>
+								<td><s:checkbox theme="simple" name="idPlanes" value="%{#checked}" fieldValue="%{id}"/></td>
 							</tr>
 						</s:iterator>
 					</tbody>
