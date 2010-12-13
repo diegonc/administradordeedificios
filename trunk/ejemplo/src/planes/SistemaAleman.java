@@ -18,9 +18,9 @@ package planes;
  * 
  * A = M/n
  * 
- * Ci = A + t*(M - iA)
+ * Ci = A + t*(M - (i - 1)*A)     ; 1 <= i <= n
  * 
- * Ii = t*M*i - t*A*i*(i - 1)/2   ; 0 < i <= n
+ * Ii = t*M*i - t*A*i*(i - 1)/2   ; 1 <= i <= n
  *    = 0                         ; i = 0
  * 
  * Interes total: In   = t*M/2 * (1 + n)
