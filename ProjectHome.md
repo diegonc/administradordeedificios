@@ -1,0 +1,1 @@
+Trabajo Práctico de la materia Taller de Programación 2 de la Facultad de Ingeniería de Buenos Aires. El proyecto se trata de un producto software para la administración de edificios.
